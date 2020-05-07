@@ -1,10 +1,13 @@
 const User = require('./user')
-const Location = require("./location")
-const LocationReview = require("./locationReview")
-const Community = require("./community")
-const CommunityMod = require("./communityMod")
-const CommunitySub = require("./communitySubs")
-
+const Location = require('./location')
+const LocationReview = require('./locationReview')
+const Community = require('./community')
+const CommunityMod = require('./communityMod')
+const CommunitySubs = require('./communitySubs')
+const Photos = require('./photos')
+const PostComment = require('./postComment')
+const UserFollowers = require('./userFollowers')
+const UserPost = require('./userPost')
 
 User.hasMany(UserPost)
 UserPost.belongsTo(User)
@@ -20,11 +23,10 @@ LocationReview.hasMany(Photos)
 Photos.belongsTo(UserPost)
 Photos.belongsTo(Location)
 Photos.belongsTo(LocationReview)
-User.belongsToMany(User , {as: "Followers", through : "UserFollowers" })
-Community.belongsToMany(User , {through: "CommunitySubs"})
-User.belongsToMany(Community , { as: "Subscribers", through: "CommunitySubs"})
+User.belongsToMany(User, {as: 'Followers', through: 'UserFollowers'})
+Community.belongsToMany(User, {through: 'CommunitySubs'})
+User.belongsToMany(Community, {as: 'Subscribers', through: 'CommunitySubs'})
 // User.belongsToMany(Community, { as : "Moderator", through: "CommunityModerator"})
-
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -41,5 +43,13 @@ User.belongsToMany(Community , { as: "Subscribers", through: "CommunitySubs"})
  */
 module.exports = {
   User,
-
+  Community,
+  CommunityMod,
+  CommunitySubs,
+  Location,
+  LocationReview,
+  Photos,
+  PostComment,
+  UserFollowers,
+  UserPost,
 }
