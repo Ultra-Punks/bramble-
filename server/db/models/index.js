@@ -1,4 +1,30 @@
 const User = require('./user')
+const Location = require("./location")
+const LocationReview = require("./locationReview")
+const Community = require("./community")
+const CommunityMod = require("./communityMod")
+const CommunitySub = require("./communitySubs")
+
+
+User.hasMany(UserPost)
+UserPost.belongsTo(User)
+UserPost.hasMany(PostComment)
+UserPost.hasMany(Photos)
+PostComment.belongsTo(UserPost)
+Location.hasMany(Photos)
+Location.belongsTo(User)
+Location.hasMany(LocationReview)
+LocationReview.belongsTo(Location)
+LocationReview.belongsTo(User)
+LocationReview.hasMany(Photos)
+Photos.belongsTo(UserPost)
+Photos.belongsTo(Location)
+Photos.belongsTo(LocationReview)
+User.belongsToMany(User , {as: "Followers", through : "UserFollowers" })
+Community.belongsToMany(User , {through: "CommunitySubs"})
+User.belongsToMany(Community , { as: "Subscribers", through: "CommunitySubs"})
+// User.belongsToMany(Community, { as : "Moderator", through: "CommunityModerator"})
+
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -14,5 +40,6 @@ const User = require('./user')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User
+  User,
+
 }
