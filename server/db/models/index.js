@@ -12,17 +12,19 @@ const UserPost = require('./userPost')
 User.hasMany(UserPost)
 UserPost.belongsTo(User)
 UserPost.hasMany(PostComment)
-UserPost.hasMany(Photos)
+UserPost.hasMany(Photo)
 PostComment.belongsTo(UserPost)
-Location.hasMany(Photos)
+PostComment.hasMany(Photo)
+Location.hasMany(Photo)
 Location.belongsTo(User)
 Location.hasMany(LocationReview)
 LocationReview.belongsTo(Location)
 LocationReview.belongsTo(User)
-LocationReview.hasMany(Photos)
-Photos.belongsTo(UserPost)
-Photos.belongsTo(Location)
-Photos.belongsTo(LocationReview)
+LocationReview.hasMany(Photo)
+Photo.belongsTo(UserPost)
+Photo.belongsTo(Location)
+Photo.belongsTo(LocationReview)
+Photo.belongsTo(PostComment)
 User.belongsToMany(User, {as: 'Followers', through: 'UserFollowers'})
 Community.belongsToMany(User, {through: 'CommunitySubs'})
 User.belongsToMany(Community, {as: 'Subscribers', through: 'CommunitySubs'})
@@ -48,7 +50,7 @@ module.exports = {
   CommunitySubs,
   Location,
   LocationReview,
-  Photos,
+  Photo,
   PostComment,
   UserFollowers,
   UserPost,
