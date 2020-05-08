@@ -7,6 +7,10 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    }
   },
   password: {
     type: Sequelize.STRING,
@@ -30,16 +34,25 @@ const User = db.define('user', {
   username: {
     type: Sequelize.STRING,
     allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
+      isAlphanumeric: true,
+    }
   },
   profileImg: {
-    type: Sequelize.BLOB,
+    type: Sequelize.TEXT,
+    defaultValue: 'https://static.thenounproject.com/png/3134331-200.png'
   },
   description: {
     type: Sequelize.TEXT,
+    validate: {
+      isAlphanumeric: true,
+    }
   },
   isAdmin: {
-    type: Sequelize.STRING,
-    allowNull: false,
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
 })
 
