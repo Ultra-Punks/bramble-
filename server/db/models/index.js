@@ -9,7 +9,6 @@ const PostComment = require('./postComment')
 const UserFollowers = require('./userFollowers')
 const UserPost = require('./userPost')
 
-
 // =========== ASSOCIATIONS BELOW ===========
 User.hasMany(UserPost)
 UserPost.belongsTo(User)
@@ -27,11 +26,11 @@ Photo.belongsTo(UserPost)
 Photo.belongsTo(Location)
 Photo.belongsTo(LocationReview)
 Photo.belongsTo(PostComment)
-User.belongsToMany(User, {as: "Followers", through: "UserFollowers"})
-Community.belongsToMany(User, {through: "CommunitySubs"})
-User.belongsToMany(Community, {as: "Subscribers", through: "CommunitySubs"})
-User.belongsToMany(Community, { as : "Moderator", through: "CommunityMods"})
-
+User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
+Community.belongsToMany(User, {through: CommunitySubs})
+Community.belongsTo(User)
+User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})
+User.belongsToMany(Community, {as: 'Moderator', through: CommunityMods})
 
 // =========== Exports Below ===========
 module.exports = {
@@ -44,5 +43,5 @@ module.exports = {
   Photo,
   PostComment,
   UserFollowers,
-  UserPost,
+  UserPost
 }

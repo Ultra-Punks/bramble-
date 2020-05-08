@@ -2,15 +2,15 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Location = db.define('location', {
-  coodinates: {
-    type: Sequelize.GEOMETRY,
-    allowNull: true,
-  },
+  // coordinates: {
+  //   type: Sequelize.GEOMETRY('POINT'),
+  //   allowNull: true,
+  // },
   address: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      notEmpty: true,
+      notEmpty: true
     }
   },
   name: {
@@ -24,7 +24,7 @@ const Location = db.define('location', {
   description: {
     type: Sequelize.TEXT,
     validate: {
-      isAlphanumeric: true,
+      isAlphanumeric: true
     }
   }
 })
