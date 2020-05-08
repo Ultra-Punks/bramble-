@@ -2,9 +2,13 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const PostComment = db.define('postComment', {
-  imgFile: {
-    type: Sequelize.BLOB,
+  comment: {
+    type: Sequelize.TEXT,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      isAlphanumeric: true
+    }
   },
 })
 
