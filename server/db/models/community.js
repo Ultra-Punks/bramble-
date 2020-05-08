@@ -7,7 +7,7 @@ const Community = db.define('community', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isAlphaNumeric: true,
+      isAlphanumeric: true,
     }
   },
   description: {
