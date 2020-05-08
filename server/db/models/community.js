@@ -5,13 +5,21 @@ const Community = db.define('community', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+      isAlphaNumeric: true,
+    }
   },
   description: {
     type: Sequelize.TEXT,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+    }
   },
   profileImg: {
-    type: Sequelize.BLOB,
+    type: Sequelize.TEXT,
+    defaultValue: 'https://image.shutterstock.com/image-vector/group-five-people-community-icon-260nw-455816902.jpg'
   },
 })
 
