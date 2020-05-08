@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Photos = db.define('photos', {
+const Photo = db.define('photo', {
   imgFile: {
     type: Sequelize.TEXT,
     allowNull: false,
   },
 })
 
-module.exports = Photos
+module.exports = Photo
