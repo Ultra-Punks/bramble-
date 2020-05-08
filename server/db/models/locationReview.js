@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const LocationReviews = db.define('locationReviews', {
+const LocationReview = db.define('locationReview', {
   ratings: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -16,4 +16,4 @@ const LocationReviews = db.define('locationReviews', {
   },
 })
 
-module.exports = LocationReviews
+module.exports = LocationReview
