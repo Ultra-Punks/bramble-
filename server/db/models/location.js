@@ -9,14 +9,23 @@ const Location = db.define('location', {
   address: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      notEmpty: true,
+    }
   },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
+    validate: {
+      noteEmpty: true,
+      isAlphanumeric: true
+    }
   },
   description: {
     type: Sequelize.TEXT,
-  
+    validate: {
+      isAlphanumeric: true,
+    }
   }
 })
 
