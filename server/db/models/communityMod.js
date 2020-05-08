@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const CommunityMod = db.define('communityMod', {
+const CommunityMods = db.define('communityMod', {
 
 })
 
-module.exports = CommunityMod
+module.exports = CommunityMods
