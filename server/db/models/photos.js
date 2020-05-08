@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Photos = db.define('photos', {
   imgFile: {
-    type: Sequelize.BLOB,
+    type: Sequelize.TEXT,
     allowNull: false,
   },
 })
