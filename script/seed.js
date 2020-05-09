@@ -1,20 +1,85 @@
 'use strict'
 
-// testing commit to seed?
-
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Location, Community} = require('../server/db/models')
+
+// bring in the Chance library to generate seed data
+const Chance = require('chance')
+const chanceObj = Chance() // use this global Chance constructor to use in different tables
+
+// create random user seed data
+const generateUser = () => {
+  return {
+    email: chanceObj.email(),
+    password: chanceObj.string({length: 8}),
+    username: chanceObj.name(),
+    description: chanceObj.paragraph({sentences: 1}),
+    isAdmin: chanceObj.bool({likelihood: 25})
+  }
+}
+// store 10 new users created by generateUser into in the userArray
+const userArray = Array.from({length: 10}, generateUser)
+
+// create random location seed data (NOT RESTRICTED TO NYC!)
+const generateLocation = () => {
+  return {
+    name: chanceObj.company(),
+    address: `${chanceObj.address()} ${chanceObj.state({full: true})}`,
+    description: chanceObj.paragraph({sentences: 2})
+  }
+}
+// store 10 new locations created by generateUser into in the userArray
+const locationArray = Array.from({length: 10}, generateLocation)
+
+// possible community names array
+const communitySeedNames = [
+  'Greenwich Blackjacks',
+  'Brooklyn Creative',
+  'SoHo Brunchers',
+  'MidTown Tourists',
+  'Raves of Chelsea',
+  'Yuppies of Upper-East',
+  'Movers & Shakers of FiDi',
+  'NYC Fit!',
+  'Urban Shredders'
+]
+// create random community seed data
+const generateCommunity = () => {
+  return {
+    name: chanceObj.pickone(communitySeedNames),
+    description: chanceObj.paragraph({sentences: 3})
+  }
+}
+// store 10 new communities created by generateUser into in the userArray
+const communityArray = Array.from({length: 10}, generateCommunity)
+
+console.log('communityArray>>>>', communityArray)
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  for (let i = 0; i < userArray.length; i++) {
+    const newUser = await User.create(userArray[i])
+  }
 
-  console.log(`seeded ${users.length} users`)
+  for (let i = 0; i < locationArray.length; i++) {
+    const newLocation = await Location.create(locationArray[i])
+  }
+
+  for (let i = 0; i < locationArray.length; i++) {
+    const newCommunity = await Community.create(communityArray[i])
+  }
+  // ==========  ORIGINAL SEED INFO FROM BOILERMAKER  ==========
+  // const users = await Promise.all([
+  //   User.create({email: 'cody@email.com', password: '123'}),
+  //   User.create({email: 'murphy@email.com', password: '123'}),
+  // ])
+  // ============================================================
+
+  console.log(
+    `seeded ${userArray.length} users, and ${locationArray.length} locations`
+  )
   console.log(`seeded successfully`)
 }
 
