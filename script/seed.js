@@ -1,5 +1,7 @@
 'use strict'
 
+// testing commit to seed?
+
 const db = require('../server/db')
 const {User} = require('../server/db/models')
 
