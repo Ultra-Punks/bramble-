@@ -47,6 +47,7 @@ export class Map extends React.Component {
         onViewportChange={_onViewportChange}/> */}
         <MapGL
           {...this.state.viewport}
+          mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken={mapboxToken}
           onViewportChange={viewport => this.setState({viewport})}
         >
