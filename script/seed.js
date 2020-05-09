@@ -19,6 +19,7 @@ const generateUser = () => {
 }
 // store 10 new users created by generateUser into in the userArray
 const userArray = Array.from({length: 10}, generateUser)
+console.log('userArray>>>>', userArray)
 
 // create random location seed data (NOT RESTRICTED TO NYC!)
 const generateLocation = () => {
@@ -53,23 +54,35 @@ const generateCommunity = () => {
 // store 10 new communities created by generateUser into in the userArray
 const communityArray = Array.from({length: 10}, generateCommunity)
 
-console.log('communityArray>>>>', communityArray)
-
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
+  const users = []
+  const locations = []
+  const communities = []
+
   for (let i = 0; i < userArray.length; i++) {
     const newUser = await User.create(userArray[i])
+    users.push(newUser)
   }
 
   for (let i = 0; i < locationArray.length; i++) {
     const newLocation = await Location.create(locationArray[i])
+    locations.push(newLocation)
+    const randomUserNum = Math.floor(Math.random() * 9) + 1
+    await locations[i].setUser(users[randomUserNum])
   }
 
   for (let i = 0; i < locationArray.length; i++) {
     const newCommunity = await Community.create(communityArray[i])
+    communities.push(newCommunity)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await communities[i].setUser(users[randomUserNum])
   }
+
+  // await locations[0].setUser(users[0])
+  // users[0].addCommunity(communities[0])
   // ==========  ORIGINAL SEED INFO FROM BOILERMAKER  ==========
   // const users = await Promise.all([
   //   User.create({email: 'cody@email.com', password: '123'}),
