@@ -1,8 +1,8 @@
 import React from 'react'
-
 const mapboxgl = require('mapbox-gl')
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoicm9idTkiLCJhIjoiY2s3dXBocG9vMGw4cjNrbzNwcms3NXNxciJ9.30FuloDeMi1IiNTY-bJLRw'
+
+import {mapboxToken} from '../../secrets'
+mapboxgl.accessToken = mapboxToken
 
 export class Map extends React.Component {
   constructor() {
