@@ -9,23 +9,23 @@ class Test extends React.Component {
     this.state = {
       food: ''
     }
-    // this.handleSubmit = this.handleSubmit.bind(this)
-    // this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  //   handleChange(event) {
-  //     this.setState({
-  //       [event.target.name]: event.target.value,
-  //     })
-  //   }
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
 
-  onClick() {
+  handleSubmit() {
     event.preventDefault()
     try {
-      this.props.fetchRecipe()
-      //   this.setState({
-      //     food: '',
-      //   })
+      this.props.fetchRecipe(this.state.food)
+      this.setState({
+        food: ''
+      })
     } catch (error) {
       console.log('error')
     }
@@ -33,13 +33,14 @@ class Test extends React.Component {
 
   searchResults = () => {
     const food = this.props.food
-    if (food) {
+    if (food.length) {
       return (
         <div>
           {food.map(result => {
             return (
               <div>
-                <h1>{result.title}</h1>
+                <h1>{result.restaurantChain}</h1>
+                <img src={result.image} />
               </div>
             )
           })}
@@ -51,7 +52,7 @@ class Test extends React.Component {
   render() {
     return (
       <div>
-        {/* <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <input
             name="food"
             type="text"
@@ -59,11 +60,11 @@ class Test extends React.Component {
             value={this.state.card}
           />
           <button type="submit"> Submit </button>
-        </form> */}
+        </form>
 
-        <button type="button" onClick={() => this.onClick()}>
+        {/* <button type="button" onClick={() => this.onClick()}>
           Scan Image
-        </button>
+        </button> */}
         <br />
         <br />
         <div>{this.searchResults()}</div>
@@ -74,7 +75,7 @@ class Test extends React.Component {
 const mapState = state => ({food: state.food})
 
 const mapDispatch = dispatch => ({
-  fetchRecipe: () => dispatch(fetchRecipe())
+  fetchRecipe: query => dispatch(fetchRecipe(query))
 })
 
 const Recipe = connect(mapState, mapDispatch)(Test)
