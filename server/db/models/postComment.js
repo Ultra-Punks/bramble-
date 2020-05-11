@@ -9,7 +9,7 @@ const PostComment = db.define('postComment', {
       notEmpty: true,
       isAlphanumeric: true
     }
-  },
+  }
 })
 
 module.exports = PostComment

@@ -36,8 +36,8 @@ const User = db.define('user', {
     // allowNull: false,
     unique: true,
     validate: {
-      // notEmpty: true,
-      isAlphanumeric: true
+      notEmpty: true
+      // isAlphanumeric: true,
     }
   },
   profileImg: {
@@ -47,7 +47,7 @@ const User = db.define('user', {
   description: {
     type: Sequelize.TEXT,
     validate: {
-      isAlphanumeric: true
+      // isAlphanumeric: true,
     }
   },
   isAdmin: {

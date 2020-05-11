@@ -17,14 +17,14 @@ const Location = db.define('location', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      noteEmpty: true,
-      isAlphanumeric: true
+      notEmpty: true
+      // isAlphanumeric: true
     }
   },
   description: {
     type: Sequelize.TEXT,
     validate: {
-      isAlphanumeric: true
+      // isAlphanumeric: true
     }
   }
 })
