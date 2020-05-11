@@ -11,13 +11,21 @@ async function quickstart(image) {
   const labels = result.labelAnnotations
   console.log('Labels:')
   labels.forEach(label => console.log(label))
+
+  const [textResults] = await client.textDetection(image)
+  const detections = textResults.textAnnotations
+  console.log('Text:')
+  detections.forEach(text => console.log(text))
+
+  const [logoResult] = await client.logoDetection(image)
+  const logos = logoResult.logoAnnotations
+  console.log('Logos:')
+  logos.forEach(logo => console.log(logo))
 }
 
 router.get('/', (req, res, next) => {
   try {
-    quickstart(
-      'https://cdn.fstoppers.com/styles/full/s3/media/2018/06/20/nike_world_cup_2018_photoshoot_england_france_brazil_photos_taken_by_nick_pecori_photographer_tampa_orlando_florida_11.jpg'
-    )
+    quickstart('https://anf.scene7.com/is/image/anf/hol_284783_ugc1?')
     res.send('TEST')
   } catch (err) {
     next(err)
