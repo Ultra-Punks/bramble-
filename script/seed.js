@@ -11,7 +11,7 @@ const chanceObj = Chance() // use this global Chance constructor to use in diffe
 const generateUser = () => {
   return {
     email: chanceObj.email(),
-    password: 123,
+    password: 'abc',
     username: chanceObj.name(),
     description: chanceObj.paragraph({sentences: 1}),
     isAdmin: chanceObj.bool({likelihood: 25})

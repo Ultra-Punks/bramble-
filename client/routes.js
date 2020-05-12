@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, SinglePostView, Map} from './components'
 import Test from './components/test'
+import CommunitySearch from './components/communitySearch'
 import {me} from './store'
 
 /**
@@ -25,6 +26,7 @@ class Routes extends Component {
         <Route path="/map" component={Map} />
         <Route path="/post-test" component={SinglePostView} />
         <Route path="/test" component={Test} />
+        <Route path="/c" component={CommunitySearch} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
