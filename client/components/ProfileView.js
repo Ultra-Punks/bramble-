@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 // import {fetchProfile} from '../store/user'
 import {fetchProfile} from '../store/singleProfile'
 
-class UserHome extends React.Component {
+class ProfileView extends React.Component {
   constructor(props) {
     super(props)
     console.log('from constructor>>>>>>', this.props)
@@ -80,4 +80,4 @@ const mapDispatch = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapState, mapDispatch)(UserHome)
+export default connect(mapState, mapDispatch)(ProfileView)
