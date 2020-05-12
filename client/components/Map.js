@@ -36,7 +36,7 @@ export class Map extends React.Component {
         longitude: -73.935242,
         zoom: 8
       },
-      popupInfo: false,
+      displayPopup: false,
       userLocation: {}
     }
   }
@@ -59,25 +59,26 @@ export class Map extends React.Component {
   }
   renderPopup(index) {
     return (
-      this.state.popupInfo && (
-        <Popup
-          tipSize={5}
-          anchor="bottom-right"
-          longitude={markerList[index].long}
-          latitude={markerList[index].lat}
-          onMouseLeave={() => this.setState({popupInfo: null})}
-          closeOnClick={true}
-        >
-          <p>
-            <strong>{markerList[index].name}</strong>
-            <br />
-            {markerList[index].info}
-          </p>
-        </Popup>
-      )
+      <Popup
+        tipSize={5}
+        anchor="bottom-right"
+        longitude={markerList[index].long}
+        latitude={markerList[index].lat}
+        onMouseLeave={() => this.setState({displayPopup: false})}
+        closeOnClick={true}
+      >
+        <p>
+          <strong>{markerList[index].name}</strong>
+          <br />
+          {markerList[index].info}
+        </p>
+      </Popup>
     )
   }
-  addMarker() {}
+  addMarker(coordsArray) {
+    const long = coordsArray[0]
+    const lat = coordsArray[1]
+  }
   render() {
     const geolocateStyle = {
       float: 'left',
@@ -91,41 +92,38 @@ export class Map extends React.Component {
       padding: '10px'
     }
     return (
-      <div>
-        <button type="submit" onClick={this.setUserLocation}>
-          My Location
+      <div id="map">
+        <button type="submit" onClick={() => this.setUserLocation()}>
+          Add My Location To Map
         </button>
         <MapGL
           {...this.state.viewport}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken={mapboxToken}
           onViewportChange={viewport => this.setState({viewport})}
+          onClick={event => console.log(event)}
         >
           <div className="nav" style={navStyle}>
             <NavigationControl
               onViewportChange={viewport => this.setState({viewport})}
             />
           </div>
-          {Object.keys(this.state.userLocation).length ? (
-            <Marker
-              latitude={this.state.userLocation.lat}
-              longitude={this.state.userLocation.long}
-            />
-          ) : (
-            <div />
-          )}
           {markerList.map((marker, idx) => {
             return (
-              <div key={idx}>
+              <div key={idx} className="marker">
                 {' '}
                 <Marker longitude={marker.long} latitude={marker.lat}>
                   <img
                     src="map-icon.png"
                     width="50"
-                    onClick={() => this.setState({popupInfo: true})}
+                    onClick={() =>
+                      this.state.displayPopup
+                        ? this.setState({displayPopup: false})
+                        : this.setState({displayPopup: true})
+                    }
                   />
                 </Marker>
-                {this.renderPopup(idx)}
+                {this.state.displayPopup ? this.renderPopup(idx) : <div />}
               </div>
             )
           })}

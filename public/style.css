@@ -20,7 +20,6 @@ form div {
   display: inline-block;
 }
 
-#map {
-  height: 100vh;
-  width: 100vw;
+.marker {
+  object-position: 0% 0%;
 }
