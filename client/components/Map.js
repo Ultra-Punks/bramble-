@@ -5,6 +5,8 @@ import MapGL, {
   Marker,
   Popup
 } from 'react-map-gl'
+import {connect} from 'react-redux'
+import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
 
 //dummy restaurant info
@@ -23,7 +25,7 @@ const markerList = [
   }
 ]
 
-export class Map extends React.Component {
+class Map extends React.Component {
   constructor() {
     super()
     this.addMarker = this.addMarker.bind(this)
@@ -39,6 +41,10 @@ export class Map extends React.Component {
       displayPopup: false,
       userLocation: {}
     }
+  }
+  componentDidMount() {
+    // this.props.getAllLocations()
+    console.log(this.props)
   }
   setUserLocation() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -138,3 +144,10 @@ export class Map extends React.Component {
     )
   }
 }
+
+const mapState = state => ({locations: state.locations})
+const mapDispatch = dispatch => ({
+  getAllLocations: dispatch(fetchAllLocations())
+})
+
+export default connect(mapState, mapDispatch)(Map)
