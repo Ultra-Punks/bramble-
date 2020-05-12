@@ -3,26 +3,30 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 // import the thunk here...
-import {fetchUsers} from '../store/profile'
+// import {fetchProfile} from '../store/user'
+import {fetchProfile} from '../store/singleProfile'
 
 class UserHome extends React.Component {
-  componentDidMount() {
-    this.props.fetchUsers()
+  constructor(props) {
+    super(props)
+    console.log('from constructor>>>>>>', this.props)
+    // bind methods here...
   }
-  // const UserHome = (props) => {
+  componentDidMount() {
+    this.props.fetchProfile()
+  }
   render() {
-    console.log('props>>>>', this.props)
-
+    const profile = this.props.profile
     return (
       <div>
-        <p>Users</p>
-        {this.props.profiles ? (
-          this.props.profiles.map(user => {
-            return <p>{user.username}</p>
-          })
+        <img src={profile.profileImg} className="profilePagePhoto" />
+        {/* {this.props.singleProfile.email} */}
+        {/* <p>Users {this.props.profile.userName}</p> */}
+        {/* {this.props.profile ? (
+          <p>Brambler: {this.props.profile.name}</p>
         ) : (
           <p>'loading'</p>
-        )}
+        )} */}
       </div>
     )
   }
@@ -33,12 +37,15 @@ class UserHome extends React.Component {
  */
 const mapState = state => {
   return {
-    profiles: state.profiles
+    profile: state.singleProfile
   }
 }
 
-const mapDispatch = dispatch => ({
-  fetchUsers: () => dispatch(fetchUsers())
-})
+const mapDispatch = (dispatch, ownProps) => {
+  const userId = ownProps.match.params.id
+  return {
+    fetchProfile: () => dispatch(fetchProfile(userId))
+  }
+}
 
 export default connect(mapState, mapDispatch)(UserHome)

@@ -24,3 +24,16 @@ form div {
   height: 100vh;
   width: 100vw;
 }
+
+.allProfilesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileSampleView {
+  display: flex;
+  background: rgb(199, 196, 196);
+  border: dashed black;
+  justify-content: space-around;
+  border-radius: 10px;
+}

@@ -4,9 +4,10 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import food from './food'
-import profiles from './profile'
+import profiles from './allProfiles'
+import singleProfile from './singleProfile'
 
-const reducer = combineReducers({user, food, profiles})
+const reducer = combineReducers({user, food, profiles, singleProfile})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
