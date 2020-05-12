@@ -10,20 +10,20 @@ import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
 
 //dummy restaurant info
-const markerList = [
-  {
-    lat: 40.653975,
-    long: -73.959285,
-    name: 'Zen Vegetarian',
-    info: "Fucking best chinese food you'll ever eat"
-  },
-  {
-    lat: 40.650774,
-    long: -73.956137,
-    name: 'Four Seasons Bakery & Juice Bar',
-    info: 'Damn good Caribbean food'
-  }
-]
+// const markerList = [
+//   {
+//     lat: 40.653975,
+//     long: -73.959285,
+//     name: 'Zen Vegetarian',
+//     info: "Fucking best chinese food you'll ever eat"
+//   },
+//   {
+//     lat: 40.650774,
+//     long: -73.956137,
+//     name: 'Four Seasons Bakery & Juice Bar',
+//     info: 'Damn good Caribbean food'
+//   }
+// ]
 
 class Map extends React.Component {
   constructor() {
@@ -43,8 +43,8 @@ class Map extends React.Component {
     }
   }
   componentDidMount() {
-    // this.props.getAllLocations()
-    console.log(this.props)
+    this.props.getAllLocations()
+    console.log('props in comp did mount', this.props)
   }
   setUserLocation() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -64,19 +64,21 @@ class Map extends React.Component {
     console.log('state in setUserLocation func', this.state)
   }
   renderPopup(index) {
+    const lat = this.props.locations[index].point.coordinates[0]
+    const long = this.props.locations[index].point.coordinates[1]
     return (
       <Popup
         tipSize={5}
         anchor="bottom-right"
-        longitude={markerList[index].long}
-        latitude={markerList[index].lat}
+        longitude={long}
+        latitude={lat}
         onMouseLeave={() => this.setState({displayPopup: false})}
         closeOnClick={true}
       >
         <p>
-          <strong>{markerList[index].name}</strong>
+          <strong>{this.props.locations[index].name}</strong>
           <br />
-          {markerList[index].info}
+          {this.props.locations[index].description}
         </p>
       </Popup>
     )
@@ -86,6 +88,7 @@ class Map extends React.Component {
     const lat = coordsArray[1]
   }
   render() {
+    console.log('props in render', this.props)
     const geolocateStyle = {
       float: 'left',
       margin: '50px',
@@ -114,11 +117,14 @@ class Map extends React.Component {
               onViewportChange={viewport => this.setState({viewport})}
             />
           </div>
-          {markerList.map((marker, idx) => {
+          {this.props.locations.map((marker, idx) => {
+            console.log('locations in map', idx, marker)
+            const lat = marker.point.coordinates[0]
+            const long = marker.point.coordinates[1]
             return (
               <div key={idx} className="marker">
                 {' '}
-                <Marker longitude={marker.long} latitude={marker.lat}>
+                <Marker longitude={long} latitude={lat}>
                   <img
                     src="map-icon.png"
                     width="50"
@@ -147,7 +153,7 @@ class Map extends React.Component {
 
 const mapState = state => ({locations: state.locations})
 const mapDispatch = dispatch => ({
-  getAllLocations: dispatch(fetchAllLocations())
+  getAllLocations: () => dispatch(fetchAllLocations())
 })
 
 export default connect(mapState, mapDispatch)(Map)
