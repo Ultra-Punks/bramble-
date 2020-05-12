@@ -26,6 +26,9 @@ class UserHome extends React.Component {
             <ul>Followers: {profile.followers}</ul>
             <ul>Following: {profile.following}</ul>
             <ul>Communities: (button / num?)</ul>
+            <button type="button" className="followButton">
+              Follow
+            </button>
           </div>
           <ul className="profileBio">Bio: {profile.description}</ul>
           <div className="contentContainer">
@@ -43,7 +46,11 @@ class UserHome extends React.Component {
           </div>
         </div>
 
-        <div className="profileMapContainer">MAP PLACEHOLDER</div>
+        <div className="profileMapContainer">
+          <br />
+          <br />
+          MAP PLACEHOLDER
+        </div>
 
         {/* {this.props.singleProfile.email} */}
         {/* <p>Users {this.props.profile.userName}</p> */}

@@ -59,11 +59,20 @@ form div {
 
 .profileInfo {
   display: flex;
+  justify-content: space-around;
 }
 
 .profilePagePhoto {
   background: rgb(249, 111, 111);
   border-radius: 150px;
+}
+
+.followButton {
+  background: rgba(60, 60, 232, 0.749);
+  border-radius: 25px;
+  height: 33px;
+  width: 60px;
+  color: white;
 }
 
 .profileBio {
