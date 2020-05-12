@@ -42,11 +42,23 @@ form div {
   background: rgb(221, 221, 244);
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  margin: 5px;
 }
 .profileMapContainer {
   background-color: cornflowerblue;
-  height: 500px;
-  width: 500px;
+  height: 800px;
+  width: 800px;
+  border-radius: 20px;
+}
+
+.profileImgContentContainer {
+  /* display: flex; */
+  padding: 20px;
+}
+
+.profileInfo {
+  display: flex;
 }
 
 .profilePagePhoto {
@@ -56,4 +68,15 @@ form div {
 
 .profileBio {
   font-style: italic;
+}
+
+.contentContainer {
+  background: rgba(244, 192, 81, 0.365);
+  height: 500px;
+  width: 825px;
+}
+
+.profileFeedButton {
+  width: 412px;
+  height: 50px;
 }

@@ -19,10 +19,30 @@ class UserHome extends React.Component {
     const profile = this.props.profile
     return (
       <div className="profileContainer">
-        <div className="imgContentProfContainer">
+        <div className="profileImgContentContainer">
           <img src={profile.profileImg} className="profilePagePhoto" />
+          <div className="profileInfo">
+            <ul>{profile.username}</ul>
+            <ul>Followers: {profile.followers}</ul>
+            <ul>Following: {profile.following}</ul>
+            <ul>Communities: (button / num?)</ul>
+          </div>
           <ul className="profileBio">Bio: {profile.description}</ul>
+          <div className="contentContainer">
+            <div className="buttonContainer">
+              <button type="button" className="profileFeedButton">
+                All Posts
+              </button>
+              <button type="button" className="profileFeedButton">
+                Gallery
+              </button>
+            </div>
+            <br />
+            <br />
+            (RENDER POSTS IN HERE)
+          </div>
         </div>
+
         <div className="profileMapContainer">MAP PLACEHOLDER</div>
 
         {/* {this.props.singleProfile.email} */}
