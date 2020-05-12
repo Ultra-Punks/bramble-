@@ -58,7 +58,8 @@ class CommunitySearch extends React.Component {
     console.log('thisssss', this.props)
     return (
       <div>
-        {/* <form onSubmit={this.handleSubmit}>
+        hello
+        <form onSubmit={this.handleSubmit}>
           <input
             name="community"
             type="text"
@@ -66,23 +67,18 @@ class CommunitySearch extends React.Component {
             value={this.state.community}
           />
           <button type="submit"> Submit </button>
-        </form> */}
-
+        </form>
         <div>
-          {community.map(communities => (
-            <div key={communities.id}>
+          {community.map(item => (
+            <div key={item.id}>
               <div>
                 <div>
-                  <p>{communities.name}</p>
+                  <p>{item.name}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        <br />
-        <br />
-        <div>{}</div>
       </div>
     )
   }
@@ -91,7 +87,7 @@ class CommunitySearch extends React.Component {
 const mapState = state => ({community: state.community})
 
 const mapDispatch = dispatch => ({
-  fetchCommunity: id => dispatch(fetchCommunity(id))
+  fetchCommunity: () => dispatch(fetchCommunity())
 })
 
 const CommunityPage = connect(mapState, mapDispatch)(CommunitySearch)
