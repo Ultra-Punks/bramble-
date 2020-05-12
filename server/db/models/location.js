@@ -3,12 +3,12 @@ const db = require('../db')
 
 const Location = db.define('location', {
   point: {
-    type: Sequelize.GEOMETRY('POINT'),
+    type: Sequelize.GEOMETRY,
     allowNull: true
   },
   address: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }

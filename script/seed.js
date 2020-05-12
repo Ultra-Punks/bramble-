@@ -73,7 +73,21 @@ async function seed() {
     const randomUserNum = Math.floor(Math.random() * 9) + 1
     await locations[i].setUser(users[randomUserNum])
   }
-
+  //add 2 restaurants to beginning of locationArray
+  locationArray.unshift(
+    await Location.create({
+      point: {type: 'point', coordinates: [40.653975, -73.959285]},
+      name: 'Zen Vegetarian',
+      description: 'Best Chinese Food'
+    })
+  )
+  locationArray.unshift(
+    await Location.create({
+      point: {type: 'point', coordinates: [40.650774, -73.956137]},
+      name: 'Four Seasons Bakery & Juice Bar',
+      description: 'Caribbean Food'
+    })
+  )
   for (let i = 0; i < locationArray.length; i++) {
     const newCommunity = await Community.create(communityArray[i])
     communities.push(newCommunity)
