@@ -13,6 +13,10 @@ class CommunitySearch extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  // componentDidMount() {
+  //   this.props.fetchCommunity()
+  // }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -31,27 +35,36 @@ class CommunitySearch extends React.Component {
     }
   }
 
-  searchResults() {
+  searchResults = () => {
     const community = this.props.community
-    if (community.length >= 1) {
+    if (community.name) {
       return (
         <div>
-          {community.map(result => {
-            return (
-              <div>
-                <h1>{result.name}</h1>
-              </div>
-            )
-          })}
+          <h1>{community.name}</h1>
         </div>
       )
-    } else {
-      return <div>{community.name}</div>
     }
   }
 
+  // searchResults = () => {
+  //   const community = this.props.community
+  //   if (community.name) {
+  //     return (
+  //       <div>
+  //         {community.map((result) => {
+  //           return (
+  //             <div>
+  //               <h1>{result.name}</h1>
+  //             </div>
+  //           )
+  //         })}
+  //       </div>
+  //     )
+  //   }
+  // }
+
   render() {
-    // const community = this.props.community
+    const community = this.props.community
     console.log('thisssss', this.props)
     return (
       <div>
@@ -64,7 +77,20 @@ class CommunitySearch extends React.Component {
           />
           <button type="submit"> Submit </button>
         </form>
-        <div>{this.searchResults()}</div>
+        <div>{this.searchResults}</div>
+        {/* <div>
+          {this.state.community === ''
+            ? community.map((item) => (
+                <div key={item.id}>
+                  <div>
+                    <div>
+                      <p>{item.name}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            : null}
+        </div> */}
       </div>
     )
   }
@@ -73,6 +99,7 @@ class CommunitySearch extends React.Component {
 const mapState = state => ({community: state.community})
 
 const mapDispatch = dispatch => ({
+  // fetchCommunity: () => dispatch(fetchCommunity()),
   fetchOneCommunity: name => dispatch(fetchOneCommunity(name))
 })
 

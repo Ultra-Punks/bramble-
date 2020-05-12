@@ -20,8 +20,8 @@ export const fetchCommunity = () => {
 export const fetchOneCommunity = name => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/community/${name}`)
-      dispatch(getCommunity(data))
+      const res = await axios.get(`/api/community/${name}`)
+      dispatch(getCommunity(res.data))
     } catch (error) {
       console.log('Error ', error)
     }
