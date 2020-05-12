@@ -17,7 +17,7 @@ export class Map extends React.Component {
       }
     }
   }
-  
+
   addMarker() {}
   render() {
     const geolocateStyle = {
