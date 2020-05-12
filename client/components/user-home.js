@@ -18,8 +18,13 @@ class UserHome extends React.Component {
   render() {
     const profile = this.props.profile
     return (
-      <div>
-        <img src={profile.profileImg} className="profilePagePhoto" />
+      <div className="profileContainer">
+        <div className="imgContentProfContainer">
+          <img src={profile.profileImg} className="profilePagePhoto" />
+          <ul className="profileBio">Bio: {profile.description}</ul>
+        </div>
+        <div className="profileMapContainer">MAP PLACEHOLDER</div>
+
         {/* {this.props.singleProfile.email} */}
         {/* <p>Users {this.props.profile.userName}</p> */}
         {/* {this.props.profile ? (

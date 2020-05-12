@@ -37,3 +37,23 @@ form div {
   justify-content: space-around;
   border-radius: 10px;
 }
+
+.profileContainer {
+  background: rgb(221, 221, 244);
+  display: flex;
+  flex-direction: row;
+}
+.profileMapContainer {
+  background-color: cornflowerblue;
+  height: 500px;
+  width: 500px;
+}
+
+.profilePagePhoto {
+  background: rgb(249, 111, 111);
+  border-radius: 150px;
+}
+
+.profileBio {
+  font-style: italic;
+}
