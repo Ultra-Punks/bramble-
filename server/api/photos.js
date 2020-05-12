@@ -1,34 +1,27 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {Photo} = require('../db/models')
 const cloudinary = require('cloudinary').v2
+const {cloudName, apiKey, apiSecret} = require('../../secrets')
 
 cloudinary.config({
-  cloud_name: 'bramble',
-  api_key: '827947846641161',
-  api_secret: 'TM2mXCh1AgICmWW-JxfHob0wlNc'
+  cloud_name: cloudName,
+  api_key: apiKey,
+  api_secret: apiSecret
 })
 
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+router.get('/all/:username', async (req, res, next) => {
   try {
-    // const photos = await Photo.findAll()
-    await cloudinary.uploader.upload(
-      'server/api/random.jpg',
-      {
-        folder: 'sample_folder',
-        public_id: 'user_1'
-      },
-      function(error, result) {
-        console.log(result, error)
-      }
-    )
-
-    res.json('TEST')
+    const user = req.params.username
+    await cloudinary.search
+      .expression(`user_uploads/${user}`)
+      .with_field('context')
+      .with_field('tags')
+      .max_results(10)
+      .execute()
+      .then(result => res.json(result.resources))
   } catch (err) {
     next(err)
   }
 })
-
-// router.post('/add', (req, res, next) => {})

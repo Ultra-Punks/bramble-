@@ -5,9 +5,8 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Image, Button} from 'react-bootstrap'
 import {AddPost} from './index'
-import {render} from 'enzyme'
 
-const Navbar = ({handleClick, isLoggedIn}) => {
+const Navbar = ({handleClick, isLoggedIn, username}) => {
   const [modalShow, setModalShow] = React.useState(false)
   return (
     <div className="nav-container">
@@ -30,7 +29,11 @@ const Navbar = ({handleClick, isLoggedIn}) => {
           Add Post
         </Button>
 
-        <AddPost show={modalShow} onHide={() => setModalShow(false)} />
+        <AddPost
+          username={username}
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         <nav>
           <div className="signin-signup">
             {isLoggedIn ? (
@@ -60,7 +63,8 @@ const Navbar = ({handleClick, isLoggedIn}) => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    username: state.user.username
   }
 }
 
