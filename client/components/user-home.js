@@ -5,21 +5,6 @@ import {connect} from 'react-redux'
 // import the thunk here...
 import {fetchUsers} from '../store/profile'
 
-// ==========================================================
-// ====== vvvv LOGIN INFORMATION FROM BOILERMAKER  vvvv =====
-// /**
-//  * COMPONENT
-//  */
-// export const UserHome = (props) => {
-//   const {email} = props
-
-//   return (
-//     <div>
-//       <h3>Welcome, {email}</h3>
-//     </div>
-//   )
-// }
-
 class UserHome extends React.Component {
   componentDidMount() {
     this.props.fetchUsers()
@@ -30,9 +15,14 @@ class UserHome extends React.Component {
 
     return (
       <div>
-        {Array.isArray(this.props.profiles)
-          ? console.log(this.props.profiles)
-          : console.log('loading')}
+        <p>Users</p>
+        {this.props.profiles ? (
+          this.props.profiles.map(user => {
+            return <p>{user.username}</p>
+          })
+        ) : (
+          <p>'loading'</p>
+        )}
       </div>
     )
   }
@@ -43,12 +33,8 @@ class UserHome extends React.Component {
  */
 const mapState = state => {
   return {
-    // user: state.user,
     profiles: state.profiles
   }
-  // return {
-  //   email: state.user.email
-  // }
 }
 
 const mapDispatch = dispatch => ({
@@ -56,13 +42,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(UserHome)
-
-// ==========================================================
-/**
- * PROP TYPES
- */
-// UserHome.propTypes = {
-//   email: PropTypes.string,
-// }
-// ====== ^^^^ LOGIN INFORMATION FROM BOILERMAKER ^^^^ ======
-// ==========================================================

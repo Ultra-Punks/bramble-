@@ -29,7 +29,7 @@ export const fetchUsers = () => {
 const initialState = []
 
 // reducer here:
-export default function profile(state = initialState, action) {
+export default function profiles(state = initialState, action) {
   switch (action.type) {
     case GOT_USERS:
       return [...action.users]
