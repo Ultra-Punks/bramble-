@@ -11,15 +11,35 @@ const chanceObj = Chance() // use this global Chance constructor to use in diffe
 const generateUser = () => {
   return {
     email: chanceObj.email(),
-    password: 123,
+    password: 'abc',
     username: chanceObj.name(),
     description: chanceObj.paragraph({sentences: 1}),
     isAdmin: chanceObj.bool({likelihood: 25})
   }
 }
+
+const manualUsers = [
+  {
+    email: 'devin@email.com',
+    password: '1234ABCD',
+    username: 'Devin Knight',
+    description:
+      'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
+    isAdmin: false
+  },
+  {
+    email: 'mochi@email.com',
+    password: '1234ABCD',
+    username: 'Mochiko Knight',
+    description:
+      'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
+    isAdmin: false
+  }
+]
 // store 10 new users created by generateUser into in the userArray
 const userArray = Array.from({length: 10}, generateUser)
-console.log('userArray>>>>', userArray)
+const updatedUsers = userArray.concat(manualUsers)
+// console.log('updatedUsers>>>>', updatedUsers)
 
 // create random location seed data (NOT RESTRICTED TO NYC!)
 const generateLocation = () => {
@@ -29,7 +49,7 @@ const generateLocation = () => {
     description: chanceObj.paragraph({sentences: 2})
   }
 }
-// store 10 new locations created by generateUser into in the userArray
+// store 10 new locations created by generateUser into in the locationArray
 const locationArray = Array.from({length: 10}, generateLocation)
 
 // possible community names array
@@ -51,7 +71,7 @@ const generateCommunity = () => {
     description: chanceObj.paragraph({sentences: 3})
   }
 }
-// store 10 new communities created by generateUser into in the userArray
+// store 10 new communities created by generateUser into in the communityArray
 const communityArray = Array.from({length: 10}, generateCommunity)
 
 async function seed() {
@@ -62,8 +82,8 @@ async function seed() {
   const locations = []
   const communities = []
 
-  for (let i = 0; i < userArray.length; i++) {
-    const newUser = await User.create(userArray[i])
+  for (let i = 0; i < updatedUsers.length; i++) {
+    const newUser = await User.create(updatedUsers[i])
     users.push(newUser)
   }
 
@@ -91,7 +111,7 @@ async function seed() {
   // ============================================================
 
   console.log(
-    `seeded ${userArray.length} users, and ${locationArray.length} locations`
+    `seeded ${updatedUsers.length} users, and ${locationArray.length} locations`
   )
   console.log(`seeded successfully`)
 }
