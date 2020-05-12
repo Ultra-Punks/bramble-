@@ -53,6 +53,14 @@ const User = db.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  followers: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  following: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

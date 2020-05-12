@@ -24,3 +24,68 @@ form div {
   height: 100vh;
   width: 100vw;
 }
+
+.allProfilesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileSampleView {
+  display: flex;
+  background: rgb(199, 196, 196);
+  border: dashed black;
+  justify-content: space-around;
+  border-radius: 10px;
+}
+
+.profileContainer {
+  background: rgb(221, 221, 244);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 5px;
+}
+.profileMapContainer {
+  background-color: cornflowerblue;
+  height: 800px;
+  width: 800px;
+  border-radius: 20px;
+}
+
+.profileImgContentContainer {
+  /* display: flex; */
+  padding: 20px;
+}
+
+.profileInfo {
+  display: flex;
+  justify-content: space-around;
+}
+
+.profilePagePhoto {
+  background: rgb(249, 111, 111);
+  border-radius: 150px;
+}
+
+.followButton {
+  background: rgba(60, 60, 232, 0.749);
+  border-radius: 25px;
+  height: 33px;
+  width: 60px;
+  color: white;
+}
+
+.profileBio {
+  font-style: italic;
+}
+
+.contentContainer {
+  background: rgba(244, 192, 81, 0.365);
+  height: 500px;
+  width: 825px;
+}
+
+.profileFeedButton {
+  width: 412px;
+  height: 50px;
+}
