@@ -6,7 +6,7 @@ import {Login, Signup, UserHome, SinglePostView, Map} from './components'
 import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
 import {me} from './store'
-import SingleCommunity from './components/singleCommunity'
+import CommunityProfile from './components/communityProfile'
 
 /**
  * COMPONENT
@@ -28,7 +28,7 @@ class Routes extends Component {
         <Route path="/post-test" component={SinglePostView} />
         <Route path="/test" component={Test} />
         <Route path="/community" component={CommunitySearch} />
-        <Route path="/community/:id" component={SingleCommunity} />
+        <Route path="/community/:id" component={CommunityProfile} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

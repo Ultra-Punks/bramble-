@@ -64,7 +64,7 @@ class CommunitySearch extends React.Component {
           </div>
         )
       }
-    } else return <div>Non</div>
+    } else return <div>No Results</div>
   }
 
   render() {
