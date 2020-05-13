@@ -21,5 +21,6 @@ form div {
 }
 
 .marker {
-  object-position: 0% 0%;
+  object-fit: fill;
+  /* object-position: 100px 50%; */
 }

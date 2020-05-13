@@ -4,7 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as Map} from './Map'
-
+export {default as AddLocationForm} from './AddLocationForm'
 export {default as Navbar} from './navbar'
 export {default as UserHome} from './user-home'
 export {default as SinglePostView} from './single-post-view'

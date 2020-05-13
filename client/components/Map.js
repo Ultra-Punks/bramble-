@@ -5,25 +5,10 @@ import MapGL, {
   Marker,
   Popup
 } from 'react-map-gl'
+// import {AddLocationForm} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
-
-//dummy restaurant info
-// const markerList = [
-//   {
-//     lat: 40.653975,
-//     long: -73.959285,
-//     name: 'Zen Vegetarian',
-//     info: "Fucking best chinese food you'll ever eat"
-//   },
-//   {
-//     lat: 40.650774,
-//     long: -73.956137,
-//     name: 'Four Seasons Bakery & Juice Bar',
-//     info: 'Damn good Caribbean food'
-//   }
-// ]
 
 class Map extends React.Component {
   constructor() {
@@ -36,19 +21,19 @@ class Map extends React.Component {
         height: 800,
         latitude: 40.73061,
         longitude: -73.935242,
-        zoom: 8
+        zoom: 15
       },
       displayPopup: false,
-      userLocation: {}
+      userLocation: {},
+      selectedLocation: {}
     }
   }
   componentDidMount() {
     this.props.getAllLocations()
-    console.log('props in comp did mount', this.props)
   }
   setUserLocation() {
     navigator.geolocation.getCurrentPosition(position => {
-      let setUserLocation = {
+      let currentLocation = {
         lat: position.coords.latitude,
         long: position.coords.longitude
       }
@@ -59,13 +44,13 @@ class Map extends React.Component {
         longitude: position.coords.longitude,
         zoom: 10
       }
-      this.setState({viewport: newViewport, userLocation: setUserLocation})
+      this.setState({viewport: newViewport, userLocation: currentLocation})
+      console.log('state in setUserLocation func', this.state)
     })
-    console.log('state in setUserLocation func', this.state)
   }
   renderPopup(index) {
-    const lat = this.props.locations[index].point.coordinates[0]
-    const long = this.props.locations[index].point.coordinates[1]
+    const long = this.props.locations[index].point.coordinates[0]
+    const lat = this.props.locations[index].point.coordinates[1]
     return (
       <Popup
         tipSize={5}
@@ -84,11 +69,14 @@ class Map extends React.Component {
     )
   }
   addMarker(coordsArray) {
-    const long = coordsArray[0]
-    const lat = coordsArray[1]
+    // const long = coordsArray[0]
+    // const lat = coordsArray[1]
+    const coordinates = [...coordsArray]
+    this.setState({
+      selectedLocation: {name: 'Temporary', point: {type: 'Point', coordinates}}
+    })
   }
   render() {
-    console.log('props in render', this.props)
     const geolocateStyle = {
       float: 'left',
       margin: '50px',
@@ -102,7 +90,15 @@ class Map extends React.Component {
     }
     return (
       <div id="map">
-        <button type="submit" onClick={() => this.setUserLocation()}>
+        <button
+          type="submit"
+          onClick={() =>
+            this.addMarker([
+              this.state.userLocation.long,
+              this.state.userLocation.lat
+            ])
+          }
+        >
           Add My Location To Map
         </button>
         <MapGL
@@ -110,22 +106,45 @@ class Map extends React.Component {
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken={mapboxToken}
           onViewportChange={viewport => this.setState({viewport})}
-          onClick={event => console.log(event)}
+          onClick={e => {
+            // this.addMarker(e.lngLat)
+            this.setState({
+              selectedLocation: {
+                name: 'Temporary',
+                point: {type: 'Point', coordinates: [e.lngLat[0], e.lngLat[1]]}
+              }
+            })
+            console.log('state in onClick', this.state)
+          }}
         >
           <div className="nav" style={navStyle}>
             <NavigationControl
               onViewportChange={viewport => this.setState({viewport})}
             />
           </div>
+          {this.state.selectedLocation.point ? (
+            <Marker
+              longitude={this.state.selectedLocation.point.coordinates[0]}
+              latitude={this.state.selectedLocation.point.coordinates[1]}
+            >
+              {console.log(
+                'IN CHECK IF SELECTED LOCATION IS DEFINED',
+                this.state
+              )}
+              <img className="marker" src="temp-map-icon.jpeg" width="50" />
+            </Marker>
+          ) : (
+            ''
+          )}
           {this.props.locations.map((marker, idx) => {
             console.log('locations in map', idx, marker)
-            const lat = marker.point.coordinates[0]
-            const long = marker.point.coordinates[1]
+            const long = marker.point.coordinates[0]
+            const lat = marker.point.coordinates[1]
             return (
-              <div key={idx} className="marker">
-                {' '}
+              <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
                   <img
+                    className="marker"
                     src="map-icon.png"
                     width="50"
                     onClick={() =>

@@ -76,14 +76,14 @@ async function seed() {
   //add 2 restaurants to beginning of locationArray
   locationArray.unshift(
     await Location.create({
-      point: {type: 'point', coordinates: [40.653975, -73.959285]},
+      point: {type: 'point', coordinates: [-73.959285, 40.653975]},
       name: 'Zen Vegetarian',
       description: 'Best Chinese Food'
     })
   )
   locationArray.unshift(
     await Location.create({
-      point: {type: 'point', coordinates: [40.650774, -73.956137]},
+      point: {type: 'point', coordinates: [-73.956137, 40.650774]},
       name: 'Four Seasons Bakery & Juice Bar',
       description: 'Caribbean Food'
     })
