@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {
   Login,
   Signup,
-  // UserHome, // needs to be created...
+  UserHome,
   SinglePostView,
   Map,
   AllProfiles,
@@ -34,7 +34,7 @@ class Routes extends Component {
         <Route path="/post-test" component={SinglePostView} />
         <Route path="/test" component={Test} />
         <Route path="/profiles" component={AllProfiles} />
-        <Route path="/users/:id" component={ProfileView} />
+        <Route path="/users/:username" component={ProfileView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

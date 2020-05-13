@@ -2,6 +2,10 @@
 
 body {
   font-family: sans-serif;
+  padding: 0;
+  padding-top: 65px;
+  margin: 0;
+  background-color: rgb(221, 221, 244);
 }
 
 a {
@@ -33,6 +37,10 @@ form div {
   align-items: center;
   background-color: #3d4a63;
   height: 75px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .nav-group {
@@ -60,6 +68,10 @@ form div {
   width: 175px;
 }
 
+.placeholder {
+  background-color: grey;
+}
+
 .custom-file {
   display: flex;
   flex-direction: column;
@@ -76,7 +88,7 @@ form div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
+}
 .allProfilesContainer {
   display: flex;
   flex-direction: column;
@@ -94,19 +106,31 @@ form div {
   background: rgb(221, 221, 244);
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
+  height: 100%;
   margin: 5px;
-}
-.profileMapContainer {
-  background-color: cornflowerblue;
-  height: 800px;
-  width: 800px;
-  border-radius: 20px;
 }
 
 .profileImgContentContainer {
   /* display: flex; */
   padding: 20px;
+}
+
+.sticky {
+  position: fixed;
+  left: 60.2%;
+}
+
+.profileMapContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: cornflowerblue;
+  height: 500px;
+  width: 500px;
+  border-radius: 20px;
+  margin: 25px;
+  margin-top: 65px;
 }
 
 .profileInfo {
@@ -133,11 +157,25 @@ form div {
 
 .contentContainer {
   background: rgba(244, 192, 81, 0.365);
-  height: 500px;
+  height: auto;
   width: 825px;
 }
 
 .profileFeedButton {
   width: 412px;
   height: 50px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5.5px;
+}
+
+.gallery-photo {
+  height: 195px;
+  width: 195px;
+  object-fit: cover;
+  background-color: red;
+  margin: 4px;
 }

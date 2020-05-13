@@ -2,26 +2,25 @@ import axios from 'axios'
 
 const GET_ALL_USER_PHOTOS = 'GET_ALL_USER_PHOTOS'
 
-const getRecipe = photos => ({type: GET_ALL_USER_PHOTOS, photos})
+const getAllUserPhotos = photos => ({type: GET_ALL_USER_PHOTOS, photos})
 
 const initialState = []
 
-export const fetchRecipe = query => {
+export const fetchAllPhotos = username => {
   return async dispatch => {
     try {
-      const searchUrl = `https://api.spoonacular.com/food/menuItems/search?query=${query}&number=2&apiKey=790dc5b49b474c409e068307c9773d08`
-      const res = await axios.get(searchUrl)
-      dispatch(getRecipe(res.data.menuItems))
+      const {data} = await axios.get(`/api/photos/${username}`)
+      dispatch(getAllUserPhotos(data))
     } catch (error) {
       console.log('error', error)
     }
   }
 }
 
-export default function foodReducer(state = initialState, action) {
+export default function allPhotos(state = initialState, action) {
   switch (action.type) {
-    case GET_RECIPE: {
-      return action.data
+    case GET_ALL_USER_PHOTOS: {
+      return [...action.photos]
     }
     default:
       return state
