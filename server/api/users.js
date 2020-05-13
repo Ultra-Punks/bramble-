@@ -43,7 +43,11 @@ router.get('/:username', async (req, res, next) => {
 // update an existing user (according to ID)
 router.put('/:userId', async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.userId)
+    const user = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
     if (user) {
       const updatedUser = user.update({
         name: req.body.name,
@@ -66,7 +70,7 @@ router.delete('/:userId', async (req, res, next) => {
   try {
     const deletedUser = await User.findOne({
       where: {
-        id: req.params.userId
+        username: req.params.username
       }
     })
     if (deletedUser) {
