@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchOneCommunity} from '../store/community'
@@ -7,10 +6,15 @@ class CommunitySearch extends React.Component {
   constructor() {
     super()
     this.state = {
-      community: ''
+      community: '',
+      view: true
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.fetchOneCommunity(this.state.community)
   }
 
   handleChange(event) {
@@ -24,7 +28,8 @@ class CommunitySearch extends React.Component {
     try {
       this.props.fetchOneCommunity(this.state.community)
       this.setState({
-        community: ''
+        community: '',
+        view: true
       })
     } catch (error) {
       console.log('error')
@@ -33,12 +38,12 @@ class CommunitySearch extends React.Component {
 
   searchResults() {
     const community = this.props.community
-    if (community.length >= 1) {
+    if (community.length > 1) {
       return (
         <div>
           {community.map(result => {
             return (
-              <div>
+              <div key={result.id}>
                 <h1>{result.name}</h1>
               </div>
             )
@@ -46,13 +51,11 @@ class CommunitySearch extends React.Component {
         </div>
       )
     } else {
-      return <div>{community.name}</div>
+      return <div>{this.props.community.name}</div>
     }
   }
 
   render() {
-    // const community = this.props.community
-    console.log('thisssss', this.props)
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
