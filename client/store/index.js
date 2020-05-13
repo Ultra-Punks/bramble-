@@ -7,7 +7,9 @@ import food from './food'
 import community from './community'
 import profiles from './allProfiles'
 import singleProfile from './singleProfile'
-const reducer = combineReducers({user, food, profiles, singleProfile, community})
+import allPhotos from './photos'
+
+const reducer = combineReducers({user, food, profiles, singleProfile, community, allPhotos})
 
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))

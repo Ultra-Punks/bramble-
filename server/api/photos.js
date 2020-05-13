@@ -11,9 +11,11 @@ cloudinary.config({
 
 module.exports = router
 
-router.get('/all/:username', async (req, res, next) => {
+//gets all of a user's photos
+router.get('/:username', async (req, res, next) => {
   try {
     const user = req.params.username
+    console.log(user)
     await cloudinary.search
       .expression(`user_uploads/${user}`)
       .with_field('context')

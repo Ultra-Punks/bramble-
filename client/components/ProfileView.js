@@ -1,20 +1,32 @@
 import React from 'react'
-// import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-
-// import the thunk here...
-// import {fetchProfile} from '../store/user'
 import {fetchProfile} from '../store/singleProfile'
+import {fetchAllPhotos} from '../store/photos'
+import {PostFeed} from './index'
 
 class ProfileView extends React.Component {
   constructor(props) {
     super(props)
     console.log('from constructor>>>>>>', this.props)
-    // bind methods here...
+    this.state = {
+      postFeed: true
+    }
+    this.postSelector = this.postSelector.bind(this)
+    this.gallerySelector = this.gallerySelector.bind(this)
   }
   componentDidMount() {
     this.props.fetchProfile()
+    this.props.fetchGallery(this.props.profile.username)
   }
+
+  postSelector() {
+    this.setState({postFeed: true})
+  }
+
+  gallerySelector() {
+    this.setState({postFeed: false})
+  }
+
   render() {
     const profile = this.props.profile
     return (
@@ -33,32 +45,31 @@ class ProfileView extends React.Component {
           <ul className="profileBio">Bio: {profile.description}</ul>
           <div className="contentContainer">
             <div className="buttonContainer">
-              <button type="button" className="profileFeedButton">
+              <button
+                type="button"
+                className="profileFeedButton"
+                onClick={() => this.postSelector()}
+              >
                 All Posts
               </button>
-              <button type="button" className="profileFeedButton">
+              <button
+                type="button"
+                className="profileFeedButton"
+                onClick={() => this.gallerySelector()}
+              >
                 Gallery
               </button>
             </div>
-            <br />
-            <br />
-            (RENDER POSTS IN HERE)
+            <div>
+              <PostFeed
+                postFeed={this.state.postFeed}
+                images={this.props.gallery}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="profileMapContainer">
-          <br />
-          <br />
-          MAP PLACEHOLDER
-        </div>
-
-        {/* {this.props.singleProfile.email} */}
-        {/* <p>Users {this.props.profile.userName}</p> */}
-        {/* {this.props.profile ? (
-          <p>Brambler: {this.props.profile.name}</p>
-        ) : (
-          <p>'loading'</p>
-        )} */}
+        <div className="profileMapContainer sticky">MAP PLACEHOLDER</div>
       </div>
     )
   }
@@ -69,14 +80,16 @@ class ProfileView extends React.Component {
  */
 const mapState = state => {
   return {
-    profile: state.singleProfile
+    profile: state.singleProfile,
+    gallery: state.allPhotos
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const userId = ownProps.match.params.id
+  const username = ownProps.match.params.username
   return {
-    fetchProfile: () => dispatch(fetchProfile(userId))
+    fetchProfile: () => dispatch(fetchProfile(username)),
+    fetchGallery: () => dispatch(fetchAllPhotos(username))
   }
 }
 

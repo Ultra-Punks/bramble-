@@ -27,10 +27,14 @@ router.get('/', async (req, res, next) => {
 })
 
 // get single user (by id)
-router.get('/:userId', async (req, res, next) => {
+router.get('/:username', async (req, res, next) => {
   try {
-    const userById = await User.findByPk(req.params.userId)
-    res.json(userById)
+    const user = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
+    res.json(user)
   } catch (error) {
     next(error)
   }

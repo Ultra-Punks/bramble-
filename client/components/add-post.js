@@ -15,12 +15,7 @@ function makeid(length) {
 
 function ShowPictures(props) {
   if (props.image[0] === undefined)
-    return (
-      <img
-        className="display-img"
-        src="https://www.ivmechicago.com/wp-content/uploads/2017/06/placeholder.gif"
-      />
-    )
+    return <div className="display-img placeholder" />
   else return <img className="display-img" src={props.image} />
 }
 
@@ -34,6 +29,7 @@ export default function AddPost(props) {
     formData.append('public_id', `${props.username}/${makeid(6)}`)
     formData.append('upload_preset', 'bramble')
     formData.append('file', files)
+    formData.append('tags', ['post_2'])
     setLoading(true)
     await axios
       .post('https://api.cloudinary.com/v1_1/bramble/upload', formData)
@@ -42,9 +38,6 @@ export default function AddPost(props) {
       .catch(error => console.error(error))
     setLoading(false)
   }
-
-  console.log(props.username)
-
   return (
     <Modal
       {...props}

@@ -12,10 +12,10 @@ const getProfile = profile => {
 }
 
 // thunk creator (NOTE: this is a NAMED export! So deconstruct it!)
-export const fetchProfile = userId => {
+export const fetchProfile = username => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/users/${userId}`)
+      const {data} = await axios.get(`/api/users/${username}`)
       dispatch(getProfile(data))
     } catch (error) {
       console.log(error)
