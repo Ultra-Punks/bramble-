@@ -29,21 +29,18 @@ class CommunityProfile extends React.Component {
 
   render() {
     const profile = this.props.profile
+    const community = this.props.community
     return (
       <div>
         <div className="profileContainer">
           <div className="profileImgContentContainer">
-            <img src={profile.profileImg} className="profilePagePhoto" />
+            <img src={community.profileImg} className="profilePagePhoto" />
             <div className="profileInfo">
               <ul>{profile.username}</ul>
-              <ul>Followers: {profile.followers}</ul>
-              <ul>Following: {profile.following}</ul>
-              <ul>Communities: (button / num?)</ul>
-              <button type="button" className="followButton">
-                Follow
-              </button>
+              <ul>Community: {community.name}</ul>
+              <button type="button">Subscribe</button>
             </div>
-            <ul className="profileBio">Bio: {profile.description}</ul>
+            <ul className="profileBio">Bio: {community.description}</ul>
             <div className="contentContainer">
               <div className="buttonContainer">
                 <button
@@ -70,14 +67,12 @@ class CommunityProfile extends React.Component {
             </div>
           </div>
 
-          <div className="profileMapContainer sticky">MAP PLACEHOLDER</div>
+          {/* <div className="profileMapContainer sticky">MAP PLACEHOLDER</div> */}
         </div>
 
         <br />
         <br />
         <br />
-        <div>{this.props.community.name}</div>
-        <div>{this.props.community.description}</div>
       </div>
     )
   }
