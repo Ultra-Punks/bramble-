@@ -37,31 +37,34 @@ class CommunitySearch extends React.Component {
 
   searchResults() {
     const community = this.props.community
-    if (community.length > 1) {
-      return (
-        <div>
-          {community.map(result => {
-            return (
-              <div key={result.id}>
-                <div>{result.name}</div>
-                <div>{result.description}</div>
-                <Link to={`/Community/${result.id}`}>Detail</Link>
-                <button type="button">Follow</button>
-              </div>
-            )
-          })}
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <div>{community.name}</div>
-          <div>{community.description}</div>
-          <Link to={`/Community/${community.id}`}>Detail</Link>
-          <button type="button">Follow</button>
-        </div>
-      )
-    }
+
+    if (community) {
+      if (Array.isArray(community)) {
+        return (
+          <div>
+            {community.map(result => {
+              return (
+                <div key={result.id}>
+                  <div>{result.name}</div>
+                  <div>{result.description}</div>
+                  <Link to={`/Community/${result.id}`}>Detail</Link>
+                  <button type="button">Follow</button>
+                </div>
+              )
+            })}
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <div>{community.name}</div>
+            <div>{community.description}</div>
+            <Link to={`/Community/${community.id}`}>Detail</Link>
+            <button type="button">Follow</button>
+          </div>
+        )
+      }
+    } else return <div>Non</div>
   }
 
   render() {
