@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 'use strict'
 
 const db = require('../server/db')
@@ -134,6 +135,7 @@ const generatePost = () => {
 // store 50 new posts created by generatePost into the userPostArray
 const userPostArray = Array.from({length: 50}, generatePost)
 
+// eslint-disable-next-line max-statements
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -148,18 +150,38 @@ async function seed() {
     users.push(newUser)
   }
 
+  for (let i = 0; i < communityArray.length; i++) {
+    const newCommunity = await Community.create(communityArray[i])
+    communities.push(newCommunity)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    // const randomCommNum = Math.floor(Math.random() * communities.length) + 1
+    await communities[i].setUser(users[randomUserNum])
+    // await locations[i].setCommunity(communities[randomCommNum])
+  }
+
+  // loop through communities in case userId is null...
+  for (let i = 0; i < communities.length; i++) {
+    if (communities[i].userId === undefined) {
+      communities[i].userId = 1
+      await communities[i].save()
+    }
+  }
+
   for (let i = 0; i < updatedLocations.length; i++) {
     const newLocation = await Location.create(updatedLocations[i])
     locations.push(newLocation)
     const randomUserNum = Math.floor(Math.random() * 9) + 1
     await locations[i].setUser(users[randomUserNum])
+    const randomCommNum = Math.floor(Math.random() * communities.length) + 1
+    await locations[i].setCommunity(communities[randomCommNum])
   }
 
-  for (let i = 0; i < communityArray.length; i++) {
-    const newCommunity = await Community.create(communityArray[i])
-    communities.push(newCommunity)
-    const randomUserNum = Math.floor(Math.random() * users.length) + 1
-    await communities[i].setUser(users[randomUserNum])
+  // loop through locations in case communityId is null...
+  for (let i = 0; i < locations.length; i++) {
+    if (locations[i].communityId === undefined) {
+      locations[i].communityId = 1
+      await locations[i].save()
+    }
   }
 
   for (let i = 0; i < userPostArray.length; i++) {
