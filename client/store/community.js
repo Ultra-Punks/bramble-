@@ -28,6 +28,17 @@ export const fetchOneCommunity = name => {
   }
 }
 
+export const fetchSingleCommunity = id => {
+  return async dispatch => {
+    try {
+      const res = await axios.get(`/api/community/list/${id}`)
+      dispatch(getCommunity(res.data))
+    } catch (error) {
+      console.log('Error ', error)
+    }
+  }
+}
+
 export default function communityReducer(state = initialState, action) {
   switch (action.type) {
     case GET_COMMUNITY: {

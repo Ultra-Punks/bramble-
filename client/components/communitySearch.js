@@ -47,8 +47,9 @@ class CommunitySearch extends React.Component {
                 <div key={result.id}>
                   <div>{result.name}</div>
                   <div>{result.description}</div>
-                  <Link to={`/Community/${result.id}`}>Detail</Link>
+                  <Link to={`/Community/list/${result.id}`}>Detail</Link>
                   <button type="button">Follow</button>
+                  <br />
                 </div>
               )
             })}
@@ -61,6 +62,7 @@ class CommunitySearch extends React.Component {
             <div>{community.description}</div>
             <Link to={`/Community/${community.id}`}>Detail</Link>
             <button type="button">Follow</button>
+            <br />
           </div>
         )
       }
@@ -70,6 +72,9 @@ class CommunitySearch extends React.Component {
   render() {
     return (
       <div>
+        <br />
+        <br />
+
         <form onSubmit={this.handleSubmit}>
           <input
             name="community"
@@ -79,6 +84,7 @@ class CommunitySearch extends React.Component {
           />
           <button type="submit"> Submit </button>
         </form>
+        <br />
         <div>{this.searchResults()}</div>
       </div>
     )
