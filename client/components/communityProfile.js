@@ -38,6 +38,7 @@ class CommunityProfile extends React.Component {
             <div className="profileInfo">
               <ul>{profile.username}</ul>
               <ul>Community: {community.name}</ul>
+              <ul>Members: </ul>
               <button type="button">Subscribe</button>
             </div>
             <ul className="profileBio">Bio: {community.description}</ul>
@@ -48,7 +49,7 @@ class CommunityProfile extends React.Component {
                   className="profileFeedButton"
                   onClick={() => this.postSelector()}
                 >
-                  All Posts
+                  Posts
                 </button>
                 <button
                   type="button"
