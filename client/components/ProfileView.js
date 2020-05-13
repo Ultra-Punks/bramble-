@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
+import {fetchUserPosts} from '../store/userFeed'
 import {PostFeed} from './index'
 
 class ProfileView extends React.Component {
@@ -16,7 +17,8 @@ class ProfileView extends React.Component {
   }
   componentDidMount() {
     this.props.fetchProfile()
-    this.props.fetchGallery(this.props.profile.username)
+    this.props.fetchGallery()
+    this.props.fetchUserPosts()
   }
 
   postSelector() {
@@ -64,6 +66,8 @@ class ProfileView extends React.Component {
               <PostFeed
                 postFeed={this.state.postFeed}
                 images={this.props.gallery}
+                posts={this.props.posts}
+                profile={this.props.profile}
               />
             </div>
           </div>
@@ -81,7 +85,8 @@ class ProfileView extends React.Component {
 const mapState = state => {
   return {
     profile: state.singleProfile,
-    gallery: state.allPhotos
+    gallery: state.allPhotos,
+    posts: state.userPosts
   }
 }
 
@@ -89,7 +94,8 @@ const mapDispatch = (dispatch, ownProps) => {
   const username = ownProps.match.params.username
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchGallery: () => dispatch(fetchAllPhotos(username))
+    fetchGallery: () => dispatch(fetchAllPhotos(username)),
+    fetchUserPosts: () => dispatch(fetchUserPosts(username))
   }
 }
 
