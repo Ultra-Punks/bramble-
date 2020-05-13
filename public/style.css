@@ -89,6 +89,7 @@ form div {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .allProfilesContainer {
   display: flex;
   flex-direction: column;

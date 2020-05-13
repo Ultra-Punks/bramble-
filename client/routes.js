@@ -12,7 +12,9 @@ import {
   ProfileView
 } from './components'
 import Test from './components/test'
+import CommunitySearch from './components/communitySearch'
 import {me} from './store'
+import CommunityProfile from './components/communityProfile'
 
 /**
  * COMPONENT
@@ -33,6 +35,8 @@ class Routes extends Component {
         <Route path="/map" component={Map} />
         <Route path="/post-test" component={SinglePostView} />
         <Route path="/test" component={Test} />
+        <Route path="/community" component={CommunitySearch} />
+        <Route path="/community/:id" component={CommunityProfile} />
         <Route path="/profiles" component={AllProfiles} />
         <Route path="/users/:username" component={ProfileView} />
         {isLoggedIn && (

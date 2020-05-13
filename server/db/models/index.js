@@ -21,6 +21,7 @@ PostComment.hasMany(Photo)
 Location.hasMany(Photo)
 Location.belongsTo(User)
 Location.hasMany(LocationReview)
+Location.belongsTo(Community)
 
 LocationReview.belongsTo(Location)
 LocationReview.belongsTo(User)
@@ -34,6 +35,7 @@ Photo.belongsTo(User)
 
 Community.belongsToMany(User, {through: CommunitySubs})
 Community.belongsTo(User)
+Community.hasMany(Location)
 
 User.hasMany(UserPost)
 User.hasMany(Photo)
