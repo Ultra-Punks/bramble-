@@ -6,6 +6,8 @@
 export {Map} from './Map'
 
 export {default as Navbar} from './navbar'
-export {default as UserHome} from './user-home'
+export {default as ProfileView} from './ProfileView'
+export {default as AllProfiles} from './AllProfiles'
 export {default as SinglePostView} from './single-post-view'
+export {default as AddPost} from './add-post'
 export {Login, Signup} from './auth-form'

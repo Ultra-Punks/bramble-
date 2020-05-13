@@ -1,25 +1,77 @@
+/* eslint-disable complexity */
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Community} = require('../server/db/models')
+const {User, Location, Community, UserPost} = require('../server/db/models')
 
-// bring in the Chance library to generate seed data
+// bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
 const Chance = require('chance')
 const chanceObj = Chance() // use this global Chance constructor to use in different tables
 
 // create random user seed data
 const generateUser = () => {
+  const handle = chanceObj.twitter()
+
   return {
     email: chanceObj.email(),
     password: 'abc',
-    username: chanceObj.name(),
+    name: chanceObj.name(),
+    username: handle.slice(1),
     description: chanceObj.paragraph({sentences: 1}),
     isAdmin: chanceObj.bool({likelihood: 25})
   }
 }
+
+const manualUsers = [
+  {
+    email: 'devin@bramble.com',
+    password: '1234ABCD',
+    name: 'Devin Knight',
+    username: 'Dev-2020',
+    description:
+      'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
+    isAdmin: false
+  },
+  {
+    email: 'mochi@email.com',
+    password: '1234ABCD',
+    name: 'Mochiko Knight',
+    username: 'mochi-2020',
+    description:
+      'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
+    isAdmin: false
+  },
+  {
+    email: 'franco@bramble.com',
+    password: '1234ABCD',
+    name: 'Franco Trelles',
+    username: 'Franco-MT',
+    description:
+      'Code master Franco among the Bramble Team! Also, Mets Fanatic!',
+    isAdmin: false
+  },
+  {
+    email: 'Darren@bramble.com',
+    password: '1234ABCD',
+    name: 'Darren Hu',
+    username: 'D-Darren-Dawg',
+    description:
+      'Code master Darren among the Bramble Team! ESPN Advocate and LeBron James Fan!',
+    isAdmin: false
+  },
+  {
+    email: 'Robu@bramble.com',
+    password: '1234ABCD',
+    name: 'Robu Waldorf',
+    username: 'Robu',
+    description:
+      'Code master Robu among the Bramble Team! Musician and map master!',
+    isAdmin: false
+  }
+]
 // store 10 new users created by generateUser into in the userArray
 const userArray = Array.from({length: 10}, generateUser)
-console.log('userArray>>>>', userArray)
+const updatedUsers = userArray.concat(manualUsers)
 
 // create random location seed data (NOT RESTRICTED TO NYC!)
 const generateLocation = () => {
@@ -29,8 +81,27 @@ const generateLocation = () => {
     description: chanceObj.paragraph({sentences: 2})
   }
 }
-// store 10 new locations created by generateUser into in the userArray
+
+const manualLocations = [
+  {
+    address: '5 Hanover Square 11th floor, New York, NY 10004',
+    name: 'Fullstack Academy',
+    description:
+      'Fullstack Academy is an immersive software engineering coding bootcamp located in New York City and Chicago. Students of the full-time flagship course learn full stack JavaScript over the course of a 13-week, on-campus program.',
+    isAdmin: false
+  },
+  {
+    address: '2 W 69th St, New York, NY 10023',
+    name: 'Le Pain Quotidien',
+    description:
+      "Nestled above Sheep’s Meadow in Central Park, our store is located within the historic Mineral Springs pavilion. In the late 1800s and early 1900s, this pavilion served 30 varieties of natural spring water to New Yorker's.",
+    isAdmin: false
+  }
+]
+
+// store 10 new locations created by generateUser into in the locationArray
 const locationArray = Array.from({length: 10}, generateLocation)
+const updatedLocations = locationArray.concat(manualLocations)
 
 // possible community names array
 const communitySeedNames = [
@@ -51,9 +122,20 @@ const generateCommunity = () => {
     description: chanceObj.paragraph({sentences: 3})
   }
 }
-// store 10 new communities created by generateUser into in the userArray
+// store 10 new communities created by generateUser into in the communityArray
 const communityArray = Array.from({length: 10}, generateCommunity)
 
+// create random post seed data
+const generatePost = () => {
+  return {
+    description: chanceObj.paragraph()
+  }
+}
+
+// store 50 new posts created by generatePost into the userPostArray
+const userPostArray = Array.from({length: 50}, generatePost)
+
+// eslint-disable-next-line max-statements
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -61,24 +143,60 @@ async function seed() {
   const users = []
   const locations = []
   const communities = []
+  const userPosts = []
 
-  for (let i = 0; i < userArray.length; i++) {
-    const newUser = await User.create(userArray[i])
+  for (let i = 0; i < updatedUsers.length; i++) {
+    const newUser = await User.create(updatedUsers[i])
     users.push(newUser)
   }
 
-  for (let i = 0; i < locationArray.length; i++) {
-    const newLocation = await Location.create(locationArray[i])
-    locations.push(newLocation)
-    const randomUserNum = Math.floor(Math.random() * 9) + 1
-    await locations[i].setUser(users[randomUserNum])
-  }
-
-  for (let i = 0; i < locationArray.length; i++) {
+  for (let i = 0; i < communityArray.length; i++) {
     const newCommunity = await Community.create(communityArray[i])
     communities.push(newCommunity)
     const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    // const randomCommNum = Math.floor(Math.random() * communities.length) + 1
     await communities[i].setUser(users[randomUserNum])
+    // await locations[i].setCommunity(communities[randomCommNum])
+  }
+
+  // loop through communities in case userId is null...
+  for (let i = 0; i < communities.length; i++) {
+    if (communities[i].userId === undefined) {
+      communities[i].userId = 1
+      await communities[i].save()
+    }
+  }
+
+  for (let i = 0; i < updatedLocations.length; i++) {
+    const newLocation = await Location.create(updatedLocations[i])
+    locations.push(newLocation)
+    const randomUserNum = Math.floor(Math.random() * 9) + 1
+    await locations[i].setUser(users[randomUserNum])
+    const randomCommNum = Math.floor(Math.random() * communities.length) + 1
+    await locations[i].setCommunity(communities[randomCommNum])
+  }
+
+  // loop through locations in case communityId is null...
+  for (let i = 0; i < locations.length; i++) {
+    if (locations[i].communityId === undefined) {
+      locations[i].communityId = 1
+      await locations[i].save()
+    }
+  }
+
+  for (let i = 0; i < userPostArray.length; i++) {
+    const newPost = await UserPost.create(userPostArray[i])
+    userPosts.push(newPost)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await userPosts[i].setUser(users[randomUserNum])
+  }
+
+  // loop through user posts in case userId is null...
+  for (let i = 0; i < userPosts.length; i++) {
+    if (userPosts[i].userId === undefined) {
+      userPosts[i].userId = 1
+      await userPosts[i].save()
+    }
   }
 
   // await locations[0].setUser(users[0])
@@ -91,7 +209,7 @@ async function seed() {
   // ============================================================
 
   console.log(
-    `seeded ${userArray.length} users, and ${locationArray.length} locations`
+    `seeded ${updatedUsers.length} users, and ${locationArray.length} locations`
   )
   console.log(`seeded successfully`)
 }

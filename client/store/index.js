@@ -5,8 +5,10 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import food from './food'
 import community from './community'
+import profiles from './allProfiles'
+import singleProfile from './singleProfile'
+const reducer = combineReducers({user, food, profiles, singleProfile, community})
 
-const reducer = combineReducers({user, food, community})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

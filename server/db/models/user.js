@@ -31,6 +31,14 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
+  name: {
+    type: Sequelize.STRING,
+    // allowNull: false,
+    validate: {
+      notEmpty: true
+      // isAlphanumeric: true,
+    }
+  },
   username: {
     type: Sequelize.STRING,
     // allowNull: false,
@@ -53,6 +61,14 @@ const User = db.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  followers: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  following: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

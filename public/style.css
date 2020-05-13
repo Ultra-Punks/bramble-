@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 body {
   font-family: sans-serif;
 }
@@ -23,4 +25,120 @@ form div {
 #map {
   height: 100vh;
   width: 100vw;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3d4a63;
+  height: 75px;
+}
+
+.nav-group {
+  display: flex;
+}
+
+.nav-title {
+  color: white;
+  font-family: 'Roboto';
+  font-size: 35px;
+  font-weight: 700;
+  margin: 0;
+  margin-left: 20px;
+}
+
+.nav-logo {
+  height: 50px;
+  width: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.display-img {
+  height: 100px;
+  width: 175px;
+}
+
+.custom-file {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-post-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.allProfilesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileSampleView {
+  display: flex;
+  background: rgb(199, 196, 196);
+  border: dashed black;
+  justify-content: space-around;
+  border-radius: 10px;
+}
+
+.profileContainer {
+  background: rgb(221, 221, 244);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 5px;
+}
+.profileMapContainer {
+  background-color: cornflowerblue;
+  height: 800px;
+  width: 800px;
+  border-radius: 20px;
+}
+
+.profileImgContentContainer {
+  /* display: flex; */
+  padding: 20px;
+}
+
+.profileInfo {
+  display: flex;
+  justify-content: space-around;
+}
+
+.profilePagePhoto {
+  background: rgb(249, 111, 111);
+  border-radius: 150px;
+}
+
+.followButton {
+  background: rgba(60, 60, 232, 0.749);
+  border-radius: 25px;
+  height: 33px;
+  width: 60px;
+  color: white;
+}
+
+.profileBio {
+  font-style: italic;
+}
+
+.contentContainer {
+  background: rgba(244, 192, 81, 0.365);
+  height: 500px;
+  width: 825px;
+}
+
+.profileFeedButton {
+  width: 412px;
+  height: 50px;
 }
