@@ -25,6 +25,18 @@ router.get('/:communityName', async (req, res, next) => {
   }
 })
 
+router.get('/list/:id', async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const selectedCommunity = await Community.findOne({
+      where: {id: id}
+    })
+    res.json(selectedCommunity)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post('/', async (req, res, next) => {
   try {
     const newCommunity = await Community.create(req.body)
