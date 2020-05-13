@@ -76,6 +76,7 @@ form div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
 
 .allProfilesContainer {
   display: flex;

@@ -1,9 +1,9 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Community} = require('../server/db/models')
+const {User, Location, Community, UserPost} = require('../server/db/models')
 
-// bring in the Chance library to generate seed data
+// bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
 const Chance = require('chance')
 const chanceObj = Chance() // use this global Chance constructor to use in different tables
 
@@ -12,7 +12,8 @@ const generateUser = () => {
   return {
     email: chanceObj.email(),
     password: 'abc',
-    username: chanceObj.name(),
+    name: chanceObj.name(),
+    username: chanceObj.twitter(),
     description: chanceObj.paragraph({sentences: 1}),
     isAdmin: chanceObj.bool({likelihood: 25})
   }
@@ -20,9 +21,10 @@ const generateUser = () => {
 
 const manualUsers = [
   {
-    email: 'devin@email.com',
+    email: 'devin@bramble.com',
     password: '1234ABCD',
-    username: 'Devin Knight',
+    name: 'Devin Knight',
+    username: '@Dev-2020',
     description:
       'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
     isAdmin: false
@@ -30,16 +32,43 @@ const manualUsers = [
   {
     email: 'mochi@email.com',
     password: '1234ABCD',
-    username: 'Mochiko Knight',
+    name: 'Mochiko Knight',
+    username: '@mochi-2020',
     description:
       'Bupe vuv homaci vo agecuisa zas za wuba uhvod anuitsiw roegtu kiz.',
+    isAdmin: false
+  },
+  {
+    email: 'franco@bramble.com',
+    password: '1234ABCD',
+    name: 'Franco Trelles',
+    username: '@Franco-MT',
+    description:
+      'Code master Franco among the Bramble Team! Also, Mets Fanatic!',
+    isAdmin: false
+  },
+  {
+    email: 'Darren@bramble.com',
+    password: '1234ABCD',
+    name: 'Darren Hu',
+    username: '@D-Darren-Dawg',
+    description:
+      'Code master Darren among the Bramble Team! ESPN Advocate and LeBron James Fan!',
+    isAdmin: false
+  },
+  {
+    email: 'Robu@bramble.com',
+    password: '1234ABCD',
+    name: 'Robu Waldorf',
+    username: '@Robu',
+    description:
+      'Code master Robu among the Bramble Team! Musician and map master!',
     isAdmin: false
   }
 ]
 // store 10 new users created by generateUser into in the userArray
 const userArray = Array.from({length: 10}, generateUser)
 const updatedUsers = userArray.concat(manualUsers)
-// console.log('updatedUsers>>>>', updatedUsers)
 
 // create random location seed data (NOT RESTRICTED TO NYC!)
 const generateLocation = () => {
@@ -74,6 +103,16 @@ const generateCommunity = () => {
 // store 10 new communities created by generateUser into in the communityArray
 const communityArray = Array.from({length: 10}, generateCommunity)
 
+// create random post seed data
+const generatePost = () => {
+  return {
+    description: chanceObj.paragraph()
+  }
+}
+
+// store 50 new posts created by generatePost into the userPostArray
+const userPostArray = Array.from({length: 50}, generatePost)
+
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
@@ -81,6 +120,7 @@ async function seed() {
   const users = []
   const locations = []
   const communities = []
+  const userPosts = []
 
   for (let i = 0; i < updatedUsers.length; i++) {
     const newUser = await User.create(updatedUsers[i])
@@ -94,13 +134,20 @@ async function seed() {
     await locations[i].setUser(users[randomUserNum])
   }
 
-  for (let i = 0; i < locationArray.length; i++) {
+  for (let i = 0; i < communityArray.length; i++) {
     const newCommunity = await Community.create(communityArray[i])
     communities.push(newCommunity)
     const randomUserNum = Math.floor(Math.random() * users.length) + 1
     await communities[i].setUser(users[randomUserNum])
   }
 
+  for (let i = 0; i < userPostArray.length; i++) {
+    const newPost = await UserPost.create(userPostArray[i])
+    userPosts.push(newPost)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    console.log('>>>>>>>>>', randomUserNum)
+    await userPosts[i].setUser(users[randomUserNum])
+  }
   // await locations[0].setUser(users[0])
   // users[0].addCommunity(communities[0])
   // ==========  ORIGINAL SEED INFO FROM BOILERMAKER  ==========
