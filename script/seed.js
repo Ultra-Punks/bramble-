@@ -7,7 +7,8 @@ const {
   Location,
   Community,
   UserPost,
-  LocationReview
+  LocationReview,
+  PostComment
 } = require('../server/db/models')
 
 // bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
@@ -152,6 +153,16 @@ const generateLocationReview = () => {
 // store 40 new location reviews created by generateLocationReview into the locationReviews array
 const locationReviewsArray = Array.from({length: 40}, generateLocationReview)
 
+// create random PostComments seed data
+const generatePostComments = () => {
+  return {
+    comment: chanceObj.paragraph()
+  }
+}
+
+// store 150 new post comments into the postCommentsArray
+const postCommentsArray = Array.from({length: 150}, generatePostComments)
+
 // eslint-disable-next-line max-statements
 async function seed() {
   await db.sync({force: true})
@@ -162,6 +173,7 @@ async function seed() {
   const communities = []
   const userPosts = []
   const locationReviews = []
+  const postComments = []
 
   for (let i = 0; i < updatedUsers.length; i++) {
     const newUser = await User.create(updatedUsers[i])
@@ -239,6 +251,23 @@ async function seed() {
       await locationReviews[i].save()
     }
   }
+
+  // loop through post comments in to mitigate null value foreign keys...
+  for (let i = 0; i < postCommentsArray.length; i++) {
+    const newComment = await PostComment.create(postCommentsArray[i])
+    postComments.push(newComment)
+    const randomUserNum = Math.floor(Math.random() * userPosts.length) + 1
+    await postComments[i].setUserPost(userPosts[randomUserNum])
+  }
+
+  // console.log('comments>>>>>>', comments)
+  // // // loop through comments in case userId is null...
+  // // for (let i = 0; i < comments.length; i++) {
+  // //   if (comments[i].userPostId === undefined) {
+  // //     comments[i].userPostId = 1
+  // //     await comments[i].save()
+  // //   }
+  // // }
 
   // await locations[0].setUser(users[0])
   // users[0].addCommunity(communities[0])

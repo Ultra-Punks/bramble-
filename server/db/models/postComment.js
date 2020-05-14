@@ -6,8 +6,8 @@ const PostComment = db.define('postComment', {
     type: Sequelize.TEXT,
     allowNull: false,
     validate: {
-      notEmpty: true,
-      isAlphanumeric: true
+      notEmpty: true
+      // isAlphanumeric: true
     }
   }
 })
