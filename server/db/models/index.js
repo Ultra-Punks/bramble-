@@ -41,6 +41,7 @@ Community.hasMany(Location)
 User.hasMany(UserPost)
 User.hasMany(Photo)
 User.hasMany(Location) // <-- NOTE: was creating some issues Sat. May need review later.
+User.hasMany(LocationReview)
 User.hasMany(PostComment)
 User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
 User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})

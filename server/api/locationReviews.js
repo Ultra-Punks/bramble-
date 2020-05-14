@@ -29,9 +29,9 @@ router.get('/of/:locationId', async (req, res, next) => {
   try {
     const locationReviews = await Location.findOne({
       where: {
-        locationId: req.params.locationId
+        id: req.params.locationId
       },
-      include: [{model: Location}]
+      include: [{model: LocationReview}]
     })
     res.json(locationReviews)
   } catch (error) {
