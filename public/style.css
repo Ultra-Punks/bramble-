@@ -5,7 +5,7 @@ body {
   padding: 0;
   padding-top: 65px;
   margin: 0;
-  background-color: rgb(221, 221, 244);
+  background-color: #53658a;
 }
 
 a {
@@ -26,9 +26,9 @@ form div {
   display: inline-block;
 }
 
-#map {
-  height: 100vh;
-  width: 100vw;
+.marker {
+  object-fit: fill;
+  /* object-position: 100px 50%; */
 }
 
 .nav-container {
@@ -72,15 +72,51 @@ form div {
   background-color: grey;
 }
 
-.custom-file {
+.file-label {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.exit-add-post {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+  border-bottom: solid #53658a 1px;
+}
+
+.exit-btn {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  margin-top: 5px;
+  color: white;
+}
+
+.exit-btn:hover {
+  color: red;
+  text-decoration: none;
+}
+
+.custom-file-label {
+  display: unset;
 }
 
 .modal-content {
-  height: 400px;
+  height: 425px;
   display: flex;
   flex-direction: column;
+  background-color: #3d4a63;
 }
 
 .add-post-container {
@@ -104,7 +140,7 @@ form div {
 }
 
 .profileContainer {
-  background: rgb(221, 221, 244);
+  background: #53658a;
   display: flex;
   flex-direction: row;
   /* justify-content: space-evenly; */
@@ -132,16 +168,43 @@ form div {
   border-radius: 20px;
   margin: 25px;
   margin-top: 65px;
+  object-fit: cover;
 }
 
 .profileInfo {
   display: flex;
-  justify-content: space-around;
+  /* justify-content: space-around; */
+}
+.profile-follows {
+  display: flex;
+}
+
+.first-list {
+  margin: 0;
+  margin-left: 0;
+  margin-right: 25px;
+  margin-top: 10px;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
+.profile-info-text {
+  margin: 0;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 400;
 }
 
 .profilePagePhoto {
   background: rgb(249, 111, 111);
   border-radius: 150px;
+  border-style: solid;
+  border-width: 7px;
+  border-color: #3d4a63;
 }
 
 .followButton {
@@ -150,21 +213,73 @@ form div {
   height: 33px;
   width: 60px;
   color: white;
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+.follow-button {
+  background-color: #3d4a63;
+  border-radius: 150px;
+  margin-bottom: 12px;
+  margin-top: 5px;
+}
+
+.profile-username {
+  margin: 0;
+  margin-bottom: 5px;
+  font-family: 'Roboto';
+  color: #c8cfde;
+  font-size: 1em;
+}
+.profile-name {
+  margin: 0;
+  margin-top: 5px;
+  font-family: 'Roboto';
+  color: white;
+  font-weight: 600;
+  font-size: 2em;
 }
 
 .profileBio {
-  font-style: italic;
+  font-family: 'Roboto';
+  font-weight: 400;
+  color: white;
+  margin: 0;
+  height: auto;
+  padding-bottom: 10px;
+}
+
+.underline {
+  border-bottom: solid #3d4a63 1.5px;
 }
 
 .contentContainer {
-  background: rgba(244, 192, 81, 0.365);
   height: auto;
   width: 825px;
+}
+
+.buttonContainer {
+  border-bottom: solid #3d4a63 3px;
 }
 
 .profileFeedButton {
   width: 412px;
   height: 50px;
+  color: #bccdec;
+  font-size: 1.2em;
+  font-family: 'Roboto';
+  font-weight: 600;
+}
+
+.profileFeedButton:hover {
+  border-bottom: solid #7092d4 4px;
+  color: white;
+  text-decoration: none;
+}
+
+.selected-feed {
+  border-bottom: solid #7092d4 4px;
+  color: white;
 }
 
 .gallery-container {
@@ -184,7 +299,6 @@ form div {
 .feedView {
   display: flex;
   flex-direction: column;
-  border: dashed black;
   justify-content: space-around;
   border-radius: 10px;
 }
@@ -192,9 +306,18 @@ form div {
 .single-post {
   display: flex;
   flex-direction: column;
-  background-color: rgb(199, 196, 196);
+  background-color: white;
   height: auto;
   margin: 3px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.post-text {
+  margin: 0;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  margin-right: 15px;
 }
 
 .post-header {
@@ -212,15 +335,85 @@ form div {
 
 .post-pfp {
   margin: 5px;
-  height: 50px;
-  width: 50px;
+  height: 65px;
+  width: 65px;
   object-fit: cover;
-  border-radius: 150px;
-  background-color: khaki;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #3d4a63;
+  background-color: rgb(249, 111, 111);
 }
 
 .post-photos {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.post-images {
+  height: 400px;
+  width: 630px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: solid 2px #8793a9;
+}
+
+.modal-post-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mb-3 {
+  width: 450px;
+  height: 30px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.btn-outline-secondary {
+  border-color: #fff;
+  color: white;
+  background-color: #6f7d96;
+}
+
+.btn-outline-secondary:hover {
+  border-color: #363f52;
+  background-color: #363f52;
+}
+
+.form-control {
+  resize: none;
+  background-color: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.form-control:focus {
+  background-color: transparent;
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control:active {
+  background-color: transparent;
+}
+
+.post-button {
+  background-color: #3d4a63;
+  border-radius: 150px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  width: 100px;
+}
+
+.post-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-form-container {
+  margin-left: 25px;
 }
