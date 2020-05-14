@@ -39,6 +39,21 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
+//gets all posts from specific user
+router.get('/from/:communityPost', async (req, res, next) => {
+  try {
+    const allUserPosts = await User.findOne({
+      where: {
+        username: req.params.username
+      },
+      include: [{model: UserPost}]
+    })
+    res.json(allUserPosts.userPosts)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //creates new post according to user
 router.post('/add/:username', async (req, res, next) => {
   try {

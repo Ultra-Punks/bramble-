@@ -1,8 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleCommunity} from '../store/community'
-import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
+import {fetchUserPosts} from '../store/userFeed'
+import {fetchProfile} from '../store/singleProfile'
+
 import {PostFeed} from './index'
 
 class CommunityProfile extends React.Component {
@@ -17,6 +19,8 @@ class CommunityProfile extends React.Component {
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.fetchSingleCommunity(id)
+    this.props.fetchGallery()
+    this.props.fetchUserPosts()
   }
 
   postSelector() {
@@ -30,6 +34,14 @@ class CommunityProfile extends React.Component {
   render() {
     const profile = this.props.profile
     const community = this.props.community
+    const postClass = this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
+
+    const galleryFeed = !this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
+
     return (
       <div>
         <div className="profileContainer">
@@ -53,7 +65,7 @@ class CommunityProfile extends React.Component {
                 </button>
                 <button
                   type="button"
-                  className="profileFeedButton"
+                  className={galleryFeed}
                   onClick={() => this.gallerySelector()}
                 >
                   Gallery
@@ -63,6 +75,8 @@ class CommunityProfile extends React.Component {
                 <PostFeed
                   postFeed={this.state.postFeed}
                   images={this.props.gallery}
+                  posts={this.props.posts}
+                  profile={this.props.profile}
                 />
               </div>
             </div>
@@ -92,7 +106,8 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     fetchSingleCommunity: id => dispatch(fetchSingleCommunity(id)),
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchGallery: () => dispatch(fetchAllPhotos(username))
+    fetchGallery: () => dispatch(fetchAllPhotos(username)),
+    fetchUserPosts: () => dispatch(fetchUserPosts(username))
   }
 }
 
