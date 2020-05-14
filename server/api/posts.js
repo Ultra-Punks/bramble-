@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {UserPost, User} = require('../db/models')
+const {UserPost, User, Community} = require('../db/models')
 
 module.exports = router
 
@@ -39,16 +39,16 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
-//gets all posts from specific user
-router.get('/from/:communityPost', async (req, res, next) => {
+//gets all posts for specific community
+router.get('/for/:communityPost', async (req, res, next) => {
   try {
-    const allUserPosts = await User.findOne({
+    const allCommunityPosts = await UserPost.findOne({
       where: {
-        username: req.params.username
+        communityId: req.params.communityPost
       },
-      include: [{model: UserPost}]
+      include: [{model: Community}]
     })
-    res.json(allUserPosts.userPosts)
+    res.json(allCommunityPosts)
   } catch (error) {
     next(error)
   }
