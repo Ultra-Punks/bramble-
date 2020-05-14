@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Image, Button} from 'react-bootstrap'
-import {AddPost} from './index'
+import {AddPost, Map} from './index'
 
 const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -13,12 +13,13 @@ const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
       <div className="nav-group">
         <p className="nav-title">Bramble</p>
       </div>
-
-      <Image
-        className="nav-logo"
-        src="https://cdn0.iconfinder.com/data/icons/kirrkle-maps-and-navigation/60/10_-_Map_marker-512.png"
-        roundedCircle
-      />
+      <Link to="/map">
+        <Image
+          className="nav-logo"
+          src="https://cdn0.iconfinder.com/data/icons/kirrkle-maps-and-navigation/60/10_-_Map_marker-512.png"
+          roundedCircle
+        />
+      </Link>
       <div className="nav-group">
         <nav>
           <div className="signin-signup">
