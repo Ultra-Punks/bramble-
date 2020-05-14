@@ -4,16 +4,15 @@ const db = require('../db')
 const LocationReview = db.define('locationReview', {
   ratings: {
     type: Sequelize.INTEGER,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       min: 1,
       max: 5
     }
   },
   comments: {
-    type: Sequelize.TEXT,
-
-  },
+    type: Sequelize.TEXT
+  }
 })
 
 module.exports = LocationReview

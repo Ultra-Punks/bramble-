@@ -2,7 +2,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Community, UserPost} = require('../server/db/models')
+const {
+  User,
+  Location,
+  Community,
+  UserPost,
+  LocationReview
+} = require('../server/db/models')
 
 // bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
 const Chance = require('chance')
@@ -135,6 +141,17 @@ const generatePost = () => {
 // store 50 new posts created by generatePost into the userPostArray
 const userPostArray = Array.from({length: 50}, generatePost)
 
+// create random location review seed data
+const generateLocationReview = () => {
+  return {
+    ratings: chanceObj.integer({min: 1, max: 5}),
+    comments: chanceObj.paragraph()
+  }
+}
+
+// store 40 new location reviews created by generateLocationReview into the locationReviews array
+const locationReviewsArray = Array.from({length: 40}, generateLocationReview)
+
 // eslint-disable-next-line max-statements
 async function seed() {
   await db.sync({force: true})
@@ -144,6 +161,7 @@ async function seed() {
   const locations = []
   const communities = []
   const userPosts = []
+  const locationReviews = []
 
   for (let i = 0; i < updatedUsers.length; i++) {
     const newUser = await User.create(updatedUsers[i])
@@ -196,6 +214,29 @@ async function seed() {
     if (userPosts[i].userId === undefined) {
       userPosts[i].userId = 1
       await userPosts[i].save()
+    }
+  }
+
+  for (let i = 0; i < locationReviewsArray.length; i++) {
+    const newReview = await LocationReview.create(locationReviewsArray[i])
+    locationReviews.push(newReview)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await locationReviews[i].setUser(users[randomUserNum])
+    const randomLocationNum = Math.floor(Math.random() * users.length) + 1
+    await locationReviews[i].setLocation(locations[randomLocationNum])
+  }
+
+  // loop through location reviews in to mitigate null value foreign keys...
+  for (let i = 0; i < locationReviews.length; i++) {
+    // if the userId column in location reviews is null...
+    if (locationReviews[i].userId === undefined) {
+      locationReviews[i].userId = 1 // default set to userId 1
+      await locationReviews[i].save()
+    }
+    // if the locationId column in location reviews is null...
+    if (locationReviews[i].locationId === undefined) {
+      locationReviews[i].locationId = 1 // default set to userId 1
+      await locationReviews[i].save()
     }
   }
 
