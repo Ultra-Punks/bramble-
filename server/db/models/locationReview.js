@@ -4,7 +4,7 @@ const db = require('../db')
 const LocationReview = db.define('locationReview', {
   ratings: {
     type: Sequelize.INTEGER,
-    // allowNull: false,
+    allowNull: false,
     validate: {
       min: 1,
       max: 5
