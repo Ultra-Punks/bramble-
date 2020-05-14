@@ -13,12 +13,12 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// // get single comment according to commentId
-// router.get('/:commentId', async (req, res, next) => {
-//   try {
-//     const singleComment = await PostComment.findByPk(req.params.commentId)
-//     res.json(singleComment)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// get single comment according to commentId
+router.get('/:commentId', async (req, res, next) => {
+  try {
+    const singleComment = await PostComment.findByPk(req.params.commentId)
+    res.json(singleComment)
+  } catch (error) {
+    next(error)
+  }
+})
