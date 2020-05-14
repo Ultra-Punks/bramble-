@@ -72,6 +72,7 @@ class Test extends React.Component {
     )
   }
 }
+
 const mapState = state => ({food: state.food})
 
 const mapDispatch = dispatch => ({

@@ -21,6 +21,7 @@ PostComment.hasMany(Photo)
 Location.hasMany(Photo)
 Location.belongsTo(User)
 Location.hasMany(LocationReview)
+Location.belongsTo(Community)
 
 LocationReview.belongsTo(Location)
 LocationReview.belongsTo(User)
@@ -30,11 +31,14 @@ Photo.belongsTo(UserPost)
 Photo.belongsTo(Location)
 Photo.belongsTo(LocationReview)
 Photo.belongsTo(PostComment)
+Photo.belongsTo(User)
 
 Community.belongsToMany(User, {through: CommunitySubs})
 Community.belongsTo(User)
+Community.hasMany(Location)
 
 User.hasMany(UserPost)
+User.hasMany(Photo)
 User.hasMany(Location) // <-- NOTE: was creating some issues Sat. May need review later.
 User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
 User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})
