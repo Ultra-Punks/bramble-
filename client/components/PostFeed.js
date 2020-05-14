@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
+import {Image} from 'react-bootstrap'
 // import axios from 'axios'
 
 export default function PostFeed(props) {
-  console.log('THESE ARE FEED PROPS >>>>', props)
   if (props.postFeed) {
     return (
       <div className="feedView">
@@ -12,13 +12,17 @@ export default function PostFeed(props) {
             return (
               <div key={post.id} className="single-post">
                 <div className="post-header">
-                  <img className="post-pfp" src={props.profile.profileImg} />
+                  <Image
+                    className="post-pfp"
+                    src={props.profile.profileImg}
+                    roundedCircle
+                  />
                   <div className="post-info">
                     <div className="post-handle">
                       <p className="handle-text">{props.profile.name}</p>
                       <p className="handle-text">@{props.profile.username}</p>
                     </div>
-                    <p>{post.description}</p>
+                    <p className="post-text">{post.description}</p>
                   </div>
                 </div>
                 <div className="post-photos">

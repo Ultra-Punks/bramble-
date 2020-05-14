@@ -4,6 +4,7 @@ import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchUserPosts} from '../store/userFeed'
 import {PostFeed} from './index'
+import {Image, Button} from 'react-bootstrap'
 
 class ProfileView extends React.Component {
   constructor(props) {
@@ -31,36 +32,54 @@ class ProfileView extends React.Component {
 
   render() {
     const profile = this.props.profile
+    const postClass = this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
+
+    const galleryFeed = !this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
     return (
       <div className="profileContainer">
         <div className="profileImgContentContainer">
-          <img src={profile.profileImg} className="profilePagePhoto" />
+          <Image
+            className="profilePagePhoto"
+            src={profile.profileImg}
+            roundedCircle
+          />
           <div className="profileInfo">
-            <ul>{profile.username}</ul>
-            <ul>Followers: {profile.followers}</ul>
-            <ul>Following: {profile.following}</ul>
-            <ul>Communities: (button / num?)</ul>
-            <button type="button" className="followButton">
-              Follow
-            </button>
+            <div>
+              <p className="profile-name">{profile.name}</p>
+              <p className="profile-username">@{profile.username}</p>
+            </div>
           </div>
-          <ul className="profileBio">Bio: {profile.description}</ul>
+          <div className="underline">
+            <p className="profileBio">{profile.description}</p>
+          </div>
+          <div className="profile-follows">
+            <p className="first-list">Followers: {profile.followers}</p>
+            <p className="profile-info-text">Following: {profile.following}</p>
+            <p className="profile-info-text">Communities</p>
+          </div>
+          <Button className="follow-button" variant="outline-light">
+            Follow
+          </Button>{' '}
           <div className="contentContainer">
             <div className="buttonContainer">
-              <button
-                type="button"
-                className="profileFeedButton"
+              <Button
+                variant="link"
+                className={postClass}
                 onClick={() => this.postSelector()}
               >
-                All Posts
-              </button>
-              <button
-                type="button"
-                className="profileFeedButton"
+                Posts
+              </Button>
+              <Button
+                variant="link"
+                className={galleryFeed}
                 onClick={() => this.gallerySelector()}
               >
                 Gallery
-              </button>
+              </Button>
             </div>
             <div>
               <PostFeed
@@ -73,7 +92,10 @@ class ProfileView extends React.Component {
           </div>
         </div>
 
-        <div className="profileMapContainer sticky">MAP PLACEHOLDER</div>
+        <img
+          src="https://miro.medium.com/max/4064/1*qYUvh-EtES8dtgKiBRiLsA.png"
+          className="profileMapContainer sticky"
+        />
       </div>
     )
   }

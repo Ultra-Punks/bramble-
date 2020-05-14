@@ -2,7 +2,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Community, UserPost} = require('../server/db/models')
+const {
+  User,
+  Location,
+  Community,
+  UserPost,
+  CommunitySubs
+} = require('../server/db/models')
 
 // bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
 const Chance = require('chance')
@@ -45,7 +51,7 @@ const manualUsers = [
     email: 'franco@bramble.com',
     password: '1234ABCD',
     name: 'Franco Trelles',
-    username: 'Franco-MT',
+    username: 'franco',
     description:
       'Code master Franco among the Bramble Team! Also, Mets Fanatic!',
     isAdmin: false
@@ -199,14 +205,11 @@ async function seed() {
     }
   }
 
-  // await locations[0].setUser(users[0])
-  // users[0].addCommunity(communities[0])
-  // ==========  ORIGINAL SEED INFO FROM BOILERMAKER  ==========
-  // const users = await Promise.all([
-  //   User.create({email: 'cody@email.com', password: '123'}),
-  //   User.create({email: 'murphy@email.com', password: '123'}),
-  // ])
-  // ============================================================
+  const communitySubs = await Promise.all([
+    CommunitySubs.create({userId: 13, communityId: 10}),
+    CommunitySubs.create({userId: 13, communityId: 6}),
+    CommunitySubs.create({userId: 13, communityId: 3})
+  ])
 
   console.log(
     `seeded ${updatedUsers.length} users, and ${locationArray.length} locations`
