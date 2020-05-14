@@ -424,3 +424,13 @@ form div {
   width: 300px;
   border-radius: 20px;
 }
+
+.commentsAndShares {
+  display: flex;
+  margin-left: 55px;
+}
+
+.commentIcon {
+  height: 40px;
+  width: 40px;
+}

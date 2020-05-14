@@ -12,6 +12,7 @@ import singleProfile from './singleProfile'
 import allPhotos from './photos'
 import userPosts from './userFeed'
 import singlePost from './singlePost'
+import singleComment from './singleComment'
 
 const reducer = combineReducers({
   user,
@@ -22,7 +23,8 @@ const reducer = combineReducers({
   allPhotos,
   singlePost,
   userPosts,
-  locations
+  locations,
+  singleComment
 })
 
 const middleware = composeWithDevTools(
