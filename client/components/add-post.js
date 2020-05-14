@@ -77,7 +77,7 @@ export default function AddPost(props) {
           </Button>
         </div>
         <div>
-          <Image className="post-pfp" src={props.profileImg} roundedCircle />{' '}
+          <Image className="post-pfp" src={props.profileimg} roundedCircle />{' '}
           <Form.Group controlId="exampleForm.ControlTextarea1">
             <Form.Control
               placeholder="What's on your mind?"

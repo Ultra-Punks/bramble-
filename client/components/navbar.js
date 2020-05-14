@@ -12,11 +12,6 @@ const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
     <div className="nav-container">
       <div className="nav-group">
         <p className="nav-title">Bramble</p>
-        <Image
-          className="nav-logo"
-          src="https://visualpharm.com/assets/319/Male%20User-595b40b65ba036ed117d3de6.svg"
-          roundedCircle
-        />
       </div>
 
       <Image
@@ -25,25 +20,26 @@ const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
         roundedCircle
       />
       <div className="nav-group">
-        <Button variant="danger" onClick={() => setModalShow(true)}>
-          Add Post
-        </Button>
-
         <nav>
           <div className="signin-signup">
             {isLoggedIn ? (
               <div>
+                {/* The navbar will show these links after you log in */}
+                <Button variant="danger" onClick={() => setModalShow(true)}>
+                  Add Post
+                </Button>
                 <AddPost
                   username={username}
                   show={modalShow}
                   onHide={() => setModalShow(false)}
-                  profileImg={profileImg}
+                  profileimg={profileImg}
                 />
-                {/* The navbar will show these links after you log in */}
+
                 <Link to="/home">Home</Link>
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
+                <Image className="nav-logo" src={profileImg} roundedCircle />
               </div>
             ) : (
               <div>
