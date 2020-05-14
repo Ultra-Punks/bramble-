@@ -6,7 +6,7 @@ import {logout} from '../store'
 import {Image, Button} from 'react-bootstrap'
 import {AddPost} from './index'
 
-const Navbar = ({handleClick, isLoggedIn, username}) => {
+const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
   const [modalShow, setModalShow] = React.useState(false)
   return (
     <div className="nav-container">
@@ -29,15 +29,16 @@ const Navbar = ({handleClick, isLoggedIn, username}) => {
           Add Post
         </Button>
 
-        <AddPost
-          username={username}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
         <nav>
           <div className="signin-signup">
             {isLoggedIn ? (
               <div>
+                <AddPost
+                  username={username}
+                  show={modalShow}
+                  onHide={() => setModalShow(false)}
+                  profileImg={profileImg}
+                />
                 {/* The navbar will show these links after you log in */}
                 <Link to="/home">Home</Link>
                 <a href="#" onClick={handleClick}>
@@ -64,7 +65,8 @@ const Navbar = ({handleClick, isLoggedIn, username}) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    username: state.user.username
+    username: state.user.username,
+    profileImg: state.user.profileImg
   }
 }
 

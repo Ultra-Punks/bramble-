@@ -1,5 +1,14 @@
 import React, {useState} from 'react'
-import {Modal, Button, Image} from 'react-bootstrap'
+import {
+  Modal,
+  Button,
+  Form,
+  InputGroup,
+  Dropdown,
+  DropdownButton,
+  FormControl,
+  Image
+} from 'react-bootstrap'
 import axios from 'axios'
 
 function makeid(length) {
@@ -38,6 +47,7 @@ export default function AddPost(props) {
       .catch(error => console.error(error))
     setLoading(false)
   }
+  console.log('THIS IS PROPS >>>', props)
   return (
     <Modal
       {...props}
@@ -45,26 +55,54 @@ export default function AddPost(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <div className="input-group mt-3">
-        <div className="custom-file add-post-container">
-          <input
-            id="inputGroupFile02"
-            type="file"
-            multiple
-            className="custom-file-input"
-            onChange={uploadImage}
-          />
-          <label className="custom-file-label" htmlFor="inputGroupFile02">
-            Select images..
-          </label>
-          <div>
-            {loading ? <h1>Loading...</h1> : <ShowPictures image={image} />}
-          </div>
+      <div className="modal-post-container">
+        <div className="exit-add-post">
+          <InputGroup className="mb-3">
+            <DropdownButton
+              as={InputGroup.Prepend}
+              variant="outline-secondary"
+              title="Community"
+              id="input-group-dropdown-1"
+            >
+              <Dropdown.Item href="#">None</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item href="#">Communities</Dropdown.Item>
+              <Dropdown.Item href="#">Communities</Dropdown.Item>
+              <Dropdown.Item href="#">Communities</Dropdown.Item>
+            </DropdownButton>
+            <FormControl aria-describedby="basic-addon1" />
+          </InputGroup>
+          <Button variant="link" className="exit-btn" onClick={props.onHide}>
+            X
+          </Button>
+        </div>
+        <div>
+          <Image className="post-pfp" src={props.profileImg} roundedCircle />{' '}
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Control
+              placeholder="What's on your mind?"
+              as="textarea"
+              rows="7"
+              style={{color: '#fff'}}
+            />
+          </Form.Group>
+          <Form className="input-form-container">
+            <Form.File
+              id="custom-file"
+              label="Custom file input"
+              custom
+              onChange={uploadImage}
+              style={{margin: 0, width: 400}}
+            />
+          </Form>
+        </div>
+        <div>{/* <ShowPictures image={image} /> */}</div>
+        <div className="post-btn-container">
+          <Button className="post-button" variant="outline-light">
+            Post
+          </Button>{' '}
         </div>
       </div>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   )
 }
