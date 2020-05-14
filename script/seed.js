@@ -102,6 +102,18 @@ const manualLocations = [
     description:
       "Nestled above Sheep’s Meadow in Central Park, our store is located within the historic Mineral Springs pavilion. In the late 1800s and early 1900s, this pavilion served 30 varieties of natural spring water to New Yorker's.",
     isAdmin: false
+  },
+  {
+    address: '123 addLater st.',
+    point: {type: 'point', coordinates: [-73.959285, 40.653975]},
+    name: 'Zen Vegetarian',
+    description: 'Best Chinese Food'
+  },
+  {
+    address: '123 butt st.',
+    point: {type: 'point', coordinates: [-73.956137, 40.650774]},
+    name: 'Four Seasons Bakery & Juice Bar',
+    description: 'Caribbean Food'
   }
 ]
 

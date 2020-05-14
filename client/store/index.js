@@ -4,6 +4,8 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import food from './food'
+import locations from './locations'
+
 import community from './community'
 import profiles from './allProfiles'
 import singleProfile from './singleProfile'
@@ -19,7 +21,8 @@ const reducer = combineReducers({
   community,
   allPhotos,
   singlePost,
-  userPosts
+  userPosts,
+  locations
 })
 
 const middleware = composeWithDevTools(

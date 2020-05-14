@@ -4,7 +4,7 @@ const db = require('../db')
 const Community = db.define('community', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
       // isAlphanumeric: true,
@@ -12,7 +12,7 @@ const Community = db.define('community', {
   },
   description: {
     type: Sequelize.TEXT,
-    allowNull: false,
+    // allowNull: false,
     validate: {
       notEmpty: true
     }
