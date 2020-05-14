@@ -16,6 +16,7 @@ UserPost.hasMany(PostComment)
 UserPost.hasMany(Photo)
 
 PostComment.belongsTo(UserPost)
+PostComment.belongsTo(User)
 PostComment.hasMany(Photo)
 
 Location.hasMany(Photo)
@@ -40,6 +41,7 @@ Community.hasMany(Location)
 User.hasMany(UserPost)
 User.hasMany(Photo)
 User.hasMany(Location) // <-- NOTE: was creating some issues Sat. May need review later.
+User.hasMany(PostComment)
 User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
 User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})
 User.belongsToMany(Community, {as: 'Moderator', through: CommunityMods})

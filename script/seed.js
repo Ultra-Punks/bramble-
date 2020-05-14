@@ -256,19 +256,25 @@ async function seed() {
   for (let i = 0; i < postCommentsArray.length; i++) {
     const newComment = await PostComment.create(postCommentsArray[i])
     postComments.push(newComment)
-    const randomUserNum = Math.floor(Math.random() * userPosts.length) + 1
-    await postComments[i].setUserPost(userPosts[randomUserNum])
+    const randomCommentNum = Math.floor(Math.random() * userPosts.length) + 1
+    await postComments[i].setUserPost(userPosts[randomCommentNum])
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await postComments[i].setUser(users[randomUserNum])
   }
 
-  // console.log('comments>>>>>>', comments)
-  // // // loop through comments in case userId is null...
-  // // for (let i = 0; i < comments.length; i++) {
-  // //   if (comments[i].userPostId === undefined) {
-  // //     comments[i].userPostId = 1
-  // //     await comments[i].save()
-  // //   }
-  // // }
-
+  // loop through post comments in to mitigate null value foreign keys...
+  for (let i = 0; i < postCommentsArray.length; i++) {
+    // if the userId column in location reviews is null...
+    if (postComments[i].userId === undefined) {
+      postComments[i].userId = 1 // default set to userId 1
+      await postComments[i].save()
+    }
+    // if the locationId column in location reviews is null...
+    if (postComments[i].userPostId === undefined) {
+      postComments[i].userPostId = 1 // default set to userId 1
+      await postComments[i].save()
+    }
+  }
   // await locations[0].setUser(users[0])
   // users[0].addCommunity(communities[0])
   // ==========  ORIGINAL SEED INFO FROM BOILERMAKER  ==========
