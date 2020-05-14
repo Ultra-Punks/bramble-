@@ -11,9 +11,8 @@ const LocationReview = db.define('locationReview', {
     }
   },
   comments: {
-    type: Sequelize.TEXT,
-
-  },
+    type: Sequelize.TEXT
+  }
 })
 
 module.exports = LocationReview

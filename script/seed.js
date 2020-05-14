@@ -7,6 +7,8 @@ const {
   Location,
   Community,
   UserPost,
+  LocationReview,
+  PostComment,
   CommunitySubs
 } = require('../server/db/models')
 
@@ -153,6 +155,27 @@ const generatePost = () => {
 // store 50 new posts created by generatePost into the userPostArray
 const userPostArray = Array.from({length: 50}, generatePost)
 
+// create random location review seed data
+const generateLocationReview = () => {
+  return {
+    ratings: chanceObj.integer({min: 1, max: 5}),
+    comments: chanceObj.paragraph()
+  }
+}
+
+// store 40 new location reviews created by generateLocationReview into the locationReviews array
+const locationReviewsArray = Array.from({length: 40}, generateLocationReview)
+
+// create random PostComments seed data
+const generatePostComments = () => {
+  return {
+    comment: chanceObj.paragraph()
+  }
+}
+
+// store 150 new post comments into the postCommentsArray
+const postCommentsArray = Array.from({length: 150}, generatePostComments)
+
 // eslint-disable-next-line max-statements
 async function seed() {
   await db.sync({force: true})
@@ -162,6 +185,8 @@ async function seed() {
   const locations = []
   const communities = []
   const userPosts = []
+  const locationReviews = []
+  const postComments = []
 
   for (let i = 0; i < updatedUsers.length; i++) {
     const newUser = await User.create(updatedUsers[i])
@@ -214,6 +239,53 @@ async function seed() {
     if (userPosts[i].userId === undefined) {
       userPosts[i].userId = 1
       await userPosts[i].save()
+    }
+  }
+
+  for (let i = 0; i < locationReviewsArray.length; i++) {
+    const newReview = await LocationReview.create(locationReviewsArray[i])
+    locationReviews.push(newReview)
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await locationReviews[i].setUser(users[randomUserNum])
+    const randomLocationNum = Math.floor(Math.random() * users.length) + 1
+    await locationReviews[i].setLocation(locations[randomLocationNum])
+  }
+
+  // loop through location reviews in to mitigate null value foreign keys...
+  for (let i = 0; i < locationReviews.length; i++) {
+    // if the userId column in location reviews is null...
+    if (locationReviews[i].userId === undefined) {
+      locationReviews[i].userId = 1 // default set to userId 1
+      await locationReviews[i].save()
+    }
+    // if the locationId column in location reviews is null...
+    if (locationReviews[i].locationId === undefined) {
+      locationReviews[i].locationId = 1 // default set to userId 1
+      await locationReviews[i].save()
+    }
+  }
+
+  // loop through post comments in to mitigate null value foreign keys...
+  for (let i = 0; i < postCommentsArray.length; i++) {
+    const newComment = await PostComment.create(postCommentsArray[i])
+    postComments.push(newComment)
+    const randomCommentNum = Math.floor(Math.random() * userPosts.length) + 1
+    await postComments[i].setUserPost(userPosts[randomCommentNum])
+    const randomUserNum = Math.floor(Math.random() * users.length) + 1
+    await postComments[i].setUser(users[randomUserNum])
+  }
+
+  // loop through post comments in to mitigate null value foreign keys...
+  for (let i = 0; i < postCommentsArray.length; i++) {
+    // if the userId column in location reviews is null...
+    if (postComments[i].userId === undefined) {
+      postComments[i].userId = 1 // default set to userId 1
+      await postComments[i].save()
+    }
+    // if the locationId column in location reviews is null...
+    if (postComments[i].userPostId === undefined) {
+      postComments[i].userPostId = 1 // default set to userId 1
+      await postComments[i].save()
     }
   }
 
