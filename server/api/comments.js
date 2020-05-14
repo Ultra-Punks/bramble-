@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {PostComment, User} = require('../db/models')
+const {PostComment, UserPost, User} = require('../db/models')
 
 module.exports = router
 
@@ -25,20 +25,20 @@ router.get('/:commentId', async (req, res, next) => {
   }
 })
 
-// // get all comments of a specific user post
-// router.get('/of/:locationId', async (req, res, next) => {
-//   try {
-//     const locationReviews = await Location.findOne({
-//       where: {
-//         id: req.params.locationId,
-//       },
-//       include: [{model: LocationReview}],
-//     })
-//     res.json(locationReviews)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// get all comments of a specific user post
+router.get('/on/:userPostId', async (req, res, next) => {
+  try {
+    const userPostComments = await UserPost.findOne({
+      where: {
+        id: req.params.userPostId
+      },
+      include: [{model: PostComment}]
+    })
+    res.json(userPostComments)
+  } catch (error) {
+    next(error)
+  }
+})
 
 // get all comments from a specific user
 router.get('/from/:username', async (req, res, next) => {
