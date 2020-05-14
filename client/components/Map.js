@@ -23,8 +23,8 @@ class Map extends React.Component {
     //for when the user wants to add a location that they are not currently at
     this.state = {
       viewport: {
-        width: 800,
-        height: 800,
+        width: 1000,
+        height: 700,
         latitude: 40.73061,
         longitude: -73.935242,
         zoom: 15
@@ -83,7 +83,10 @@ class Map extends React.Component {
     console.log('coordsArray in addMarker func', coordsArray)
     const coordinates = [...coordsArray]
     this.setState({
-      selectedLocation: {name: 'Temporary', point: {type: 'Point', coordinates}}
+      selectedLocation: {
+        name: 'Temporary',
+        point: {type: 'Point', coordinates}
+      }
     })
   }
   render() {
