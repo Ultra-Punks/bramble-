@@ -27,10 +27,10 @@ class Map extends React.Component {
         height: 700,
         latitude: 40.73061,
         longitude: -73.935242,
-        zoom: 15
+        zoom: 12
       },
-      displayPopup: false,
       userLocation: {},
+      displayPopup: false,
       selectedLocation: {}
     }
   }
@@ -59,6 +59,7 @@ class Map extends React.Component {
   //and creates a <Popup/> component for each location,
   // ANY HTML can go between Popups opening and closing tags
   renderPopup(index) {
+    console.log('IN RENDERPOPUP FUNC')
     const long = this.props.locations[index].point.coordinates[0]
     const lat = this.props.locations[index].point.coordinates[1]
     return (
@@ -166,15 +167,19 @@ class Map extends React.Component {
                     className="marker"
                     src="map-icon.png"
                     width="50"
-                    onClick={() =>
+                    onClick={() => {
+                      console.log('marker in onClick', marker)
+                      marker.popup
+                        ? (marker.popup = false)
+                        : (marker.popup = true)
                       this.state.displayPopup
                         ? this.setState({displayPopup: false})
                         : this.setState({displayPopup: true})
-                    }
+                    }}
                   />
                 </Marker>
                 {/* also checking if displayPopup is true, then render Popup */}
-                {this.state.displayPopup ? this.renderPopup(idx) : <div />}
+                {marker.popup ? this.renderPopup(idx) : <div />}
               </div>
             )
           })}
