@@ -3,6 +3,8 @@ const {LocationReview, Location, User} = require('../db/models')
 
 module.exports = router
 
+// NOTE: reviews are mounted on /api/reviews
+
 // get all reviews
 router.get('/', async (req, res, next) => {
   try {
@@ -23,7 +25,6 @@ router.get('/:reviewId', async (req, res, next) => {
   }
 })
 
-// REVISIT...NOT WORKING CURRENTLY...
 // get all reviews of a specific location
 router.get('/of/:locationId', async (req, res, next) => {
   try {
@@ -39,7 +40,6 @@ router.get('/of/:locationId', async (req, res, next) => {
   }
 })
 
-// REVISIT...NOT WORKING CURRENTLY...
 // get all reviews from a specific user
 router.get('/from/:username', async (req, res, next) => {
   try {
