@@ -26,6 +26,11 @@ const Location = db.define('location', {
     validate: {
       // isAlphanumeric: true
     }
+  },
+  popup: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   }
 })
 

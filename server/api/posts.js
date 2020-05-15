@@ -1,13 +1,17 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {UserPost, User, Community} = require('../db/models')
+
+
+
+const {UserPost, User, Photo, Community} = require('../db/models')
+
 
 module.exports = router
 
 //gets all posts
 router.get('/', async (req, res, next) => {
   try {
-    const allPosts = await UserPost.findAll()
+    const allPosts = await UserPost.findAll({include: [{model: Photo}]})
     res.json(allPosts)
   } catch (error) {
     next(error)
@@ -17,7 +21,9 @@ router.get('/', async (req, res, next) => {
 //gets single post according to postId
 router.get('/:postId', async (req, res, next) => {
   try {
-    const singlePost = await UserPost.findByPk(req.params.postId)
+    const singlePost = await UserPost.findByPk(req.params.postId, {
+      include: [{model: Photo}]
+    })
     res.json(singlePost)
   } catch (error) {
     next(error)
@@ -31,7 +37,7 @@ router.get('/from/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: UserPost}]
+      include: [{model: UserPost, include: [{model: Photo}]}]
     })
     res.json(allUserPosts.userPosts)
   } catch (error) {
@@ -63,12 +69,30 @@ router.post('/add/:username', async (req, res, next) => {
       }
     })
 
-    const newPost = await UserPost.create(
-      {userId: user.id, description: req.body.description}
-      // {include: [{model: User}]}
-    )
+    let newPost = await UserPost.create({
+      userId: user.id,
+      description: req.body.description
+    })
 
-    res.json(newPost)
+    if (req.body.photo) {
+      const newPhoto = await Photo.create({
+        userPostId: newPost.id,
+        userId: user.id,
+        imgFile: req.body.photoInfo
+      })
+
+      const postWithPics = await UserPost.findByPk(newPost.id, {
+        include: [{model: Photo}]
+      })
+
+      res.json(postWithPics)
+    } else {
+      newPost = await UserPost.findByPk(newPost.id, {
+        include: [{model: Photo}]
+      })
+
+      res.json(newPost)
+    }
   } catch (error) {
     next(error)
   }
