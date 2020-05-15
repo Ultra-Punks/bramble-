@@ -1,13 +1,19 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {UserPost, User, Photo} = require('../db/models')
+
+
+
+const {UserPost, User, Photo, Community} = require('../db/models')
+
 
 module.exports = router
 
 //gets all posts
 router.get('/', async (req, res, next) => {
   try {
-    const allPosts = await UserPost.findAll({include: [{model: Photo}]})
+    const allPosts = await UserPost.findAll({
+      include: [{model: Photo}]
+    })
     res.json(allPosts)
   } catch (error) {
     next(error)
@@ -18,7 +24,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const singlePost = await UserPost.findByPk(req.params.postId, {
-      include: [{model: Photo}]
+      include: [{model: Photo}, {model: User}]
     })
     res.json(singlePost)
   } catch (error) {
@@ -36,6 +42,21 @@ router.get('/from/:username', async (req, res, next) => {
       include: [{model: UserPost, include: [{model: Photo}]}]
     })
     res.json(allUserPosts.userPosts)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//gets all posts for specific community
+router.get('/for/:communityPost', async (req, res, next) => {
+  try {
+    const allCommunityPosts = await Community.findOne({
+      where: {
+        id: req.params.communityPost
+      },
+      include: [{model: UserPost}]
+    })
+    res.json(allCommunityPosts)
   } catch (error) {
     next(error)
   }

@@ -21,7 +21,22 @@ export const fetchUserPosts = username => {
   }
 }
 
+
+// thunk to fetch community Post
+export const fetchCommunityPosts = id => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/posts/for/${id}`)
+      dispatch(getUserPosts(data.userPosts))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+
 export const addPostThunk = postInfo => {
+
   return async dispatch => {
     try {
       const {data} = await axios.post(

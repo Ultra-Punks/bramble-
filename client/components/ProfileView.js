@@ -1,15 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
-import {fetchAllPhotos} from '../store/photos'
 import {fetchUserPosts} from '../store/userFeed'
+import {fetchSingleComment} from '../store/singleComment'
 import {PostFeed, Map} from './index'
 import {Image, Button} from 'react-bootstrap'
 
 class ProfileView extends React.Component {
   constructor(props) {
     super(props)
-    console.log('from constructor>>>>>>', this.props)
     this.state = {
       postFeed: true
     }
@@ -18,7 +17,6 @@ class ProfileView extends React.Component {
   }
   componentDidMount() {
     this.props.fetchProfile()
-    this.props.fetchGallery()
     this.props.fetchUserPosts()
   }
 
@@ -63,7 +61,7 @@ class ProfileView extends React.Component {
           </div>
           <Button className="follow-button" variant="outline-light">
             Follow
-          </Button>{' '}
+          </Button>
           <div className="contentContainer">
             <div className="buttonContainer">
               <Button
@@ -103,13 +101,9 @@ class ProfileView extends React.Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     profile: state.singleProfile,
-    gallery: state.allPhotos,
     posts: state.userPosts
   }
 }
@@ -118,8 +112,8 @@ const mapDispatch = (dispatch, ownProps) => {
   const username = ownProps.match.params.username
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchGallery: () => dispatch(fetchAllPhotos(username)),
     fetchUserPosts: () => dispatch(fetchUserPosts(username))
+    // fetchSingleComment: () => dispatch(fetchSingleComment())
   }
 }
 

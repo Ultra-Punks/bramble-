@@ -232,12 +232,19 @@ async function seed() {
     userPosts.push(newPost)
     const randomUserNum = Math.floor(Math.random() * users.length) + 1
     await userPosts[i].setUser(users[randomUserNum])
+    const randomCommunityNum =
+      Math.floor(Math.random() * communities.length) + 1
+    await userPosts[i].setCommunity(communities[randomCommunityNum])
   }
 
   // loop through user posts in case userId is null...
   for (let i = 0; i < userPosts.length; i++) {
     if (userPosts[i].userId === undefined) {
       userPosts[i].userId = 1
+      await userPosts[i].save()
+    }
+    if (userPosts[i].communityId === undefined) {
+      userPosts[i].communityId = 1
       await userPosts[i].save()
     }
   }

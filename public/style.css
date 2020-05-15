@@ -41,6 +41,7 @@ form div {
   top: 0;
   width: 100%;
   overflow: hidden;
+  z-index: 5;
 }
 
 .nav-group {
@@ -439,4 +440,176 @@ form div {
   height: 300px;
   width: 300px;
   border-radius: 20px;
+}
+
+
+.signup-label {
+  color: white;
+}
+
+.signup-input {
+  background-color: white;
+  color: black;
+}
+
+.signup-input:active {
+  background-color: white;
+  color: black;
+}
+
+.signup-input:focus {
+  background-color: white;
+  color: black;
+}
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub {
+  color: #dee1e8 !important;
+}
+
+.signup-username {
+  display: flex;
+  margin: 0;
+}
+
+.input-group-text {
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+
+.input-radius {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.single-post-img {
+  width: 650px;
+  height: 450px;
+  object-fit: cover;
+}
+
+.single-post-container {
+  margin: 50px;
+}
+
+.image-rec-container {
+  background-color: #fff;
+  height: 450px;
+  width: 500px;
+  overflow-y: auto;
+}
+
+.image-single-post-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.test {
+  font-size: 30px;
+}
+
+.communityBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.communityContainer {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: black;
+  width: 80%;
+}
+
+.community:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  padding: 2px 16px;
+
+  margin: 10px;
+}
+
+.imageStyle {
+  background-color: black;
+  width: 100px;
+  height: 170px;
+  margin: 10px;
+}
+.commentsAndShares {
+  display: flex;
+  margin-left: 55px;
+}
+
+.commentIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.commentIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.likeIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.likeIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.dislikeIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.dislikeIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.commentContainer {
+  display: flex;
+  height: 500px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.singleComment {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 700px;
+  background-color: rgba(224, 232, 240, 0.879);
+  justify-content: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+}
+
+.commentHeader {
+  background-color: rgba(60, 78, 96, 0.879);
+  padding: 10px;
+  display: flex;
+}
+
+.commentWriting {
+  padding: 40px;
+}
+
+.commentShareBar {
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
 }

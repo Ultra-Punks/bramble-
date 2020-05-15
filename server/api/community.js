@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {Community} = require('../db/models')
 module.exports = router
 
+// get all community
 router.get('/', async (req, res, next) => {
   try {
     const allCommunity = await Community.findAll()
@@ -13,6 +14,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// get community by name
 router.get('/:communityName', async (req, res, next) => {
   try {
     const CName = req.params.communityName
@@ -25,6 +27,7 @@ router.get('/:communityName', async (req, res, next) => {
   }
 })
 
+// get community by id
 router.get('/list/:id', async (req, res, next) => {
   try {
     const id = req.params.id
