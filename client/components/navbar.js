@@ -4,14 +4,17 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Image, Button} from 'react-bootstrap'
-import {AddPost} from './index'
+import {AddPost, SignupButton} from './index'
 
-const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
+const Navbar = ({handleClick, isLoggedIn, user}) => {
   const [modalShow, setModalShow] = React.useState(false)
+  const [signupShow, setSignupShow] = React.useState(false)
   return (
     <div className="nav-container">
       <div className="nav-group">
-        <p className="nav-title">Bramble</p>
+        <Link to="/">
+          <p className="nav-title">Bramble</p>
+        </Link>
       </div>
 
       <Image
@@ -23,29 +26,37 @@ const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
         <nav>
           <div className="signin-signup">
             {isLoggedIn ? (
-              <div>
+              <div className="logged-in-container">
                 {/* The navbar will show these links after you log in */}
                 <Button variant="danger" onClick={() => setModalShow(true)}>
                   Add Post
                 </Button>
                 <AddPost
-                  username={username}
                   show={modalShow}
                   onHide={() => setModalShow(false)}
-                  profileimg={profileImg}
+                  user={user}
                 />
 
                 <Link to="/home">Home</Link>
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
-                <Image className="nav-logo" src={profileImg} roundedCircle />
+                <Image
+                  className="nav-logo"
+                  src={user.profileImg}
+                  roundedCircle
+                />
               </div>
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
                 <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
+                <Button onClick={() => setSignupShow(true)}>Signup</Button>
+                <SignupButton
+                  show={signupShow}
+                  onHide={() => setSignupShow(false)}
+                />
+                {/* <Link to="/signup">Sign Up</Link> */}
               </div>
             )}
           </div>
@@ -61,8 +72,7 @@ const Navbar = ({handleClick, isLoggedIn, username, profileImg}) => {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    username: state.user.username,
-    profileImg: state.user.profileImg
+    user: state.user
   }
 }
 

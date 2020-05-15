@@ -113,7 +113,8 @@ form div {
 }
 
 .modal-content {
-  height: 425px;
+  height: auto;
+  min-height: 425px;
   display: flex;
   flex-direction: column;
   background-color: #3d4a63;
@@ -416,4 +417,19 @@ form div {
 
 .input-form-container {
   margin-left: 25px;
+}
+
+.logged-in-container {
+  display: flex;
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+}
+
+.description-input {
+  width: 100%;
+  min-height: 100px;
+  height: unset;
 }

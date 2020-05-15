@@ -6,7 +6,6 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-// const GET_PROFILE = 'GET_PROFILE'
 
 /**
  * INITIAL STATE
@@ -24,13 +23,6 @@ const getUser = user => {
 }
 const removeUser = () => ({type: REMOVE_USER})
 
-// const getProfile = (profile) => {
-//   return {
-//     type: GET_PROFILE,
-//     profile,
-//   }
-// }
-
 /**
  * THUNK CREATORS
  */
@@ -46,17 +38,6 @@ export const fetchUser = userId => {
   }
 }
 
-// export const fetchProfile = (userId) => {
-//   return async (dispatch) => {
-//     try {
-//       const res = await axios.get(`api/users/${userId}`)
-//       dispatch(getProfile(res.data))
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-// }
-
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -66,10 +47,21 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (
+  email,
+  password,
+  method,
+  name,
+  username
+) => async dispatch => {
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await axios.post(`/auth/${method}`, {
+      email,
+      password,
+      name,
+      username
+    })
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
@@ -101,8 +93,6 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
-    // case GET_PROFILE:
-    //   return action.profile
     default:
       return state
   }
