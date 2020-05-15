@@ -54,9 +54,7 @@ const User = db.define('user', {
   },
   description: {
     type: Sequelize.TEXT,
-    validate: {
-      // isAlphanumeric: true,
-    }
+    defaultValue: ''
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,

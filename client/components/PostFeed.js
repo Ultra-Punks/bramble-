@@ -3,6 +3,17 @@ import React from 'react'
 import {Image} from 'react-bootstrap'
 // import axios from 'axios'
 
+function PostingPictures(props) {
+  const {post} = props
+  console.log('RIGHT BEFORE', post)
+
+  if (post.photos[0] !== undefined) {
+    return <img src={post.photos[0].imgFile} className="post-images" />
+  } else {
+    return <div />
+  }
+}
+
 export default function PostFeed(props) {
   if (props.postFeed) {
     return (
@@ -25,11 +36,9 @@ export default function PostFeed(props) {
                     <p className="post-text">{post.description}</p>
                   </div>
                 </div>
+
                 <div className="post-photos">
-                  <img
-                    src="https://img.freepik.com/free-photo/blue-mountains-famous-tourism-scenery-lijiang_1417-1143.jpg?size=626&ext=jpg"
-                    className="post-images"
-                  />
+                  <PostingPictures post={post} />
                 </div>
                 <div className="commentsAndShares">
                   <img
