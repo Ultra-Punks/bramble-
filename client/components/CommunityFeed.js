@@ -1,18 +1,7 @@
-/* eslint-disable react/jsx-key */
+// * eslint - disable react / jsx - key * /
 import React from 'react'
 import {Image} from 'react-bootstrap'
 // import axios from 'axios'
-
-function PostingPictures(props) {
-  const {post} = props
-  console.log('RIGHT BEFORE', post)
-
-  if (post.photos[0] !== undefined) {
-    return <img src={post.photos[0].imgFile} className="post-images" />
-  } else {
-    return <div />
-  }
-}
 
 export default function PostFeed(props) {
   if (props.postFeed) {
@@ -23,11 +12,7 @@ export default function PostFeed(props) {
             return (
               <div key={post.id} className="single-post">
                 <div className="post-header">
-                  <Image
-                    className="post-pfp"
-                    src={props.profile.profileImg}
-                    roundedCircle
-                  />
+                  <Image className="post-pfp" src={props.profile.profileImg} />
                   <div className="post-info">
                     <div className="post-handle">
                       <p className="handle-text">{props.profile.name}</p>
@@ -36,14 +21,10 @@ export default function PostFeed(props) {
                     <p className="post-text">{post.description}</p>
                   </div>
                 </div>
-
                 <div className="post-photos">
-                  <PostingPictures post={post} />
-                </div>
-                <div className="commentsAndShares">
                   <img
-                    src="https://img.icons8.com/all/500/comments.png"
-                    className="commentIcon"
+                    src="https://img.freepik.com/free-photo/blue-mountains-famous-tourism-scenery-lijiang_1417-1143.jpg?size=626&ext=jpg"
+                    className="post-images"
                   />
                 </div>
                 <br />

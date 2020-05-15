@@ -1,9 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleCommunity} from '../store/community'
-import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
-import {PostFeed} from './index'
+import {fetchCommunityPosts} from '../store/userFeed'
+import {fetchProfile} from '../store/singleProfile'
+import {Image, Button} from 'react-bootstrap'
+import {CommunityFeed} from './index'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
@@ -17,6 +19,8 @@ class CommunityProfile extends React.Component {
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.fetchSingleCommunity(id)
+    this.props.fetchGallery()
+    this.props.fetchCommunityPosts()
   }
 
   postSelector() {
@@ -27,42 +31,83 @@ class CommunityProfile extends React.Component {
     this.setState({postFeed: false})
   }
 
+  // PostFeed() {
+  //   const posts = this.props.posts
+  //   if (this.state.postFeed) {
+  //     if (Array.isArray(posts)) {
+  //       return (
+  //         <div>
+  //           {posts.map((result) => {
+  //             return (
+  //               <div key={result.id}>
+  //                 <div>{result.description}</div>
+  //               </div>
+  //             )
+  //           })}
+  //         </div>
+  //       )
+  //     }
+  //   }
+  // }
+
   render() {
+    console.log(this.props)
     const profile = this.props.profile
     const community = this.props.community
+    const postClass = this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
+
+    const galleryFeed = !this.state.postFeed
+      ? 'profileFeedButton selected-feed'
+      : 'profileFeedButton'
+
     return (
       <div>
         <div className="profileContainer">
           <div className="profileImgContentContainer">
             <img src={community.profileImg} className="profilePagePhoto" />
             <div className="profileInfo">
-              <ul>{profile.username}</ul>
-              <ul>Community: {community.name}</ul>
-              <ul>Members: </ul>
-              <button type="button">Subscribe</button>
+              <p className="profile-name">{profile.username}</p>
+              <p className="profile-username"> Community: {community.name}</p>
+              {/* <ul>Members: </ul> */}
+              {/* <button type="button">Subscribe</button> */}
             </div>
-            <ul className="profileBio">Bio: {community.description}</ul>
+            <div className="underline">
+              <p className="profileBio">Bio: {community.description}</p>
+            </div>
+            <div className="profile-follows">
+              <p className="first-list">Subscribers: {community.subscribers}</p>
+              {/* <p className="profile-info-text">Communities</p> */}
+            </div>
+            <Button className="follow-button" variant="outline-light">
+              Subscribe
+            </Button>
+
             <div className="contentContainer">
               <div className="buttonContainer">
-                <button
-                  type="button"
-                  className="profileFeedButton"
+                <Button
+                  variant="link"
+                  className={postClass}
                   onClick={() => this.postSelector()}
                 >
                   Posts
-                </button>
-                <button
-                  type="button"
-                  className="profileFeedButton"
+                </Button>
+                <Button
+                  variant="link"
+                  className={galleryFeed}
                   onClick={() => this.gallerySelector()}
                 >
                   Gallery
-                </button>
+                </Button>
               </div>
+              {/* <div>{this.PostFeed()}</div> */}
               <div>
-                <PostFeed
+                <CommunityFeed
                   postFeed={this.state.postFeed}
                   images={this.props.gallery}
+                  posts={this.props.posts}
+                  profile={this.props.profile}
                 />
               </div>
             </div>
@@ -83,16 +128,19 @@ const mapState = state => {
   return {
     community: state.community,
     profile: state.singleProfile,
-    gallery: state.allPhotos
+    gallery: state.allPhotos,
+    posts: state.userPosts
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
+  const id = ownProps.match.params.id
   const username = ownProps.match.params.username
   return {
-    fetchSingleCommunity: id => dispatch(fetchSingleCommunity(id)),
+    fetchSingleCommunity: () => dispatch(fetchSingleCommunity(id)),
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchGallery: () => dispatch(fetchAllPhotos(username))
+    fetchGallery: () => dispatch(fetchAllPhotos(username)),
+    fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id))
   }
 }
 

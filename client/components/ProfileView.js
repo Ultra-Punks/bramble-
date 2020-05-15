@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchUserPosts} from '../store/userFeed'
+import {fetchSingleComment} from '../store/singleComment'
 import {PostFeed, Map} from './index'
 import {Image, Button} from 'react-bootstrap'
 
@@ -63,7 +64,7 @@ class ProfileView extends React.Component {
           </div>
           <Button className="follow-button" variant="outline-light">
             Follow
-          </Button>{' '}
+          </Button>
           <div className="contentContainer">
             <div className="buttonContainer">
               <Button
@@ -120,6 +121,7 @@ const mapDispatch = (dispatch, ownProps) => {
     fetchProfile: () => dispatch(fetchProfile(username)),
     fetchGallery: () => dispatch(fetchAllPhotos(username)),
     fetchUserPosts: () => dispatch(fetchUserPosts(username))
+    // fetchSingleComment: () => dispatch(fetchSingleComment())
   }
 }
 
