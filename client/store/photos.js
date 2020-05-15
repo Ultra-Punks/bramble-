@@ -9,7 +9,7 @@ const initialState = []
 export const fetchAllPhotos = username => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/photos/${username}`)
+      const {data} = await axios.get(`/api/photos/from/${username}`)
       dispatch(getAllUserPhotos(data))
     } catch (error) {
       console.log('error', error)

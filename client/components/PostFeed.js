@@ -5,8 +5,6 @@ import {Image} from 'react-bootstrap'
 
 function PostingPictures(props) {
   const {post} = props
-  console.log('RIGHT BEFORE', post)
-
   if (post.photos[0] !== undefined) {
     return <img src={post.photos[0].imgFile} className="post-images" />
   } else {
@@ -49,14 +47,16 @@ export default function PostFeed(props) {
   } else {
     return (
       <div className="gallery-container">
-        {props.images.map(image => {
-          return (
-            <img
-              key={image.filename}
-              className="gallery-photo"
-              src={image.url}
-            />
-          )
+        {props.posts.map(post => {
+          if (post.photos[0] !== undefined) {
+            return (
+              <img
+                key={post.photos[0].id}
+                src={post.photos[0].imgFile}
+                className="gallery-photo"
+              />
+            )
+          }
         })}
       </div>
     )
