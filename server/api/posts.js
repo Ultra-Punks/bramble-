@@ -42,11 +42,11 @@ router.get('/from/:username', async (req, res, next) => {
 //gets all posts for specific community
 router.get('/for/:communityPost', async (req, res, next) => {
   try {
-    const allCommunityPosts = await UserPost.findOne({
+    const allCommunityPosts = await Community.findOne({
       where: {
-        communityId: req.params.communityPost
+        id: req.params.communityPost
       },
-      include: [{model: Community}]
+      include: [{model: UserPost}]
     })
     res.json(allCommunityPosts)
   } catch (error) {

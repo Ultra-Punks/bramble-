@@ -41,14 +41,17 @@ class CommunitySearch extends React.Component {
     if (community) {
       if (Array.isArray(community)) {
         return (
-          <div>
+          <div className="communityBlock">
             {community.map(result => {
               return (
-                <div key={result.id}>
-                  <div>{result.name}</div>
-                  <div>{result.description}</div>
-                  <Link to={`/Community/list/${result.id}`}>Detail</Link>
-                  <button type="button">Follow</button>
+                <div key={result.id} className="communityContainer">
+                  <img src={result.profileImg} className="imageStyle" />
+                  <div className="card">
+                    <div>{result.name}</div>
+                    <div>{result.description}</div>
+                    <Link to={`/Community/list/${result.id}`}>Detail</Link>
+                    <button type="button">Follow</button>
+                  </div>
                   <br />
                 </div>
               )
@@ -57,12 +60,17 @@ class CommunitySearch extends React.Component {
         )
       } else {
         return (
-          <div>
-            <div>{community.name}</div>
-            <div>{community.description}</div>
-            <Link to={`/Community/${community.id}`}>Detail</Link>
-            <button type="button">Follow</button>
-            <br />
+          <div className="communityBlock">
+            <div className="communityContainer">
+              <img src={community.profileImg} className="imageStyle" />
+              <div className="card">
+                <div>{community.name}</div>
+                <div>{community.description}</div>
+                <Link to={`/Community/${community.id}`}>Detail</Link>
+                <button type="button">Follow</button>
+              </div>
+              <br />
+            </div>
           </div>
         )
       }

@@ -2,10 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleCommunity} from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
-import {fetchUserPosts} from '../store/userFeed'
+import {fetchCommunityPosts} from '../store/userFeed'
 import {fetchProfile} from '../store/singleProfile'
-
-import {PostFeed} from './index'
+// import {PostFeed} from './index'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class CommunityProfile extends React.Component {
     const id = this.props.match.params.id
     this.props.fetchSingleCommunity(id)
     this.props.fetchGallery()
-    this.props.fetchUserPosts()
+    this.props.fetchCommunityPosts(id)
   }
 
   postSelector() {
@@ -31,7 +30,27 @@ class CommunityProfile extends React.Component {
     this.setState({postFeed: false})
   }
 
+  PostFeed() {
+    const userPosts = this.props.userPosts
+    if (this.state.postFeed) {
+      if (Array.isArray(userPosts)) {
+        return (
+          <div>
+            {userPosts.map(result => {
+              return (
+                <div key={result.id}>
+                  <div>{result.description}</div>
+                </div>
+              )
+            })}
+          </div>
+        )
+      }
+    }
+  }
+
   render() {
+    console.log(this.props)
     const profile = this.props.profile
     const community = this.props.community
     const postClass = this.state.postFeed
@@ -50,15 +69,15 @@ class CommunityProfile extends React.Component {
             <div className="profileInfo">
               <ul>{profile.username}</ul>
               <ul>Community: {community.name}</ul>
-              <ul>Members: </ul>
-              <button type="button">Subscribe</button>
+              {/* <ul>Members: </ul> */}
+              {/* <button type="button">Subscribe</button> */}
             </div>
             <ul className="profileBio">Bio: {community.description}</ul>
             <div className="contentContainer">
               <div className="buttonContainer">
                 <button
                   type="button"
-                  className="profileFeedButton"
+                  className={postClass}
                   onClick={() => this.postSelector()}
                 >
                   Posts
@@ -71,14 +90,7 @@ class CommunityProfile extends React.Component {
                   Gallery
                 </button>
               </div>
-              <div>
-                <PostFeed
-                  postFeed={this.state.postFeed}
-                  images={this.props.gallery}
-                  posts={this.props.posts}
-                  profile={this.props.profile}
-                />
-              </div>
+              <div>{this.PostFeed()}</div>
             </div>
           </div>
 
@@ -97,7 +109,8 @@ const mapState = state => {
   return {
     community: state.community,
     profile: state.singleProfile,
-    gallery: state.allPhotos
+    gallery: state.allPhotos,
+    userPosts: state.userPosts
   }
 }
 
@@ -107,7 +120,7 @@ const mapDispatch = (dispatch, ownProps) => {
     fetchSingleCommunity: id => dispatch(fetchSingleCommunity(id)),
     fetchProfile: () => dispatch(fetchProfile(username)),
     fetchGallery: () => dispatch(fetchAllPhotos(username)),
-    fetchUserPosts: () => dispatch(fetchUserPosts(username))
+    fetchCommunityPosts: id => dispatch(fetchCommunityPosts(id))
   }
 }
 
