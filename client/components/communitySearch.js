@@ -90,7 +90,7 @@ class CommunitySearch extends React.Component {
             onChange={this.handleChange}
             value={this.state.community}
           />
-          <button type="submit"> Submit </button>
+          <button type="submit"> Search </button>
         </form>
         <br />
         <div>{this.searchResults()}</div>
