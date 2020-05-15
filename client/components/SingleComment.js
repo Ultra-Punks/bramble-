@@ -3,7 +3,9 @@ import {connect} from 'react-redux'
 
 //import thunk:
 import {fetchSingleComment} from '../store/singleComment'
-import {fetchUser} from '../store/user'
+import {fetchProfile} from '../store/singleProfile'
+
+// import {fetchUser} from '../store/user'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
@@ -13,13 +15,16 @@ class SingleComment extends Component {
   }
 
   componentDidMount() {
-    const id = this.props.match.params.commentId
-    this.props.fetchSingleComment(id)
+    // const id = this.props.match.params.commentId
+    this.props.fetchSingleComment()
+    // const profile = this.props.match.params.profile
+    this.props.fetchProfile(3)
     // this.props.fetchUser(3)
   }
 
   render() {
-    console.log('props???>>>>>', this.props)
+    // console.log('props???>>>>>', this.props)
+    // console.log('THIS.STATE>>>>', this.state)
     const comment = this.props.singleComment.comment
     return (
       <div className="commentContainer">
@@ -46,17 +51,20 @@ class SingleComment extends Component {
 }
 
 const mapToState = state => {
+  console.log('this is STATE>>>>>', state)
   return {
     singleComment: state.singleComment,
-    user: state.user
+    profile: state.singleProfile
   }
 }
 
-const mapToDispatch = dispatch => {
+const mapToDispatch = (dispatch, ownProps) => {
   // establish variable for user?
-  return {
-    fetchSingleComment: comment => dispatch(fetchSingleComment(comment))
+  const commentId = ownProps.match.params.commentId
 
+  return {
+    fetchSingleComment: () => dispatch(fetchSingleComment(commentId)),
+    fetchProfile: username => dispatch(fetchProfile(username))
     // fetchUser: (userId) => dispatch(fetchUser(userId)),
   }
 }

@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Tags = db.define('tags', {
   imageTags: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.STRING
   }
 })
 
