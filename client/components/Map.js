@@ -1,6 +1,6 @@
 //Official Docs: https://github.com/visgl/react-map-gl/tree/master/docs/api-reference
 //Tutorial (Viewport, Markers, Popups): https://medium.com/@walkingtreetech/play-with-maps-in-react-using-mapbox-f74fdf386c8a
-
+//Geocoder example: https://codesandbox.io/s/l7p179qr6m & Docs: https://github.com/SamSamskies/react-map-gl-geocoder
 import React from 'react'
 import MapGL, {
   GeolocateControl,
@@ -8,7 +8,9 @@ import MapGL, {
   Marker,
   Popup
 } from 'react-map-gl'
-import {AddLocationForm} from './index'
+import Geocoder from 'react-map-gl-geocoder'
+import {Link} from 'react-router-dom'
+import {AddLocationForm, SingleLocation} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
@@ -18,6 +20,7 @@ class Map extends React.Component {
     super()
     this.addMarker = this.addMarker.bind(this)
     this.setUserLocation = this.setUserLocation.bind(this)
+    this.handleResult = this.handleResult.bind(this)
     //state contains viewport information, boolean value to toggle popups being displayed,
     //userLocation is the user's current location and selectedLocation is a temporary location
     //for when the user wants to add a location that they are not currently at
@@ -27,16 +30,18 @@ class Map extends React.Component {
         height: 700,
         latitude: 40.73061,
         longitude: -73.935242,
-        zoom: 15
+        zoom: 12
       },
-      displayPopup: false,
       userLocation: {},
+      displayPopup: false,
       selectedLocation: {}
     }
   }
+  //create a reference to be passed to <Geocoder/>
   componentDidMount() {
     this.props.getAllLocations()
   }
+  mapRef = React.createRef()
   setUserLocation() {
     //using below function from react-map-gl to get the current position and set new viewport around those coords
     navigator.geolocation.getCurrentPosition(position => {
@@ -58,9 +63,9 @@ class Map extends React.Component {
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
   //and creates a <Popup/> component for each location,
   // ANY HTML can go between Popups opening and closing tags
-  renderPopup(index) {
-    const long = this.props.locations[index].point.coordinates[0]
-    const lat = this.props.locations[index].point.coordinates[1]
+  renderPopup(loc) {
+    const long = loc.point.coordinates[0]
+    const lat = loc.point.coordinates[1]
     return (
       <Popup
         tipSize={5}
@@ -71,23 +76,40 @@ class Map extends React.Component {
         closeOnClick={true}
       >
         <p>
-          <strong>{this.props.locations[index].name}</strong>
+          <strong>{loc.name}</strong>
           <br />
-          {this.props.locations[index].description}
+          {`${loc.address} ${loc.city} ${loc.description}`}
         </p>
       </Popup>
     )
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
-  addMarker(coordsArray) {
-    console.log('coordsArray in addMarker func', coordsArray)
-    const coordinates = [...coordsArray]
+  addMarker(coordinates, result) {
+    console.log('coordinates in addMarker func', coordinates)
+    // const coordinates = [...coordsArray]
+    let name,
+      address,
+      city = ''
+    if (result) {
+      name = result.text
+      address = result.properties.address
+      city = result.context[3].text
+    }
     this.setState({
       selectedLocation: {
-        name: 'Temporary',
-        point: {type: 'Point', coordinates}
+        name,
+        address,
+        city,
+        point: {type: 'Point', coordinates},
+        description: '',
+        popup: true
       }
     })
+    console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
+  }
+  handleResult(event) {
+    console.log('This is event.result in handleResult', event.result)
+    this.addMarker(event.result.geometry.coordinates, event.result)
   }
   render() {
     //styles for geolocated and navigation
@@ -107,8 +129,8 @@ class Map extends React.Component {
         <button
           type="submit"
           onClick={() => {
-            //if state.userLocation exists, addMarker is called with the coordinates from
-            //userLocation
+            //if state.userLocation exists, addMarker is called with the
+            // coordinates from userLocation
             this.state.userLocation.lat &&
               this.addMarker([
                 this.state.userLocation.long,
@@ -118,9 +140,9 @@ class Map extends React.Component {
         >
           Add My Location To Map
         </button>
-        <button type="submit">Add Selected Location to Bramble</button>
         {/* our main interactive map component */}
         <MapGL
+          ref={this.mapRef}
           {...this.state.viewport}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken={mapboxToken}
@@ -129,15 +151,20 @@ class Map extends React.Component {
           // to those coordinates
           onClick={e => {
             // this.addMarker(e.lngLat)
-            this.setState({
-              selectedLocation: {
-                name: 'Temporary',
-                point: {type: 'Point', coordinates: [e.lngLat[0], e.lngLat[1]]}
-              }
-            })
             console.log('state in onClick', this.state)
           }}
         >
+          <Geocoder
+            className="geocoder"
+            mapRef={this.mapRef}
+            mapboxApiAccessToken={mapboxToken}
+            placeholder="Search for places in the NYC area"
+            onViewportChange={viewport => this.setState({viewport})}
+            onResult={this.handleResult}
+            //bounding box coordinates in [minX, minY, maxX, maxY] format,
+            //from South Amboy NJ(SW) to Hempstead (E) and White Plains (N)
+            bbox={[-74.272562, 40.488076, -73.609777, 41.064978]}
+          />
           <div className="nav" style={navStyle}>
             <NavigationControl
               onViewportChange={viewport => this.setState({viewport})}
@@ -145,20 +172,34 @@ class Map extends React.Component {
           </div>
           {/* if state.selectedLocation exists, then we create a marker for it */}
           {this.state.selectedLocation.point ? (
-            <Marker
-              longitude={this.state.selectedLocation.point.coordinates[0]}
-              latitude={this.state.selectedLocation.point.coordinates[1]}
-            >
-              <img className="marker" src="temp-map-icon.jpeg" width="50" />
-            </Marker>
+            <div>
+              <Marker
+                longitude={this.state.selectedLocation.point.coordinates[0]}
+                latitude={this.state.selectedLocation.point.coordinates[1]}
+                onClick={() => {
+                  console.log('IN ONCLICK OF SELECTEDLOCATIONMARKER')
+                  this.state.selectedLocation.popup
+                    ? this.setState({selectedLocation: {popup: false}})
+                    : this.setState({selectedLocation: {popup: true}})
+                  this.state.displayPopup
+                    ? this.setState({displayPopup: false})
+                    : this.setState({displayPopup: true})
+                }}
+              >
+                <img className="marker" src="temp-map-icon.jpeg" width="50" />
+              </Marker>
+              {this.state.selectedLocation.popup
+                ? this.renderPopup(this.state.selectedLocation)
+                : ''}
+            </div>
           ) : (
             ''
           )}
+
           {/* map() through locations and create Markers for all of them */}
-          {this.props.locations.map((marker, idx) => {
-            console.log('locations in map', idx, marker)
-            const long = marker.point.coordinates[0]
-            const lat = marker.point.coordinates[1]
+          {this.props.locations.map((loc, idx) => {
+            const long = loc.point.coordinates[0]
+            const lat = loc.point.coordinates[1]
             return (
               <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
@@ -166,15 +207,16 @@ class Map extends React.Component {
                     className="marker"
                     src="map-icon.png"
                     width="50"
-                    onClick={() =>
+                    onClick={() => {
+                      loc.popup ? (loc.popup = false) : (loc.popup = true)
                       this.state.displayPopup
                         ? this.setState({displayPopup: false})
                         : this.setState({displayPopup: true})
-                    }
+                    }}
                   />
                 </Marker>
-                {/* also checking if displayPopup is true, then render Popup */}
-                {this.state.displayPopup ? this.renderPopup(idx) : <div />}
+                {/* also checking if marker.popup boolean is true, then render Popup */}
+                {loc.popup ? this.renderPopup(loc) : <div />}
               </div>
             )
           })}

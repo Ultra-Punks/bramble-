@@ -9,7 +9,8 @@ import {
   SinglePostView,
   Map,
   AllProfiles,
-  ProfileView
+  ProfileView,
+  SingleComment
 } from './components'
 import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
@@ -39,6 +40,8 @@ class Routes extends Component {
         <Route path="/profiles" component={AllProfiles} />
         <Route path="/u/:username" component={ProfileView} />
         <Route path="/p/:postId" component={SinglePostView} />
+        <Route path="/comments/:commentId" component={SingleComment} />
+      
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

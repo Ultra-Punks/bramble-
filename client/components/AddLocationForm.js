@@ -7,8 +7,9 @@ export class AddLocationForm extends React.Component {
     this.state = {
       name: '',
       address: '',
+      city: '',
       description: '',
-      coordinates: ''
+      point: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -18,8 +19,9 @@ export class AddLocationForm extends React.Component {
       this.setState({
         name: this.props.location.name,
         address: this.props.location.address,
+        city: this.props.location.city,
         description: this.props.location.description,
-        coordinates: this.props.location.coordinates
+        point: this.props.location.geometry
       })
     }
     console.log('props in compdidmount', this.props)
@@ -36,26 +38,34 @@ export class AddLocationForm extends React.Component {
     this.setState({
       name: '',
       address: '',
+      city: '',
       description: '',
-      coordinates: []
+      point: {}
     })
   }
   render() {
     console.log(this.state)
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name">Product Name:</label>
+        <label htmlFor="name">Name:</label>
         <input
           name="name"
           type="text"
           value={this.state.name}
           onChange={this.handleChange}
         />
-        <label htmlFor="address">Address</label>
+        <label htmlFor="address">Street Address</label>
         <input
           name="address"
           type="text"
           value={this.state.address}
+          onChange={this.handleChange}
+        />
+        <label htmlFor="city">City</label>
+        <input
+          name="city"
+          type="text"
+          value={this.state.city}
           onChange={this.handleChange}
         />
         <label htmlFor="description">Description</label>
