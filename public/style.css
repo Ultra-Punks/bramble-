@@ -157,6 +157,7 @@ form div {
 .sticky {
   position: fixed;
   left: 60.2%;
+  top: 20%;
 }
 
 .profileMapContainer {
@@ -432,4 +433,10 @@ form div {
   width: 100%;
   min-height: 100px;
   height: unset;
+}
+
+.mapContainer {
+  height: 300px;
+  width: 300px;
+  border-radius: 20px;
 }

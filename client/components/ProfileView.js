@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchUserPosts} from '../store/userFeed'
-import {PostFeed} from './index'
+import {PostFeed, Map} from './index'
 import {Image, Button} from 'react-bootstrap'
 
 class ProfileView extends React.Component {
@@ -91,11 +91,13 @@ class ProfileView extends React.Component {
             </div>
           </div>
         </div>
-
-        <img
+        <div className="profileMapContainer sticky">
+          <Map />
+          {/* <img
           src="https://miro.medium.com/max/4064/1*qYUvh-EtES8dtgKiBRiLsA.png"
           className="profileMapContainer sticky"
-        />
+        /> */}
+        </div>
       </div>
     )
   }
