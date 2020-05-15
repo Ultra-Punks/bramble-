@@ -9,7 +9,8 @@ import MapGL, {
   Popup
 } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-import {AddLocationForm} from './index'
+import {Link} from 'react-router-dom'
+import {AddLocationForm, SingleLocation} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
@@ -84,10 +85,12 @@ class Map extends React.Component {
     )
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
-  addMarker(coordsArray, result) {
-    console.log('coordsArray in addMarker func', coordsArray)
-    const coordinates = [...coordsArray]
-    let name, address, city
+  addMarker(coordinates, result) {
+    console.log('coordinates in addMarker func', coordinates)
+    // const coordinates = [...coordsArray]
+    let name,
+      address,
+      city = ''
     if (result) {
       name = result.place_name.split(',')[0]
       address = result.place_name.split(',')[1]
@@ -103,6 +106,7 @@ class Map extends React.Component {
         popup: true
       }
     })
+    console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
   }
   handleResult(event) {
     console.log('This is event.result in handleResult', event.result)
@@ -156,6 +160,7 @@ class Map extends React.Component {
             mapRef={this.mapRef}
             mapboxApiAccessToken={mapboxToken}
             placeholder="Search for places in the NYC area"
+            onViewportChange={viewport => this.setState({viewport})}
             onResult={this.handleResult}
             //bounding box coordinates in [minX, minY, maxX, maxY] format,
             //from South Amboy NJ(SW) to Hempstead (E) and White Plains (N)
@@ -190,10 +195,13 @@ class Map extends React.Component {
                   anchor="bottom-right"
                   longitude={this.state.selectedLocation.point.coordinates[0]}
                   latitude={this.state.selectedLocation.point.coordinates[1]}
-                  onMouseLeave={() => this.setState({displayPopup: false})}
-                  closeOnClick={true}
+                  // onMouseLeave={() => this.setState({displayPopup: false})}
+                  // closeOnClick={true}
                 >
-                  <AddLocationForm location={this.state.selectedLocation} />
+                  {Object.keys(this.state.selectedLocation).map(e => (
+                    <p key={e}>{`${e} ${this.state.selectedLocation[e]}`}</p>
+                  ))}
+                  {/* <AddLocationForm location={this.state.selectedLocation} /> */}
                 </Popup>
               ) : (
                 ''
@@ -205,7 +213,6 @@ class Map extends React.Component {
 
           {/* map() through locations and create Markers for all of them */}
           {this.props.locations.map((marker, idx) => {
-            console.log('locations in map', idx, marker)
             const long = marker.point.coordinates[0]
             const lat = marker.point.coordinates[1]
             return (
@@ -225,7 +232,7 @@ class Map extends React.Component {
                     }}
                   />
                 </Marker>
-                {/* also checking if displayPopup is true, then render Popup */}
+                {/* also checking if marker.popup boolean is true, then render Popup */}
                 {marker.popup ? this.renderPopup(idx) : <div />}
               </div>
             )

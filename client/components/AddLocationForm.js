@@ -7,8 +7,9 @@ export class AddLocationForm extends React.Component {
     this.state = {
       name: '',
       address: '',
+      city: '',
       description: '',
-      coordinates: ''
+      point: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -20,7 +21,7 @@ export class AddLocationForm extends React.Component {
         address: this.props.location.address,
         city: this.props.location.city,
         description: this.props.location.description,
-        coordinates: this.props.location.coordinates
+        point: this.props.location.geometry
       })
     }
     console.log('props in compdidmount', this.props)
@@ -36,10 +37,10 @@ export class AddLocationForm extends React.Component {
     //this.props.addLocationThunk or whatever
     this.setState({
       name: '',
-      street: '',
+      address: '',
       city: '',
       description: '',
-      coordinates: []
+      point: {}
     })
   }
   render() {
