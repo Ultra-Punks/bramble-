@@ -8,12 +8,14 @@ const Photo = require('./photos')
 const PostComment = require('./postComment')
 const UserFollowers = require('./userFollowers')
 const UserPost = require('./userPost')
+const Tags = require('./tags')
 
 // =========== ASSOCIATIONS BELOW ===========
 
 UserPost.belongsTo(User)
 UserPost.hasMany(PostComment)
 UserPost.hasMany(Photo)
+UserPost.hasMany(Tags)
 
 PostComment.belongsTo(UserPost)
 PostComment.belongsTo(User)
@@ -33,6 +35,7 @@ Photo.belongsTo(Location)
 Photo.belongsTo(LocationReview)
 Photo.belongsTo(PostComment)
 Photo.belongsTo(User)
+Photo.hasMany(Tags)
 
 Community.belongsToMany(User, {through: CommunitySubs})
 Community.belongsTo(User)
@@ -46,6 +49,10 @@ User.hasMany(PostComment)
 User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
 User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})
 User.belongsToMany(Community, {as: 'Moderator', through: CommunityMods})
+
+Tags.belongsTo(UserPost)
+Tags.belongsTo(User)
+Tags.belongsTo(Photo)
 
 // =========== Exports Below ===========
 module.exports = {

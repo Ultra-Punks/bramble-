@@ -441,6 +441,76 @@ form div {
   border-radius: 20px;
 }
 
-.geocoder {
-  background-color: #fff;
+.commentsAndShares {
+  display: flex;
+  margin-left: 55px;
+}
+
+.commentIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.commentIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.likeIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.likeIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.dislikeIcon {
+  height: 40px;
+  width: 40px;
+}
+
+.dislikeIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.commentContainer {
+  display: flex;
+  height: 500px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.singleComment {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 700px;
+  background-color: rgba(224, 232, 240, 0.879);
+  justify-content: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+}
+
+.commentHeader {
+  background-color: rgba(60, 78, 96, 0.879);
+  padding: 10px;
+  display: flex;
+}
+
+.commentWriting {
+  padding: 40px;
+}
+
+.commentShareBar {
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
+
 }

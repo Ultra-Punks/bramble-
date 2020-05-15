@@ -40,6 +40,12 @@ export default function PostFeed(props) {
                 <div className="post-photos">
                   <PostingPictures post={post} />
                 </div>
+                <div className="commentsAndShares">
+                  <img
+                    src="https://img.icons8.com/all/500/comments.png"
+                    className="commentIcon"
+                  />
+                </div>
                 <br />
               </div>
             )
