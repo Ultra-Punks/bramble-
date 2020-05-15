@@ -15,10 +15,10 @@ const getSingleComment = comment => {
 export const fetchSingleComment = commentId => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/comments${commentId}`)
+      const {data} = await axios.get(`/api/comments/${commentId}`)
       dispatch(getSingleComment(data))
     } catch (error) {
-      console.log("Couldn't get the comment" + error)
+      console.log(error)
     }
   }
 }

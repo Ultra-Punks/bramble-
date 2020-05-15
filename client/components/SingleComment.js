@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 
 //import thunk:
 import {fetchSingleComment} from '../store/singleComment'
-import {connect} from 'react-redux'
+import {fetchUser} from '../store/user'
+
+// NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
 class SingleComment extends Component {
   constructor() {
@@ -10,15 +13,37 @@ class SingleComment extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchSingleComment()
+    const id = this.props.match.params.commentId
+    this.props.fetchSingleComment(id)
+    // this.props.fetchUser(3)
   }
 
   render() {
     console.log('props???>>>>>', this.props)
+    const comment = this.props.singleComment.comment
     return (
       <div className="commentContainer">
-        <br />
-        <div>TESTING SINGLE COMMENT COMPONENT</div>
+        <div className="singleComment">
+          <div className="commentHeader">
+            <ul>COMMENTER PHOTO:</ul>
+            <ul>COMMENTER USERNAME:</ul>
+          </div>
+          <div className="commentWriting">{comment}</div>
+          <div className="commentShareBar">
+            <img
+              src="https://img.icons8.com/all/500/comments.png"
+              className="commentIcon"
+            />
+            <img
+              src="https://img.icons8.com/ios/64/000000/like.png"
+              className="likeIcon"
+            />
+            <img
+              src="https://img.icons8.com/windows/80/000000/dislike.png"
+              className="dislikeIcon"
+            />
+          </div>
+        </div>
       </div>
     )
   }
@@ -26,14 +51,17 @@ class SingleComment extends Component {
 
 const mapToState = state => {
   return {
-    comment: state.comment
+    singleComment: state.singleComment,
+    user: state.user
   }
 }
 
-const mapToDispatch = (dispatch, ownProps) => {
-  const comment = ownProps.match.params.comment
+const mapToDispatch = dispatch => {
+  // establish variable for user?
   return {
-    fetchSingleComment: () => dispatch(fetchSingleComment(comment))
+    fetchSingleComment: comment => dispatch(fetchSingleComment(comment))
+
+    // fetchUser: (userId) => dispatch(fetchUser(userId)),
   }
 }
 
