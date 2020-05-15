@@ -21,10 +21,13 @@ export const fetchUserPosts = username => {
   }
 }
 
-export const addPostThunk = (username, postInfo) => {
+export const addPostThunk = postInfo => {
   return async dispatch => {
     try {
-      const {data} = await axios.post(`/api/posts/from/${username}`, postInfo)
+      const {data} = await axios.post(
+        `/api/posts/add/${postInfo.username}`,
+        postInfo
+      )
       dispatch(addPost(data))
     } catch (error) {
       console.log(error)
