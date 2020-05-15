@@ -31,10 +31,6 @@ class SingleComment extends Component {
           <div className="commentWriting">{comment}</div>
           <div className="commentShareBar">
             <img
-              src="https://img.icons8.com/all/500/comments.png"
-              className="commentIcon"
-            />
-            <img
               src="https://img.icons8.com/ios/64/000000/like.png"
               className="likeIcon"
             />
