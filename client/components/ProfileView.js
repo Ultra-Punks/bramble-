@@ -63,7 +63,7 @@ class ProfileView extends React.Component {
           </div>
           <Button className="follow-button" variant="outline-light">
             Follow
-          </Button>{' '}
+          </Button>
           <div className="contentContainer">
             <div className="buttonContainer">
               <Button
