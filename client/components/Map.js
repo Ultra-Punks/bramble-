@@ -1,6 +1,6 @@
 //Official Docs: https://github.com/visgl/react-map-gl/tree/master/docs/api-reference
 //Tutorial (Viewport, Markers, Popups): https://medium.com/@walkingtreetech/play-with-maps-in-react-using-mapbox-f74fdf386c8a
-
+//Geocoder example: https://codesandbox.io/s/l7p179qr6m & Docs: https://github.com/SamSamskies/react-map-gl-geocoder
 import React from 'react'
 import MapGL, {
   GeolocateControl,
@@ -8,6 +8,7 @@ import MapGL, {
   Marker,
   Popup
 } from 'react-map-gl'
+import Geocoder from 'react-map-gl-geocoder'
 import {AddLocationForm} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations} from '../store/locations'
@@ -18,6 +19,7 @@ class Map extends React.Component {
     super()
     this.addMarker = this.addMarker.bind(this)
     this.setUserLocation = this.setUserLocation.bind(this)
+    this.handleResult = this.handleResult.bind(this)
     //state contains viewport information, boolean value to toggle popups being displayed,
     //userLocation is the user's current location and selectedLocation is a temporary location
     //for when the user wants to add a location that they are not currently at
@@ -34,9 +36,11 @@ class Map extends React.Component {
       selectedLocation: {}
     }
   }
+  //create a reference to be passed to <Geocoder/>
   componentDidMount() {
     this.props.getAllLocations()
   }
+  mapRef = React.createRef()
   setUserLocation() {
     //using below function from react-map-gl to get the current position and set new viewport around those coords
     navigator.geolocation.getCurrentPosition(position => {
@@ -80,15 +84,29 @@ class Map extends React.Component {
     )
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
-  addMarker(coordsArray) {
+  addMarker(coordsArray, result) {
     console.log('coordsArray in addMarker func', coordsArray)
     const coordinates = [...coordsArray]
+    let name, address, city
+    if (result) {
+      name = result.place_name.split(',')[0]
+      address = result.place_name.split(',')[1]
+      city = result.place_name.split(',')[2]
+    }
     this.setState({
       selectedLocation: {
-        name: 'Temporary',
-        point: {type: 'Point', coordinates}
+        name,
+        address,
+        city,
+        point: {type: 'Point', coordinates},
+        description: '',
+        popup: true
       }
     })
+  }
+  handleResult(event) {
+    console.log('This is event.result in handleResult', event.result)
+    this.addMarker(event.result.geometry.coordinates, event.result)
   }
   render() {
     //styles for geolocated and navigation
@@ -108,8 +126,8 @@ class Map extends React.Component {
         <button
           type="submit"
           onClick={() => {
-            //if state.userLocation exists, addMarker is called with the coordinates from
-            //userLocation
+            //if state.userLocation exists, addMarker is called with the
+            // coordinates from userLocation
             this.state.userLocation.lat &&
               this.addMarker([
                 this.state.userLocation.long,
@@ -119,9 +137,9 @@ class Map extends React.Component {
         >
           Add My Location To Map
         </button>
-        <button type="submit">Add Selected Location to Bramble</button>
         {/* our main interactive map component */}
         <MapGL
+          ref={this.mapRef}
           {...this.state.viewport}
           mapStyle="mapbox://styles/mapbox/streets-v11"
           mapboxApiAccessToken={mapboxToken}
@@ -130,15 +148,19 @@ class Map extends React.Component {
           // to those coordinates
           onClick={e => {
             // this.addMarker(e.lngLat)
-            this.setState({
-              selectedLocation: {
-                name: 'Temporary',
-                point: {type: 'Point', coordinates: [e.lngLat[0], e.lngLat[1]]}
-              }
-            })
             console.log('state in onClick', this.state)
           }}
         >
+          <Geocoder
+            className="geocoder"
+            mapRef={this.mapRef}
+            mapboxApiAccessToken={mapboxToken}
+            placeholder="Search for places in the NYC area"
+            onResult={this.handleResult}
+            //bounding box coordinates in [minX, minY, maxX, maxY] format,
+            //from South Amboy NJ(SW) to Hempstead (E) and White Plains (N)
+            bbox={[-74.272562, 40.488076, -73.609777, 41.064978]}
+          />
           <div className="nav" style={navStyle}>
             <NavigationControl
               onViewportChange={viewport => this.setState({viewport})}
@@ -146,15 +168,41 @@ class Map extends React.Component {
           </div>
           {/* if state.selectedLocation exists, then we create a marker for it */}
           {this.state.selectedLocation.point ? (
-            <Marker
-              longitude={this.state.selectedLocation.point.coordinates[0]}
-              latitude={this.state.selectedLocation.point.coordinates[1]}
-            >
-              <img className="marker" src="temp-map-icon.jpeg" width="50" />
-            </Marker>
+            <div>
+              <Marker
+                longitude={this.state.selectedLocation.point.coordinates[0]}
+                latitude={this.state.selectedLocation.point.coordinates[1]}
+                onClick={() => {
+                  console.log('IN ONCLICK OF SELECTEDLOCATIONMARKER')
+                  this.state.selectedLocation.popup
+                    ? this.setState({selectedLocation: {popup: false}})
+                    : this.setState({selectedLocation: {popup: true}})
+                  this.state.displayPopup
+                    ? this.setState({displayPopup: false})
+                    : this.setState({displayPopup: true})
+                }}
+              >
+                <img className="marker" src="temp-map-icon.jpeg" width="50" />
+              </Marker>
+              {this.state.selectedLocation.popup ? (
+                <Popup
+                  tipSize={5}
+                  anchor="bottom-right"
+                  longitude={this.state.selectedLocation.point.coordinates[0]}
+                  latitude={this.state.selectedLocation.point.coordinates[1]}
+                  onMouseLeave={() => this.setState({displayPopup: false})}
+                  closeOnClick={true}
+                >
+                  <AddLocationForm location={this.state.selectedLocation} />
+                </Popup>
+              ) : (
+                ''
+              )}
+            </div>
           ) : (
             ''
           )}
+
           {/* map() through locations and create Markers for all of them */}
           {this.props.locations.map((marker, idx) => {
             console.log('locations in map', idx, marker)
@@ -168,7 +216,6 @@ class Map extends React.Component {
                     src="map-icon.png"
                     width="50"
                     onClick={() => {
-                      console.log('marker in onClick', marker)
                       marker.popup
                         ? (marker.popup = false)
                         : (marker.popup = true)
