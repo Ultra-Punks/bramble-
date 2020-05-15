@@ -9,7 +9,8 @@ import MapGL, {
   Popup
 } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
-import {AddLocationForm} from './index'
+import {Link} from 'react-router-dom'
+import {AddLocationForm, SingleLocation} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
@@ -62,10 +63,9 @@ class Map extends React.Component {
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
   //and creates a <Popup/> component for each location,
   // ANY HTML can go between Popups opening and closing tags
-  renderPopup(index) {
-    console.log('IN RENDERPOPUP FUNC')
-    const long = this.props.locations[index].point.coordinates[0]
-    const lat = this.props.locations[index].point.coordinates[1]
+  renderPopup(loc) {
+    const long = loc.point.coordinates[0]
+    const lat = loc.point.coordinates[1]
     return (
       <Popup
         tipSize={5}
@@ -76,22 +76,24 @@ class Map extends React.Component {
         closeOnClick={true}
       >
         <p>
-          <strong>{this.props.locations[index].name}</strong>
+          <strong>{loc.name}</strong>
           <br />
-          {this.props.locations[index].description}
+          {`${loc.address} ${loc.city} ${loc.description}`}
         </p>
       </Popup>
     )
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
-  addMarker(coordsArray, result) {
-    console.log('coordsArray in addMarker func', coordsArray)
-    const coordinates = [...coordsArray]
-    let name, address, city
+  addMarker(coordinates, result) {
+    console.log('coordinates in addMarker func', coordinates)
+    // const coordinates = [...coordsArray]
+    let name,
+      address,
+      city = ''
     if (result) {
-      name = result.place_name.split(',')[0]
-      address = result.place_name.split(',')[1]
-      city = result.place_name.split(',')[2]
+      name = result.text
+      address = result.properties.address
+      city = result.context[3].text
     }
     this.setState({
       selectedLocation: {
@@ -103,6 +105,7 @@ class Map extends React.Component {
         popup: true
       }
     })
+    console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
   }
   handleResult(event) {
     console.log('This is event.result in handleResult', event.result)
@@ -156,6 +159,7 @@ class Map extends React.Component {
             mapRef={this.mapRef}
             mapboxApiAccessToken={mapboxToken}
             placeholder="Search for places in the NYC area"
+            onViewportChange={viewport => this.setState({viewport})}
             onResult={this.handleResult}
             //bounding box coordinates in [minX, minY, maxX, maxY] format,
             //from South Amboy NJ(SW) to Hempstead (E) and White Plains (N)
@@ -184,30 +188,18 @@ class Map extends React.Component {
               >
                 <img className="marker" src="temp-map-icon.jpeg" width="50" />
               </Marker>
-              {this.state.selectedLocation.popup ? (
-                <Popup
-                  tipSize={5}
-                  anchor="bottom-right"
-                  longitude={this.state.selectedLocation.point.coordinates[0]}
-                  latitude={this.state.selectedLocation.point.coordinates[1]}
-                  onMouseLeave={() => this.setState({displayPopup: false})}
-                  closeOnClick={true}
-                >
-                  <AddLocationForm location={this.state.selectedLocation} />
-                </Popup>
-              ) : (
-                ''
-              )}
+              {this.state.selectedLocation.popup
+                ? this.renderPopup(this.state.selectedLocation)
+                : ''}
             </div>
           ) : (
             ''
           )}
 
           {/* map() through locations and create Markers for all of them */}
-          {this.props.locations.map((marker, idx) => {
-            // console.log('locations in map', idx, marker)
-            const long = marker.point.coordinates[0]
-            const lat = marker.point.coordinates[1]
+          {this.props.locations.map((loc, idx) => {
+            const long = loc.point.coordinates[0]
+            const lat = loc.point.coordinates[1]
             return (
               <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
@@ -216,17 +208,15 @@ class Map extends React.Component {
                     src="map-icon.png"
                     width="50"
                     onClick={() => {
-                      marker.popup
-                        ? (marker.popup = false)
-                        : (marker.popup = true)
+                      loc.popup ? (loc.popup = false) : (loc.popup = true)
                       this.state.displayPopup
                         ? this.setState({displayPopup: false})
                         : this.setState({displayPopup: true})
                     }}
                   />
                 </Marker>
-                {/* also checking if displayPopup is true, then render Popup */}
-                {marker.popup ? this.renderPopup(idx) : <div />}
+                {/* also checking if marker.popup boolean is true, then render Popup */}
+                {loc.popup ? this.renderPopup(loc) : <div />}
               </div>
             )
           })}
