@@ -18,6 +18,7 @@ export class AddLocationForm extends React.Component {
       this.setState({
         name: this.props.location.name,
         address: this.props.location.address,
+        city: this.props.location.city,
         description: this.props.location.description,
         coordinates: this.props.location.coordinates
       })
@@ -35,7 +36,8 @@ export class AddLocationForm extends React.Component {
     //this.props.addLocationThunk or whatever
     this.setState({
       name: '',
-      address: '',
+      street: '',
+      city: '',
       description: '',
       coordinates: []
     })
@@ -44,18 +46,25 @@ export class AddLocationForm extends React.Component {
     console.log(this.state)
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name">Product Name:</label>
+        <label htmlFor="name">Name:</label>
         <input
           name="name"
           type="text"
           value={this.state.name}
           onChange={this.handleChange}
         />
-        <label htmlFor="address">Address</label>
+        <label htmlFor="address">Street Address</label>
         <input
           name="address"
           type="text"
           value={this.state.address}
+          onChange={this.handleChange}
+        />
+        <label htmlFor="city">City</label>
+        <input
+          name="city"
+          type="text"
+          value={this.state.city}
           onChange={this.handleChange}
         />
         <label htmlFor="description">Description</label>
