@@ -41,6 +41,7 @@ form div {
   top: 0;
   width: 100%;
   overflow: hidden;
+  z-index: 5;
 }
 
 .nav-group {
@@ -441,6 +442,38 @@ form div {
   border-radius: 20px;
 }
 
+
+.communityBlock {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.communityContainer {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: black;
+  width: 80%;
+}
+
+.community:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card {
+  padding: 2px 16px;
+
+  margin: 10px;
+}
+
+.imageStyle {
+  background-color: black;
+  width: 100px;
+  height: 170px;
+  margin: 10px;
+}
 .commentsAndShares {
   display: flex;
   margin-left: 55px;
@@ -512,5 +545,6 @@ form div {
   display: flex;
   padding: 10px;
   justify-content: space-around;
+
 
 }

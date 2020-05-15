@@ -21,6 +21,10 @@ const Community = db.define('community', {
     type: Sequelize.TEXT,
     defaultValue:
       'https://image.shutterstock.com/image-vector/group-five-people-community-icon-260nw-455816902.jpg'
+  },
+  subscribers: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

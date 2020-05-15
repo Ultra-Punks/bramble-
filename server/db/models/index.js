@@ -15,6 +15,9 @@ const Tags = require('./tags')
 UserPost.belongsTo(User)
 UserPost.hasMany(PostComment)
 UserPost.hasMany(Photo)
+
+UserPost.belongsTo(Community)
+
 UserPost.hasMany(Tags)
 
 PostComment.belongsTo(UserPost)
@@ -40,6 +43,7 @@ Photo.hasMany(Tags)
 Community.belongsToMany(User, {through: CommunitySubs})
 Community.belongsTo(User)
 Community.hasMany(Location)
+Community.hasMany(UserPost)
 
 User.hasMany(UserPost)
 User.hasMany(Photo)
