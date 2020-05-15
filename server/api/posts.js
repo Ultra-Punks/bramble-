@@ -11,7 +11,9 @@ module.exports = router
 //gets all posts
 router.get('/', async (req, res, next) => {
   try {
-    const allPosts = await UserPost.findAll({include: [{model: Photo}]})
+    const allPosts = await UserPost.findAll({
+      include: [{model: Photo}]
+    })
     res.json(allPosts)
   } catch (error) {
     next(error)
@@ -22,7 +24,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const singlePost = await UserPost.findByPk(req.params.postId, {
-      include: [{model: Photo}]
+      include: [{model: Photo}, {model: User}]
     })
     res.json(singlePost)
   } catch (error) {

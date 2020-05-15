@@ -34,14 +34,14 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/map" component={Map} />
-        <Route path="/post-test" component={SinglePostView} />
         <Route path="/test" component={Test} />
         <Route exact path="/community" component={CommunitySearch} />
         <Route exact path="/community/list/:id" component={CommunityProfile} />
         <Route path="/profiles" component={AllProfiles} />
-        <Route path="/users/:username" component={ProfileView} />
+        <Route path="/u/:username" component={ProfileView} />
+        <Route path="/p/:postId" component={SinglePostView} />
         <Route path="/comments/:commentId" component={SingleComment} />
-
+      
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
