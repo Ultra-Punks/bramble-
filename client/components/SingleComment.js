@@ -1,8 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 //import thunk:
-import {fetchSingleComment} from '../store/singleComment'
+import {
+  fetchSingleComment,
+  likeComment,
+  dislikeComment
+} from '../store/singleComment'
 import {fetchProfile} from '../store/singleProfile'
 
 // import {fetchUser} from '../store/user'
@@ -22,10 +27,13 @@ class SingleComment extends Component {
     // const profile = this.props.match.params.profile
     this.props.fetchProfile(3)
     // this.props.fetchUser(3)
+
+    this.props.fetchLikes()
+    this.props.fetchDislikes()
   }
 
   likeComment() {
-    // this.props.singleComment.likes++
+    this.props.singleComment.likes++
     console.log('clicked LIKE Comment! +1')
   }
 
@@ -48,8 +56,12 @@ class SingleComment extends Component {
           {/* if commenter exists, then we create the comment header */}
           {commenter !== undefined ? (
             <div className="commentHeader">
-              <img src={commenter.profileImg} className="commentImg" />
-              <ul>@{commenter.username}</ul>
+              <Link to={`/u/${commenter.username}`}>
+                <img src={commenter.profileImg} className="commentImg" />
+              </Link>
+              <Link to={`/u/${commenter.username}`}>
+                <ul>@{commenter.username}</ul>
+              </Link>
             </div>
           ) : (
             <p>'loading'</p>
@@ -103,7 +115,9 @@ const mapToDispatch = (dispatch, ownProps) => {
 
   return {
     fetchSingleComment: () => dispatch(fetchSingleComment(commentId)),
-    fetchProfile: username => dispatch(fetchProfile(username))
+    fetchProfile: username => dispatch(fetchProfile(username)),
+    fetchLikes: () => dispatch(likeComment(commentId)),
+    fetchDislikes: () => dispatch(dislikeComment(commentId))
     // fetchUser: (userId) => dispatch(fetchUser(userId)),
   }
 }
