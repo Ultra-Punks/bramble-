@@ -53,8 +53,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
               <div>
                 {/* The navbar will show these links before you log in */}
                 <Link to="/login">Login</Link>
-
-                <Link to="/signup">Sign Up</Link>
                 <Link to="/community">Community</Link>
 
                 <Button onClick={() => setSignupShow(true)}>Signup</Button>
@@ -63,7 +61,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                   onHide={() => setSignupShow(false)}
                 />
                 {/* <Link to="/signup">Sign Up</Link> */}
-
               </div>
             )}
           </div>

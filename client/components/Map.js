@@ -246,7 +246,7 @@ class Map extends React.Component {
                 <Marker longitude={long} latitude={lat}>
                   {/* <img
                     className="marker"
-                    src="map-icon.png"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1200px-Map_pin_icon.svg.png"
                     width="50"
                     onClick={() => {
                       loc.popup ? (loc.popup = false) : (loc.popup = true)
