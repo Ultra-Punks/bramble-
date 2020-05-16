@@ -13,6 +13,7 @@ function PostingPictures(props) {
 }
 
 export default function PostFeed(props) {
+  console.log('props from postFeed>>>>', props)
   if (props.postFeed) {
     return (
       <div className="feedView">
@@ -42,6 +43,8 @@ export default function PostFeed(props) {
                   <img
                     src="https://img.icons8.com/all/500/comments.png"
                     className="commentIcon"
+                    type="button"
+                    onClick={props.handleComments}
                   />
                 </div>
                 <br />

@@ -10,10 +10,12 @@ class ProfileView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      postFeed: true
+      postFeed: true,
+      openComments: false
     }
     this.postSelector = this.postSelector.bind(this)
     this.gallerySelector = this.gallerySelector.bind(this)
+    this.handleComments = this.handleComments.bind(this)
   }
   componentDidMount() {
     this.props.fetchProfile()
@@ -26,6 +28,12 @@ class ProfileView extends React.Component {
 
   gallerySelector() {
     this.setState({postFeed: false})
+  }
+
+  handleComments() {
+    this.setState({
+      openComments: !this.state.openComments
+    })
   }
 
   render() {
@@ -85,6 +93,7 @@ class ProfileView extends React.Component {
                 images={this.props.gallery}
                 posts={this.props.posts}
                 profile={this.props.profile}
+                handleComments={this.handleComments}
               />
             </div>
           </div>

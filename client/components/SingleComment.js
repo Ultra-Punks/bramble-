@@ -17,6 +17,11 @@ import {fetchProfile} from '../store/singleProfile'
 class SingleComment extends Component {
   constructor() {
     super()
+
+    this.state = {
+      openComments: false
+    }
+
     this.likeComment = this.likeComment.bind(this)
     this.dislikeComment = this.dislikeComment.bind(this)
   }
@@ -25,7 +30,7 @@ class SingleComment extends Component {
     // const id = this.props.match.params.commentId
     this.props.fetchSingleComment()
     // const profile = this.props.match.params.profile
-    this.props.fetchProfile(3)
+    this.props.fetchProfile()
     // this.props.fetchUser(3)
 
     this.props.fetchLikes()
@@ -33,23 +38,25 @@ class SingleComment extends Component {
   }
 
   likeComment() {
+    console.log('BEFORE INCREMENT>>>>>', this.props.singleComment.likes)
     this.props.singleComment.likes++
     console.log('clicked LIKE Comment! +1')
+    console.log('AFTER INCREMENT>>>>>', this.props.singleComment.likes)
   }
 
   dislikeComment() {
-    // this.props.singleComment.likes--
-    console.log('cliked DISLIKE comment! -1')
+    console.log('BEFORE INCREMENT>>>>>', this.props.singleComment.dislikes)
+    this.props.singleComment.dislikes++
+    console.log('cliked DISLIKE comment!')
+    console.log('AFTER INCREMENT>>>>>', this.props.singleComment.dislikes)
   }
 
   render() {
-    // const numOfLikes =
-    //   this.props.singleComment.likes > 0 ? this.props.singleComment.likes : ''
     console.log('props>>>>>', this.props)
     const commenter = this.props.singleComment.user
     console.log('COMMENTER???>>>>', commenter)
-    // const comment = this.props.singleComment.comment
     const {likes, dislikes, comment} = this.props.singleComment
+    // const comment = this.props.singleComment.comment
     return (
       <div className="commentContainer">
         <div className="singleComment">
