@@ -2,10 +2,38 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Location = db.define('location', {
-  point: {
-    type: Sequelize.GEOMETRY,
-    allowNull: true
+  //below are new geoJSON specific fields, in the same order as this: https://github.com/mapbox/carmen/blob/master/carmen-geojson.md
+  //'point' has been renamed 'geometry'
+  type: {
+    type: Sequelize.STRING,
+    defaultValue: 'Feature'
   },
+  // "id": {
+  //   type: Sequelize.STRING,
+  //   primaryKey: false
+  // },
+  text: {
+    type: Sequelize.TEXT
+  },
+  place_name: {
+    type: Sequelize.TEXT
+  },
+  place_type: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
+  },
+  center: {
+    type: Sequelize.ARRAY(Sequelize.FLOAT)
+  },
+  geometry: {
+    type: Sequelize.GEOMETRY
+  },
+  properties: {
+    type: Sequelize.JSON
+  },
+  context: {
+    type: Sequelize.ARRAY(Sequelize.JSON)
+  },
+  //original columns/properties below
   address: {
     type: Sequelize.STRING,
     // allowNull: false,

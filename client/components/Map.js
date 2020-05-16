@@ -6,9 +6,12 @@ import MapGL, {
   GeolocateControl,
   NavigationControl,
   Marker,
-  Popup
+  Popup,
+  Source,
+  Layer
 } from 'react-map-gl'
 import Geocoder from 'react-map-gl-geocoder'
+import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
 import {AddLocationForm, SingleLocation} from './index'
 import {connect} from 'react-redux'
@@ -28,8 +31,8 @@ class Map extends React.Component {
       viewport: {
         width: 1000,
         height: 700,
-        latitude: 40.73061,
-        longitude: -73.935242,
+        latitude: 40.705112,
+        longitude: -74.009123,
         zoom: 12
       },
       userLocation: {},
@@ -37,10 +40,10 @@ class Map extends React.Component {
       selectedLocation: {}
     }
   }
-  //create a reference to be passed to <Geocoder/>
   componentDidMount() {
     this.props.getAllLocations()
   }
+  //create a reference to be passed to <Geocoder/> and <MapGL/>
   mapRef = React.createRef()
   setUserLocation() {
     //using below function from react-map-gl to get the current position and set new viewport around those coords
@@ -64,8 +67,8 @@ class Map extends React.Component {
   //and creates a <Popup/> component for each location,
   // ANY HTML can go between Popups opening and closing tags
   renderPopup(loc) {
-    const long = loc.point.coordinates[0]
-    const lat = loc.point.coordinates[1]
+    const long = loc.geometry.coordinates[0]
+    const lat = loc.geometry.coordinates[1]
     return (
       <Popup
         tipSize={5}
@@ -78,7 +81,7 @@ class Map extends React.Component {
         <p>
           <strong>{loc.name}</strong>
           <br />
-          {`${loc.address} ${loc.city} ${loc.description}`}
+          {`${loc.address}   ${loc.city} ${loc.description}`}
         </p>
       </Popup>
     )
@@ -86,7 +89,6 @@ class Map extends React.Component {
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
     console.log('coordinates in addMarker func', coordinates)
-    // const coordinates = [...coordsArray]
     let name,
       address,
       city = ''
@@ -97,12 +99,10 @@ class Map extends React.Component {
     }
     this.setState({
       selectedLocation: {
+        ...result,
+        popup: true,
         name,
-        address,
-        city,
-        point: {type: 'Point', coordinates},
-        description: '',
-        popup: true
+        address: address + city
       }
     })
     console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
@@ -167,14 +167,16 @@ class Map extends React.Component {
             //this function has the search query as an argument, and when it returns an array
             //of GeoJSON features will add them to the search results bar
             //result.context[3].text
-            localGeocoder={query =>
+            localGeocoder={(
+              query //this.props.locations
+            ) =>
               this.props.locations.map(l => ({
+                ...l,
                 type: 'feature',
                 text: l.name,
                 place_name: l.name,
                 place_type: l.id,
-                center: l.point.coordinates,
-                geometry: {coordinates: l.point.coordinates},
+                center: l.geometry.coordinates,
                 context: [
                   {id: l.id, text: l.name},
                   {},
@@ -190,17 +192,30 @@ class Map extends React.Component {
               onViewportChange={viewport => this.setState({viewport})}
             />
           </div>
+          {/* GeolocateControl component, which calls setUserLocation when it gets clicked */}
+          <GeolocateControl
+            style={geolocateStyle}
+            positionOptions={{enableHighAccuracy: true}}
+            trackUserLocation={true}
+            onGeolocate={() => this.setUserLocation()}
+          />
           {/* if state.selectedLocation exists, then we create a marker for it */}
-          {this.state.selectedLocation.point &&
-            this.state.selectedLocation.point.type && (
+          {this.state.selectedLocation.geometry &&
+            this.state.selectedLocation.geometry.type && (
+              // <Source type="geojson" data={{
+              //   type: 'FeatureCollection', features: this.props.locations}}
+              // >
+              //   <Layer id="markers" type="symbol">
               <div>
                 <Marker
                   {...console.log(
                     'hello from in the sL point check',
                     this.state.selectedLocation
                   )}
-                  longitude={this.state.selectedLocation.point.coordinates[0]}
-                  latitude={this.state.selectedLocation.point.coordinates[1]}
+                  longitude={
+                    this.state.selectedLocation.geometry.coordinates[0]
+                  }
+                  latitude={this.state.selectedLocation.geometry.coordinates[1]}
                   onClick={() => {
                     console.log('IN ONCLICK OF SELECTEDLOCATIONMARKER')
                     this.state.selectedLocation.popup
@@ -211,22 +226,25 @@ class Map extends React.Component {
                       : this.setState({displayPopup: true})
                   }}
                 >
-                  <img className="marker" src="temp-map-icon.jpeg" width="50" />
+                  {/* <img className="marker" src="temp-map-icon.jpeg" width="50" /> */}
+                  <RedPin />
                 </Marker>
                 {this.state.selectedLocation.popup
                   ? this.renderPopup(this.state.selectedLocation)
                   : ''}
               </div>
+              //   </Layer>
+              // </Source>
             )}
-
           {/* map() through locations and create Markers for all of them */}
+
           {this.props.locations.map((loc, idx) => {
-            const long = loc.point.coordinates[0]
-            const lat = loc.point.coordinates[1]
+            const long = loc.geometry.coordinates[0]
+            const lat = loc.geometry.coordinates[1]
             return (
               <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
-                  <img
+                  {/* <img
                     className="marker"
                     src="map-icon.png"
                     width="50"
@@ -236,20 +254,14 @@ class Map extends React.Component {
                         ? this.setState({displayPopup: false})
                         : this.setState({displayPopup: true})
                     }}
-                  />
+                  /> */}
+                  <RedPin />
                 </Marker>
                 {/* also checking if marker.popup boolean is true, then render Popup */}
                 {loc.popup ? this.renderPopup(loc) : <div />}
               </div>
             )
           })}
-          {/* GeolocateControl component, which calls setUserLocation when it gets clicked */}
-          <GeolocateControl
-            style={geolocateStyle}
-            positionOptions={{enableHighAccuracy: true}}
-            trackUserLocation={true}
-            onGeolocate={() => this.setUserLocation()}
-          />
         </MapGL>
       </div>
     )

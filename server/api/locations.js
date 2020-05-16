@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     //below will only return locations with coordinates
     const locations = await Location.findAll({
-      where: {point: {[Op.ne]: null}}
+      where: {geometry: {[Op.ne]: null}}
     })
     // const locations = await Location.findAll()
     res.json(locations)
