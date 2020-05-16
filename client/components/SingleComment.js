@@ -23,16 +23,22 @@ class SingleComment extends Component {
   }
 
   render() {
-    // console.log('props???>>>>>', this.props)
-    // console.log('THIS.STATE>>>>', this.state)
+    console.log('props>>>>>', this.props)
+    const commenter = this.props.singleComment.user
+    console.log('COMMENTER???>>>>', commenter)
     const comment = this.props.singleComment.comment
     return (
       <div className="commentContainer">
         <div className="singleComment">
-          <div className="commentHeader">
-            <ul>COMMENTER PHOTO:</ul>
-            <ul>COMMENTER USERNAME:</ul>
-          </div>
+          {/* if commenter exists, then we create the comment header */}
+          {commenter !== undefined ? (
+            <div className="commentHeader">
+              <img src={commenter.profileImg} className="commentImg" />
+              <ul>{commenter.username}</ul>
+            </div>
+          ) : (
+            <p>'loading'</p>
+          )}
           <div className="commentWriting">{comment}</div>
           <div className="commentShareBar">
             <img
