@@ -4,8 +4,8 @@ import {fetchSingleCommunity} from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
 import {fetchProfile} from '../store/singleProfile'
-import {Image, Button} from 'react-bootstrap'
-import {CommunityFeed} from './index'
+import {Button} from 'react-bootstrap'
+import {CommunityFeed, Map} from './index'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
@@ -73,8 +73,8 @@ class CommunityProfile extends React.Component {
               {/* <ul>Members: </ul> */}
               {/* <button type="button">Subscribe</button> */}
             </div>
-            <div className="underline">
-              <p className="profileBio">Bio: {community.description}</p>
+            <div className="underCommunity">
+              <p className="communityBio">Bio: {community.description}</p>
             </div>
             <div className="profile-follows">
               <p className="first-list">Subscribers: {community.subscribers}</p>
@@ -113,9 +113,10 @@ class CommunityProfile extends React.Component {
             </div>
           </div>
 
-          {/* <div className="profileMapContainer sticky">MAP PLACEHOLDER</div> */}
+          <div className="profileMapContainer sticky">
+            <Map />
+          </div>
         </div>
-
         <br />
         <br />
         <br />

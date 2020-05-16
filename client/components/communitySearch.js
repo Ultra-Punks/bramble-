@@ -49,8 +49,15 @@ class CommunitySearch extends React.Component {
                   <div className="card">
                     <div>{result.name}</div>
                     <div>{result.description}</div>
-                    <Link to={`/Community/list/${result.id}`}>Detail</Link>
-                    <button type="button">Follow</button>
+                    {/* <button
+                    // onClick ={ history.push
+                    >
+
+                    </button> */}
+                    <Link to={`/Community/list/${result.id}`}>View Posts</Link>
+                    <button className="followbutton" type="button">
+                      Follow
+                    </button>
                   </div>
                   <br />
                 </div>
@@ -67,7 +74,11 @@ class CommunitySearch extends React.Component {
                 <div>{community.name}</div>
                 <div>{community.description}</div>
                 <Link to={`/Community/${community.id}`}>Detail</Link>
-                <button type="button">Follow</button>
+                <div>
+                  <button className="followbutton" type="button">
+                    Follow
+                  </button>
+                </div>
               </div>
               <br />
             </div>
@@ -80,19 +91,29 @@ class CommunitySearch extends React.Component {
   render() {
     return (
       <div>
-        <br />
-        <br />
-
         <form onSubmit={this.handleSubmit}>
           <input
+            className="searchbar"
             name="community"
             type="text"
             onChange={this.handleChange}
             value={this.state.community}
           />
-          <button type="submit"> Search </button>
+          <button className="searchCommunitybutton" type="submit">
+            <img
+              src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/245532/58-512.png"
+              className="magPic"
+            />
+          </button>
         </form>
         <br />
+
+        <div className="communityPic">
+          <img
+            src="https://cdn.cnn.com/cnnnext/dam/assets/200512161230-tony-hawk-pro-skater-super-tease.jpg"
+            className="communitySinglePix"
+          />
+        </div>
         <div>{this.searchResults()}</div>
       </div>
     )
