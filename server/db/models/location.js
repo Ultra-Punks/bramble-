@@ -27,6 +27,7 @@ const Location = db.define('location', {
       // isAlphanumeric: true
     }
   },
+  //popup controls if popup is being displayed
   popup: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
