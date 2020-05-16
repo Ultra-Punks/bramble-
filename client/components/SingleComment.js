@@ -12,6 +12,8 @@ import {fetchProfile} from '../store/singleProfile'
 class SingleComment extends Component {
   constructor() {
     super()
+    this.likeComment = this.likeComment.bind(this)
+    this.dislikeComment = this.dislikeComment.bind(this)
   }
 
   componentDidMount() {
@@ -22,11 +24,24 @@ class SingleComment extends Component {
     // this.props.fetchUser(3)
   }
 
+  likeComment() {
+    // this.props.singleComment.likes++
+    console.log('clicked LIKE Comment! +1')
+  }
+
+  dislikeComment() {
+    // this.props.singleComment.likes--
+    console.log('cliked DISLIKE comment! -1')
+  }
+
   render() {
+    // const numOfLikes =
+    //   this.props.singleComment.likes > 0 ? this.props.singleComment.likes : ''
     console.log('props>>>>>', this.props)
     const commenter = this.props.singleComment.user
     console.log('COMMENTER???>>>>', commenter)
-    const comment = this.props.singleComment.comment
+    // const comment = this.props.singleComment.comment
+    const {likes, dislikes, comment} = this.props.singleComment
     return (
       <div className="commentContainer">
         <div className="singleComment">
@@ -34,21 +49,39 @@ class SingleComment extends Component {
           {commenter !== undefined ? (
             <div className="commentHeader">
               <img src={commenter.profileImg} className="commentImg" />
-              <ul>{commenter.username}</ul>
+              <ul>@{commenter.username}</ul>
             </div>
           ) : (
             <p>'loading'</p>
           )}
           <div className="commentWriting">{comment}</div>
           <div className="commentShareBar">
-            <img
-              src="https://img.icons8.com/ios/64/000000/like.png"
-              className="likeIcon"
-            />
-            <img
-              src="https://img.icons8.com/windows/80/000000/dislike.png"
-              className="dislikeIcon"
-            />
+            <div className="likes">
+              {likes >= 1 && (
+                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                  {likes}
+                </div>
+              )}
+              <img
+                src="https://img.icons8.com/ios/64/000000/like.png"
+                className="likeIcon"
+                type="button"
+                onClick={() => this.likeComment()}
+              />
+            </div>
+            <div className="dislikes">
+              {dislikes >= 1 && (
+                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                  {dislikes}
+                </div>
+              )}
+              <img
+                src="https://img.icons8.com/windows/80/000000/dislike.png"
+                className="dislikeIcon"
+                type="button"
+                onClick={() => this.dislikeComment()}
+              />
+            </div>
           </div>
         </div>
       </div>
