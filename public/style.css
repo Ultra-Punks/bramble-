@@ -509,19 +509,98 @@ form div {
   font-size: 30px;
 }
 
-.communityBlock {
+.community-cards {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.community-cards-item {
+  display: flex;
+  padding: 1rem;
+  @media (min-width: 40rem) {
+    width: 50%;
+  }
+  @media (min-width: 56rem) {
+    width: 33.3333%;
+  }
+}
+
+.community-card {
+  background-color: white;
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  width: 100%;
+  overflow: hidden;
+  width: 350px;
+  height: 400px;
+}
+
+.community-card-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  width: 95%;
+  height: 70%;
+  margin: 10px;
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  filter: contrast(70%);
+
+  overflow: hidden;
+  position: relative;
+  transition: filter 0.5s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+
+  @media (min-width: 40rem) {
+    &::before {
+      padding-top: 66.6%;
+    }
+  }
+}
+
+.community-card-content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.community-card-title {
+  color: black;
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+}
+
+.community-card-text {
+  flex: 1 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: center;
+}
+
+.community-link {
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.communityContainer {
+.community-button {
   display: flex;
-  flex-direction: row;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  background-color: black;
-  width: 70%;
+  justify-content: center;
 }
 
 .community:hover {
@@ -557,10 +636,10 @@ form div {
 
 .searchCommunitybutton {
   position: absolute;
-  top: 45%;
-  width: 100px;
+  top: 50%;
+  width: 20%;
   height: 50px;
-  right: 17.2%;
+  right: 25%;
   color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
@@ -572,7 +651,7 @@ form div {
   transition: all 0.4s ease 0s;
 }
 
-.magPic {
+.community-magPic {
   height: 45px;
   width: 50px;
 }
@@ -586,14 +665,10 @@ form div {
   transition: all 0.4s ease 0s;
 }
 
-.card {
-  padding: 2px 16px;
-
-  margin: 10px;
-}
-
 .followbutton {
-  /* width: 100px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(60, 60, 232, 0.749);
   border-radius: 25px;
   height: 33px;
@@ -607,12 +682,19 @@ form div {
   display: flex;
 }
 
-.imageStyle {
-  background-color: black;
-  width: auto;
-  height: 170px;
-  margin: 10px;
+.communityText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  width: 100%;
 }
+
+.communityText2 {
+  color: white;
+  font-size: 25px;
+}
+
 .commentsAndShares {
   display: flex;
   margin-left: 55px;

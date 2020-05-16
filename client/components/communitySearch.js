@@ -41,25 +41,33 @@ class CommunitySearch extends React.Component {
     if (community) {
       if (Array.isArray(community)) {
         return (
-          <div className="communityBlock">
+          <div className="community-cards">
             {community.map(result => {
               return (
-                <div key={result.id} className="communityContainer">
-                  <img src={result.profileImg} className="imageStyle" />
-                  <div className="card">
-                    <div>{result.name}</div>
-                    <div>{result.description}</div>
-                    {/* <button
-                    // onClick ={ history.push
-                    >
-
-                    </button> */}
-                    <Link to={`/Community/list/${result.id}`}>View Posts</Link>
-                    <button className="followbutton" type="button">
-                      Follow
-                    </button>
+                <div key={result.id} className="community-cards-item">
+                  <div className="community-card">
+                    <img
+                      src={result.profileImg}
+                      className="community-card-image"
+                    />
+                    <div className="community-card-content">
+                      <div className="community-card-title">{result.name}</div>
+                      <div className="community-card-text">
+                        {result.description}
+                      </div>
+                      <Link
+                        to={`/Community/list/${result.id}`}
+                        className="community-link"
+                      >
+                        View Posts
+                      </Link>
+                      <div className="community-button">
+                        <button className="followbutton" type="button">
+                          Follow
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <br />
                 </div>
               )
             })}
@@ -67,14 +75,24 @@ class CommunitySearch extends React.Component {
         )
       } else {
         return (
-          <div className="communityBlock">
-            <div className="communityContainer">
-              <img src={community.profileImg} className="imageStyle" />
+          <div className="community-cards-item">
+            <div className="community-card">
+              <img
+                src={community.profileImg}
+                className="community-card-image"
+              />
               <div className="card">
-                <div>{community.name}</div>
-                <div>{community.description}</div>
-                <Link to={`/Community/${community.id}`}>Detail</Link>
-                <div>
+                <div className="community-card-title">{community.name}</div>
+                <div className="community-card-text">
+                  {community.description}
+                </div>
+                <Link
+                  to={`/Community/${community.id}`}
+                  className="community-link"
+                >
+                  Detail
+                </Link>
+                <div className="community-button">
                   <button className="followbutton" type="button">
                     Follow
                   </button>
@@ -102,7 +120,7 @@ class CommunitySearch extends React.Component {
           <button className="searchCommunitybutton" type="submit">
             <img
               src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/245532/58-512.png"
-              className="magPic"
+              className="community-magPic"
             />
           </button>
         </form>
@@ -114,6 +132,10 @@ class CommunitySearch extends React.Component {
             className="communitySinglePix"
           />
         </div>
+        <div className="communityText">
+          <div className="communityText2">Find Your Community</div>
+        </div>
+
         <div>{this.searchResults()}</div>
       </div>
     )

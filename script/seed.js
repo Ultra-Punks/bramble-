@@ -135,15 +135,45 @@ const communitySeedNames = [
   'NYC Fit!',
   'Urban Shredders'
 ]
+
 // create random community seed data
 const generateCommunity = () => {
   return {
     name: chanceObj.pickone(communitySeedNames),
-    description: chanceObj.paragraph({sentences: 3})
+    description: chanceObj.paragraph({sentences: 1})
   }
 }
+
+const manualCommunities = [
+  {
+    name: 'Food',
+    description: 'Food is the ingredient that binds us together',
+    profileImg:
+      'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'
+  },
+  {
+    name: 'Fitness',
+    description: 'Be the hardest worker in the room',
+    profileImg:
+      'https://www.maxim.com/.image/t_share/MTY1MDc5NTMwMzgwMjA3NDE2/dwayne-the-rock-johnson-chest-drop-sets.png'
+  },
+  {
+    name: 'Skating',
+    description: 'Life is alot like skateboarding ',
+    profileImg:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTSeXvrFrdX237gzTMITf4vFommaqJOYBTOk2Xf8IHthyzDnK2K&usqp=CAU'
+  },
+  {
+    name: 'Fashion',
+    description: 'Being yourself never goes out of fashion ',
+    profileImg:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp_FYgM-HuoNgldG9lW9a4L5cZ9IgLhZNi4EPCTA2H1EC2GonC&usqp=CAU'
+  }
+]
+
 // store 10 new communities created by generateUser into in the communityArray
-const communityArray = Array.from({length: 10}, generateCommunity)
+const communityArray = Array.from({length: 8}, generateCommunity)
+const updatedCommunities = manualCommunities.concat(communityArray)
 
 // create random post seed data
 const generatePost = () => {
@@ -193,8 +223,13 @@ async function seed() {
     users.push(newUser)
   }
 
-  for (let i = 0; i < communityArray.length; i++) {
-    const newCommunity = await Community.create(communityArray[i])
+  // for (let i = 0; i < updatedCommunities.length; i++) {
+  //   const newCommunity = await Community.create(updatedCommunities[i])
+  //   users.push(newCommunity)
+  // }
+
+  for (let i = 0; i < updatedCommunities.length; i++) {
+    const newCommunity = await Community.create(updatedCommunities[i])
     communities.push(newCommunity)
     const randomUserNum = Math.floor(Math.random() * users.length) + 1
     // const randomCommNum = Math.floor(Math.random() * communities.length) + 1
