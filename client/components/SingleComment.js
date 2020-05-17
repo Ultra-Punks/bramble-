@@ -18,10 +18,6 @@ class SingleComment extends Component {
   constructor() {
     super()
 
-    this.state = {
-      openComments: false
-    }
-
     this.likeComment = this.likeComment.bind(this)
     this.dislikeComment = this.dislikeComment.bind(this)
   }

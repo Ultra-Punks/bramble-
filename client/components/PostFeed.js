@@ -39,13 +39,43 @@ export default function PostFeed(props) {
                 <div className="post-photos">
                   <PostingPictures post={post} />
                 </div>
-                <div className="commentsAndShares">
+                <div className="commentShareBar">
                   <img
                     src="https://img.icons8.com/all/500/comments.png"
                     className="commentIcon"
                     type="button"
-                    onClick={props.handleComments}
+                    // onClick={props.handleComments}
                   />
+                  <p type="button" onClick={props.handleComments}>
+                    See Replies
+                  </p>
+
+                  <div className="likes">
+                    {/* {likes >= 1 && (
+                      <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                        {likes}
+                      </div>
+                    )} */}
+                    <img
+                      src="https://img.icons8.com/ios/64/000000/like.png"
+                      className="likeIcon"
+                      type="button"
+                      // onClick={() => this.likeComment()}
+                    />
+                  </div>
+                  <div className="dislikes">
+                    {/* {dislikes >= 1 && (
+                      <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                        {dislikes}
+                      </div>
+                    )} */}
+                    <img
+                      src="https://img.icons8.com/windows/80/000000/dislike.png"
+                      className="dislikeIcon"
+                      type="button"
+                      // onClick={() => this.dislikeComment()}
+                    />
+                  </div>
                 </div>
                 <br />
               </div>
