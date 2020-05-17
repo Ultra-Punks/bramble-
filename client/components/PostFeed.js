@@ -15,7 +15,6 @@ function PostingPictures(props) {
 
 export default function PostFeed(props) {
   const [openComments, setOpenComment] = useState(false)
-  console.log(openComments) // would be false
 
   function handleComments() {
     if (openComments) {
