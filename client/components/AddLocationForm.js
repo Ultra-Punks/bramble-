@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addLocationThunk} from '../store/singleLocation'
+import {fetchAllLocations} from '../store/locations'
 
 export class AddLocationForm extends React.Component {
   constructor() {
@@ -81,6 +82,9 @@ export class AddLocationForm extends React.Component {
   }
 }
 const mapDispatch = dispatch => ({
-  add: location => dispatch(addLocationThunk(location))
+  add: location => {
+    dispatch(addLocationThunk(location))
+    dispatch(fetchAllLocations())
+  }
 })
 export default connect(null, mapDispatch)(AddLocationForm)

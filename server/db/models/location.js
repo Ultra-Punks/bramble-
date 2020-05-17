@@ -8,6 +8,9 @@ const Location = db.define('location', {
     type: Sequelize.STRING,
     defaultValue: 'Feature'
   },
+  mapId: {
+    type: Sequelize.STRING
+  },
   text: {
     type: Sequelize.TEXT
   },

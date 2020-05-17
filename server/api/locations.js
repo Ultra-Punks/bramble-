@@ -7,6 +7,7 @@ module.exports = router
 router.post('/add', async (req, res, next) => {
   try {
     const {
+      id,
       place_type,
       properties,
       text,
@@ -19,6 +20,7 @@ router.post('/add', async (req, res, next) => {
       address
     } = req.body
     const location = await Location.create({
+      mapId: id,
       place_type,
       properties,
       text,
