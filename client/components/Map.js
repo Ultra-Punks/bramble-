@@ -37,7 +37,8 @@ class Map extends React.Component {
       },
       userLocation: {},
       displayPopup: false,
-      selectedLocation: {}
+      selectedLocation: {},
+      displayForm: false
     }
   }
   componentDidMount() {
@@ -81,7 +82,8 @@ class Map extends React.Component {
         <p>
           <strong>{loc.name}</strong>
           <br />
-          {`${loc.address}   ${loc.city} ${loc.description}`}
+          {`${loc.address} ${loc.city}`}
+          {loc.description && `${loc.description}`}
         </p>
       </Popup>
     )
@@ -102,7 +104,8 @@ class Map extends React.Component {
         ...result,
         popup: true,
         name,
-        address: address + city
+        city,
+        address: address
       }
     })
     console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
@@ -139,6 +142,18 @@ class Map extends React.Component {
           }}
         >
           Add My Location To Map
+        </button>
+        {this.state.displayForm && (
+          <AddLocationForm location={this.state.selectedLocation} />
+        )}
+        <button
+          type="submit"
+          onClick={() => {
+            const display = this.state.displayForm
+            this.setState({displayForm: !display})
+          }}
+        >
+          Display Add Location Form
         </button>
         {/* our main interactive map component */}
         <MapGL

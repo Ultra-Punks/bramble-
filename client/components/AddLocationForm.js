@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {addLocationThunk} from '../store/singleLocation'
 
 export class AddLocationForm extends React.Component {
   constructor() {
@@ -9,7 +10,7 @@ export class AddLocationForm extends React.Component {
       address: '',
       city: '',
       description: '',
-      point: {}
+      geometry: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -21,30 +22,27 @@ export class AddLocationForm extends React.Component {
         address: this.props.location.address,
         city: this.props.location.city,
         description: this.props.location.description,
-        point: this.props.location.geometry
+        geometry: this.props.location.geometry
       })
     }
-    console.log('props in compdidmount', this.props)
   }
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log('handlechangestate', this.state)
   }
   handleSubmit = event => {
     event.preventDefault()
-    //this.props.addLocationThunk or whatever
+    this.props.add(this.props.location)
     this.setState({
       name: '',
       address: '',
       city: '',
       description: '',
-      point: {}
+      geometry: {}
     })
   }
   render() {
-    console.log(this.state)
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="name">Name:</label>
@@ -83,9 +81,6 @@ export class AddLocationForm extends React.Component {
   }
 }
 const mapDispatch = dispatch => ({
-  add: function(product) {
-    // dispatch(addProductThunk(product))
-    // dispatch(fetchProducts())
-  }
+  add: location => dispatch(addLocationThunk(location))
 })
 export default connect(null, mapDispatch)(AddLocationForm)

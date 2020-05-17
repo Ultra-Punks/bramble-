@@ -8,10 +8,6 @@ const Location = db.define('location', {
     type: Sequelize.STRING,
     defaultValue: 'Feature'
   },
-  // "id": {
-  //   type: Sequelize.STRING,
-  //   primaryKey: false
-  // },
   text: {
     type: Sequelize.TEXT
   },
@@ -40,6 +36,9 @@ const Location = db.define('location', {
     validate: {
       notEmpty: true
     }
+  },
+  city: {
+    type: Sequelize.STRING
   },
   name: {
     type: Sequelize.STRING,
