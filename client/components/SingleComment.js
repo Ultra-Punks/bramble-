@@ -34,7 +34,9 @@ class SingleComment extends Component {
   }
 
   likeComment() {
+    console.log('likes before increment', this.props.singleComment.likes)
     this.props.singleComment.likes++
+    console.log('likes AFTER increment', this.props.singleComment.likes)
   }
 
   dislikeComment() {
@@ -43,6 +45,7 @@ class SingleComment extends Component {
 
   render() {
     const commenter = this.props.singleComment.user
+    console.log('COMMENTER>>>>', commenter)
     const {likes, dislikes, comment} = this.props.singleComment
     // const comment = this.props.singleComment.comment
     return (

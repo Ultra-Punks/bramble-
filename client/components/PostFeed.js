@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
-import React from 'react'
+import React, {useState} from 'react'
 import {Image} from 'react-bootstrap'
+import PostComment from './PostComment'
 // import axios from 'axios'
 
 function PostingPictures(props) {
@@ -13,7 +14,18 @@ function PostingPictures(props) {
 }
 
 export default function PostFeed(props) {
-  // console.log('props from postFeed>>>>', props)
+  const [openComments, setOpenComment] = useState(false)
+  console.log(openComments) // would be false
+
+  function handleComments() {
+    if (openComments) {
+      setOpenComment(false)
+    } else {
+      setOpenComment(true)
+    }
+  }
+
+  console.log('props from postFeed>>>>', props)
   if (props.postFeed) {
     return (
       <div className="feedView">
@@ -50,17 +62,22 @@ export default function PostFeed(props) {
                     <p
                       className="seeReplies"
                       type="button"
-                      onClick={props.handleComments}
+                      onClick={handleComments}
                     >
                       See Replies
                     </p>
                   </div>
                   {/* <div className="likesAndDislikes"> */}
                   <div className="likes">
-                    {/* {likes >= 1 && (
-                      <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-                        {likes}
-                      </div>
+                    {/* {Array.isArray(props.posts) &&
+                      props.posts.map((singlePost) => {
+                        if (singlePost.likes >= 1)
+                          return (
+                            <div key={post.id}>{props.singlePost.likes}</div>
+                          )
+                      })} */}
+                    {/* {props.posts[0].likes >= 1 && (
+                      <div>{props.posts[0].likes}</div>
                     )} */}
                     <img
                       src="https://img.icons8.com/ios/64/000000/like.png"
@@ -85,6 +102,7 @@ export default function PostFeed(props) {
                   {/* </div> */}
                 </div>
                 <br />
+                <PostComment post={post} openComments={openComments} />
               </div>
             )
           })}

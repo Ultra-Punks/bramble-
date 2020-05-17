@@ -1,10 +1,7 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
 
-
-
-const {UserPost, User, Photo, Community} = require('../db/models')
-
+const {UserPost, User, Photo, Community, PostComment} = require('../db/models')
 
 module.exports = router
 
@@ -39,7 +36,9 @@ router.get('/from/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: UserPost, include: [{model: Photo}]}]
+      include: [
+        {model: UserPost, include: [{model: Photo}, {model: PostComment}]}
+      ]
     })
     res.json(allUserPosts.userPosts)
   } catch (error) {
