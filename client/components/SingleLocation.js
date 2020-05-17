@@ -1,14 +1,11 @@
 import React from 'react'
 
-class SingleLocation extends React.Component {
-  constructor() {
-    super()
-    this.state = {}
-  }
-
-  render() {
-    return <div />
-  }
+// class SingleLocation extends React.Component {
+const SingleLocation = props => {
+  const {location} = props
+  Object.keys(location).map(el => {
+    return <p key={el.id}>{`${el} ${location[el]}`}</p>
+  })
 }
 
 export default SingleLocation

@@ -3,6 +3,15 @@ const {Location} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const location = await Location.findByPk(req.params.id)
+    res.json(location)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/', async (req, res, next) => {
   try {
     //below will only return locations with coordinates

@@ -167,25 +167,40 @@ class Map extends React.Component {
             //this function has the search query as an argument, and when it returns an array
             //of GeoJSON features will add them to the search results bar
             //result.context[3].text
-            localGeocoder={(
-              query //this.props.locations
-            ) =>
-              this.props.locations.map(l => ({
-                ...l,
-                type: 'feature',
-                text: l.name,
-                place_name: l.name,
-                place_type: l.id,
-                center: l.geometry.coordinates,
-                context: [
-                  {id: l.id, text: l.name},
-                  {},
-                  {},
-                  {id: l.id, text: l.city}
-                ],
-                properties: {address: l.address}
-              }))
-            }
+            localGeocoder={query => {
+              return this.props.locations
+                .filter(l => l.name.toLowerCase().startsWith(query))
+                .map(l => ({
+                  ...l,
+                  type: 'feature',
+                  text: l.name,
+                  place_name: l.name,
+                  place_type: l.id,
+                  center: l.geometry.coordinates,
+                  context: [
+                    {id: l.id, text: l.name},
+                    {},
+                    {},
+                    {id: l.id, text: l.city}
+                  ],
+                  properties: {address: l.address}
+                }))
+              // this.props.locations.map(l => ({
+              //   ...l,
+              //   type: 'feature',
+              //   text: l.name,
+              //   place_name: l.name,
+              //   place_type: l.id,
+              //   center: l.geometry.coordinates,
+              //   context: [
+              //     {id: l.id, text: l.name},
+              //     {},
+              //     {},
+              //     {id: l.id, text: l.city}
+              //   ],
+              //   properties: {address: l.address}
+              // }))
+            }}
           />
           <div className="nav" style={navStyle}>
             <NavigationControl
