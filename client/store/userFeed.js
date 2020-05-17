@@ -21,8 +21,7 @@ export const fetchUserPosts = username => {
   }
 }
 
-
-// thunk to fetch community Post
+// thunk to fetch User community Post
 export const fetchCommunityPosts = id => {
   return async dispatch => {
     try {
@@ -34,9 +33,7 @@ export const fetchCommunityPosts = id => {
   }
 }
 
-
 export const addPostThunk = postInfo => {
-
   return async dispatch => {
     try {
       const {data} = await axios.post(

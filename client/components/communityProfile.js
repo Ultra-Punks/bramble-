@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchSingleCommunity} from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
-import {fetchProfile} from '../store/singleProfile'
+// import {fetchProfile} from '../store/singleProfile'
 import {Button} from 'react-bootstrap'
 import {CommunityFeed, Map} from './index'
 
@@ -31,28 +31,9 @@ class CommunityProfile extends React.Component {
     this.setState({postFeed: false})
   }
 
-  // PostFeed() {
-  //   const posts = this.props.posts
-  //   if (this.state.postFeed) {
-  //     if (Array.isArray(posts)) {
-  //       return (
-  //         <div>
-  //           {posts.map((result) => {
-  //             return (
-  //               <div key={result.id}>
-  //                 <div>{result.description}</div>
-  //               </div>
-  //             )
-  //           })}
-  //         </div>
-  //       )
-  //     }
-  //   }
-  // }
-
   render() {
-    console.log(this.props)
-    const profile = this.props.profile
+    // console.log(this.props)
+    // const profile = this.props.profile
     const community = this.props.community
     const postClass = this.state.postFeed
       ? 'profileFeedButton selected-feed'
@@ -71,16 +52,16 @@ class CommunityProfile extends React.Component {
               className="profilePagePhoto-Community"
             />
             <div className="profileInfo">
-              <p className="profile-name">{profile.username}</p>
+              {/* <p className="profile-name">{profile.username}</p> */}
               <p className="profile-username"> Community: {community.name}</p>
               {/* <ul>Members: </ul> */}
               {/* <button type="button">Subscribe</button> */}
             </div>
             <div className="underCommunity">
-              <p className="communityBio">Bio: {community.description}</p>
+              <p className="communityBio">{community.description}</p>
             </div>
             <div className="profile-follows">
-              <p className="first-list">Subscribers: {community.subscribers}</p>
+              {/* <p className="first-list">Subscribers: {community.subscribers}</p> */}
               {/* <p className="profile-info-text">Communities</p> */}
             </div>
             <Button className="follow-button" variant="outline-light">
@@ -110,7 +91,7 @@ class CommunityProfile extends React.Component {
                   postFeed={this.state.postFeed}
                   images={this.props.gallery}
                   posts={this.props.posts}
-                  profile={this.props.profile}
+                  // profile={this.props.profile}
                 />
               </div>
             </div>
@@ -131,7 +112,7 @@ class CommunityProfile extends React.Component {
 const mapState = state => {
   return {
     community: state.community,
-    profile: state.singleProfile,
+    // profile: state.singleProfile,
     gallery: state.allPhotos,
     posts: state.userPosts
   }
@@ -139,11 +120,11 @@ const mapState = state => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const id = ownProps.match.params.id
-  const username = ownProps.match.params.username
+  // const username = ownProps.match.params.username
   return {
     fetchSingleCommunity: () => dispatch(fetchSingleCommunity(id)),
-    fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchGallery: () => dispatch(fetchAllPhotos(username)),
+    // fetchProfile: () => dispatch(fetchProfile(id)),
+    fetchGallery: () => dispatch(fetchAllPhotos(id)),
     fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id))
   }
 }

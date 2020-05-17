@@ -40,40 +40,40 @@ router.get('/list/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    const newCommunity = await Community.create(req.body)
-    res.json(newCommunity)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.post('/', async (req, res, next) => {
+//   try {
+//     const newCommunity = await Community.create(req.body)
+//     res.json(newCommunity)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
-router.delete('/:id', async (req, res, next) => {
-  try {
-    const communityId = req.params.id
-    const removeCommunity = await communityId.destroy({
-      where: {
-        id: communityId
-      }
-    })
-    res.json(removeCommunity)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//     const communityId = req.params.id
+//     const removeCommunity = await communityId.destroy({
+//       where: {
+//         id: communityId
+//       }
+//     })
+//     res.json(removeCommunity)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
-router.put('/:id', async (req, res, next) => {
-  try {
-    const communityId = req.params.id
-    const [, community] = await Community.create(req.body, {
-      where: {
-        id: communityId,
-        returning: true
-      }
-    })
-    res.json(community)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const communityId = req.params.id
+//     const [, community] = await Community.create(req.body, {
+//       where: {
+//         id: communityId,
+//         returning: true
+//       }
+//     })
+//     res.json(community)
+//   } catch (error) {
+//     next(error)
+//   }
+// })

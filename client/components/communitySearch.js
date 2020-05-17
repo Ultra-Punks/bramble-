@@ -87,7 +87,7 @@ class CommunitySearch extends React.Component {
                   {community.description}
                 </div>
                 <Link
-                  to={`/Community/${community.id}`}
+                  to={`/Community/list/${community.id}`}
                   className="community-link"
                 >
                   Detail
