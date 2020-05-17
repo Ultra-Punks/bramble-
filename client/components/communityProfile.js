@@ -66,7 +66,10 @@ class CommunityProfile extends React.Component {
       <div>
         <div className="profileContainer">
           <div className="profileImgContentContainer">
-            <img src={community.profileImg} className="profilePagePhoto" />
+            <img
+              src={community.profileImg}
+              className="profilePagePhoto-Community"
+            />
             <div className="profileInfo">
               <p className="profile-name">{profile.username}</p>
               <p className="profile-username"> Community: {community.name}</p>

@@ -209,6 +209,17 @@ form div {
   border-width: 7px;
   border-color: #3d4a63;
 }
+.profilePagePhoto-Community {
+  background: rgb(249, 111, 111);
+  border-radius: 150px;
+  border-style: solid;
+  border-width: 7px;
+  border-color: #3d4a63;
+  display: flex;
+  height: 250px;
+  width: auto;
+  margin: 25px;
+}
 
 .followButton {
   background: rgba(60, 60, 232, 0.749);
