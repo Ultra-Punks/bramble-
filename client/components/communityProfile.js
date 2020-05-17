@@ -44,66 +44,61 @@ class CommunityProfile extends React.Component {
       : 'profileFeedButton'
 
     return (
-      <div>
-        <div className="profileContainer">
-          <div className="profileImgContentContainer">
-            <img
-              src={community.profileImg}
-              className="profilePagePhoto-Community"
-            />
-            <div className="profileInfo">
-              {/* <p className="profile-name">{profile.username}</p> */}
-              <p className="profile-username"> Community: {community.name}</p>
-              {/* <ul>Members: </ul> */}
-              {/* <button type="button">Subscribe</button> */}
-            </div>
-            <div className="underCommunity">
-              <p className="communityBio">{community.description}</p>
-            </div>
-            <div className="profile-follows">
-              {/* <p className="first-list">Subscribers: {community.subscribers}</p> */}
-              {/* <p className="profile-info-text">Communities</p> */}
-            </div>
-            <Button className="follow-button" variant="outline-light">
-              Subscribe
-            </Button>
-
-            <div className="contentContainer">
-              <div className="buttonContainer">
-                <Button
-                  variant="link"
-                  className={postClass}
-                  onClick={() => this.postSelector()}
-                >
-                  Posts
-                </Button>
-                <Button
-                  variant="link"
-                  className={galleryFeed}
-                  onClick={() => this.gallerySelector()}
-                >
-                  Gallery
-                </Button>
-              </div>
-              {/* <div>{this.PostFeed()}</div> */}
-              <div>
-                <CommunityFeed
-                  postFeed={this.state.postFeed}
-                  images={this.props.gallery}
-                  posts={this.props.posts}
-                  // profile={this.props.profile}
-                />
-              </div>
-            </div>
+      <div className="profileContainer">
+        <div className="profileImgContentContainer">
+          <img
+            src={community.profileImg}
+            className="profilePagePhoto-Community"
+          />
+          <div className="profileInfo">
+            {/* <p className="profile-name">{profile.username}</p> */}
+            <p className="profile-username"> Community: {community.name}</p>
+            {/* <ul>Members: </ul> */}
+            {/* <button type="button">Subscribe</button> */}
           </div>
+          <div className="underCommunity">
+            <p className="communityBio">{community.description}</p>
+          </div>
+          <div className="profile-follows">
+            {/* <p className="first-list">Subscribers: {community.subscribers}</p> */}
+            {/* <p className="profile-info-text">Communities</p> */}
+          </div>
+          <Button className="follow-button" variant="outline-light">
+            Subscribe
+          </Button>
 
-          <div className="profileMapContainer sticky">
-            <Map />
+          <div className="contentContainer">
+            <div className="buttonContainer">
+              <Button
+                variant="link"
+                className={postClass}
+                onClick={() => this.postSelector()}
+              >
+                Posts
+              </Button>
+              <Button
+                variant="link"
+                className={galleryFeed}
+                onClick={() => this.gallerySelector()}
+              >
+                Gallery
+              </Button>
+            </div>
+            {/* <div>{this.PostFeed()}</div> */}
+            <div>
+              <CommunityFeed
+                postFeed={this.state.postFeed}
+                images={this.props.gallery}
+                posts={this.props.posts}
+                // profile={this.props.profile}
+              />
+            </div>
           </div>
         </div>
-        <br />
-        <br />
-        <br />
+
+        <div className="profileMapContainer sticky">
+          <Map />
+        </div>
       </div>
     )
   }

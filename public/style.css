@@ -641,13 +641,12 @@ form div {
   font-weight: inherit;
   line-height: var(--inputLineHeight);
   border: none;
-  border-radius: 0.4rem;
   transition: box-shadow var(--transitionDuration);
 }
 
 .searchCommunitybutton {
   position: absolute;
-  top: 50%;
+  top: 45%;
   width: 20%;
   height: 50px;
   right: 25%;
@@ -655,8 +654,6 @@ form div {
   text-transform: uppercase;
   text-decoration: none;
   background: #ed3330;
-  padding: 5px;
-  border-radius: 5px;
   display: inline-block;
   border: none;
   transition: all 0.4s ease 0s;
