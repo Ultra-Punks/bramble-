@@ -647,3 +647,30 @@ form div {
   padding: 10px;
   justify-content: space-around;
 }
+
+.all-comment-preview-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.commentPreviewContainer {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.singleCommentPreview {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 80%;
+  background-color: rgba(224, 232, 240, 0.879);
+  justify-content: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+  margin: 10px;
+  padding: 25px;
+}

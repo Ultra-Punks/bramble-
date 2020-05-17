@@ -20,10 +20,38 @@ export default function PostComments(props) {
   ) {
     const postComments = post.postComments
     return (
-      <div className="commentContainer">
+      <div className="commentPreviewContainer">
         {postComments.map(comment => (
-          <div key={comment.id}>
-            <div className="singleComment">{comment.comment}</div>
+          <div key={comment.id} className="singleCommentPreview">
+            {comment.comment}
+            <div className="commentShareBar">
+              <div>
+                {comment.likes >= 1 && (
+                  <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                    {comment.likes}
+                  </div>
+                )}
+                <img
+                  src="https://img.icons8.com/ios/64/000000/like.png"
+                  className="likeIcon"
+                  type="button"
+                  // onClick={() => this.likeComment()}
+                />
+              </div>
+              <div>
+                {comment.dislikes >= 1 && (
+                  <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+                    {comment.dislikes}
+                  </div>
+                )}
+                <img
+                  src="https://img.icons8.com/windows/80/000000/dislike.png"
+                  className="dislikeIcon"
+                  type="button"
+                  // onClick={() => this.dislikeComment()}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>
