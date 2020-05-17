@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
 import {fetchUserPosts} from '../store/userFeed'
+import {fetchComments} from '../store/postComments'
 import {fetchSingleComment} from '../store/singleComment'
 import {PostFeed, Map} from './index'
 import {Image, Button} from 'react-bootstrap'
+import PostComments from './PostComments'
 
 class ProfileView extends React.Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class ProfileView extends React.Component {
   componentDidMount() {
     this.props.fetchProfile()
     this.props.fetchUserPosts()
+    this.props.fetchComments()
   }
 
   postSelector() {
@@ -37,6 +40,9 @@ class ProfileView extends React.Component {
   }
 
   render() {
+    // console.log('PROPS from Profile View >>>> ', this.props)
+    const postId = this.props.posts[0] ? this.props.posts[0].id : null
+    // console.log('POST ID>>>>>>', postId)
     const profile = this.props.profile
     const postClass = this.state.postFeed
       ? 'profileFeedButton selected-feed'
@@ -95,6 +101,22 @@ class ProfileView extends React.Component {
                 profile={this.props.profile}
                 handleComments={this.handleComments}
               />
+              {this.state.openComments &&
+                Array.isArray(this.props.commentsOnPosts) &&
+                this.props.commentsOnPosts.map(comment => {
+                  if (comment.userPostId === postId) {
+                    return (
+                      <div key={comment.id}>
+                        {/* need to map through comment per userPostId */}
+                        CAN YOU SEE THIS???{comment.comment}
+                      </div>
+                    )
+                  }
+                })}
+              <PostComments
+                comments={this.props.commentsOnPosts}
+                postId={this.postId}
+              />
             </div>
           </div>
         </div>
@@ -111,17 +133,21 @@ class ProfileView extends React.Component {
 }
 
 const mapState = state => {
+  console.log('STATE from profile view!>>>', state)
   return {
     profile: state.singleProfile,
-    posts: state.userPosts
+    posts: state.userPosts,
+    commentsOnPosts: state.postComments
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
   const username = ownProps.match.params.username
+
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchUserPosts: () => dispatch(fetchUserPosts(username))
+    fetchUserPosts: () => dispatch(fetchUserPosts(username)),
+    fetchComments: () => dispatch(fetchComments())
     // fetchSingleComment: () => dispatch(fetchSingleComment())
   }
 }

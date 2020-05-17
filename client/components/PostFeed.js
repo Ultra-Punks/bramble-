@@ -13,7 +13,7 @@ function PostingPictures(props) {
 }
 
 export default function PostFeed(props) {
-  console.log('props from postFeed>>>>', props)
+  // console.log('props from postFeed>>>>', props)
   if (props.postFeed) {
     return (
       <div className="feedView">
@@ -39,17 +39,23 @@ export default function PostFeed(props) {
                 <div className="post-photos">
                   <PostingPictures post={post} />
                 </div>
-                <div className="commentShareBar">
-                  <img
-                    src="https://img.icons8.com/all/500/comments.png"
-                    className="commentIcon"
-                    type="button"
-                    // onClick={props.handleComments}
-                  />
-                  <p type="button" onClick={props.handleComments}>
-                    See Replies
-                  </p>
-
+                <div className="commentsAndShares">
+                  <div className="commentRepliesContainer">
+                    <img
+                      src="https://img.icons8.com/all/500/comments.png"
+                      className="commentIcon"
+                      type="button"
+                      // onClick={props.handleComments}
+                    />
+                    <p
+                      className="seeReplies"
+                      type="button"
+                      onClick={props.handleComments}
+                    >
+                      See Replies
+                    </p>
+                  </div>
+                  {/* <div className="likesAndDislikes"> */}
                   <div className="likes">
                     {/* {likes >= 1 && (
                       <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
@@ -76,6 +82,7 @@ export default function PostFeed(props) {
                       // onClick={() => this.dislikeComment()}
                     />
                   </div>
+                  {/* </div> */}
                 </div>
                 <br />
               </div>

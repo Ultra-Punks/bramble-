@@ -543,14 +543,40 @@ form div {
 .commentsAndShares {
   display: flex;
   margin-left: 55px;
+  justify-content: space-evenly;
+}
+
+.likesAndDislikes {
+  display: flex;
+  justify-content: space-around;
+}
+
+.commentRepliesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 80px;
+  width: 170px;
 }
 
 .commentIcon {
   height: 40px;
   width: 40px;
+  margin-top: 21px;
 }
 
 .commentIcon:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.seeReplies {
+  margin-top: 21px;
+  align-self: center;
+}
+
+.seeReplies:hover {
   text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
     rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
   transform: translateY(-3px) scale(1.025);

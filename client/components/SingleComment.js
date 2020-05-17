@@ -34,23 +34,15 @@ class SingleComment extends Component {
   }
 
   likeComment() {
-    console.log('BEFORE INCREMENT>>>>>', this.props.singleComment.likes)
     this.props.singleComment.likes++
-    console.log('clicked LIKE Comment! +1')
-    console.log('AFTER INCREMENT>>>>>', this.props.singleComment.likes)
   }
 
   dislikeComment() {
-    console.log('BEFORE INCREMENT>>>>>', this.props.singleComment.dislikes)
     this.props.singleComment.dislikes++
-    console.log('cliked DISLIKE comment!')
-    console.log('AFTER INCREMENT>>>>>', this.props.singleComment.dislikes)
   }
 
   render() {
-    console.log('props>>>>>', this.props)
     const commenter = this.props.singleComment.user
-    console.log('COMMENTER???>>>>', commenter)
     const {likes, dislikes, comment} = this.props.singleComment
     // const comment = this.props.singleComment.comment
     return (
@@ -105,7 +97,7 @@ class SingleComment extends Component {
 }
 
 const mapToState = state => {
-  console.log('this is STATE>>>>>', state)
+  // console.log('this is STATE>>>>>', state)
   return {
     singleComment: state.singleComment,
     profile: state.singleProfile
