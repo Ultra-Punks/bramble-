@@ -23,24 +23,3 @@ router.get('/from/:username', async (req, res, next) => {
     console.error(error)
   }
 })
-
-//////////////////////////
-// CLOUDINARY REQUEST!!!//
-//////////////////////////
-
-// gets all of a user's photos
-// router.get('/:username', async (req, res, next) => {
-//   try {
-//     const user = req.params.username
-//     console.log(user)
-//     await cloudinary.search
-//       .expression(`user_uploads/${user}`)
-//       .with_field('context')
-//       .with_field('tags')
-//       .max_results(10)
-//       .execute()
-//       .then((result) => res.json(result.resources))
-//   } catch (err) {
-//     next(err)
-//   }
-// })

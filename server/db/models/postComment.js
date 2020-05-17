@@ -7,7 +7,6 @@ const PostComment = db.define('postComment', {
     allowNull: false,
     validate: {
       notEmpty: true
-      // isAlphanumeric: true
     }
   }
 })

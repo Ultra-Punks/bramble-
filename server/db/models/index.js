@@ -6,9 +6,10 @@ const CommunityMods = require('./communityMod')
 const CommunitySubs = require('./communitySubs')
 const Photo = require('./photos')
 const PostComment = require('./postComment')
-const UserFollowers = require('./userFollowers')
+const UserFollower = require('./userFollower')
+const UserFollowing = require('./userFollowing')
 const UserPost = require('./userPost')
-const Tags = require('./tags')
+const Tag = require('./tags')
 
 // =========== ASSOCIATIONS BELOW ===========
 
@@ -18,7 +19,7 @@ UserPost.hasMany(Photo)
 
 UserPost.belongsTo(Community)
 
-UserPost.hasMany(Tags)
+UserPost.hasMany(Tag)
 
 PostComment.belongsTo(UserPost)
 PostComment.belongsTo(User)
@@ -38,7 +39,7 @@ Photo.belongsTo(Location)
 Photo.belongsTo(LocationReview)
 Photo.belongsTo(PostComment)
 Photo.belongsTo(User)
-Photo.hasMany(Tags)
+Photo.hasMany(Tag)
 
 Community.belongsToMany(User, {through: CommunitySubs})
 Community.belongsTo(User)
@@ -50,13 +51,23 @@ User.hasMany(Photo)
 User.hasMany(Location) // <-- NOTE: was creating some issues Sat. May need review later.
 User.hasMany(LocationReview)
 User.hasMany(PostComment)
-User.belongsToMany(User, {as: 'Followers', through: UserFollowers})
+User.belongsToMany(User, {
+  as: 'follower',
+  through: 'follow',
+  foreignKey: 'userId'
+})
+User.belongsToMany(User, {
+  as: 'following',
+  through: 'follow',
+  foreignKey: 'followerId'
+})
+// User.belongsToMany(User, {as: 'Followers', through: "UserFollower"})
 User.belongsToMany(Community, {as: 'Subscribers', through: CommunitySubs})
 User.belongsToMany(Community, {as: 'Moderator', through: CommunityMods})
 
-Tags.belongsTo(UserPost)
-Tags.belongsTo(User)
-Tags.belongsTo(Photo)
+Tag.belongsTo(UserPost)
+Tag.belongsTo(User)
+Tag.belongsTo(Photo)
 
 // =========== Exports Below ===========
 module.exports = {
@@ -68,6 +79,8 @@ module.exports = {
   LocationReview,
   Photo,
   PostComment,
-  UserFollowers,
-  UserPost
+  UserFollower,
+  UserFollowing,
+  UserPost,
+  Tag
 }

@@ -60,11 +60,11 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-  followers: {
+  followerCount: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  following: {
+  followingCount: {
     type: Sequelize.INTEGER,
     defaultValue: 0
   }

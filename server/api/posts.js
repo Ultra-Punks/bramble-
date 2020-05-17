@@ -1,10 +1,8 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
+const {scanner} = require('../imageRec')
 
-
-
-const {UserPost, User, Photo, Community} = require('../db/models')
-
+const {UserPost, User, Photo, Community, Tag} = require('../db/models')
 
 module.exports = router
 
@@ -12,7 +10,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const allPosts = await UserPost.findAll({
-      include: [{model: Photo}]
+      include: [{model: Photo, include: [{model: Tag}]}]
     })
     res.json(allPosts)
   } catch (error) {
@@ -24,7 +22,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const singlePost = await UserPost.findByPk(req.params.postId, {
-      include: [{model: Photo}, {model: User}]
+      include: [{model: Photo, include: {model: Tag}}, {model: User}]
     })
     res.json(singlePost)
   } catch (error) {
@@ -39,7 +37,9 @@ router.get('/from/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: UserPost, include: [{model: Photo}]}]
+      include: [
+        {model: UserPost, include: [{model: Photo, include: [{model: Tag}]}]}
+      ]
     })
     res.json(allUserPosts.userPosts)
   } catch (error) {
@@ -83,8 +83,19 @@ router.post('/add/:username', async (req, res, next) => {
         imgFile: req.body.photoInfo
       })
 
+      const scannedLabels = await scanner(req.body.photoInfo)
+
+      scannedLabels.forEach(label => {
+        Tag.create({
+          imageTag: label,
+          userPostId: newPost.id,
+          photoId: newPhoto.id,
+          userId: user.id
+        })
+      })
+
       const postWithPics = await UserPost.findByPk(newPost.id, {
-        include: [{model: Photo}]
+        include: [{model: Photo, include: [{model: Tag}]}]
       })
 
       res.json(postWithPics)

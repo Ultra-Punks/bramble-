@@ -41,7 +41,7 @@ class Routes extends Component {
         <Route path="/u/:username" component={ProfileView} />
         <Route path="/p/:postId" component={SinglePostView} />
         <Route path="/comments/:commentId" component={SingleComment} />
-      
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -49,7 +49,6 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
       </Switch>
     )
   }

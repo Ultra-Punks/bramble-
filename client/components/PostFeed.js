@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import React from 'react'
+import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 // import axios from 'axios'
 
@@ -19,33 +20,36 @@ export default function PostFeed(props) {
         {Array.isArray(props.posts) &&
           props.posts.map(post => {
             return (
-              <div key={post.id} className="single-post">
-                <div className="post-header">
-                  <Image
-                    className="post-pfp"
-                    src={props.profile.profileImg}
-                    roundedCircle
-                  />
-                  <div className="post-info">
-                    <div className="post-handle">
-                      <p className="handle-text">{props.profile.name}</p>
-                      <p className="handle-text">@{props.profile.username}</p>
-                    </div>
-                    <p className="post-text">{post.description}</p>
-                  </div>
-                </div>
+              <Link to={`/p/${post.id}`}>
+                <div key={post.id} className="single-post">
+                  <div className="post-header">
+                    <Image
+                      className="post-pfp"
+                      src={props.profile.profileImg}
+                      roundedCircle
+                    />
+                    <div className="post-info">
+                      <div className="post-handle">
+                        <p className="handle-text">{props.profile.name}</p>
 
-                <div className="post-photos">
-                  <PostingPictures post={post} />
+                        <p className="handle-text">@{props.profile.username}</p>
+                      </div>
+                      <p className="post-text">{post.description}</p>
+                    </div>
+                  </div>
+
+                  <div className="post-photos">
+                    <PostingPictures post={post} />
+                  </div>
+                  <div className="commentsAndShares">
+                    <img
+                      src="https://img.icons8.com/all/500/comments.png"
+                      className="commentIcon"
+                    />
+                  </div>
+                  <br />
                 </div>
-                <div className="commentsAndShares">
-                  <img
-                    src="https://img.icons8.com/all/500/comments.png"
-                    className="commentIcon"
-                  />
-                </div>
-                <br />
-              </div>
+              </Link>
             )
           })}
       </div>

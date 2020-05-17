@@ -18,6 +18,9 @@ export {default as PostFeed} from './PostFeed'
 export {default as CommunityFeed} from './CommunityFeed'
 
 export {default as SingleComment} from './SingleComment'
+export {default as LoginButton} from './login'
+export {default as LoginForm} from './login-form'
 export {default as SignupButton} from './sign-up'
 export {default as SignupForm} from './sign-up-form'
 
+export {default as PopUpDisplay} from './PopUpDisplay'
