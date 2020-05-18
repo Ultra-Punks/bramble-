@@ -80,3 +80,15 @@ router.put('/:commentId/dislikes', async (req, res, next) => {
     next(error)
   }
 })
+
+//delete comment by Id
+router.delete('/:commentId', async (req, res, next) => {
+  try {
+    const numOfDeleted = await PostComment.destroy({
+      where: {id: req.params.commentId}
+    })
+    res.status(200).json(numOfDeleted)
+  } catch (error) {
+    next(error)
+  }
+})
