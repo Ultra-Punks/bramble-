@@ -8,9 +8,6 @@ import {
   likeComment,
   dislikeComment
 } from '../store/singleComment'
-import {fetchProfile} from '../store/singleProfile'
-
-// import {fetchUser} from '../store/user'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
@@ -23,11 +20,7 @@ class SingleComment extends Component {
   }
 
   componentDidMount() {
-    // const id = this.props.match.params.commentId
     this.props.fetchSingleComment()
-    // const profile = this.props.match.params.profile
-    this.props.fetchProfile()
-    // this.props.fetchUser(3)
 
     this.props.fetchLikes()
     this.props.fetchDislikes()
@@ -47,7 +40,6 @@ class SingleComment extends Component {
     const commenter = this.props.singleComment.user
     console.log('COMMENTER>>>>', commenter)
     const {likes, dislikes, comment} = this.props.singleComment
-    // const comment = this.props.singleComment.comment
     return (
       <div className="commentContainer">
         <div className="singleComment">
@@ -100,10 +92,8 @@ class SingleComment extends Component {
 }
 
 const mapToState = state => {
-  // console.log('this is STATE>>>>>', state)
   return {
-    singleComment: state.singleComment,
-    profile: state.singleProfile
+    singleComment: state.singleComment
   }
 }
 
@@ -113,10 +103,8 @@ const mapToDispatch = (dispatch, ownProps) => {
 
   return {
     fetchSingleComment: () => dispatch(fetchSingleComment(commentId)),
-    fetchProfile: username => dispatch(fetchProfile(username)),
     fetchLikes: () => dispatch(likeComment(commentId)),
     fetchDislikes: () => dispatch(dislikeComment(commentId))
-    // fetchUser: (userId) => dispatch(fetchUser(userId)),
   }
 }
 
