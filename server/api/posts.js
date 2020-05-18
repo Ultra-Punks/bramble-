@@ -124,6 +124,30 @@ router.post('/add/:username', async (req, res, next) => {
   }
 })
 
+// increase the nuber of likes on a post
+router.put('/:postId/likes', async (req, res, next) => {
+  try {
+    let updatedPostLikes = await UserPost.findByPk(req.params.postId)
+    updatedPostLikes.likes++
+    await updatedPostLikes.save()
+    res.status(200).json(updatedPostLikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of dislikes on a post
+router.put('/:postId/dislikes', async (req, res, next) => {
+  try {
+    let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
+    updatedPostDislikes.dislikes++
+    await updatedPostDislikes.save()
+    res.status(200).json(updatedPostDislikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //delete post by Id
 router.delete('/:postId', async (req, res, next) => {
   try {
