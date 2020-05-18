@@ -89,7 +89,7 @@ class CommunityProfile extends React.Component {
               <CommunityFeed
                 postFeed={this.state.postFeed}
                 images={this.props.gallery}
-                posts={this.props.posts}
+                posts={this.props.posts.communityPosts}
                 // profile={this.props.profile}
               />
             </div>

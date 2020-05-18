@@ -43,12 +43,7 @@ router.get('/:username', async (req, res, next) => {
 
 router.post('/:username/follow/check', async (req, res, next) => {
   try {
-    const loggedInUser = await User.findOne({
-      where: {
-        username: req.params.username
-      }
-    })
-
+    const loggedInUser = await User.findByPk(req.session.passport.user)
     const viewingUser = await User.findOne({
       where: {
         username: req.body.username

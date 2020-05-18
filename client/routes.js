@@ -40,9 +40,13 @@ class Routes extends Component {
         <Route path="/l/:id" component={SingleLocation} />
         <Route path="/test" component={Test} />
         <Route exact path="/community" component={CommunitySearch} />
-        <Route exact path="/community/list/:id" component={CommunityProfile} />
+        <Route
+          exact
+          path="/community/list/:id"
+          component={withRouter(CommunityProfile)}
+        />
         <Route exact path="/u" component={AllProfiles} />
-        <Route exact path="/u/:username" component={ProfileView} />
+        <Route exact path="/u/:username" component={withRouter(ProfileView)} />
         <Route path="/p/:postId" component={SinglePostView} />
         <Route path="/comments/:commentId" component={SingleComment} />
 
