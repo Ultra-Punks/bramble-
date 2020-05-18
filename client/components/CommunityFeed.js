@@ -12,11 +12,11 @@ export default function PostFeed(props) {
             return (
               <div key={post.id} className="single-post">
                 <div className="post-header">
-                  <Image className="post-pfp" src={props.profile.profileImg} />
+                  <Image className="post-pfp" src={post.user.profileImg} />
                   <div className="post-info">
                     <div className="post-handle">
-                      <p className="handle-text">{props.profile.name}</p>
-                      <p className="handle-text">@{props.profile.username}</p>
+                      <p className="handle-text">{post.user.name}</p>
+                      <p className="handle-text">@{post.user.username}</p>
                     </div>
                     <p className="post-text">{post.description}</p>
                   </div>
