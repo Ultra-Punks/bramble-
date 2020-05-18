@@ -27,10 +27,10 @@ const removeUser = () => ({type: REMOVE_USER})
  * THUNK CREATORS
  */
 
-export const fetchUser = userId => {
+export const fetchUser = username => {
   return async dispatch => {
     try {
-      const res = await axios.get(`/api/users/${userId}`)
+      const res = await axios.get(`/api/users/${username}`)
       dispatch(getUser(res.data))
     } catch (error) {
       console.log(error)

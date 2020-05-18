@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchProfile} from '../store/singleProfile'
 import {fetchUserPosts} from '../store/userFeed'
-import {fetchSingleComment} from '../store/singleComment'
 import {PostFeed, Map, PopUpDisplay} from './index'
 import {Image, Button} from 'react-bootstrap'
 
@@ -57,6 +56,7 @@ class ProfileView extends React.Component {
     const galleryFeed = !this.state.postFeed
       ? 'profileFeedButton selected-feed'
       : 'profileFeedButton'
+
     return (
       <div className="profileContainer">
         <div className="profileImgContentContainer">
@@ -118,6 +118,8 @@ class ProfileView extends React.Component {
                 images={this.props.gallery}
                 posts={this.props.posts}
                 profile={this.props.profile}
+                handleComments={this.handleComments}
+                openComments={this.state.openComments}
               />
             </div>
           </div>
@@ -143,10 +145,10 @@ const mapState = state => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const username = ownProps.match.params.username
+
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
     fetchUserPosts: () => dispatch(fetchUserPosts(username))
-    // fetchSingleComment: () => dispatch(fetchSingleComment())
   }
 }
 

@@ -149,7 +149,9 @@ const communityArray = Array.from({length: 10}, generateCommunity)
 // create random post seed data
 const generatePost = () => {
   return {
-    description: chanceObj.paragraph()
+    description: chanceObj.paragraph(),
+    likes: chanceObj.integer({min: 0, max: updatedUsers.length}),
+    dislikes: chanceObj.integer({min: 0, max: updatedUsers.length})
   }
 }
 
@@ -170,7 +172,9 @@ const locationReviewsArray = Array.from({length: 40}, generateLocationReview)
 // create random PostComments seed data
 const generatePostComments = () => {
   return {
-    comment: chanceObj.paragraph()
+    comment: chanceObj.paragraph(),
+    likes: chanceObj.integer({min: 0, max: updatedUsers.length}),
+    dislikes: chanceObj.integer({min: 0, max: updatedUsers.length})
   }
 }
 

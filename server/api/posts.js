@@ -2,7 +2,14 @@
 const router = require('express').Router()
 const {scanner} = require('../imageRec')
 
-const {UserPost, User, Photo, Community, Tag} = require('../db/models')
+const {
+  UserPost,
+  User,
+  Photo,
+  Community,
+  Tag,
+  PostComment
+} = require('../db/models')
 
 module.exports = router
 
@@ -38,7 +45,13 @@ router.get('/from/:username', async (req, res, next) => {
         username: req.params.username
       },
       include: [
-        {model: UserPost, include: [{model: Photo, include: [{model: Tag}]}]}
+        {
+          model: UserPost,
+          include: [
+            {model: Photo, include: [{model: Tag}]},
+            {model: PostComment}
+          ]
+        }
       ]
     })
     res.json(allUserPosts.userPosts)

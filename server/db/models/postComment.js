@@ -8,6 +8,14 @@ const PostComment = db.define('postComment', {
     validate: {
       notEmpty: true
     }
+  },
+  likes: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  dislikes: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 
