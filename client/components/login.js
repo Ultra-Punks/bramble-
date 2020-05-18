@@ -1,8 +1,8 @@
 import React from 'react'
 import {Modal} from 'react-bootstrap'
-import {SignupForm} from './index'
+import {LoginForm} from './index'
 
-class SignupButton extends React.Component {
+class LoginButton extends React.Component {
   render() {
     return (
       <Modal
@@ -12,10 +12,10 @@ class SignupButton extends React.Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <SignupForm />
+        <LoginForm />
       </Modal>
     )
   }
 }
 
-export default SignupButton
+export default LoginButton

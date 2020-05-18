@@ -1,36 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {
-  Modal,
-  Button,
-  Form,
-  InputGroup,
-  Dropdown,
-  DropdownButton,
-  FormControl,
-  Image
-} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 import AddPostForm from './add-post-form'
-import axios from 'axios'
 import {addPostThunk} from '../store/userFeed'
-import autosize from 'autosize'
-
-// function makeid(length) {
-//   var result = ''
-//   var characters =
-//     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-//   var charactersLength = characters.length
-//   for (var i = 0; i < length; i++) {
-//     result += characters.charAt(Math.floor(Math.random() * charactersLength))
-//   }
-//   return result
-// }
-
-// function ShowPictures(props) {
-//   if (props.image[0] === undefined)
-//     return <div className="display-img placeholder" />
-//   else return <img className="display-img" src={props.image} />
-// }
 
 class AddPost extends React.Component {
   constructor() {

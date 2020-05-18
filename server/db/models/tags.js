@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
-const Tags = db.define('tags', {
-  imageTags: {
+const Tag = db.define('tag', {
+  imageTag: {
     type: Sequelize.STRING
   }
 })
 
-module.exports = Tags
+module.exports = Tag

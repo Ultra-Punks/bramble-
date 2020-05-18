@@ -1,9 +1,6 @@
-const router = require('express').Router()
 const vision = require('@google-cloud/vision')
 
-module.exports = router
-
-async function quickstart(image) {
+async function scanner(image) {
   let allLabels = []
 
   const client = new vision.ImageAnnotatorClient({
@@ -24,14 +21,4 @@ async function quickstart(image) {
   return allLabels
 }
 
-router.get('/', async (req, res, next) => {
-  try {
-    let labels = await quickstart(
-      'https://res.cloudinary.com/bramble/image/upload/v1589609673/user_uploads/franco/ddqs36.jpg'
-    )
-
-    res.send('TEST')
-  } catch (err) {
-    next(err)
-  }
-})
+module.exports = {scanner}

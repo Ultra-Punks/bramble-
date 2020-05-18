@@ -1,7 +1,17 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
+const {scanner} = require('../imageRec')
 
-const {UserPost, User, Photo, Community} = require('../db/models')
+
+const {
+  UserPost,
+  User,
+  Photo,
+  Community,
+  Tag,
+  PostComment
+} = require('../db/models')
+
 
 module.exports = router
 
@@ -9,7 +19,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const allPosts = await UserPost.findAll({
-      include: [{model: Photo}]
+      include: [{model: Photo, include: [{model: Tag}]}]
     })
     res.json(allPosts)
   } catch (error) {
@@ -21,7 +31,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const singlePost = await UserPost.findByPk(req.params.postId, {
-      include: [{model: Photo}, {model: User}]
+      include: [{model: Photo, include: {model: Tag}}, {model: User}]
     })
     res.json(singlePost)
   } catch (error) {
@@ -36,7 +46,15 @@ router.get('/from/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: UserPost, include: [{model: Photo}]}]
+      include: [
+        {
+          model: UserPost,
+          include: [
+            {model: Photo, include: [{model: Tag}]},
+            {model: PostComment}
+          ]
+        }
+      ]
     })
     res.json(allUserPosts.userPosts)
   } catch (error) {
@@ -80,8 +98,19 @@ router.post('/add/:username', async (req, res, next) => {
         imgFile: req.body.photoInfo
       })
 
+      const scannedLabels = await scanner(req.body.photoInfo)
+
+      scannedLabels.forEach(label => {
+        Tag.create({
+          imageTag: label,
+          userPostId: newPost.id,
+          photoId: newPhoto.id,
+          userId: user.id
+        })
+      })
+
       const postWithPics = await UserPost.findByPk(newPost.id, {
-        include: [{model: Photo}]
+        include: [{model: Photo, include: [{model: Tag}]}]
       })
 
       res.json(postWithPics)
@@ -92,6 +121,30 @@ router.post('/add/:username', async (req, res, next) => {
 
       res.json(newPost)
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the nuber of likes on a post
+router.put('/:postId/likes', async (req, res, next) => {
+  try {
+    let updatedPostLikes = await UserPost.findByPk(req.params.postId)
+    updatedPostLikes.likes++
+    await updatedPostLikes.save()
+    res.status(200).json(updatedPostLikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of dislikes on a post
+router.put('/:postId/dislikes', async (req, res, next) => {
+  try {
+    let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
+    updatedPostDislikes.dislikes++
+    await updatedPostDislikes.save()
+    res.status(200).json(updatedPostDislikes)
   } catch (error) {
     next(error)
   }

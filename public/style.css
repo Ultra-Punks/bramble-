@@ -208,6 +208,7 @@ form div {
   border-style: solid;
   border-width: 7px;
   border-color: #3d4a63;
+  height: 5%;
 }
 .profilePagePhoto-Community {
   background: rgb(249, 111, 111);
@@ -706,11 +707,26 @@ form div {
 .commentsAndShares {
   display: flex;
   margin-left: 55px;
+  justify-content: space-evenly;
+}
+
+.likesAndDislikes {
+  display: flex;
+  justify-content: space-around;
+}
+
+.commentRepliesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 80px;
+  width: 170px;
 }
 
 .commentIcon {
   height: 40px;
   width: 40px;
+  margin-top: 21px;
 }
 
 .commentIcon:hover {
@@ -719,9 +735,21 @@ form div {
   transform: translateY(-3px) scale(1.025);
 }
 
+.seeReplies {
+  margin-top: 21px;
+  align-self: center;
+}
+
+.seeReplies:hover {
+  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
+    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.025);
+}
+
 .likeIcon {
   height: 40px;
   width: 40px;
+  margin-top: 21px;
 }
 
 .likeIcon:hover {
@@ -733,6 +761,7 @@ form div {
 .dislikeIcon {
   height: 40px;
   width: 40px;
+  margin-top: 21px;
 }
 
 .dislikeIcon:hover {
@@ -762,8 +791,15 @@ form div {
 
 .commentHeader {
   background-color: rgba(60, 78, 96, 0.879);
-  padding: 10px;
+  padding: 20px;
   display: flex;
+}
+
+.commentImg {
+  background-color: rgb(220, 150, 150);
+  border-radius: 150px;
+  height: 50px;
+  width: 50px;
 }
 
 .commentWriting {
@@ -776,6 +812,75 @@ form div {
   justify-content: space-around;
 }
 
+
+.single-post-view-container {
+  display: flex;
+  width: 50%;
+  height: 75%;
+  margin: 50px;
+}
+
+.single-post-view-img {
+  height: 30%;
+  width: 90%;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+}
+
+.page-container {
+  display: flex;
+}
+
+.rec-container {
+  display: flex;
+  margin: 50px;
+}
+
+.description-container {
+  display: flex;
+}
+
+.reply-comment-button {
+  height: 50px;
+  width: 65px;
+}
+
+.single-post-feedback {
+  display: flex;
+  align-items: center;
+}
+.all-comment-preview-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.commentPreviewContainer {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.singleCommentPreview {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 80%;
+  background-color: rgba(224, 232, 240, 0.879);
+  justify-content: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+  margin: 10px;
+  padding: 25px;
+}
 .communityBio {
   font-family: 'Roboto';
   font-weight: 400;

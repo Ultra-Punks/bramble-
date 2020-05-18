@@ -4,11 +4,12 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Image, Button} from 'react-bootstrap'
-import {AddPost, Map, SignupButton} from './index'
+import {AddPost, Map, SignupButton, LoginButton} from './index'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => {
   const [modalShow, setModalShow] = React.useState(false)
   const [signupShow, setSignupShow] = React.useState(false)
+  const [loginShow, setLoginShow] = React.useState(false)
   return (
     <div className="nav-container">
       <div className="nav-group">
@@ -43,24 +44,29 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
-                <Image
-                  className="nav-logo"
-                  src={user.profileImg}
-                  roundedCircle
-                />
+                <Link to={`/u/${user.username}`}>
+                  <Image
+                    className="nav-logo"
+                    src={user.profileImg}
+                    roundedCircle
+                  />
+                </Link>
               </div>
             ) : (
               <div>
                 {/* The navbar will show these links before you log in */}
-                <Link to="/login">Login</Link>
+                {/* <Link to="/login">Login</Link> */}
                 <Link to="/community">Community</Link>
-
+                <Button onClick={() => setLoginShow(true)}>Login</Button>
+                <LoginButton
+                  show={loginShow}
+                  onHide={() => setLoginShow(false)}
+                />
                 <Button onClick={() => setSignupShow(true)}>Signup</Button>
                 <SignupButton
                   show={signupShow}
                   onHide={() => setSignupShow(false)}
                 />
-                {/* <Link to="/signup">Sign Up</Link> */}
               </div>
             )}
           </div>

@@ -20,19 +20,21 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const allUsers = await User.findAll()
+    console.log(Object.keys(User.prototype))
     res.json(allUsers)
   } catch (error) {
     next(error)
   }
 })
 
-// get single user (by id)
+// get single user (by username)
 router.get('/:username', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
         username: req.params.username
-      }
+      },
+      include: [{model: User, as: 'follower'}]
     })
     res.json(user)
   } catch (error) {
@@ -60,6 +62,62 @@ router.put('/:userId', async (req, res, next) => {
     } else {
       res.sendStatus(404)
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of followers && follow a new user
+router.put('/:username/follow', async (req, res, next) => {
+  try {
+    let loggedInUser = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
+
+    let newFollowing = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
+
+    loggedInUser.setFollowing(newFollowing.id) //magic method
+    loggedInUser.increaseFollowing() // instance method
+    newFollowing.increaseFollowers() // instance method
+
+    await loggedInUser.save()
+    await newFollowing.save()
+
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// decrease the number of followers && unfollow a user
+router.put('/:username/unfollow', async (req, res, next) => {
+  try {
+    let loggedInUser = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
+
+    let newUnfollowing = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
+
+    loggedInUser.removeFollowing(newUnfollowing.id) //magic method
+    loggedInUser.decreaseFollowing() // instance method
+    newUnfollowing.decreaseFollowers() // instance method
+
+    await loggedInUser.save()
+    await newUnfollowing.save()
+
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
