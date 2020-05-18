@@ -19,4 +19,14 @@ const PostComment = db.define('postComment', {
   }
 })
 
+PostComment.prototype.increaseLikes = async function() {
+  const newLikesCount = this.likes + 1
+  await this.update({likes: newLikesCount})
+}
+
+PostComment.prototype.decreaseLikes = async function() {
+  const newLikesCount = this.likes + 1
+  await this.update({dislikes: newLikesCount})
+}
+
 module.exports = PostComment
