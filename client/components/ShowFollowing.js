@@ -6,12 +6,12 @@ function ShowInfo(props) {
   const {profile} = props
   if (
     profile !== undefined &&
-    profile.follower !== undefined &&
-    profile.follower.length
+    profile.following !== undefined &&
+    profile.following.length
   ) {
     return (
       <div>
-        {profile.follower.map(user => {
+        {profile.following.map(user => {
           return <p key={user.id}>{user.username}</p>
         })}
       </div>
@@ -21,7 +21,7 @@ function ShowInfo(props) {
   }
 }
 
-class PopUpDisplay extends React.Component {
+class ShowFollowing extends React.Component {
   render() {
     return (
       <Modal
@@ -37,4 +37,4 @@ class PopUpDisplay extends React.Component {
   }
 }
 
-export default PopUpDisplay
+export default ShowFollowing

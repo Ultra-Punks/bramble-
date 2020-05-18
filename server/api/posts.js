@@ -51,7 +51,7 @@ router.get('/from/:username', async (req, res, next) => {
           model: UserPost,
           include: [
             {model: Photo, include: [{model: Tag}]},
-            {model: PostComment}
+            {model: PostComment, include: [{model: User}]}
           ]
         }
       ]
@@ -62,8 +62,41 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
+
+router.get('/from/:username/following', async (req, res, next) => {
+  try {
+    const loggedInUser = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
+
+    const allFollowing = await loggedInUser.getFollowing()
+
+    let arrOfIds = allFollowing.map(user => {
+      return user.id
+    })
+
+    arrOfIds.push(loggedInUser.id)
+
+    const feed = await UserPost.findAll({
+      where: {userId: arrOfIds},
+      include: [
+        {model: User},
+        {model: Photo, include: [{model: Tag}]},
+        {model: PostComment, include: [{model: User}]}
+      ]
+    })
+
+    res.json(feed)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //gets all posts for user by community
 router.get('/for/:id', async (req, res, next) => {
+
   try {
     const allCommunityPosts = await Community.findOne({
       where: {

@@ -20,7 +20,6 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const allUsers = await User.findAll()
-    console.log(Object.keys(User.prototype))
     res.json(allUsers)
   } catch (error) {
     next(error)
@@ -34,9 +33,31 @@ router.get('/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: User, as: 'follower'}]
+      include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
     })
     res.json(user)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:username/follow/check', async (req, res, next) => {
+  try {
+    const loggedInUser = await User.findOne({
+      where: {
+        username: req.params.username
+      }
+    })
+
+    const viewingUser = await User.findOne({
+      where: {
+        username: req.body.username
+      }
+    })
+
+    const isFollowing = await loggedInUser.hasFollowing(viewingUser.id)
+
+    res.json(isFollowing)
   } catch (error) {
     next(error)
   }
@@ -82,14 +103,21 @@ router.put('/:username/follow', async (req, res, next) => {
       }
     })
 
-    loggedInUser.setFollowing(newFollowing.id) //magic method
+    loggedInUser.addFollowing(newFollowing.id) //magic method
     loggedInUser.increaseFollowing() // instance method
     newFollowing.increaseFollowers() // instance method
 
     await loggedInUser.save()
     await newFollowing.save()
 
-    res.sendStatus(200)
+    const updatedUser = await User.findOne({
+      where: {
+        username: req.body.username
+      },
+      include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
+    })
+
+    res.json(updatedUser)
   } catch (error) {
     next(error)
   }

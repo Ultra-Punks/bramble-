@@ -12,7 +12,7 @@ function PostingPictures(props) {
   }
 }
 
-export default function PostPreview(props) {
+export default function FeedPostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
 
   function handleComments() {
@@ -23,16 +23,16 @@ export default function PostPreview(props) {
     }
   }
 
-  const {post, profile} = props
+  const {post} = props
 
   return (
     <div key={post.id} className="single-post">
       <div className="post-header">
-        <Image className="post-pfp" src={profile.profileImg} roundedCircle />
+        <Image className="post-pfp" src={post.user.profileImg} roundedCircle />
         <div className="post-info">
           <div className="post-handle">
-            <p className="handle-text">{profile.name}</p>
-            <p className="handle-text">@{profile.username}</p>
+            <p className="handle-text">{post.user.name}</p>
+            <p className="handle-text">@{post.user.username}</p>
           </div>
           <Link to={`/p/${post.id}`}>
             <p className="post-text">{post.description}</p>
