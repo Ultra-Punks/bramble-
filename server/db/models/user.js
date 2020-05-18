@@ -70,6 +70,26 @@ const User = db.define('user', {
   }
 })
 
+User.prototype.increaseFollowers = async function() {
+  const newFollowerCount = this.followerCount + 1
+  await this.update({followerCount: newFollowerCount})
+}
+
+User.prototype.decreaseFollowers = async function() {
+  const newFollowerCount = this.followerCount - 1
+  await this.update({followerCount: newFollowerCount})
+}
+
+User.prototype.increaseFollowing = async function() {
+  const newFollowerCount = this.followingCount + 1
+  await this.update({followingCount: newFollowerCount})
+}
+
+User.prototype.decreaseFollowing = async function() {
+  const newFollowerCount = this.followingCount - 1
+  await this.update({followingCount: newFollowerCount})
+}
+
 module.exports = User
 
 /**
