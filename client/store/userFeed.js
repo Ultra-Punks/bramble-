@@ -21,7 +21,8 @@ export const fetchUserPosts = username => {
   }
 }
 
-// thunk to fetch community Post
+
+// thunk to fetch User community Post
 export const fetchCommunityPosts = id => {
   return async dispatch => {
     try {

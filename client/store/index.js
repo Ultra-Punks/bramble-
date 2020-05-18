@@ -5,6 +5,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import food from './food'
 import locations from './locations'
+import singleLocation from './singleLocation'
 
 import community from './community'
 import profiles from './allProfiles'
@@ -26,6 +27,7 @@ const reducer = combineReducers({
   userPosts,
   locations,
   postComments,
+  singleLocation,
   singleComment
 })
 

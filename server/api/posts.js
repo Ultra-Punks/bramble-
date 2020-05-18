@@ -2,6 +2,7 @@
 const router = require('express').Router()
 const {scanner} = require('../imageRec')
 
+
 const {
   UserPost,
   User,
@@ -10,6 +11,7 @@ const {
   Tag,
   PostComment
 } = require('../db/models')
+
 
 module.exports = router
 
@@ -60,14 +62,14 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
-//gets all posts for specific community
-router.get('/for/:communityPost', async (req, res, next) => {
+//gets all posts for user by community
+router.get('/for/:id', async (req, res, next) => {
   try {
     const allCommunityPosts = await Community.findOne({
       where: {
-        id: req.params.communityPost
+        id: req.params.id
       },
-      include: [{model: UserPost}]
+      include: [{model: UserPost, include: [{model: User}]}]
     })
     res.json(allCommunityPosts)
   } catch (error) {
