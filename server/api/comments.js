@@ -57,6 +57,28 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
+// ==============================================
+// KEEP WORKING THROUGH THIS...MAY NEED ADJUSTMENT
+// create a new comment on a particular UserPost
+router.post('/add/:postId', async (req, res, next) => {
+  try {
+    const post = await UserPost.findOne({
+      where: {
+        id: req.params.postId
+      }
+    })
+
+    let newComment = await PostComment.create({
+      userPostId: post.id
+    })
+
+    res.status(201).json(newComment)
+  } catch (error) {
+    next(error)
+  }
+})
+// ==============================================
+
 // increase the nuber of likes on a comment
 router.put('/:commentId/likes', async (req, res, next) => {
   try {
