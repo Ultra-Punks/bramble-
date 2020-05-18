@@ -1,8 +1,39 @@
 const router = require('express').Router()
-const {Location} = require('../db/models')
+const {Location, User} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
+// get locations by community
+router.get('/of/:id', async (req, res, next) => {
+  try {
+    const locations = await Location.findAll({
+      where: {
+        communityId: req.params.id,
+        geometry: {[Op.ne]: null}
+      }
+    })
+    res.json(locations)
+  } catch (err) {
+    next(err)
+  }
+})
+// get locations by user
+router.get('/from/:username', async (req, res, next) => {
+  try {
+    const user = await User.findOne({
+      where: {username: req.params.username}
+    })
+    const locations = await Location.findAll({
+      where: {
+        userId: user.id,
+        geometry: {[Op.ne]: null}
+      }
+    })
+    res.json(locations)
+  } catch (err) {
+    next(err)
+  }
+})
 // single location routes
 router.post('/add', async (req, res, next) => {
   try {

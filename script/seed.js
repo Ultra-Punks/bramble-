@@ -93,8 +93,9 @@ const generateLocation = () => {
 
 const manualLocations = [
   {
-    address: '5 Hanover Square 11th floor, New York, NY 10004',
-    geometry: {type: 'point', coordinates: [-74.009123, 40.705112]},
+    address: '5 Hanover Square 11th floor',
+    geometry: {type: 'point', coordinates: [-74.009345, 40.705309]},
+    mapId: 'poi.309237703361',
     name: 'Fullstack Academy',
     description:
       'Fullstack Academy is an immersive software engineering coding bootcamp located in New York City and Chicago. Students of the full-time flagship course learn full stack JavaScript over the course of a 13-week, on-campus program.',
@@ -110,7 +111,8 @@ const manualLocations = [
   },
   {
     address: '773 Flatbush Ave, Brooklyn, NY, 11226',
-    geometry: {type: 'point', coordinates: [-73.959285, 40.653975]},
+    geometry: {type: 'point', coordinates: [-73.959496, 40.653919]},
+    mapId: 'poi.755914263725',
     name: 'Zen Vegetarian',
     description: 'Best Chinese Food'
   },
