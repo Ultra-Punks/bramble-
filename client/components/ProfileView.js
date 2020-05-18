@@ -21,14 +21,19 @@ class ProfileView extends React.Component {
     this.hideFollowers = this.hideFollowers.bind(this)
   }
   componentDidMount() {
-    this.props.fetchProfile()
-    this.props.fetchUserPosts()
+    console.log('MOUNTING')
+    const username = this.props.match.params.username
+    console.log('USERNAME', username)
+    this.props.fetchProfile(username)
+    this.props.fetchUserPosts(username)
 
     const info = {
       loggedInUser: this.props.username,
       username: this.props.match.params.username
     }
-    console.log('THIS IS INFO', info)
+
+    console.log('INFO', info)
+    // console.log('THIS IS INFO', info)
     // if (this.props.isLoggedIn) {
     // let info = {
     //   loggedInUser: this.props.user.username,
@@ -158,7 +163,7 @@ class ProfileView extends React.Component {
               <PostFeed
                 postFeed={this.state.postFeed}
                 images={this.props.gallery}
-                posts={this.props.posts}
+                posts={this.props.posts.profilePosts}
                 profile={this.props.profile}
                 handleComments={this.handleComments}
                 openComments={this.state.openComments}
@@ -189,12 +194,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
-  // const username = ownProps.match.params.username
+const mapDispatch = dispatch => {
   return {
-    fetchProfile: () => dispatch(fetchProfile(ownProps.match.params.username)),
-    fetchUserPosts: () =>
-      dispatch(fetchUserPosts(ownProps.match.params.username)),
+    fetchProfile: username => dispatch(fetchProfile(username)),
+    fetchUserPosts: username => dispatch(fetchUserPosts(username)),
     followUserThunk: info => dispatch(addNewFollower(info)),
     checkFollowing: info => dispatch(checkIfFollowing(info))
   }
