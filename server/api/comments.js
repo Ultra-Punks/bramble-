@@ -57,26 +57,26 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
-// // increase the nuber of likes on a comment
-// router.put('/:commentId/increaselikes', async (req, res, next) => {
-//   try {
-//     let updatedComment = await PostComment.findByPk(req.params.commentId)
-//     updatedComment.likes++
-//     await updatedComment.save()
-//     res.json(updatedComment)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// increase the nuber of likes on a comment
+router.put('/:commentId/likes', async (req, res, next) => {
+  try {
+    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    updatedComment.likes++
+    await updatedComment.save()
+    res.status(200).json(updatedComment)
+  } catch (error) {
+    next(error)
+  }
+})
 
-// // increase the number of dislikes on a comment
-// router.put('/:commentId/increasedislikes', async (req, res, next) => {
-//   try {
-//     let updatedComment = await PostComment.findByPk(req.params.commentId)
-//     updatedComment.dislikes++
-//     await updatedComment.save()
-//     res.json(updatedComment)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// increase the number of dislikes on a comment
+router.put('/:commentId/increasedislikes', async (req, res, next) => {
+  try {
+    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    updatedComment.dislikes++
+    await updatedComment.save()
+    res.status(200).json(updatedComment)
+  } catch (error) {
+    next(error)
+  }
+})
