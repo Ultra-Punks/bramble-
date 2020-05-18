@@ -61,7 +61,6 @@ class Map extends React.Component {
         zoom: 10
       }
       this.setState({viewport: newViewport, userLocation: currentLocation})
-      console.log('state in setUserLocation func', this.state)
     })
   }
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
@@ -90,7 +89,7 @@ class Map extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    console.log('coordinates in addMarker func', coordinates)
+    // console.log('coordinates in addMarker func', coordinates)
     let name,
       address,
       city = ''
@@ -108,10 +107,8 @@ class Map extends React.Component {
         address: address
       }
     })
-    console.log('SELECTEDLOC AT END OF ADDMARKER', this.state.selectedLocation)
   }
   handleResult(event) {
-    console.log('This is event.result in handleResult', event.result)
     this.addMarker(event.result.geometry.coordinates, event.result)
   }
   render() {
@@ -166,7 +163,7 @@ class Map extends React.Component {
           // to those coordinates
           onClick={e => {
             // this.addMarker(e.lngLat)
-            console.log('state in onClick', this.state)
+            // console.log('state in onClick', this.state)
           }}
         >
           <Geocoder
@@ -182,7 +179,7 @@ class Map extends React.Component {
             //this function has the search query as an argument, and when it returns an array
             //of GeoJSON features will add them to the search results bar
             filter={loc => {
-              console.log('this is in the geocoder filter', loc)
+              // console.log('this is in the geocoder filter', loc)
               return !this.props.locations.some(l => l.mapId === loc.id)
             }}
             localGeocoder={query => {
@@ -222,16 +219,15 @@ class Map extends React.Component {
             this.state.selectedLocation.geometry.type && (
               <div>
                 <Marker
-                  {...console.log(
-                    'hello from in the sL point check',
-                    this.state.selectedLocation
-                  )}
+                  // {...console.log(
+                  //   'hello from in the sL point check',
+                  //   this.state.selectedLocation
+                  // )}
                   longitude={
                     this.state.selectedLocation.geometry.coordinates[0]
                   }
                   latitude={this.state.selectedLocation.geometry.coordinates[1]}
                   onClick={() => {
-                    console.log('IN ONCLICK OF SELECTEDLOCATIONMARKER')
                     this.state.selectedLocation.popup
                       ? this.setState({selectedLocation: {popup: false}})
                       : this.setState({selectedLocation: {popup: true}})
