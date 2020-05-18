@@ -2,7 +2,6 @@
 const router = require('express').Router()
 const {scanner} = require('../imageRec')
 
-
 const {
   UserPost,
   User,
@@ -11,7 +10,6 @@ const {
   Tag,
   PostComment
 } = require('../db/models')
-
 
 module.exports = router
 
@@ -62,7 +60,6 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
-
 router.get('/from/:username/following', async (req, res, next) => {
   try {
     const loggedInUser = await User.findOne({
@@ -96,7 +93,6 @@ router.get('/from/:username/following', async (req, res, next) => {
 
 //gets all posts for user by community
 router.get('/for/:id', async (req, res, next) => {
-
   try {
     const allCommunityPosts = await Community.findOne({
       where: {
@@ -175,8 +171,8 @@ router.put('/:postId/likes', async (req, res, next) => {
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {
     let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
-    updatedPostDislikes.dislikes++
-    await updatedPostDislikes.save()
+    await updatedPostDislikes.increaseDislikes()
+    // await updatedPostDislikes.save()
     res.status(200).json(updatedPostDislikes)
   } catch (error) {
     next(error)
