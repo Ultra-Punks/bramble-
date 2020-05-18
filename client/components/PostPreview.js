@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import PostComment from './PostComment'
 import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
+import TimeAgo from 'react-timeago'
 
 function PostingPictures(props) {
   const {post} = props
@@ -34,6 +35,7 @@ export default function PostPreview(props) {
             <p className="handle-text">{profile.name}</p>
             <p className="handle-text">@{profile.username}</p>
           </div>
+          <TimeAgo className="time-ago" date={post.createdAt} live={false} />
           <Link to={`/p/${post.id}`}>
             <p className="post-text">{post.description}</p>
           </Link>
