@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import PostComment from './PostComment'
+import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 
 function PostingPictures(props) {
@@ -33,7 +34,9 @@ export default function PostPreview(props) {
             <p className="handle-text">{profile.name}</p>
             <p className="handle-text">@{profile.username}</p>
           </div>
-          <p className="post-text">{post.description}</p>
+          <Link to={`/p/${post.id}`}>
+            <p className="post-text">{post.description}</p>
+          </Link>
         </div>
       </div>
 
