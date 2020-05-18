@@ -32,7 +32,8 @@ router.get('/:username', async (req, res, next) => {
     const user = await User.findOne({
       where: {
         username: req.params.username
-      }
+      },
+      include: [{model: User, as: 'follower'}]
     })
     res.json(user)
   } catch (error) {

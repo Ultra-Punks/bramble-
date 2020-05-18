@@ -20,8 +20,8 @@ export default function PostFeed(props) {
         {Array.isArray(props.posts) &&
           props.posts.map(post => {
             return (
-              <Link to={`/p/${post.id}`}>
-                <div key={post.id} className="single-post">
+              <Link key={post.id} to={`/p/${post.id}`}>
+                <div className="single-post">
                   <div className="post-header">
                     <Image
                       className="post-pfp"

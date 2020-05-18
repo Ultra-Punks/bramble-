@@ -84,6 +84,8 @@ class ProfileView extends React.Component {
             <PopUpDisplay
               show={this.state.showFollowers}
               onHide={() => this.hideFollowers()}
+              type="followers"
+              profile={profile}
             />
             <p className="profile-info-text">
               Following: {profile.followingCount}

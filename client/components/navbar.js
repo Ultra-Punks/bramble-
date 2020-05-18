@@ -44,11 +44,13 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
-                <Image
-                  className="nav-logo"
-                  src={user.profileImg}
-                  roundedCircle
-                />
+                <Link to={`/u/${user.username}`}>
+                  <Image
+                    className="nav-logo"
+                    src={user.profileImg}
+                    roundedCircle
+                  />
+                </Link>
               </div>
             ) : (
               <div>
