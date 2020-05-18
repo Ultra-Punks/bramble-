@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Image} from 'react-bootstrap'
 
 import {Link} from 'react-router-dom'
 
@@ -17,6 +18,21 @@ export default function PostComments(props) {
       <div className="commentPreviewContainer">
         {postComments.map(comment => (
           <div key={comment.id} className="singleCommentPreview">
+            <div>
+              <Image
+                className="post-pfp"
+                src={comment.user.profileImg}
+                roundedCircle
+              />
+              <div className="post-handle">
+                <Link to={`/u/${comment.user.username}`}>
+                  <p className="handle-text">{comment.user.name}</p>
+                </Link>
+                <Link to={`/u/${comment.user.username}`}>
+                  <p className="handle-text">@{comment.user.username}</p>
+                </Link>
+              </div>
+            </div>
             <Link to={`/comments/${comment.id}`}>{comment.comment}</Link>
             <div className="commentShareBar">
               <div>

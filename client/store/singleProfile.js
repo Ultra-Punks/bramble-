@@ -3,10 +3,19 @@ import axios from 'axios'
 // action types:
 const GET_PROFILE = 'GET_PROFILE'
 
+const NEW_FOLLOW = 'NEW_FOLLOW'
+
 // action creator:
 const getProfile = profile => {
   return {
     type: GET_PROFILE,
+    profile
+  }
+}
+
+const newFollow = profile => {
+  return {
+    type: NEW_FOLLOW,
     profile
   }
 }
@@ -16,6 +25,20 @@ export const fetchProfile = username => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/users/${username}`)
+      dispatch(getProfile(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addNewFollower = info => {
+  const {loggedInUser, username} = info
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/users/${loggedInUser}/follow`, {
+        username
+      })
       dispatch(getProfile(data))
     } catch (error) {
       console.log(error)

@@ -24,3 +24,7 @@ export {default as SignupButton} from './sign-up'
 export {default as SignupForm} from './sign-up-form'
 
 export {default as PopUpDisplay} from './PopUpDisplay'
+
+export {default as FollowingFeed} from './FollowingFeed'
+
+export {default as ShowFollowing} from './ShowFollowing'

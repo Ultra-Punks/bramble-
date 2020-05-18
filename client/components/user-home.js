@@ -1,18 +1,25 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchFollowingPosts} from '../store/generalUserFeed'
+import {PostFeed} from './index'
+import FollowingFeed from './FollowingFeed'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email} = props
+class UserHome extends React.Component {
+  componentDidMount() {
+    this.props.fetchFollowingFeed(this.props.username)
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+  render() {
+    const {username} = this.props
+    console.log('PROPS', this.props)
+    return (
+      <div>
+        <h3>Welcome {username}!</h3>
+        <FollowingFeed posts={this.props.followingFeed} />
+      </div>
+    )
+  }
 }
 
 /**
@@ -20,15 +27,23 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    // email: state.user.email,
+    username: state.user.username,
+    followingFeed: state.followingFeed
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = dispatch => {
+  return {
+    fetchFollowingFeed: username => dispatch(fetchFollowingPosts(username))
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES
  */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+// UserHome.propTypes = {
+//   email: PropTypes.string,
+// }

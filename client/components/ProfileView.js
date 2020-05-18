@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchProfile} from '../store/singleProfile'
+import {fetchProfile, addNewFollower} from '../store/singleProfile'
 import {fetchUserPosts} from '../store/userFeed'
 import {PostFeed, Map, PopUpDisplay} from './index'
 import {Image, Button} from 'react-bootstrap'
+import {checkIfFollowing} from '../store/isFollowing'
+import ShowFollowing from './ShowFollowing'
 
 class ProfileView extends React.Component {
   constructor(props) {
@@ -21,6 +23,19 @@ class ProfileView extends React.Component {
   componentDidMount() {
     this.props.fetchProfile()
     this.props.fetchUserPosts()
+
+    const info = {
+      loggedInUser: this.props.username,
+      username: this.props.match.params.username
+    }
+    console.log('THIS IS INFO', info)
+    // if (this.props.isLoggedIn) {
+    // let info = {
+    //   loggedInUser: this.props.user.username,
+    //   username: this.props.profile.username,
+    // }
+    this.props.checkFollowing(info)
+    // }
   }
 
   postSelector() {
@@ -40,11 +55,19 @@ class ProfileView extends React.Component {
   }
 
   showFollowingOnClick() {
-    this.setState({showFollowers: true})
+    this.setState({showFollowing: true})
   }
 
   hideFollowing() {
-    this.setState({showFollowers: false})
+    this.setState({showFollowing: false})
+  }
+
+  followUser() {
+    let info = {
+      loggedInUser: this.props.user.username,
+      username: this.props.profile.username
+    }
+    this.props.followUserThunk(info)
   }
 
   render() {
@@ -81,20 +104,39 @@ class ProfileView extends React.Component {
             >
               Followers: {profile.followerCount}
             </p>
+            {/* DISPLAY FOR FOLLOWERS */}
             <PopUpDisplay
               show={this.state.showFollowers}
               onHide={() => this.hideFollowers()}
-              type="followers"
               profile={profile}
             />
-            <p className="profile-info-text">
+            <p
+              className="profile-info-text"
+              onClick={() => this.showFollowingOnClick()}
+            >
               Following: {profile.followingCount}
             </p>
+            {/* DISPLAY FOR FOLLOWING */}
+            <ShowFollowing
+              show={this.state.showFollowing}
+              onHide={() => this.hideFollowing()}
+              profile={profile}
+            />
             <p className="profile-info-text">Communities</p>
           </div>
-          <Button className="follow-button" variant="outline-light">
-            Follow
-          </Button>
+          {this.props.isLoggedIn &&
+          this.props.user.username !== profile.username ? (
+            <Button
+              className="follow-button"
+              variant="outline-light"
+              onClick={() => this.followUser()}
+            >
+              Follow
+            </Button>
+          ) : (
+            <div />
+          )}
+
           <div className="contentContainer">
             <div className="buttonContainer">
               <Button
@@ -139,16 +181,21 @@ class ProfileView extends React.Component {
 const mapState = state => {
   return {
     profile: state.singleProfile,
-    posts: state.userPosts
+    posts: state.userPosts,
+    isLoggedIn: !!state.user.id,
+    user: state.user,
+    isFollowing: state.isFollowing,
+    username: state.user.username
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
   const username = ownProps.match.params.username
-
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchUserPosts: () => dispatch(fetchUserPosts(username))
+    fetchUserPosts: () => dispatch(fetchUserPosts(username)),
+    followUserThunk: info => dispatch(addNewFollower(info)),
+    checkFollowing: info => dispatch(checkIfFollowing(info))
   }
 }
 

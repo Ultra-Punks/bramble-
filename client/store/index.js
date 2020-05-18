@@ -14,6 +14,8 @@ import userPosts from './userFeed'
 import singlePost from './singlePost'
 import postComments from './postComments'
 import singleComment from './singleComment'
+import isFollowing from './isFollowing'
+import followingFeed from './generalUserFeed'
 
 const reducer = combineReducers({
   user,
@@ -26,7 +28,9 @@ const reducer = combineReducers({
   userPosts,
   locations,
   postComments,
-  singleComment
+  singleComment,
+  isFollowing,
+  followingFeed
 })
 
 const middleware = composeWithDevTools(

@@ -3,7 +3,6 @@ import React from 'react'
 import PostPreview from './PostPreview'
 
 export default function PostFeed(props) {
-  console.log('props from postFeed>>>>', props)
   if (props.postFeed) {
     return (
       <div className="feedView">

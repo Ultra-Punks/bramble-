@@ -81,13 +81,13 @@ User.prototype.decreaseFollowers = async function() {
 }
 
 User.prototype.increaseFollowing = async function() {
-  const newFollowerCount = this.followingCount + 1
-  await this.update({followingCount: newFollowerCount})
+  const newFollowingCount = this.followingCount + 1
+  await this.update({followingCount: newFollowingCount})
 }
 
 User.prototype.decreaseFollowing = async function() {
-  const newFollowerCount = this.followingCount - 1
-  await this.update({followingCount: newFollowerCount})
+  const newFollowingCount = this.followingCount - 1
+  await this.update({followingCount: newFollowingCount})
 }
 
 module.exports = User
