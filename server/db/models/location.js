@@ -24,7 +24,7 @@ const Location = db.define('location', {
     type: Sequelize.ARRAY(Sequelize.FLOAT)
   },
   geometry: {
-    type: Sequelize.GEOMETRY
+    type: Sequelize.JSON
   },
   properties: {
     type: Sequelize.JSON
