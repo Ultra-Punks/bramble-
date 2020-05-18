@@ -70,7 +70,7 @@ router.put('/:commentId/likes', async (req, res, next) => {
 })
 
 // increase the number of dislikes on a comment
-router.put('/:commentId/increasedislikes', async (req, res, next) => {
+router.put('/:commentId/dislikes', async (req, res, next) => {
   try {
     let updatedComment = await PostComment.findByPk(req.params.commentId)
     updatedComment.dislikes++
