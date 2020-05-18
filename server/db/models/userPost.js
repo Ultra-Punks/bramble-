@@ -21,7 +21,7 @@ UserPost.prototype.increaseLikes = async function() {
   await this.update({likes: newLikesCount})
 }
 
-UserPost.prototype.decreaseLikes = async function() {
+UserPost.prototype.increaseDislikes = async function() {
   const newLikesCount = this.likes + 1
   await this.update({dislikes: newLikesCount})
 }

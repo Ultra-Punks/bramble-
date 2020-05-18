@@ -64,7 +64,7 @@ User.belongsToMany(Community, {as: 'Subscribers', through: 'CommunitySubs'})
 User.belongsToMany(Community, {as: 'Moderator', through: 'CommunityMods'})
 
 Tag.belongsToMany(UserPost, {through: 'PostTags'})
-Tag.belongsTo(User)
+// Tag.belongsTo(User)
 Tag.belongsToMany(Photo, {through: 'PhotoTags'})
 
 // =========== Exports Below ===========
