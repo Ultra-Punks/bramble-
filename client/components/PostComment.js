@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 // import {connect} from 'react-redux'
-// import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 //import thunk:
 // import {fetchComments} from '../store/postComments'
@@ -23,7 +23,7 @@ export default function PostComments(props) {
       <div className="commentPreviewContainer">
         {postComments.map(comment => (
           <div key={comment.id} className="singleCommentPreview">
-            {comment.comment}
+            <Link to={`/comments/${comment.id}`}>{comment.comment}</Link>
             <div className="commentShareBar">
               <div>
                 {comment.likes >= 1 && (

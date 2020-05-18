@@ -12,16 +12,13 @@ class ProfileView extends React.Component {
     super(props)
     this.state = {
       postFeed: true
-      // openComments: false,
     }
     this.postSelector = this.postSelector.bind(this)
     this.gallerySelector = this.gallerySelector.bind(this)
-    // this.handleComments = this.handleComments.bind(this)
   }
   componentDidMount() {
     this.props.fetchProfile()
     this.props.fetchUserPosts()
-    // this.props.fetchComments()
   }
 
   postSelector() {
@@ -33,7 +30,7 @@ class ProfileView extends React.Component {
   }
 
   render() {
-    // console.log('PROPS from Profile View >>>> ', this.props)
+    console.log('PROPS from Profile View >>>> ', this.props)
     const postId = this.props.posts[0] ? this.props.posts[0].id : null
     // const posts = this.props.posts.length ? this.props.posts[0].id : null
 
@@ -117,7 +114,6 @@ const mapState = state => {
   return {
     profile: state.singleProfile,
     posts: state.userPosts
-    // commentsOnPosts: state.postComments,
   }
 }
 
@@ -127,7 +123,6 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     fetchProfile: () => dispatch(fetchProfile(username)),
     fetchUserPosts: () => dispatch(fetchUserPosts(username))
-    // fetchComments: () => dispatch(fetchComments()),
     // fetchSingleComment: () => dispatch(fetchSingleComment())
   }
 }

@@ -52,6 +52,11 @@ export default function PostPreview(props) {
           </p>
         </div>
         <div className="likes">
+          {post.likes >= 1 && (
+            <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+              {post.likes}
+            </div>
+          )}
           <img
             src="https://img.icons8.com/ios/64/000000/like.png"
             className="likeIcon"
@@ -59,6 +64,11 @@ export default function PostPreview(props) {
           />
         </div>
         <div className="dislikes">
+          {post.dislikes >= 1 && (
+            <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
+              {post.dislikes}
+            </div>
+          )}
           <img
             src="https://img.icons8.com/windows/80/000000/dislike.png"
             className="dislikeIcon"
