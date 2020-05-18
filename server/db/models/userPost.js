@@ -16,4 +16,14 @@ const UserPost = db.define('userPost', {
   }
 })
 
+UserPost.prototype.increaseLikes = async function() {
+  const newLikesCount = this.likes + 1
+  await this.update({likes: newLikesCount})
+}
+
+UserPost.prototype.decreaseLikes = async function() {
+  const newLikesCount = this.likes + 1
+  await this.update({dislikes: newLikesCount})
+}
+
 module.exports = UserPost
