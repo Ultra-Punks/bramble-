@@ -39,22 +39,41 @@ router.get('/:postId', async (req, res, next) => {
 
 //gets all posts from specific user
 router.get('/from/:username', async (req, res, next) => {
+  // order: [['createdAt', 'DESC']],
   try {
-    const allUserPosts = await User.findOne({
+    // const allUserPosts = await User.findOne({
+    //   where: {
+    //     username: req.params.username,
+    //   },
+    //   include: [
+    //     {
+    //       model: UserPost,
+    //       include: [
+    //         {model: Photo, include: [{model: Tag}]},
+    //         {model: PostComment, include: [{model: User}]},
+    //       ],
+    //     },
+    //   ],
+    // })
+
+    const user = await User.findOne({
       where: {
         username: req.params.username
+      }
+    })
+
+    const allUserPosts = await UserPost.findAll({
+      where: {
+        userId: user.id
       },
       include: [
-        {
-          model: UserPost,
-          include: [
-            {model: Photo, include: [{model: Tag}]},
-            {model: PostComment, include: [{model: User}]}
-          ]
-        }
-      ]
+        {model: Photo, include: [{model: Tag}]},
+        {model: PostComment, include: [{model: User}]}
+      ],
+      order: [['createdAt', 'DESC']]
     })
-    res.json(allUserPosts.userPosts)
+
+    res.json(allUserPosts)
   } catch (error) {
     next(error)
   }
@@ -82,7 +101,8 @@ router.get('/from/:username/following', async (req, res, next) => {
         {model: User},
         {model: Photo, include: [{model: Tag}]},
         {model: PostComment, include: [{model: User}]}
-      ]
+      ],
+      order: [['createdAt', 'DESC']]
     })
 
     res.json(feed)

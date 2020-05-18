@@ -21,7 +21,6 @@ export const fetchUserPosts = username => {
   }
 }
 
-
 // thunk to fetch User community Post
 export const fetchCommunityPosts = id => {
   return async dispatch => {
@@ -57,7 +56,7 @@ export default function singleUserPostsReducer(state = initialState, action) {
     case GET_USER_POSTS:
       return [...action.posts]
     case ADD_POST:
-      return [...state, action.post]
+      return [action.post, ...state]
     default:
       return state
   }

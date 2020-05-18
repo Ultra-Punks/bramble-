@@ -190,10 +190,11 @@ const mapState = state => {
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const username = ownProps.match.params.username
+  // const username = ownProps.match.params.username
   return {
-    fetchProfile: () => dispatch(fetchProfile(username)),
-    fetchUserPosts: () => dispatch(fetchUserPosts(username)),
+    fetchProfile: () => dispatch(fetchProfile(ownProps.match.params.username)),
+    fetchUserPosts: () =>
+      dispatch(fetchUserPosts(ownProps.match.params.username)),
     followUserThunk: info => dispatch(addNewFollower(info)),
     checkFollowing: info => dispatch(checkIfFollowing(info))
   }

@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React from 'react'
-import {Modal} from 'react-bootstrap'
+import {Modal, Image} from 'react-bootstrap'
 
 function ShowInfo(props) {
   const {profile} = props
@@ -12,7 +12,12 @@ function ShowInfo(props) {
     return (
       <div>
         {profile.following.map(user => {
-          return <p key={user.id}>{user.username}</p>
+          return (
+            <div key={user.id}>
+              <Image className="post-pfp" src={user.profileImg} roundedCircle />
+              <p>{user.username}</p>
+            </div>
+          )
         })}
       </div>
     )

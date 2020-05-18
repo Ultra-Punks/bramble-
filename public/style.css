@@ -330,6 +330,7 @@ form div {
 
 .post-text {
   margin: 0;
+  margin-top: 15px;
   margin-left: 10px;
   margin-bottom: 20px;
   margin-right: 15px;
@@ -812,7 +813,6 @@ form div {
   justify-content: space-around;
 }
 
-
 .single-post-view-container {
   display: flex;
   width: 50%;
@@ -893,4 +893,17 @@ form div {
 .underCommunity {
   border-bottom: solid #3d4a63 1.5px;
   width: 40%;
+}
+
+.profilePagePhoto {
+  height: 300px;
+  width: 300px;
+  object-fit: cover;
+}
+
+.time-ago {
+  color: grey;
+  font-family: 'Roboto';
+  font-weight: 400;
+  margin-left: 10px;
 }
