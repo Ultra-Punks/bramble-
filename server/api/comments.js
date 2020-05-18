@@ -57,26 +57,60 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
-// // increase the nuber of likes on a comment
-// router.put('/:commentId/increaselikes', async (req, res, next) => {
-//   try {
-//     let updatedComment = await PostComment.findByPk(req.params.commentId)
-//     updatedComment.likes++
-//     await updatedComment.save()
-//     res.json(updatedComment)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+// ==============================================
+// KEEP WORKING THROUGH THIS...MAY NEED ADJUSTMENT
+// create a new comment on a particular UserPost
+router.post('/add/:postId', async (req, res, next) => {
+  try {
+    const post = await UserPost.findOne({
+      where: {
+        id: req.params.postId
+      }
+    })
 
-// // increase the number of dislikes on a comment
-// router.put('/:commentId/increasedislikes', async (req, res, next) => {
-//   try {
-//     let updatedComment = await PostComment.findByPk(req.params.commentId)
-//     updatedComment.dislikes++
-//     await updatedComment.save()
-//     res.json(updatedComment)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+    let newComment = await PostComment.create({
+      userPostId: post.id
+    })
+
+    res.status(201).json(newComment)
+  } catch (error) {
+    next(error)
+  }
+})
+// ==============================================
+
+// increase the nuber of likes on a comment
+router.put('/:commentId/likes', async (req, res, next) => {
+  try {
+    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    updatedComment.likes++
+    await updatedComment.save()
+    res.status(200).json(updatedComment)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of dislikes on a comment
+router.put('/:commentId/dislikes', async (req, res, next) => {
+  try {
+    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    updatedComment.dislikes++
+    await updatedComment.save()
+    res.status(200).json(updatedComment)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//delete comment by Id
+router.delete('/:commentId', async (req, res, next) => {
+  try {
+    const numOfDeleted = await PostComment.destroy({
+      where: {id: req.params.commentId}
+    })
+    res.status(200).json(numOfDeleted)
+  } catch (error) {
+    next(error)
+  }
+})

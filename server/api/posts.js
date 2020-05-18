@@ -2,6 +2,7 @@
 const router = require('express').Router()
 const {scanner} = require('../imageRec')
 
+
 const {
   UserPost,
   User,
@@ -10,6 +11,7 @@ const {
   Tag,
   PostComment
 } = require('../db/models')
+
 
 module.exports = router
 
@@ -60,6 +62,7 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
+
 router.get('/from/:username/following', async (req, res, next) => {
   try {
     const loggedInUser = await User.findOne({
@@ -91,14 +94,15 @@ router.get('/from/:username/following', async (req, res, next) => {
   }
 })
 
-//gets all posts for specific community
-router.get('/for/:communityPost', async (req, res, next) => {
+//gets all posts for user by community
+router.get('/for/:id', async (req, res, next) => {
+
   try {
     const allCommunityPosts = await Community.findOne({
       where: {
-        id: req.params.communityPost
+        id: req.params.id
       },
-      include: [{model: UserPost}]
+      include: [{model: UserPost, include: [{model: User}]}]
     })
     res.json(allCommunityPosts)
   } catch (error) {
@@ -150,6 +154,30 @@ router.post('/add/:username', async (req, res, next) => {
 
       res.json(newPost)
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the nuber of likes on a post
+router.put('/:postId/likes', async (req, res, next) => {
+  try {
+    let updatedPostLikes = await UserPost.findByPk(req.params.postId)
+    updatedPostLikes.likes++
+    await updatedPostLikes.save()
+    res.status(200).json(updatedPostLikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of dislikes on a post
+router.put('/:postId/dislikes', async (req, res, next) => {
+  try {
+    let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
+    updatedPostDislikes.dislikes++
+    await updatedPostDislikes.save()
+    res.status(200).json(updatedPostDislikes)
   } catch (error) {
     next(error)
   }

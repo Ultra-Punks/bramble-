@@ -10,6 +10,7 @@ const getAllLocations = locations => ({type: GET_ALL_LOCATIONS, locations})
 export const fetchAllLocations = () => async dispatch => {
   try {
     const res = await axios.get('/api/locations')
+    console.log('res in thunk', res)
     dispatch(getAllLocations(res.data))
   } catch (err) {
     console.error(err, 'Error fetching all locations')

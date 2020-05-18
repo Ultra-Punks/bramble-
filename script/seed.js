@@ -94,6 +94,7 @@ const generateLocation = () => {
 const manualLocations = [
   {
     address: '5 Hanover Square 11th floor, New York, NY 10004',
+    geometry: {type: 'point', coordinates: [-74.009123, 40.705112]},
     name: 'Fullstack Academy',
     description:
       'Fullstack Academy is an immersive software engineering coding bootcamp located in New York City and Chicago. Students of the full-time flagship course learn full stack JavaScript over the course of a 13-week, on-campus program.',
@@ -101,20 +102,21 @@ const manualLocations = [
   },
   {
     address: '2 W 69th St, New York, NY 10023',
+    geometry: {type: 'point', coordinates: [-73.977721, 40.774355]},
     name: 'Le Pain Quotidien',
     description:
       "Nestled above Sheep’s Meadow in Central Park, our store is located within the historic Mineral Springs pavilion. In the late 1800s and early 1900s, this pavilion served 30 varieties of natural spring water to New Yorker's.",
     isAdmin: false
   },
   {
-    address: '123 addLater st.',
-    point: {type: 'point', coordinates: [-73.959285, 40.653975]},
+    address: '773 Flatbush Ave, Brooklyn, NY, 11226',
+    geometry: {type: 'point', coordinates: [-73.959285, 40.653975]},
     name: 'Zen Vegetarian',
     description: 'Best Chinese Food'
   },
   {
-    address: '123 butt st.',
-    point: {type: 'point', coordinates: [-73.956137, 40.650774]},
+    address: '2281 Church Ave, Brooklyn, NY, 11226',
+    geometry: {type: 'point', coordinates: [-73.956137, 40.650774]},
     name: 'Four Seasons Bakery & Juice Bar',
     description: 'Caribbean Food'
   }
@@ -136,15 +138,45 @@ const communitySeedNames = [
   'NYC Fit!',
   'Urban Shredders'
 ]
+
 // create random community seed data
 const generateCommunity = () => {
   return {
     name: chanceObj.pickone(communitySeedNames),
-    description: chanceObj.paragraph({sentences: 3})
+    description: chanceObj.paragraph({sentences: 1})
   }
 }
+
+const manualCommunities = [
+  {
+    name: 'Food',
+    description: 'Food is the ingredient that binds us together',
+    profileImg:
+      'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'
+  },
+  {
+    name: 'Fitness',
+    description: 'Be the hardest worker in the room',
+    profileImg:
+      'https://www.maxim.com/.image/t_share/MTY1MDc5NTMwMzgwMjA3NDE2/dwayne-the-rock-johnson-chest-drop-sets.png'
+  },
+  {
+    name: 'Skating',
+    description: 'Life is alot like skateboarding ',
+    profileImg:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTSeXvrFrdX237gzTMITf4vFommaqJOYBTOk2Xf8IHthyzDnK2K&usqp=CAU'
+  },
+  {
+    name: 'Fashion',
+    description: 'Being yourself never goes out of fashion ',
+    profileImg:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp_FYgM-HuoNgldG9lW9a4L5cZ9IgLhZNi4EPCTA2H1EC2GonC&usqp=CAU'
+  }
+]
+
 // store 10 new communities created by generateUser into in the communityArray
-const communityArray = Array.from({length: 10}, generateCommunity)
+const communityArray = Array.from({length: 8}, generateCommunity)
+const updatedCommunities = manualCommunities.concat(communityArray)
 
 // create random post seed data
 const generatePost = () => {
@@ -198,8 +230,13 @@ async function seed() {
     users.push(newUser)
   }
 
-  for (let i = 0; i < communityArray.length; i++) {
-    const newCommunity = await Community.create(communityArray[i])
+  // for (let i = 0; i < updatedCommunities.length; i++) {
+  //   const newCommunity = await Community.create(updatedCommunities[i])
+  //   users.push(newCommunity)
+  // }
+
+  for (let i = 0; i < updatedCommunities.length; i++) {
+    const newCommunity = await Community.create(updatedCommunities[i])
     communities.push(newCommunity)
     const randomUserNum = Math.floor(Math.random() * users.length) + 1
     // const randomCommNum = Math.floor(Math.random() * communities.length) + 1
