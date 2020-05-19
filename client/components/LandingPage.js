@@ -52,14 +52,27 @@ class LandingPage extends Component {
       const randomOne = this.props.community[
         getRandomInt(0, this.props.community.length - 1)
       ]
-      const randomTwo = this.props.community[
+      let randomTwo = this.props.community[
         getRandomInt(0, this.props.community.length - 1)
       ]
-      const randomThree = this.props.community[
+      // if the id on randomOne matches randomTwo
+      if (randomOne.id === randomTwo.id) {
+        randomTwo = this.props.community[
+          getRandomInt(0, this.props.community.length - 1)
+        ]
+      }
+      let randomThree = this.props.community[
         getRandomInt(0, this.props.community.length - 1)
       ]
-      sampleCommunities.push(randomOne, randomTwo, randomThree)
+      // if the id on randomThree matches randomOne or randomTwo
+      if (randomOne.id === randomTwo.id && randomOne.id === randomThree.id) {
+        randomThree = this.props.community[
+          getRandomInt(0, this.props.community.length - 1)
+        ]
+      }
 
+      sampleCommunities.push(randomOne, randomTwo, randomThree)
+      console.log('length of sample communities --->', sampleCommunities.length)
       return sampleCommunities
     } else {
       return false
@@ -79,12 +92,15 @@ class LandingPage extends Component {
             Discover and Share the Things you Love. Check out a Bramble
             community or create your own!
           </h2>
-          <div>
+          <div className="samplesDisplay">
             {Array.isArray(samplesComms) &&
               samplesComms.map(singleCommunity => {
                 return (
                   <div key={singleCommunity.id} className="sampleContainer">
-                    <img src={singleCommunity.profileImg} />
+                    <img
+                      src={singleCommunity.profileImg}
+                      className="community-card-image"
+                    />
 
                     <div className="community-card-content">
                       <div className="community-card-title">

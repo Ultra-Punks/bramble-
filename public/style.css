@@ -933,3 +933,17 @@ form div {
   width: 275px;
   color: black;
 }
+
+.samplesDisplay {
+  display: flex;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.sampleContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  background-color: red;
+  width: 20%;
+}
