@@ -118,7 +118,17 @@ router.get('/for/:id', async (req, res, next) => {
       where: {
         id: req.params.id
       },
-      include: [{model: UserPost, include: [{model: User}]}]
+      include: [
+        {
+          model: UserPost,
+          include: [
+            {
+              model: User,
+              include: [{model: PostComment, include: [{model: User}]}]
+            }
+          ]
+        }
+      ]
     })
     res.json(allCommunityPosts)
   } catch (error) {
