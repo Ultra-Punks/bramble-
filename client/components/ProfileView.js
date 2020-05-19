@@ -162,7 +162,7 @@ class ProfileView extends React.Component {
           </div>
         </div>
         <div className="profileMapContainer sticky">
-          <Map />
+          <Map username={this.props.match.params.username} />
           {/* <img
           src="https://miro.medium.com/max/4064/1*qYUvh-EtES8dtgKiBRiLsA.png"
           className="profileMapContainer sticky"

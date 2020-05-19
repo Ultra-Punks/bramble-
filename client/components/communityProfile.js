@@ -119,7 +119,7 @@ class CommunityProfile extends React.Component {
         </div>
 
         <div className="profileMapContainer sticky">
-          <Map />
+          <Map cId={this.props.match.params.id} />
         </div>
       </div>
     )

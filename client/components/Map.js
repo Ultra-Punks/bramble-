@@ -15,7 +15,7 @@ import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
 import {AddLocationForm, SingleLocation} from './index'
 import {connect} from 'react-redux'
-import {fetchAllLocations} from '../store/locations'
+import {fetchAllLocations, fetchSomeLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -42,7 +42,10 @@ class Map extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.getAllLocations()
+    if (this.props.cId) this.props.getSomeLocations(this.props.cId, 'community')
+    else if (this.props.username)
+      this.props.getSomeLocations(this.props.username, 'user')
+    else this.props.getAllLocations()
   }
   //create a reference to be passed to <Geocoder/> and <MapGL/>
   mapRef = React.createRef()
@@ -107,11 +110,16 @@ class Map extends React.Component {
         address: address
       }
     })
+    console.log(
+      'selectedLocation in addMarker func',
+      this.state.selectedLocation
+    )
   }
   handleResult(event) {
     this.addMarker(event.result.geometry.coordinates, event.result)
   }
   render() {
+    if (!this.props.locations[0] || !this.props.locations[0].id) return <div />
     //styles for geolocated and navigation
     const geolocateStyle = {
       float: 'left',
@@ -278,7 +286,8 @@ class Map extends React.Component {
 
 const mapState = state => ({locations: state.locations})
 const mapDispatch = dispatch => ({
-  getAllLocations: () => dispatch(fetchAllLocations())
+  getAllLocations: () => dispatch(fetchAllLocations()),
+  getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type))
 })
 
 export default connect(mapState, mapDispatch)(Map)
