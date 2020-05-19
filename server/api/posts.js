@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
 const {scanner} = require('../imageRec')
+const {Op} = require('sequelize')
 
 const {
   UserPost,
@@ -88,9 +89,17 @@ router.get('/from/:username/following', async (req, res, next) => {
     })
 
     const allFollowing = await loggedInUser.getFollowing()
+    const allSubs = await loggedInUser.getSubscriber()
+
+    console.log(Object.keys(User.prototype))
 
     let arrOfIds = allFollowing.map(user => {
       return user.id
+    })
+
+    //WIP ARR OF COMMUNITY IDS USER IS SUBBED TO
+    let arrOfComIds = allSubs.map(sub => {
+      return sub.id
     })
 
     arrOfIds.push(loggedInUser.id)

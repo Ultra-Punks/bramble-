@@ -8,9 +8,7 @@ const {
   Community,
   UserPost,
   LocationReview,
-  PostComment,
-  CommunitySubs,
-  UserFollower
+  PostComment
 } = require('../server/db/models')
 
 // bring in the Chance library to generate seed data (Chance Library info --> https://chancejs.com/index.html)
@@ -337,12 +335,6 @@ async function seed() {
       await postComments[i].save()
     }
   }
-
-  const communitySubs = await Promise.all([
-    CommunitySubs.create({userId: 13, communityId: 10}),
-    CommunitySubs.create({userId: 13, communityId: 6}),
-    CommunitySubs.create({userId: 13, communityId: 3})
-  ])
 
   // await users[3].setFollowing(13)
   // await users[2].setFollowing(13)

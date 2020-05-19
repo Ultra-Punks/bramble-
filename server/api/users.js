@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Community} = require('../db/models')
 module.exports = router
 
 // router.get('/', async (req, res, next) => {
@@ -19,7 +19,16 @@ module.exports = router
 // get ALL users
 router.get('/', async (req, res, next) => {
   try {
-    const allUsers = await User.findAll()
+    const allUsers = await User.findAll({
+      attributes: [
+        'id',
+        'name',
+        'email',
+        'username',
+        'description',
+        'profileImg'
+      ]
+    })
     res.json(allUsers)
   } catch (error) {
     next(error)
@@ -33,33 +42,27 @@ router.get('/:username', async (req, res, next) => {
       where: {
         username: req.params.username
       },
-      include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
-    })
-    res.json(user)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.post('/:username/follow/check', async (req, res, next) => {
-  try {
-    const loggedInUser = await User.findByPk(req.session.passport.user)
-    const viewingUser = await User.findOne({
-      where: {
-        username: req.body.username
-      }
+      include: [
+        {model: User, as: 'follower'},
+        {model: User, as: 'following'},
+        {model: Community, as: 'subscriber'}
+      ]
     })
 
-    const isFollowing = await loggedInUser.hasFollowing(viewingUser.id)
-
-    res.json(isFollowing)
+    if (req.session.passport) {
+      const loggedIn = await User.findByPk(req.session.passport.user)
+      const isFollowing = await loggedIn.hasFollowing(user)
+      res.json({profile: user, isFollowing})
+    } else {
+      res.json({profile: user, isFollowing: false})
+    }
   } catch (error) {
     next(error)
   }
 })
 
 // update an existing user (according to ID)
-router.put('/:userId', async (req, res, next) => {
+router.put('/:username', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
@@ -83,14 +86,29 @@ router.put('/:userId', async (req, res, next) => {
   }
 })
 
-// increase the number of followers && follow a new user
-router.put('/:username/follow', async (req, res, next) => {
+// delete an existing user by id
+router.delete('/:username', async (req, res, next) => {
   try {
-    let loggedInUser = await User.findOne({
+    const deletedUser = await User.findOne({
       where: {
         username: req.params.username
       }
     })
+    if (deletedUser) {
+      await deletedUser.destroy()
+      res.status(204).json(deletedUser)
+    } else {
+      res.sendStatus(404)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+// increase the number of followers && follow a new user
+router.put('/follow/user', async (req, res, next) => {
+  try {
+    let loggedInUser = await User.findByPk(req.session.passport.user)
 
     let newFollowing = await User.findOne({
       where: {
@@ -111,21 +129,18 @@ router.put('/:username/follow', async (req, res, next) => {
       },
       include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
     })
+    const isFollowing = loggedInUser.hasFollowing(newFollowing)
 
-    res.json(updatedUser)
+    res.json({profile: updatedUser, isFollowing: isFollowing})
   } catch (error) {
     next(error)
   }
 })
 
 // decrease the number of followers && unfollow a user
-router.put('/:username/unfollow', async (req, res, next) => {
+router.put('/unfollow/user', async (req, res, next) => {
   try {
-    let loggedInUser = await User.findOne({
-      where: {
-        username: req.params.username
-      }
-    })
+    let loggedInUser = await User.findByPk(req.session.passport.user)
 
     let newUnfollowing = await User.findOne({
       where: {
@@ -140,26 +155,16 @@ router.put('/:username/unfollow', async (req, res, next) => {
     await loggedInUser.save()
     await newUnfollowing.save()
 
-    res.sendStatus(200)
-  } catch (error) {
-    next(error)
-  }
-})
-
-// delete an existing user by id
-router.delete('/:userId', async (req, res, next) => {
-  try {
-    const deletedUser = await User.findOne({
+    const updatedUser = await User.findOne({
       where: {
-        username: req.params.username
-      }
+        username: req.body.username
+      },
+      include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
     })
-    if (deletedUser) {
-      await deletedUser.destroy()
-      res.status(204).json(deletedUser)
-    } else {
-      res.sendStatus(404)
-    }
+
+    const isFollowing = await loggedInUser.hasFollowing(updatedUser)
+
+    res.json({profile: updatedUser, isFollowing: isFollowing})
   } catch (error) {
     next(error)
   }

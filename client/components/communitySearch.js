@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchOneCommunity} from '../store/community'
 import {Link} from 'react-router-dom'
+import {fetchAllCommunities, fetchOneCommunity} from '../store/allCommunities'
 
 class CommunitySearch extends React.Component {
   constructor() {
@@ -14,7 +14,7 @@ class CommunitySearch extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchOneCommunity(this.state.community)
+    this.props.fetchCommunites()
   }
 
   handleChange(event) {
@@ -36,7 +36,7 @@ class CommunitySearch extends React.Component {
   }
 
   searchResults() {
-    const community = this.props.community
+    const community = this.props.allCommunities
 
     if (community) {
       if (Array.isArray(community)) {
@@ -55,51 +55,18 @@ class CommunitySearch extends React.Component {
                       <div className="community-card-text">
                         {result.description}
                       </div>
-                      <Link
-                        to={`/Community/list/${result.id}`}
-                        className="community-link"
-                      >
-                        View Posts
-                      </Link>
                       <div className="community-button">
-                        <button className="followbutton" type="button">
-                          Follow
-                        </button>
+                        <Link to={`/Community/list/${result.id}`}>
+                          <button className="followbutton" type="button">
+                            View
+                          </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
                 </div>
               )
             })}
-          </div>
-        )
-      } else {
-        return (
-          <div className="community-cards-item">
-            <div className="community-card">
-              <img
-                src={community.profileImg}
-                className="community-card-image"
-              />
-              <div className="card">
-                <div className="community-card-title">{community.name}</div>
-                <div className="community-card-text">
-                  {community.description}
-                </div>
-                <Link
-                  to={`/Community/list/${community.id}`}
-                  className="community-link"
-                >
-                  Detail
-                </Link>
-                <div className="community-button">
-                  <button className="followbutton" type="button">
-                    Follow
-                  </button>
-                </div>
-              </div>
-              <br />
-            </div>
           </div>
         )
       }
@@ -142,9 +109,14 @@ class CommunitySearch extends React.Component {
   }
 }
 
-const mapState = state => ({community: state.community})
+const mapState = state => {
+  return {
+    allCommunities: state.allCommunities
+  }
+}
 
 const mapDispatch = dispatch => ({
+  fetchCommunites: () => dispatch(fetchAllCommunities()),
   fetchOneCommunity: name => dispatch(fetchOneCommunity(name))
 })
 
