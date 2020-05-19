@@ -6,10 +6,19 @@ import {Link} from 'react-router-dom'
 // bring in thunks here
 import {fetchOneCommunity} from '../store/community'
 import {fetchUsers} from '../store/allProfiles'
-
 import {fetchUserPosts} from '../store/userFeed'
-import {fetchProfile} from '../store/singleProfile'
-import {fetchSinglePost} from '../store/singlePost'
+
+// -----------------------------------------------------------
+// -----------------------------------------------------------
+// few ideas for landing page:
+const option1 =
+  'https://d39l2hkdp2esp1.cloudfront.net/img/photo/122786/122786_00_2x.jpg'
+const option2 =
+  'https://avsmindfulness.com/wp-content/uploads/2018/03/5-Health-Benefits-of-Socialization-1.jpg'
+const option3 =
+  'https://www.elikarealestate.com/blog/wp-content/uploads/2018/02/millennials.jpeg'
+// -----------------------------------------------------------
+// -----------------------------------------------------------
 
 class LandingPage extends Component {
   constructor() {
@@ -30,10 +39,9 @@ class LandingPage extends Component {
     console.log('this.props>>>>>', this.props)
     return (
       <div className="landingPage">
-        <div>
-          <ul>THIS IS LANDING PAGE</ul>
+        <div className="welcomePhotoContainer">
           {/* <AllProfiles /> */}
-          <img src="https://avsmindfulness.com/wp-content/uploads/2018/03/5-Health-Benefits-of-Socialization-1.jpg" />
+          <img src={option1} className="welcomePhoto" />
         </div>
       </div>
     )

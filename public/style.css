@@ -907,3 +907,23 @@ form div {
   font-weight: 400;
   margin-left: 10px;
 }
+
+/* Container holding the image and the text */
+.welcomePhotoContainer {
+  position: relative;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  overflow: hidden; /*hide bounds of image */
+  margin: 0; /*reset margin of figure tag*/
+}
+
+.welcomePhoto {
+  display: block; /*remove inline-block spaces*/
+  width: 100%; /*make image streatch*/
+}
+
+.welcomePhoto {
+  /* crops image...must be added separately */
+  margin: -8.875% 0;
+}
