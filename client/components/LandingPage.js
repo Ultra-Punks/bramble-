@@ -46,7 +46,6 @@ class LandingPage extends Component {
   randomDisplay() {
     // create an array of sample communities
     const sampleCommunities = []
-    console.log('in random display', this.props.community)
 
     if (this.props.community.length) {
       const randomOne = this.props.community[
@@ -70,9 +69,8 @@ class LandingPage extends Component {
           getRandomInt(0, this.props.community.length - 1)
         ]
       }
-
       sampleCommunities.push(randomOne, randomTwo, randomThree)
-      console.log('length of sample communities --->', sampleCommunities.length)
+
       return sampleCommunities
     } else {
       return false
@@ -80,7 +78,7 @@ class LandingPage extends Component {
   }
 
   render() {
-    console.log('this.props>>>>>', this.props)
+    // console.log('this.props>>>>>', this.props)
     const samplesComms = this.randomDisplay()
     return (
       <div className="landingPage">
