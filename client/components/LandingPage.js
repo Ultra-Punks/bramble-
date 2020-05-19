@@ -90,8 +90,8 @@ class LandingPage extends Component {
         <div className="introContainer">
           <div className="welcomePageContent">
             <h2>
-              Discover the things you love. Check out a Bramble community or
-              create your own!
+              Discover the things you love. Check out a Bramble community to see
+              what's happening in your area.
             </h2>
             <div className="samplesDisplay">
               {Array.isArray(samplesComms) &&
