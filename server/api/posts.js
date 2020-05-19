@@ -134,7 +134,8 @@ router.get('/for/:id', async (req, res, next) => {
             {
               model: User,
               include: [{model: PostComment, include: [{model: User}]}]
-            }
+            },
+            {model: PostComment, include: [{model: User}]}
           ]
         }
       ]

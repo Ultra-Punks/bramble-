@@ -43,7 +43,7 @@ export default function PostPreview(props) {
             live={false}
           />
           <Link to={`/p/${posts.postComments.id}`}>
-            <p className="post-text">{posts.description}</p>
+            <p className="post-text">{post.description}</p>
           </Link>
         </div>
       </div>

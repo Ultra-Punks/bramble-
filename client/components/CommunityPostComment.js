@@ -12,10 +12,11 @@ export default function PostComments(props) {
     post.user.postComments.length &&
     openComments
   ) {
+    console.log('propppppsss', props)
     return (
       <div className="commentPreviewContainer">
-        {post.user.postComments.map(comment => (
-          <div key={comment.id} className="singleCommentPreview">
+        {post.postComments.map(comment => (
+          <div key={comment.user.id} className="singleCommentPreview">
             <div>
               <Image
                 className="post-pfp"
