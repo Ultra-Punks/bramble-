@@ -14,7 +14,7 @@ export {default as SinglePostView} from './single-post-view'
 export {default as AddPost} from './add-post'
 export {Login, Signup} from './auth-form'
 export {default as PostFeed} from './PostFeed'
-
+export {default as LandingPage} from './LandingPage'
 export {default as CommunityFeed} from './CommunityFeed'
 
 export {default as SingleComment} from './SingleComment'

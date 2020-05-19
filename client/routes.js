@@ -12,7 +12,8 @@ import {
   ProfileView,
   SingleComment,
   SingleLocation,
-  AddLocationForm
+  AddLocationForm,
+  LandingPage
 } from './components'
 import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
@@ -36,6 +37,8 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/map" component={Map} />
+        <Route exact path="/" component={LandingPage} />
+
         {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
         <Route path="/l/:id" component={SingleLocation} />
         <Route path="/test" component={Test} />
