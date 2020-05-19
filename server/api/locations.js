@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Location, User} = require('../db/models')
+const {Location, User, LocationReview} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
@@ -72,7 +72,9 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const location = await Location.findByPk(req.params.id)
+    const location = await Location.findByPk(req.params.id, {
+      include: [{model: LocationReview}]
+    })
     res.json(location)
   } catch (err) {
     next(err)

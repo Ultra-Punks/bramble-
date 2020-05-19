@@ -957,3 +957,22 @@ form div {
   border-radius: 10px;
   margin-top: 1%;
 }
+
+.location-modal {
+  padding: 45px;
+}
+
+.post-button-location {
+  background-color: #3d4a63;
+  border-radius: 150px;
+  margin-top: 25px;
+  margin-right: 25px;
+  margin-bottom: 25px;
+  width: 100px;
+}
+
+.signup-input {
+  background-color: white;
+  color: black;
+  margin-bottom: 25px;
+}

@@ -10,10 +10,11 @@ import MapGL, {
   Source,
   Layer
 } from 'react-map-gl'
+import {Button} from 'react-bootstrap'
 import Geocoder from 'react-map-gl-geocoder'
 import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
-import {AddLocationForm, SingleLocation} from './index'
+import {AddLocationForm, SingleLocation, AddLocation} from './index'
 import {connect} from 'react-redux'
 import {fetchAllLocations, fetchSomeLocations} from '../store/locations'
 import {mapboxToken} from '../../secrets'
@@ -28,6 +29,7 @@ class Map extends React.Component {
     //userLocation is the user's current location and selectedLocation is a temporary location
     //for when the user wants to add a location that they are not currently at
     this.state = {
+      show: false,
       viewport: {
         width: 1000,
         height: 700,
@@ -47,6 +49,15 @@ class Map extends React.Component {
       this.props.getSomeLocations(this.props.username, 'user')
     else this.props.getAllLocations()
   }
+
+  handleShowForm() {
+    this.setState({show: true})
+  }
+
+  handleHideForm() {
+    this.setState({show: false})
+  }
+
   //create a reference to be passed to <Geocoder/> and <MapGL/>
   mapRef = React.createRef()
   setUserLocation() {
@@ -148,18 +159,21 @@ class Map extends React.Component {
         >
           Add My Location To Map
         </button>
-        {this.state.displayForm && (
+        {/* {this.state.displayForm && (
           <AddLocationForm location={this.state.selectedLocation} />
-        )}
-        <button
+        )} */}
+        <Button
           type="submit"
-          onClick={() => {
-            const display = this.state.displayForm
-            this.setState({displayForm: !display})
-          }}
+          variant="danger"
+          onClick={() => this.handleShowForm()}
         >
-          Display Add Location Form
-        </button>
+          Add Location Form
+        </Button>
+        <AddLocation
+          show={this.state.show}
+          location={this.state.selectedLocation}
+          onHide={() => this.handleHideForm()}
+        />
         {/* our main interactive map component */}
         <MapGL
           ref={this.mapRef}

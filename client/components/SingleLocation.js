@@ -1,11 +1,30 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {fetchOneLocation} from '../store/singleLocation'
 
 // class SingleLocation extends React.Component {
-const SingleLocation = props => {
-  const {location} = props
-  Object.keys(location).map(el => {
-    return <p key={el.id}>{`${el} ${location[el]}`}</p>
-  })
+class SingleLocationView extends React.Component {
+  componentDidMount() {
+    this.props.fetchLocation()
+  }
+
+  render() {
+    console.log('THIS IS PROPS', this.props)
+    return <div>TEST</div>
+  }
 }
 
-export default SingleLocation
+const mapState = state => {
+  return {
+    singleLocation: state.singleLocation
+  }
+}
+
+const mapDispatch = (dispatch, ownProps) => {
+  const id = ownProps.match.params.id
+  return {
+    fetchLocation: () => dispatch(fetchOneLocation(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(SingleLocationView)
