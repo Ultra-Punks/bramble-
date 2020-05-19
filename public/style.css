@@ -925,5 +925,11 @@ form div {
 
 .welcomePhoto {
   /* crops image...must be added separately */
-  margin: -8.875% 0;
+  margin: -10.875% 0;
+}
+
+.onPhotoText {
+  margin-top: 20px;
+  width: 275px;
+  color: black;
 }

@@ -20,12 +20,20 @@ const option3 =
 // -----------------------------------------------------------
 // -----------------------------------------------------------
 
+// define a helper function to get a random number!
+function getRandomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min)) + min //The maximum is exclusive and the minimum is inclusive}
+}
+
 class LandingPage extends Component {
   constructor() {
     super()
     this.state = {
       community: ''
     }
+    this.randomDisplay = this.randomDisplay.bind(this)
   }
 
   componentDidMount() {
@@ -35,13 +43,61 @@ class LandingPage extends Component {
     // this.props.fetchUserPosts(username)
   }
 
+  randomDisplay() {
+    // create an array of sample communities
+    const sampleCommunities = []
+    console.log('in random display', this.props.community)
+
+    if (this.props.community.length) {
+      const randomOne = this.props.community[
+        getRandomInt(0, this.props.community.length - 1)
+      ]
+      const randomTwo = this.props.community[
+        getRandomInt(0, this.props.community.length - 1)
+      ]
+      const randomThree = this.props.community[
+        getRandomInt(0, this.props.community.length - 1)
+      ]
+      sampleCommunities.push(randomOne, randomTwo, randomThree)
+
+      return sampleCommunities
+    } else {
+      return false
+    }
+  }
+
   render() {
     console.log('this.props>>>>>', this.props)
+    const samplesComms = this.randomDisplay()
     return (
       <div className="landingPage">
         <div className="welcomePhotoContainer">
-          {/* <AllProfiles /> */}
           <img src={option1} className="welcomePhoto" />
+        </div>
+        <div className="welcomePageContent">
+          <h2>
+            Discover and Share the Things you Love. Check out a Bramble
+            community or create your own!
+          </h2>
+          <div>
+            {Array.isArray(samplesComms) &&
+              samplesComms.map(singleCommunity => {
+                return (
+                  <div key={singleCommunity.id} className="sampleContainer">
+                    <img src={singleCommunity.profileImg} />
+
+                    <div className="community-card-content">
+                      <div className="community-card-title">
+                        {singleCommunity.name}
+                      </div>
+                      <div className="community-card-text">
+                        {singleCommunity.description}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+          </div>
         </div>
       </div>
     )
