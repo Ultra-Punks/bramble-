@@ -206,6 +206,19 @@ router.put('/:postId/likes', async (req, res, next) => {
   }
 })
 
+// get random posts
+router.put('/random', async (req, res, next) => {
+  try {
+    const arrOfIds = req.body.postIds
+    const randomPosts = await UserPost.findAll({
+      where: {id: arrOfIds}
+    })
+    res.json(randomPosts)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // increase the number of dislikes on a post
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {
