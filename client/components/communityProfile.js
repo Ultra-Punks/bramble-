@@ -1,20 +1,29 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchSingleCommunity} from '../store/community'
+import {
+  fetchSingleCommunity,
+  subToCommunity,
+  unSubToCommunity
+} from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
 // import {fetchProfile} from '../store/singleProfile'
 import {Button} from 'react-bootstrap'
 import {CommunityFeed, Map} from './index'
+import ShowMembers from './ShowMembers'
+import DisplaySubUnsub from './DisplaySubUnsub'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      postFeed: true
+      postFeed: true,
+      showMembers: false
     }
     this.postSelector = this.postSelector.bind(this)
     this.gallerySelector = this.gallerySelector.bind(this)
+    this.showMembersOnClick = this.showMembersOnClick.bind(this)
+    this.hideMembers = this.hideMembers.bind(this)
   }
   componentDidMount() {
     const id = this.props.match.params.id
@@ -31,10 +40,16 @@ class CommunityProfile extends React.Component {
     this.setState({postFeed: false})
   }
 
+  showMembersOnClick() {
+    this.setState({showMembers: true})
+  }
+
+  hideMembers() {
+    this.setState({showMembers: false})
+  }
+
   render() {
-    // console.log(this.props)
-    // const profile = this.props.profile
-    const community = this.props.community
+    const community = this.props.community.communityProfile
     const postClass = this.state.postFeed
       ? 'profileFeedButton selected-feed'
       : 'profileFeedButton'
@@ -51,21 +66,29 @@ class CommunityProfile extends React.Component {
             className="profilePagePhoto-Community"
           />
           <div className="profileInfo">
-            {/* <p className="profile-name">{profile.username}</p> */}
             <p className="profile-username"> Community: {community.name}</p>
-            {/* <ul>Members: </ul> */}
-            {/* <button type="button">Subscribe</button> */}
           </div>
           <div className="underCommunity">
             <p className="communityBio">{community.description}</p>
           </div>
-          <div className="profile-follows">
-            {/* <p className="first-list">Subscribers: {community.subscribers}</p> */}
-            {/* <p className="profile-info-text">Communities</p> */}
-          </div>
-          <Button className="follow-button" variant="outline-light">
-            Subscribe
-          </Button>
+          <div className="profile-follows" />
+          <p className="first-list" onClick={() => this.showMembersOnClick()}>
+            {community.subscribers} members
+          </p>
+          <ShowMembers
+            show={this.state.showMembers}
+            onHide={() => this.hideMembers()}
+            community={community}
+          />
+          {this.props.isLoggedIn ? (
+            <DisplaySubUnsub
+              unsubscribe={this.props.unsubscribe}
+              subscribe={this.props.subscribe}
+              isSubscribed={this.props.community.isSubscribed}
+            />
+          ) : (
+            <div />
+          )}
 
           <div className="contentContainer">
             <div className="buttonContainer">
@@ -84,7 +107,6 @@ class CommunityProfile extends React.Component {
                 Gallery
               </Button>
             </div>
-            {/* <div>{this.PostFeed()}</div> */}
             <div>
               <CommunityFeed
                 postFeed={this.state.postFeed}
@@ -107,7 +129,7 @@ class CommunityProfile extends React.Component {
 const mapState = state => {
   return {
     community: state.community,
-    // profile: state.singleProfile,
+    isLoggedIn: !!state.user.id,
     gallery: state.allPhotos,
     posts: state.userPosts
   }
@@ -115,12 +137,12 @@ const mapState = state => {
 
 const mapDispatch = (dispatch, ownProps) => {
   const id = ownProps.match.params.id
-  // const username = ownProps.match.params.username
   return {
     fetchSingleCommunity: () => dispatch(fetchSingleCommunity(id)),
-    // fetchProfile: () => dispatch(fetchProfile(id)),
     fetchGallery: () => dispatch(fetchAllPhotos(id)),
-    fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id))
+    fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id)),
+    subscribe: () => dispatch(subToCommunity(id)),
+    unsubscribe: () => dispatch(unSubToCommunity(id))
   }
 }
 

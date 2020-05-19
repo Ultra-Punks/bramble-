@@ -13,18 +13,12 @@ const getProfile = profile => {
   }
 }
 
-const newFollow = profile => {
-  return {
-    type: NEW_FOLLOW,
-    profile
-  }
-}
-
 // thunk creator (NOTE: this is a NAMED export! So deconstruct it!)
 export const fetchProfile = username => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/users/${username}`)
+      console.log('THIS IS DATA', data)
       dispatch(getProfile(data))
     } catch (error) {
       console.log(error)
@@ -32,12 +26,24 @@ export const fetchProfile = username => {
   }
 }
 
-export const addNewFollower = info => {
-  const {loggedInUser, username} = info
+export const addNewFollower = username => {
   return async dispatch => {
     try {
-      const {data} = await axios.put(`/api/users/${loggedInUser}/follow`, {
-        username
+      const {data} = await axios.put(`/api/users/follow/user`, {
+        username: username
+      })
+      dispatch(getProfile(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const unfollowUserThunk = username => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/users/unfollow/user`, {
+        username: username
       })
       dispatch(getProfile(data))
     } catch (error) {
@@ -47,7 +53,10 @@ export const addNewFollower = info => {
 }
 
 // initial state:
-const initialState = {}
+const initialState = {
+  profile: {},
+  isFollowing: false
+}
 
 // create our reducer here:
 export default function singleProfileReducer(state = initialState, action) {

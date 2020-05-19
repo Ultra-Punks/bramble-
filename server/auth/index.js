@@ -5,9 +5,7 @@ module.exports = router
 router.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({where: {username: req.body.username}})
-    console.log('\n')
-    console.log('THIS IS USER >>>', user)
-    console.log('\n')
+
     if (!user) {
       console.log('No such user found:', req.body.username)
       res.status(401).send('Wrong username and/or password')

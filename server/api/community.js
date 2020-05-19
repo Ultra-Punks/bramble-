@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const {Community} = require('../db/models')
+const {Community, User} = require('../db/models')
+const Sequelize = require('sequelize')
 module.exports = router
 
 // get all community
@@ -17,9 +18,15 @@ router.get('/', async (req, res, next) => {
 // get community by name
 router.get('/:communityName', async (req, res, next) => {
   try {
-    const CName = req.params.communityName
-    const selectCommunity = await Community.findOne({
-      where: {name: CName}
+    const CName = req.params.communityName.toLowerCase()
+    const selectCommunity = await Community.findAll({
+      where: {
+        name: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('name')),
+          'LIKE',
+          '%' + CName + '%'
+        )
+      }
     })
     res.json(selectCommunity)
   } catch (error) {
@@ -31,49 +38,70 @@ router.get('/:communityName', async (req, res, next) => {
 router.get('/list/:id', async (req, res, next) => {
   try {
     const id = req.params.id
-    const selectedCommunity = await Community.findOne({
-      where: {id: id}
+    const selectedCommunity = await Community.findByPk(id, {
+      include: [{model: User}]
     })
-    res.json(selectedCommunity)
+
+    if (req.session.passport) {
+      const loggedIn = await User.findByPk(req.session.passport.user)
+      const isSubscribed = await loggedIn.hasSubscriber(selectedCommunity)
+
+      res.json({
+        communityProfile: selectedCommunity,
+        isSubscribed: isSubscribed
+      })
+    } else {
+      res.json({communityProfile: selectedCommunity, isSubscribed: false})
+    }
   } catch (error) {
     next(error)
   }
 })
 
-// router.post('/', async (req, res, next) => {
-//   try {
-//     const newCommunity = await Community.create(req.body)
-//     res.json(newCommunity)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+//logged in user subscribe to a community
+router.put('/subscribe', async (req, res, next) => {
+  try {
+    let loggedIn = await User.findByPk(req.session.passport.user)
 
-// router.delete('/:id', async (req, res, next) => {
-//   try {
-//     const communityId = req.params.id
-//     const removeCommunity = await communityId.destroy({
-//       where: {
-//         id: communityId
-//       }
-//     })
-//     res.json(removeCommunity)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+    let subToCommunity = await Community.findByPk(req.body.communityId)
 
-// router.put('/:id', async (req, res, next) => {
-//   try {
-//     const communityId = req.params.id
-//     const [, community] = await Community.create(req.body, {
-//       where: {
-//         id: communityId,
-//         returning: true
-//       }
-//     })
-//     res.json(community)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+    loggedIn.addSubscriber(subToCommunity)
+    subToCommunity.subscribers++
+    await loggedIn.save()
+    await subToCommunity.save()
+
+    const isSubscribed = await loggedIn.hasSubscriber(subToCommunity)
+
+    let updatedCommunity = await Community.findByPk(req.body.communityId, {
+      include: [{model: User}]
+    })
+
+    res.json({communityProfile: updatedCommunity, isSubscribed: isSubscribed})
+  } catch (error) {
+    next(error)
+  }
+})
+
+//logged in user unsubscribe from community
+router.put('/unsubscribe', async (req, res, next) => {
+  try {
+    let loggedIn = await User.findByPk(req.session.passport.user)
+
+    let unSubToCommunity = await Community.findByPk(req.body.communityId)
+
+    loggedIn.removeSubscriber(unSubToCommunity)
+    unSubToCommunity.subscribers--
+    await loggedIn.save()
+    await unSubToCommunity.save()
+
+    const isSubscribed = await loggedIn.hasSubscriber(unSubToCommunity)
+
+    let updatedCommunity = await Community.findByPk(req.body.communityId, {
+      include: [{model: User}]
+    })
+
+    res.json({communityProfile: updatedCommunity, isSubscribed: isSubscribed})
+  } catch (error) {
+    next(error)
+  }
+})

@@ -12,15 +12,12 @@ const checkFollowing = trueOrFalse => {
   }
 }
 
-export const checkIfFollowing = info => {
-  const {loggedInUser, username} = info
-
+export const checkIfFollowing = username => {
   return async dispatch => {
     try {
-      const {data} = await axios.post(
-        `/api/users/${loggedInUser}/follow/check`,
-        {username: username}
-      )
+      const {data} = await axios.post(`/api/users/checkfollow`, {
+        username: username
+      })
       dispatch(checkFollowing(data))
     } catch (error) {
       console.log(error)
