@@ -5,18 +5,23 @@ import {
   addNewFollower,
   unfollowUserThunk
 } from '../store/singleProfile'
+import {
+  PostFeed,
+  Map,
+  PopUpDisplay,
+  ShowFollowing,
+  DisplayFollowUnfollow,
+  ShowSubscriptions
+} from './index'
 import {fetchUserPosts} from '../store/userFeed'
-import {PostFeed, Map, PopUpDisplay} from './index'
 import {Image, Button} from 'react-bootstrap'
-import {checkIfFollowing} from '../store/isFollowing'
-import ShowFollowing from './ShowFollowing'
-import DisplayFollowUnfollow from './DisplayFollowUnfollow'
 
 class ProfileView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       postFeed: true,
+      showSubs: false,
       showFollowers: false,
       showFollowing: false
     }
@@ -24,14 +29,14 @@ class ProfileView extends React.Component {
     this.gallerySelector = this.gallerySelector.bind(this)
     this.showFollowersOnClick = this.showFollowersOnClick.bind(this)
     this.hideFollowers = this.hideFollowers.bind(this)
+    this.showSubscriptions = this.showSubscriptions.bind(this)
+    this.hideSubscriptions = this.hideSubscriptions.bind(this)
   }
   componentDidMount() {
     const username = this.props.match.params.username
 
     this.props.fetchProfile(username)
     this.props.fetchUserPosts(username)
-
-    // this.props.checkFollowing(username)
   }
 
   postSelector() {
@@ -56,6 +61,14 @@ class ProfileView extends React.Component {
 
   hideFollowing() {
     this.setState({showFollowing: false})
+  }
+
+  showSubscriptions() {
+    this.setState({showSubs: true})
+  }
+
+  hideSubscriptions() {
+    this.setState({showSubs: false})
   }
 
   followUser() {
@@ -118,7 +131,17 @@ class ProfileView extends React.Component {
               onHide={() => this.hideFollowing()}
               profile={profile}
             />
-            <p className="profile-info-text">Communities</p>
+            <p
+              className="profile-info-text"
+              onClick={() => this.showSubscriptions()}
+            >
+              Communities
+            </p>
+            <ShowSubscriptions
+              show={this.state.showSubs}
+              onHide={() => this.hideSubscriptions()}
+              profile={profile}
+            />
           </div>
           {this.props.isLoggedIn &&
           this.props.user.username !== profile.username ? (
@@ -163,10 +186,6 @@ class ProfileView extends React.Component {
         </div>
         <div className="profileMapContainer sticky">
           <Map username={this.props.match.params.username} />
-          {/* <img
-          src="https://miro.medium.com/max/4064/1*qYUvh-EtES8dtgKiBRiLsA.png"
-          className="profileMapContainer sticky"
-        /> */}
         </div>
       </div>
     )

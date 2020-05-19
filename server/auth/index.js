@@ -1,10 +1,13 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const {User, Community} = require('../db/models')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
   try {
-    const user = await User.findOne({where: {username: req.body.username}})
+    const user = await User.findOne({
+      where: {username: req.body.username},
+      include: [{model: Community, as: 'subscriber'}]
+    })
 
     if (!user) {
       console.log('No such user found:', req.body.username)
@@ -44,8 +47,11 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  const user = await User.findByPk(req.user.id, {
+    include: [{model: Community, as: 'subscriber'}]
+  })
+  res.json(user)
 })
 
 router.use('/google', require('./google'))

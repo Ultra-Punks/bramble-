@@ -91,8 +91,6 @@ router.get('/from/:username/following', async (req, res, next) => {
     const allFollowing = await loggedInUser.getFollowing()
     const allSubs = await loggedInUser.getSubscriber()
 
-    console.log(Object.keys(User.prototype))
-
     let arrOfIds = allFollowing.map(user => {
       return user.id
     })
@@ -154,9 +152,12 @@ router.post('/add/:username', async (req, res, next) => {
       }
     })
 
+    let comId = req.body.communityId
+    if (comId === 'none') comId = null
     let newPost = await UserPost.create({
       userId: user.id,
-      description: req.body.description
+      description: req.body.description,
+      communityId: comId
     })
 
     if (req.body.photo) {
