@@ -26,6 +26,19 @@ export const fetchOneCommunity = name => {
   }
 }
 
+export const fetchRandomCommunities = ids => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/community/random`, {
+        communityIds: ids
+      })
+      dispatch(getCommunities(data))
+    } catch (error) {
+      console.log('Error ', error)
+    }
+  }
+}
+
 const initialState = []
 
 export default function allCommunitiesReducer(state = initialState, action) {
