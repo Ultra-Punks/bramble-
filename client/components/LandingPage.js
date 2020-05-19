@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import {fetchOneCommunity} from '../store/community'
 import {fetchUsers} from '../store/allProfiles'
 import {fetchUserPosts} from '../store/userFeed'
+import {fetchRandomCommunities} from '../store/allCommunities'
 
 // -----------------------------------------------------------
 // -----------------------------------------------------------
@@ -34,13 +35,26 @@ class LandingPage extends Component {
       community: ''
     }
     this.randomDisplay = this.randomDisplay.bind(this)
+    this.randomCommunityIds = this.randomCommunityIds.bind(this)
   }
 
   componentDidMount() {
-    this.props.fetchCommunity(this.state.community)
+    // this.props.fetchCommunity(this.state.community)
     this.props.fetchUsers()
+
+    let arrOfIds = this.randomCommunityIds()
+    this.props.getRandomCommunities(arrOfIds)
     // const username = this.props.match.params.username
     // this.props.fetchUserPosts(username)
+  }
+
+  randomCommunityIds() {
+    var arr = []
+    while (arr.length < 4) {
+      var r = Math.floor(Math.random() * 10) + 1
+      if (arr.indexOf(r) === -1) arr.push(r)
+    }
+    return arr
   }
 
   randomDisplay() {
@@ -79,7 +93,9 @@ class LandingPage extends Component {
 
   render() {
     // console.log('this.props>>>>>', this.props)
-    const samplesComms = this.randomDisplay()
+    this.randomCommunityIds()
+    // const samplesComms = this.randomDisplay()
+    const randomCommunities = this.props.communities
     return (
       <div className="landingPage">
         <div className="welcomePhotoContainer">
@@ -92,8 +108,8 @@ class LandingPage extends Component {
               what's happening in your area.
             </h2>
             <div className="samplesDisplay">
-              {Array.isArray(samplesComms) &&
-                samplesComms.map(singleCommunity => {
+              {Array.isArray(randomCommunities) &&
+                randomCommunities.map(singleCommunity => {
                   return (
                     <div key={singleCommunity.id} className="sampleContainer">
                       <img
@@ -122,15 +138,16 @@ class LandingPage extends Component {
 
 const mapToState = state => {
   return {
-    community: state.community,
+    communities: state.allCommunities,
     profiles: state.profiles
     // posts: state.userPosts,
   }
 }
 
-const mapToDispatch = (dispatch, ownProps) => {
+const mapToDispatch = dispatch => {
   return {
-    fetchCommunity: name => dispatch(fetchOneCommunity(name)),
+    getRandomCommunities: arrOfIds =>
+      dispatch(fetchRandomCommunities(arrOfIds)),
     fetchUsers: () => dispatch(fetchUsers())
     // fetchUserPosts: (username) => dispatch(fetchUserPosts(username)),
   }

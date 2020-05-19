@@ -34,6 +34,18 @@ router.get('/:communityName', async (req, res, next) => {
   }
 })
 
+router.put('/random', async (req, res, next) => {
+  try {
+    const arrOfIds = req.body.communityIds
+    const randomCommunities = await Community.findAll({
+      where: {id: arrOfIds}
+    })
+    res.json(randomCommunities)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // get community by id
 router.get('/list/:id', async (req, res, next) => {
   try {
