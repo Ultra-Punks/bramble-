@@ -15,26 +15,26 @@ class SingleComment extends Component {
   constructor() {
     super()
 
-    this.likeComment = this.likeComment.bind(this)
-    this.dislikeComment = this.dislikeComment.bind(this)
+    // this.likeComment = this.likeComment.bind(this)
+    // this.dislikeComment = this.dislikeComment.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchSingleComment()
 
-    this.props.fetchLikes()
-    this.props.fetchDislikes()
+    // this.props.fetchLikes()
+    // this.props.fetchDislikes()
   }
 
-  likeComment() {
-    console.log('likes before increment', this.props.singleComment.likes)
-    this.props.singleComment.likes++
-    console.log('likes AFTER increment', this.props.singleComment.likes)
-  }
+  // likeComment() {
+  //   console.log('likes before increment', this.props.singleComment.likes)
+  //   this.props.singleComment.likes++
+  //   console.log('likes AFTER increment', this.props.singleComment.likes)
+  // }
 
-  dislikeComment() {
-    this.props.singleComment.dislikes++
-  }
+  // dislikeComment() {
+  //   this.props.singleComment.dislikes++
+  // }
 
   render() {
     const commenter = this.props.singleComment.user
@@ -68,7 +68,7 @@ class SingleComment extends Component {
                 src="https://img.icons8.com/ios/64/000000/like.png"
                 className="likeIcon"
                 type="button"
-                onClick={() => this.likeComment()}
+                onClick={() => this.props.fetchLikes()}
               />
             </div>
             <div className="dislikes">
@@ -81,7 +81,7 @@ class SingleComment extends Component {
                 src="https://img.icons8.com/windows/80/000000/dislike.png"
                 className="dislikeIcon"
                 type="button"
-                onClick={() => this.dislikeComment()}
+                onClick={() => this.props.fetchDislikes()}
               />
             </div>
           </div>

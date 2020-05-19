@@ -211,8 +211,9 @@ router.put('/:postId/likes', async (req, res, next) => {
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {
     let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
-    await updatedPostDislikes.increaseDislikes()
-    // await updatedPostDislikes.save()
+    updatedPostDislikes.dislikes++
+    // await updatedPostDislikes.increaseDislikes()
+    await updatedPostDislikes.save()
     res.status(200).json(updatedPostDislikes)
   } catch (error) {
     next(error)

@@ -12,7 +12,6 @@ export default function PostComments(props) {
     post.user.postComments.length &&
     openComments
   ) {
-    console.log('propppppsss', props)
     return (
       <div className="commentPreviewContainer">
         {post.postComments.map(comment => (
