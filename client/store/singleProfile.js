@@ -18,7 +18,6 @@ export const fetchProfile = username => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/users/${username}`)
-      console.log('THIS IS DATA', data)
       dispatch(getProfile(data))
     } catch (error) {
       console.log(error)

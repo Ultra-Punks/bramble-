@@ -5,7 +5,8 @@
  */
 export {default as Map} from './Map'
 export {default as AddLocationForm} from './AddLocationForm'
-export {default as SingleLocation} from './SingleLocation'
+export {default as AddLocation} from './AddLocation'
+export {default as SingleLocationView} from './SingleLocation'
 export {default as Navbar} from './navbar'
 export {default as ProfileView} from './ProfileView'
 export {default as AllProfiles} from './AllProfiles'
@@ -30,5 +31,6 @@ export {default as FollowingFeed} from './FollowingFeed'
 export {default as ShowFollowing} from './ShowFollowing'
 export {default as DisplayFollowUnfollow} from './DisplayFollowUnfollow'
 export {default as ShowMembers} from './ShowMembers'
+export {default as ShowSubscriptions} from './ShowSubscriptions'
 
 export {default as DisplaySubUnsub} from './DisplaySubUnsub'

@@ -3,10 +3,12 @@ import axios from 'axios'
 // action types
 const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS'
 const GET_SOME_LOCATIONS = 'GET_SOME_LOCATIONS'
+const ADD_LOCATION = 'ADD_LOCATION'
 
 // action creators
 const getAllLocations = locations => ({type: GET_ALL_LOCATIONS, locations})
 const getSomeLocations = locations => ({type: GET_SOME_LOCATIONS, locations})
+const addLocation = location => ({type: ADD_LOCATION, location})
 
 // thunk creators
 export const fetchAllLocations = () => async dispatch => {
@@ -29,6 +31,15 @@ export const fetchSomeLocations = (id, type) => async dispatch => {
   }
 }
 
+export const addLocationThunk = location => async dispatch => {
+  try {
+    const res = await axios.post('/api/locations/add', location)
+    dispatch(addLocation(res.data))
+  } catch (err) {
+    console.error(err, 'Error adding location')
+  }
+}
+
 // reducer
 export default function(state = [], action) {
   switch (action.type) {
@@ -36,6 +47,8 @@ export default function(state = [], action) {
       return action.locations
     case GET_SOME_LOCATIONS:
       return action.locations
+    case ADD_LOCATION:
+      return [...state, action.location]
     default:
       return state
   }

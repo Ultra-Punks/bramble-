@@ -11,7 +11,7 @@ import {
   AllProfiles,
   ProfileView,
   SingleComment,
-  SingleLocation,
+  SingleLocationView,
   AddLocationForm,
   LandingPage
 } from './components'
@@ -40,7 +40,7 @@ class Routes extends Component {
         <Route exact path="/" component={LandingPage} />
 
         {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
-        <Route path="/l/:id" component={SingleLocation} />
+        <Route path="/l/:id" component={SingleLocationView} />
         <Route path="/test" component={Test} />
         <Route exact path="/community" component={CommunitySearch} />
         <Route
