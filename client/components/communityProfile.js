@@ -18,7 +18,9 @@ class CommunityProfile extends React.Component {
     super(props)
     this.state = {
       postFeed: true,
-      showMembers: false
+      showMembers: false,
+      postlikes: false,
+      commentLikes: false
     }
     this.postSelector = this.postSelector.bind(this)
     this.gallerySelector = this.gallerySelector.bind(this)
@@ -48,7 +50,20 @@ class CommunityProfile extends React.Component {
     this.setState({showMembers: false})
   }
 
+  like() {
+    this.setState({wasLiked: true})
+  }
+
+  disliked() {
+    this.setState({wasliked: true})
+  }
+
+  // updateLikes(){
+  //   this.set
+  // }
+
   render() {
+    console.log('stateeeeee', this.state)
     const community = this.props.community.communityProfile
     const postClass = this.state.postFeed
       ? 'profileFeedButton selected-feed'
