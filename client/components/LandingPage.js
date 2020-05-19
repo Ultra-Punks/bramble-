@@ -87,32 +87,34 @@ class LandingPage extends Component {
         <div className="welcomePhotoContainer">
           <img src={option1} className="welcomePhoto" />
         </div>
-        <div className="welcomePageContent">
-          <h2>
-            Discover and Share the Things you Love. Check out a Bramble
-            community or create your own!
-          </h2>
-          <div className="samplesDisplay">
-            {Array.isArray(samplesComms) &&
-              samplesComms.map(singleCommunity => {
-                return (
-                  <div key={singleCommunity.id} className="sampleContainer">
-                    <img
-                      src={singleCommunity.profileImg}
-                      className="community-card-image"
-                    />
+        <div className="introContainer">
+          <div className="welcomePageContent">
+            <h2>
+              Discover the things you love. Check out a Bramble community or
+              create your own!
+            </h2>
+            <div className="samplesDisplay">
+              {Array.isArray(samplesComms) &&
+                samplesComms.map(singleCommunity => {
+                  return (
+                    <div key={singleCommunity.id} className="sampleContainer">
+                      <img
+                        src={singleCommunity.profileImg}
+                        className="community-card-image"
+                      />
 
-                    <div className="community-card-content">
-                      <div className="community-card-title">
-                        {singleCommunity.name}
-                      </div>
-                      <div className="community-card-text">
-                        {singleCommunity.description}
+                      <div className="community-card-content">
+                        <div className="community-card-title">
+                          {singleCommunity.name}
+                        </div>
+                        <div className="community-card-text">
+                          {singleCommunity.description}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+            </div>
           </div>
         </div>
       </div>

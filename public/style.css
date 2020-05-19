@@ -934,6 +934,14 @@ form div {
   color: black;
 }
 
+.introContainer {
+  margin-top: 3%;
+}
+
+.welcomePageContent {
+  padding: 2%;
+}
+
 .samplesDisplay {
   display: flex;
   justify-content: center;
@@ -946,4 +954,6 @@ form div {
   margin-bottom: 10px;
   background-color: red;
   width: 20%;
+  border-radius: 10px;
+  margin-top: 1%;
 }
