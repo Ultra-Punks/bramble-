@@ -8,7 +8,10 @@
       href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css"
       rel="stylesheet"
     />
-    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' rel='stylesheet' />
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -17,6 +20,16 @@
     />
     <link rel="stylesheet" href="/style.css" />
     <script defer src="/bundle.js"></script>
+    <link rel="manifest" href="./manifest.json" />
+    <script>
+      // Check that service workers are supported
+      if ('serviceWorker' in navigator) {
+        // Use the window load event to keep the page load performant
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+        })
+      }
+    </script>
   </head>
   <body>
     <div id="app">
