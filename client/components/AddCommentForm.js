@@ -15,7 +15,7 @@ export class AddCommentForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    this.props.fetchUserPosts()
+    // this.props.fetchUserPosts()
   }
 
   handleChange(event) {
@@ -25,7 +25,7 @@ export class AddCommentForm extends React.Component {
   }
   handleSubmit = event => {
     event.preventDefault()
-    this.props.add(41)
+    this.props.add(41, this.state.comment)
     this.setState({
       comment: ''
       // likes: 0,
@@ -58,8 +58,8 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  add: id => {
-    dispatch(addCommentThunk(id))
+  add: (id, comment) => {
+    dispatch(addCommentThunk(id, comment))
   },
   getPosts: () => {
     dispatch(fetchUserPosts())

@@ -44,10 +44,12 @@ export const fetchComments = () => {
   }
 }
 
-export const addCommentThunk = comment => {
+export const addCommentThunk = (postId, comment) => {
   return async dispatch => {
     try {
-      const {data} = await axios.post(`/api/comments/add/:${id}`, comment)
+      const {data} = await axios.post(`/api/comments/add/${postId}`, {
+        comment: comment
+      })
       dispatch(addPostComments(data))
     } catch (error) {
       console.log(error)
