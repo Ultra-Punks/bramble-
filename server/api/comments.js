@@ -60,17 +60,24 @@ router.get('/from/:username', async (req, res, next) => {
 // ==============================================
 // KEEP WORKING THROUGH THIS...MAY NEED ADJUSTMENT
 // create a new comment on a particular UserPost
-router.post('/add/:postId', async (req, res, next) => {
+router.post('/add/:postId/', async (req, res, next) => {
   try {
-    const post = await UserPost.findOne({
-      where: {
-        id: req.params.postId
-      }
-    })
+    // const post = await UserPost.findOne({
+    //   where: {
+    //     id: req.params.postId,
+    //   },
+    // })
+
+    // const user = await User.findOne({
+    //   where: {
+    //     id: req.passport.user,
+    //   },
+    // })
 
     let newComment = await PostComment.create({
-      userPostId: post.id,
-      comment: req.body.comment
+      userPostId: req.params.postId,
+      comment: req.body.comment,
+      userId: req.session.passport.user // investigating
     })
 
     res.status(201).json(newComment)
