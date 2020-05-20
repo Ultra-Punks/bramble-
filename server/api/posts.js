@@ -91,8 +91,6 @@ router.get('/from/:username/following', async (req, res, next) => {
     const allFollowing = await loggedInUser.getFollowing()
     const allSubs = await loggedInUser.getSubscriber()
 
-    console.log(Object.keys(User.prototype))
-
     let arrOfIds = allFollowing.map(user => {
       return user.id
     })
@@ -134,7 +132,8 @@ router.get('/for/:id', async (req, res, next) => {
             {
               model: User,
               include: [{model: PostComment, include: [{model: User}]}]
-            }
+            },
+            {model: PostComment, include: [{model: User}]}
           ]
         }
       ]
@@ -154,9 +153,12 @@ router.post('/add/:username', async (req, res, next) => {
       }
     })
 
+    let comId = req.body.communityId
+    if (comId === 'none') comId = null
     let newPost = await UserPost.create({
       userId: user.id,
-      description: req.body.description
+      description: req.body.description,
+      communityId: comId
     })
 
     if (req.body.photo) {
@@ -210,8 +212,9 @@ router.put('/:postId/likes', async (req, res, next) => {
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {
     let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
-    await updatedPostDislikes.increaseDislikes()
-    // await updatedPostDislikes.save()
+    updatedPostDislikes.dislikes++
+    // await updatedPostDislikes.increaseDislikes()
+    await updatedPostDislikes.save()
     res.status(200).json(updatedPostDislikes)
   } catch (error) {
     next(error)

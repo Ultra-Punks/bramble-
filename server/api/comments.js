@@ -82,7 +82,9 @@ router.post('/add/:postId', async (req, res, next) => {
 // increase the nuber of likes on a comment
 router.put('/:commentId/likes', async (req, res, next) => {
   try {
-    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    let updatedComment = await PostComment.findByPk(req.params.commentId, {
+      include: [{model: User}]
+    })
     updatedComment.likes++
     await updatedComment.save()
     res.status(200).json(updatedComment)
@@ -94,7 +96,9 @@ router.put('/:commentId/likes', async (req, res, next) => {
 // increase the number of dislikes on a comment
 router.put('/:commentId/dislikes', async (req, res, next) => {
   try {
-    let updatedComment = await PostComment.findByPk(req.params.commentId)
+    let updatedComment = await PostComment.findByPk(req.params.commentId, {
+      include: [{model: User}]
+    })
     updatedComment.dislikes++
     await updatedComment.save()
     res.status(200).json(updatedComment)

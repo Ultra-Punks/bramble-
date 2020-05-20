@@ -27,7 +27,7 @@ export default function PostPreview(props) {
   const posts = props.post.user
 
   const post = props.post
-
+  console.log('testting this', post)
   return (
     <div key={posts.id} className="single-post">
       <div className="post-header">
@@ -43,8 +43,9 @@ export default function PostPreview(props) {
             live={false}
           />
           <Link to={`/p/${posts.postComments.id}`}>
-            <p className="post-text">{posts.description}</p>
+            <p className="post-text">{post.description}</p>
           </Link>
+          <div />
         </div>
       </div>
 
@@ -69,9 +70,9 @@ export default function PostPreview(props) {
           )}
         </div>
         <div className="likes">
-          {posts.postComments.likes >= 1 && (
+          {post.likes >= 1 && (
             <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-              {posts.postComments.likes}
+              {post.likes}
             </div>
           )}
           <img
@@ -81,9 +82,9 @@ export default function PostPreview(props) {
           />
         </div>
         <div className="dislikes">
-          {posts.postComments.dislikes >= 1 && (
+          {post.dislikes >= 1 && (
             <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-              {posts.postComments.dislikes}
+              {post.dislikes}
             </div>
           )}
           <img

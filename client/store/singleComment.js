@@ -43,7 +43,7 @@ export const fetchSingleComment = commentId => {
 export const likeComment = commentId => {
   return async function(dispatch) {
     try {
-      let res = await axios.put(`/api/comments/${commentId}/increaselikes`)
+      let res = await axios.put(`/api/comments/${commentId}/likes`)
       dispatch(likedComment(res.data))
     } catch (error) {
       console.log(error)
@@ -55,7 +55,7 @@ export const likeComment = commentId => {
 export const dislikeComment = comentId => {
   return async function(dispatch) {
     try {
-      let res = await axios.put(`/api/comments/${comentId}/increasedislikes`)
+      let res = await axios.put(`/api/comments/${comentId}/dislikes`)
       dispatch(dislikedComment(res.data))
     } catch (error) {
       console.log(error)

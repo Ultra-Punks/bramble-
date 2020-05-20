@@ -49,26 +49,27 @@ export default function AddPostForm(props) {
       .catch(error => console.error(error))
     setLoading(false)
   }
-
   return (
     <div>
       <Form className="example" key="submit-form" onSubmit={handleSubmit}>
         <div className="exit-add-post">
-          <InputGroup className="mb-3">
-            <DropdownButton
-              as={InputGroup.Prepend}
-              variant="outline-secondary"
-              title="Community"
-              id="input-group-dropdown-1"
-              style={{margin: 0}}
-            >
-              <Dropdown.Item href="#">None</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#">Communities</Dropdown.Item>
-              <Dropdown.Item href="#">Communities</Dropdown.Item>
-              <Dropdown.Item href="#">Communities</Dropdown.Item>
-            </DropdownButton>
-          </InputGroup>
+          <Form.Group controlId="community">
+            <Form.Label>Community</Form.Label>
+            <Form.Control name="community" as="select" custom>
+              <option value="none">None</option>
+              {props.communities ? (
+                props.communities.map(community => {
+                  return (
+                    <option key={community.id} value={community.id}>
+                      {community.name}
+                    </option>
+                  )
+                })
+              ) : (
+                <div />
+              )}
+            </Form.Control>
+          </Form.Group>
         </div>
         <Form.Group controlId="description">
           <Form.Control
