@@ -5,6 +5,7 @@ import {FullPicture} from './index'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import history from '../history'
+import AddCommentForm from './AddCommentForm'
 
 function PostingPictures(props) {
   const {post} = props
@@ -31,7 +32,7 @@ function PostingPictures(props) {
 
 export default function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
-
+  const [commentForm, setCommentForm] = useState(false)
   function handleComments() {
     if (openComments) {
       setOpenComment(false)
@@ -69,29 +70,36 @@ export default function PostPreview(props) {
             </Link>
           </div>
 
+          <div className="post-photos">
+            <PostingPictures post={post} />
+          </div>
+          <div className="commentsAndShares">
+            <div className="commentRepliesContainer">
+              <img
+                src="https://img.icons8.com/all/500/comments.png"
+                className="commentIcon"
+                type="button"
+                onClick={() => setCommentForm(true)}
+              />
+              <AddCommentForm
+                show={commentForm}
+                onHide={() => setCommentForm(false)}
+                postId={post.id}
+              />
 
-      <div className="post-photos">
-        <PostingPictures post={post} />
-      </div>
-      <div className="commentsAndShares">
-        <div className="commentRepliesContainer">
-          <img
-            src="https://img.icons8.com/all/500/comments.png"
-            className="commentIcon"
-            type="button"
-            onClick={() => history.push(`/post/addComment/${props.post.id}`)}
-          />
-
-          {post.postComments !== undefined && post.postComments.length ? (
-            <p className="seeReplies" type="button" onClick={handleComments}>
-              {post.postComments.length > 1
-                ? `See ${post.postComments.length} replies`
-                : 'See 1 reply'}
-            </p>
-          ) : (
-            <p className="seeReplies">0 replies</p>
-          )}
-
+              {post.postComments !== undefined && post.postComments.length ? (
+                <p
+                  className="seeReplies"
+                  type="button"
+                  onClick={handleComments}
+                >
+                  {post.postComments.length > 1
+                    ? `See ${post.postComments.length} replies`
+                    : 'See 1 reply'}
+                </p>
+              ) : (
+                <p className="seeReplies">0 replies</p>
+              )}
             </div>
             <div className="likes">
               {post.likes >= 1 && (

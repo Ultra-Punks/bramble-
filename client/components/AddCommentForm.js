@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addCommentThunk} from '../store/postComments'
 import {fetchUserPosts} from '../store/userFeed'
+import {InputGroup, Form, Button, Modal} from 'react-bootstrap'
 
 export class AddCommentForm extends React.Component {
   constructor() {
@@ -18,6 +19,8 @@ export class AddCommentForm extends React.Component {
     // this.props.fetchUserPosts()
   }
 
+  //  add the props.id for activeuser
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -25,7 +28,8 @@ export class AddCommentForm extends React.Component {
   }
   handleSubmit = event => {
     event.preventDefault()
-    this.props.add(41, this.state.comment)
+    this.props.add(this.props.postId, this.state.comment, this.props.username)
+    // this.props.fetchUserPosts(this.props.username)
     this.setState({
       comment: ''
       // likes: 0,
@@ -35,34 +39,41 @@ export class AddCommentForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="comment">Comment:</label>
-        <input
-          name="comment"
-          type="text"
-          value={this.state.comment}
-          onChange={this.handleChange}
-        />
-        <button type="submit" onClick={this.handleSubmit}>
-          Submit
-        </button>
-      </form>
+      <Modal
+        onHide={this.props.onHide}
+        show={this.props.show}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="comment">Comment:</label>
+          <input
+            name="comment"
+            type="text"
+            value={this.state.comment}
+            onChange={this.handleChange}
+          />
+          <button type="submit" onClick={this.handleSubmit}>
+            Submit
+          </button>
+        </form>
+      </Modal>
     )
   }
 }
 
 const mapState = state => {
   return {
-    allCommemts: state.comment
+    allCommemts: state.comment,
+    username: state.singleProfile.profile.username
   }
 }
 
 const mapDispatch = dispatch => ({
-  add: (id, comment) => {
+  add: (id, comment, username) => {
     dispatch(addCommentThunk(id, comment))
-  },
-  getPosts: () => {
-    dispatch(fetchUserPosts())
+    dispatch(fetchUserPosts(username))
   }
 })
 export default connect(mapState, mapDispatch)(AddCommentForm)
