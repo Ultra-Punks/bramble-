@@ -69,7 +69,8 @@ router.post('/add/:postId', async (req, res, next) => {
     })
 
     let newComment = await PostComment.create({
-      userPostId: post.id
+      userPostId: post.id,
+      comment: req.body.comment
     })
 
     res.status(201).json(newComment)

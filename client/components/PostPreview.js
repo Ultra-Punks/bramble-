@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {FullPicture} from './index'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import history from '../history'
 
 function PostingPictures(props) {
   const {post} = props
@@ -40,7 +41,7 @@ export default function PostPreview(props) {
   }
 
   const {post, profile} = props
-
+  console.log('this is the propsss>>>>', props)
   return (
     <div className="single-post-preview-container">
       {post.communityId ? (
@@ -68,29 +69,29 @@ export default function PostPreview(props) {
             </Link>
           </div>
 
-          <div className="post-photos">
-            <PostingPictures post={post} />
-          </div>
-          <div className="commentsAndShares">
-            <div className="commentRepliesContainer">
-              <img
-                src="https://img.icons8.com/all/500/comments.png"
-                className="commentIcon"
-                type="button"
-              />
-              {post.postComments !== undefined && post.postComments.length ? (
-                <p
-                  className="seeReplies"
-                  type="button"
-                  onClick={handleComments}
-                >
-                  {post.postComments.length > 1
-                    ? `See ${post.postComments.length} replies`
-                    : 'See 1 reply'}
-                </p>
-              ) : (
-                <p className="seeReplies">0 replies</p>
-              )}
+
+      <div className="post-photos">
+        <PostingPictures post={post} />
+      </div>
+      <div className="commentsAndShares">
+        <div className="commentRepliesContainer">
+          <img
+            src="https://img.icons8.com/all/500/comments.png"
+            className="commentIcon"
+            type="button"
+            onClick={() => history.push(`/post/addComment/${props.post.id}`)}
+          />
+
+          {post.postComments !== undefined && post.postComments.length ? (
+            <p className="seeReplies" type="button" onClick={handleComments}>
+              {post.postComments.length > 1
+                ? `See ${post.postComments.length} replies`
+                : 'See 1 reply'}
+            </p>
+          ) : (
+            <p className="seeReplies">0 replies</p>
+          )}
+
             </div>
             <div className="likes">
               {post.likes >= 1 && (
