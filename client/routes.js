@@ -20,6 +20,7 @@ import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
 import {me} from './store'
 import CommunityProfile from './components/communityProfile'
+import Footer from './components/Footer'
 
 /**
  * COMPONENT
@@ -33,36 +34,46 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     return (
-      <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/map" component={Map} />
-        <Route exact path="/" component={LandingPage} />
+      <div className="Routes-Container">
+        <Switch>
+          {/* Routes placed here are available to all visitors */}
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/map" component={Map} />
+          <Route exact path="/" component={LandingPage} />
 
-        {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
-        <Route path="/l/:id" component={SingleLocationView} />
-        <Route path="/test" component={Test} />
-        <Route exact path="/community" component={CommunitySearch} />
-        <Route
-          exact
-          path="/community/list/:id"
-          component={withRouter(CommunityProfile)}
-        />
-        <Route exact path="/u" component={AllProfiles} />
-        <Route exact path="/u/:username" component={withRouter(ProfileView)} />
-        <Route path="/p/:postId" component={SinglePostView} />
-        <Route path="/comments/:commentId" component={SingleComment} />
+          {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
+          <Route path="/l/:id" component={SingleLocation} />
+          <Route path="/test" component={Test} />
+          <Route exact path="/community" component={CommunitySearch} />
+          <Route
+            exact
+            path="/community/list/:id"
+            component={withRouter(CommunityProfile)}
+          />
+          <Route exact path="/u" component={AllProfiles} />
+          <Route
+            exact
+            path="/u/:username"
+            component={withRouter(ProfileView)}
+          />
+          <Route path="/p/:postId" component={SinglePostView} />
+          <Route path="/comments/:commentId" component={SingleComment} />
 
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-            <Route path="/edit-profile" component={EditProfile} />
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
-      </Switch>
+          {isLoggedIn && (
+            <Switch>
+              {/* Routes placed here are only available after logging in */}
+              <Route path="/home" component={UserHome} />
+              <Route path="/edit-profile" component={EditProfile} />
+            </Switch>
+          )}
+          {/* Displays our Login component as a fallback */}
+        </Switch>
+        <br />
+        <br />
+        <Route path="/" component={Footer} />
+      </div>
+
     )
   }
 }
