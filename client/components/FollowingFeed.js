@@ -6,7 +6,7 @@ export default function FollowingFeed(props) {
   if (props.posts) {
     const {posts} = props
     return (
-      <div className="feedView">
+      <div className="home-feed-view">
         {posts.map(post => {
           return <FeedPostPreview key={post.id} post={post} />
         })}

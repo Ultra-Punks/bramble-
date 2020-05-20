@@ -9,13 +9,13 @@ export default function PostComments(props) {
   if (
     post.user !== undefined &&
     post.user !== undefined &&
-    post.user.postComments.length &&
+    post.postComments.length &&
     openComments
   ) {
     return (
       <div className="commentPreviewContainer">
-        {post.user.postComments.map(comment => (
-          <div key={comment.id} className="singleCommentPreview">
+        {post.postComments.map(comment => (
+          <div key={comment.user.id} className="singleCommentPreview">
             <div>
               <Image
                 className="post-pfp"

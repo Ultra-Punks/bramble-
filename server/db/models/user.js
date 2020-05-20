@@ -50,7 +50,8 @@ const User = db.define('user', {
   },
   profileImg: {
     type: Sequelize.TEXT,
-    defaultValue: 'https://static.thenounproject.com/png/3134331-200.png'
+    defaultValue:
+      'https://res.cloudinary.com/bramble/image/upload/v1589958607/default_profile_phtwdz.png'
   },
   description: {
     type: Sequelize.TEXT,

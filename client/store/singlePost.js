@@ -47,6 +47,27 @@ export const fetchRandomPosts = ids => {
       dispatch(getAllPosts(data))
     } catch (error) {
       console.log('Error ', error)
+
+// LIKE a post thunk creator
+export const likedPost = postId => {
+  return async function(dispatch) {
+    try {
+      let res = await axios.put(`/api/posts/${postId}/likes`)
+      dispatch(likedPost(res.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+// DISLIKE a post thunk creator
+export const dislikedPost = postId => {
+  return async function(dispatch) {
+    try {
+      let res = await axios.put(`/api/post/${postId}/dislikes`)
+      dispatch(dislikedPost(res.data))
+    } catch (error) {
+      console.log(error)
     }
   }
 }

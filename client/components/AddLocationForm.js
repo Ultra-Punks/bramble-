@@ -1,7 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addLocationThunk} from '../store/singleLocation'
-import {fetchAllLocations} from '../store/locations'
+import {addLocationThunk, fetchAllLocations} from '../store/locations'
+import {InputGroup, Form, Button} from 'react-bootstrap'
+
+const communities = [
+  'Food',
+  'Fitness',
+  'Skating',
+  'Fashion',
+  'blah',
+  'hello',
+  'something',
+  'something else'
+]
 
 export class AddLocationForm extends React.Component {
   constructor() {
@@ -10,8 +21,7 @@ export class AddLocationForm extends React.Component {
       name: '',
       address: '',
       city: '',
-      description: '',
-      geometry: {}
+      description: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -22,8 +32,7 @@ export class AddLocationForm extends React.Component {
         name: this.props.location.name,
         address: this.props.location.address,
         city: this.props.location.city,
-        description: this.props.location.description,
-        geometry: this.props.location.geometry
+        description: this.props.location.description
       })
     }
   }
@@ -32,59 +41,106 @@ export class AddLocationForm extends React.Component {
       [event.target.name]: event.target.value
     })
   }
+
   handleSubmit = event => {
     event.preventDefault()
-    this.props.add(this.props.location)
+    const newLocation = {
+      ...this.props.location,
+      ...this.state
+    }
+    this.props.add(newLocation)
     this.setState({
       name: '',
       address: '',
       city: '',
-      description: '',
-      geometry: {}
+      description: ''
     })
   }
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
-          name="name"
+      <form onSubmit={this.handleSubmit} className="location-modal">
+        {/* copied for dropdown menu */}
+        <div className="exit-add-post">
+          <Form.Group controlId="community">
+            <Form.Label>Community</Form.Label>
+            <Form.Control name="community" as="select" custom>
+              <option value="none">None</option>
+              {communities &&
+                communities.map(community => {
+                  return (
+                    // <option key={community.id} value={community.id}>
+                    //   {community.name}
+                    // </option>
+                    <option key={community}>{community}</option>
+                  )
+                })}
+            </Form.Control>
+          </Form.Group>
+        </div>
+
+        <Form.Label htmlFor="name" className="signup-label">
+          Name
+        </Form.Label>
+        <Form.Control
+          className="signup-input"
           type="text"
+          placeholder="Location Name"
           value={this.state.name}
           onChange={this.handleChange}
+          name="name"
         />
-        <label htmlFor="address">Street Address</label>
-        <input
-          name="address"
+        <Form.Label htmlFor="address" className="signup-label">
+          Street Address
+        </Form.Label>
+        <Form.Control
+          className="signup-input"
           type="text"
+          placeholder="Street Address"
           value={this.state.address}
           onChange={this.handleChange}
+          name="address"
         />
-        <label htmlFor="city">City</label>
-        <input
-          name="city"
+        <Form.Label htmlFor="city" className="signup-label">
+          City
+        </Form.Label>
+        <Form.Control
+          className="signup-input"
           type="text"
+          placeholder="City"
           value={this.state.city}
           onChange={this.handleChange}
+          name="city"
         />
-        <label htmlFor="description">Description</label>
-        <input
-          name="description"
+        <Form.Label htmlFor="description" className="signup-label">
+          Description
+        </Form.Label>
+        <Form.Control
+          className="signup-input"
           type="text"
+          placeholder="Description"
           value={this.state.description}
           onChange={this.handleChange}
+          name="description"
         />
-        <button type="submit" onClick={this.handleSubmit}>
+        <Button
+          className="post-button-location"
+          variant="outline-light"
+          type="submit"
+        >
           Submit
-        </button>
+        </Button>
       </form>
     )
   }
 }
+
+const mapState = state => ({
+  // communites: state.allCommunities
+})
 const mapDispatch = dispatch => ({
   add: location => {
     dispatch(addLocationThunk(location))
     dispatch(fetchAllLocations())
   }
 })
-export default connect(null, mapDispatch)(AddLocationForm)
+export default connect(mapState, mapDispatch)(AddLocationForm)

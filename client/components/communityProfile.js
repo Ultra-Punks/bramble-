@@ -7,18 +7,20 @@ import {
 } from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
-// import {fetchProfile} from '../store/singleProfile'
 import {Button} from 'react-bootstrap'
 import {CommunityFeed, Map} from './index'
 import ShowMembers from './ShowMembers'
 import DisplaySubUnsub from './DisplaySubUnsub'
+import {me} from '../store'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       postFeed: true,
-      showMembers: false
+      showMembers: false,
+      postlikes: false,
+      commentLikes: false
     }
     this.postSelector = this.postSelector.bind(this)
     this.gallerySelector = this.gallerySelector.bind(this)
@@ -46,6 +48,14 @@ class CommunityProfile extends React.Component {
 
   hideMembers() {
     this.setState({showMembers: false})
+  }
+
+  like() {
+    this.setState({wasLiked: true})
+  }
+
+  disliked() {
+    this.setState({wasliked: true})
   }
 
   render() {
@@ -85,6 +95,7 @@ class CommunityProfile extends React.Component {
               unsubscribe={this.props.unsubscribe}
               subscribe={this.props.subscribe}
               isSubscribed={this.props.community.isSubscribed}
+              updateUser={this.props.updateUser}
             />
           ) : (
             <div />

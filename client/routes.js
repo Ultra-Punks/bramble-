@@ -11,9 +11,10 @@ import {
   AllProfiles,
   ProfileView,
   SingleComment,
-  SingleLocation,
+  SingleLocationView,
   AddLocationForm,
-  LandingPage
+  LandingPage,
+  EditProfile
 } from './components'
 import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
@@ -63,6 +64,7 @@ class Routes extends Component {
             <Switch>
               {/* Routes placed here are only available after logging in */}
               <Route path="/home" component={UserHome} />
+              <Route path="/edit-profile" component={EditProfile} />
             </Switch>
           )}
           {/* Displays our Login component as a fallback */}
@@ -71,6 +73,7 @@ class Routes extends Component {
         <br />
         <Route path="/" component={Footer} />
       </div>
+
     )
   }
 }
