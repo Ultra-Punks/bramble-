@@ -33,6 +33,11 @@ const Location = db.define('location', {
     type: Sequelize.ARRAY(Sequelize.JSON)
   },
   //original columns/properties below
+  coverImg: {
+    type: Sequelize.STRING,
+    defaultValue:
+      'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
+  },
   address: {
     type: Sequelize.STRING,
     // allowNull: false,

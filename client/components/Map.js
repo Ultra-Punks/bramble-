@@ -14,9 +14,13 @@ import {Button} from 'react-bootstrap'
 import Geocoder from 'react-map-gl-geocoder'
 import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
-import {AddLocationForm, SingleLocation, AddLocation} from './index'
+import {AddLocationForm, AddLocation} from './index'
 import {connect} from 'react-redux'
-import {fetchAllLocations, fetchSomeLocations} from '../store/locations'
+import {
+  fetchAllLocations,
+  fetchSomeLocations,
+  fetchHomeFeedLocations
+} from '../store/locations'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -39,15 +43,28 @@ class Map extends React.Component {
       },
       userLocation: {},
       displayPopup: false,
-      selectedLocation: {},
-      displayForm: false
+      selectedLocation: {}
+      // displayForm: false
     }
   }
   componentDidMount() {
-    if (this.props.cId) this.props.getSomeLocations(this.props.cId, 'community')
-    else if (this.props.username)
+    if (this.props.homeId) {
+      this.props.getSomeLocations(this.props.homeId)
+    } else if (
+      this.props.singleLocation &&
+      this.props.singleLocation.geometry
+    ) {
+      this.addMarker(
+        this.props.singleLocation.geometry.coordinates,
+        this.props.singleLocation
+      )
+    } else if (this.props.cId) {
+      this.props.getSomeLocations(this.props.cId, 'community')
+    } else if (this.props.username) {
       this.props.getSomeLocations(this.props.username, 'user')
-    else this.props.getAllLocations()
+    } else {
+      this.props.getAllLocations()
+    }
   }
 
   handleShowForm() {
@@ -85,11 +102,17 @@ class Map extends React.Component {
     const lat = loc.geometry.coordinates[1]
     return (
       <Popup
-        tipSize={5}
+        tipSize={7}
         anchor="bottom-right"
         longitude={long}
         latitude={lat}
-        onMouseLeave={() => this.setState({displayPopup: false})}
+        // onMouseLeave={() => this.setState({displayPopup: false})}
+        onClose={() => {
+          console.log('in the onclose func', loc)
+          loc.popup = false
+          this.setState({displayPopup: false})
+        }}
+        closeButton={true}
         closeOnClick={true}
       >
         <p>
@@ -241,29 +264,23 @@ class Map extends React.Component {
             this.state.selectedLocation.geometry.type && (
               <div>
                 <Marker
-                  // {...console.log(
-                  //   'hello from in the sL point check',
-                  //   this.state.selectedLocation
-                  // )}
                   longitude={
                     this.state.selectedLocation.geometry.coordinates[0]
                   }
                   latitude={this.state.selectedLocation.geometry.coordinates[1]}
-                  onClick={() => {
-                    this.state.selectedLocation.popup
-                      ? this.setState({selectedLocation: {popup: false}})
-                      : this.setState({selectedLocation: {popup: true}})
-                    this.state.displayPopup
-                      ? this.setState({displayPopup: false})
-                      : this.setState({displayPopup: true})
-                  }}
                 >
                   {/* <img className="marker" src="temp-map-icon.jpeg" width="50" /> */}
-                  <RedPin />
+                  <div
+                    onClick={() => {
+                      // const oldDisplay = this.state.selectedLocation.displayPopup
+                      // this.setState({selectedLocation: {popup: !oldDisplay}})
+                    }}
+                  >
+                    <RedPin />
+                  </div>
                 </Marker>
-                {this.state.selectedLocation.popup
-                  ? this.renderPopup(this.state.selectedLocation)
-                  : ''}
+                {this.state.selectedLocation.popup &&
+                  this.renderPopup(this.state.selectedLocation)}
               </div>
             )}
           {/* map() through locations and create Markers for all of them */}
@@ -274,18 +291,15 @@ class Map extends React.Component {
             return (
               <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
-                  {/* <img
-                    className="marker"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1200px-Map_pin_icon.svg.png"
-                    width="50"
+                  <div
                     onClick={() => {
-                      loc.popup ? (loc.popup = false) : (loc.popup = true)
-                      this.state.displayPopup
-                        ? this.setState({displayPopup: false})
-                        : this.setState({displayPopup: true})
+                      console.log('in onclick in the div in marker', loc)
+                      loc.popup = !loc.popup
+                      this.setState({displayPopup: loc.popup})
                     }}
-                  /> */}
-                  <RedPin />
+                  >
+                    <RedPin />
+                  </div>
                 </Marker>
                 {/* also checking if marker.popup boolean is true, then render Popup */}
                 {loc.popup ? this.renderPopup(loc) : <div />}
