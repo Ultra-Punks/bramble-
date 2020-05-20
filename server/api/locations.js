@@ -10,7 +10,12 @@ router.get('/of/:id', async (req, res, next) => {
       where: {
         communityId: req.params.id,
         geometry: {[Op.ne]: null}
-      }
+      },
+      include: [
+        {model: LocationReview, include: [{model: User}]},
+        {model: Community},
+        {model: User}
+      ]
     })
     res.json(locations)
   } catch (err) {
@@ -27,7 +32,12 @@ router.get('/from/:username', async (req, res, next) => {
       where: {
         userId: user.id,
         geometry: {[Op.ne]: null}
-      }
+      },
+      include: [
+        {model: LocationReview, include: [{model: User}]},
+        {model: Community},
+        {model: User}
+      ]
     })
     res.json(locations)
   } catch (err) {
@@ -134,7 +144,12 @@ router.get('/', async (req, res, next) => {
   try {
     //below will only return locations with coordinates
     const locations = await Location.findAll({
-      where: {geometry: {[Op.ne]: null}}
+      where: {geometry: {[Op.ne]: null}},
+      include: [
+        {model: LocationReview, include: [{model: User}]},
+        {model: Community},
+        {model: User}
+      ]
     })
     res.json(locations)
   } catch (err) {

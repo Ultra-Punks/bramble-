@@ -22,7 +22,7 @@ function PostingPictures(props) {
 function UserPFP(props) {
   const {post} = props
 
-  if (post !== undefined && post.user !== undefined) {
+  if (post !== undefined && post.user !== undefined && post.user.profileImg) {
     return (
       <Image className="post-pfp" src={post.user.profileImg} roundedCircle />
     )
@@ -86,6 +86,15 @@ class SingleLocationView extends React.Component {
   render() {
     console.log('THIS IS PROPS', this.props)
     const location = this.props.singleLocation
+    if (!location)
+      return (
+        <div>
+          Not enough info about this location yet
+          {Object.keys(location).map((k, i) => {
+            return <p key={i}>{`${k} ${location[k]}`}</p>
+          })}
+        </div>
+      )
     return (
       <div className="page-container">
         <div className="single-location-view-container">
