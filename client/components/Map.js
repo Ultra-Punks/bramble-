@@ -108,18 +108,22 @@ class Map extends React.Component {
         longitude={long}
         latitude={lat}
         // onMouseLeave={() => this.setState({displayPopup: false})}
-        onClose={() => {
-          console.log('in the onclose func', loc)
-          loc.popup = false
-          this.setState({displayPopup: false})
-        }}
+        // onClose={() => {
+        //   console.log('in the onclose func', loc)
+        //   loc.popup = false
+        //   this.setState({displayPopup: false})
+        // }}
         closeButton={true}
         closeOnClick={true}
       >
         <div className="popup">
           <p className="popup-header">
-            <strong>{loc.name && loc.name}</strong>
-            {loc.community.name && loc.community.name}
+            <Link to={`l/${loc.id}`}>
+              <strong>{loc.name && loc.name}</strong>
+            </Link>
+            <Link to={`/community/list/${loc.communityId}`}>
+              {loc.community && loc.community.name && loc.community.name}
+            </Link>
           </p>
           <p className="popup-body">
             {/* {`${loc.address} ${loc.city}`} */}
