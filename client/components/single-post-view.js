@@ -10,7 +10,7 @@ function PostingPictures(props) {
   const [showPicture, setShowPicture] = useState(false)
   if (post !== undefined && post.photos !== undefined && post.photos.length) {
     return (
-      <div className="img-container">
+      <div className="single-post-img-container">
         <img
           src={post.photos[0].imgFile}
           className="single-post-view-img"
@@ -95,20 +95,30 @@ class SinglePostView extends React.Component {
       <div className="page-container">
         <div className="single-post-view-container">
           <div key={post.id} className="single-post">
-            <div className="post-header">
+            <div>
               <UserPFP post={post} />
+            </div>
+            <div className="post-header">
               <div className="post-info">
                 <UserInformation post={post} />
                 <div className="description-container">
                   <p className="post-text">{post.description}</p>
                 </div>
               </div>
+
+              <PostingPictures className="post-photos" post={post} />
+              <div className="single-post-feedback" />
+              <div className="single-post-break" />
+              {post !== undefined &&
+              post.postComments !== undefined &&
+              post.postComments.length ? (
+                <div className="replies">Replies</div>
+              ) : (
+                <div className="replies"> No Replies</div>
+              )}
+
+              <PostComment post={post} openComments={true} />
             </div>
-            <PostingPictures className="post-photos" post={post} />
-            <div className="single-post-feedback" />
-            <div className="single-post-break" />
-            <div className="replies">Replies</div>
-            <PostComment post={post} openComments={true} />
           </div>
         </div>
         <div className="rec-container">
