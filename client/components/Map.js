@@ -39,15 +39,23 @@ class Map extends React.Component {
       },
       userLocation: {},
       displayPopup: false,
-      selectedLocation: {},
-      displayForm: false
+      selectedLocation: {}
+      // displayForm: false
     }
   }
   componentDidMount() {
-    if (this.props.cId) this.props.getSomeLocations(this.props.cId, 'community')
-    else if (this.props.username)
+    if (this.props.singleLocation && this.props.singleLocation.geometry) {
+      this.addMarker(
+        this.props.singleLocation.geometry.coordinates,
+        this.props.singleLocation
+      )
+    } else if (this.props.cId) {
+      this.props.getSomeLocations(this.props.cId, 'community')
+    } else if (this.props.username) {
       this.props.getSomeLocations(this.props.username, 'user')
-    else this.props.getAllLocations()
+    } else {
+      this.props.getAllLocations()
+    }
   }
 
   handleShowForm() {
@@ -81,16 +89,18 @@ class Map extends React.Component {
   //and creates a <Popup/> component for each location,
   // ANY HTML can go between Popups opening and closing tags
   renderPopup(loc) {
+    console.log('loc in render popup', loc)
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
     return (
       <Popup
-        tipSize={5}
+        // tipSize={5}
         anchor="bottom-right"
         longitude={long}
         latitude={lat}
         onMouseLeave={() => this.setState({displayPopup: false})}
-        closeOnClick={true}
+        closeButton={true}
+        closeOnClick={false}
       >
         <p>
           <strong>{loc.name}</strong>
@@ -274,18 +284,15 @@ class Map extends React.Component {
             return (
               <div key={idx}>
                 <Marker longitude={long} latitude={lat}>
-                  {/* <img
-                    className="marker"
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/1200px-Map_pin_icon.svg.png"
-                    width="50"
+                  <div
                     onClick={() => {
-                      loc.popup ? (loc.popup = false) : (loc.popup = true)
-                      this.state.displayPopup
-                        ? this.setState({displayPopup: false})
-                        : this.setState({displayPopup: true})
+                      console.log('in onclick in the div in marker', loc)
+                      loc.popup = !loc.popup
+                      this.setState({displayPopup: loc.popup})
                     }}
-                  /> */}
-                  <RedPin />
+                  >
+                    <RedPin />
+                  </div>
                 </Marker>
                 {/* also checking if marker.popup boolean is true, then render Popup */}
                 {loc.popup ? this.renderPopup(loc) : <div />}

@@ -25,7 +25,9 @@ export const fetchSomeLocations = (id, type) => async dispatch => {
     let res
     if (type === 'community') res = await axios.get(`/api/locations/of/${id}`)
     else if (type === 'user') res = await axios.get(`/api/locations/from/${id}`)
-    dispatch(getSomeLocations(res.data))
+
+    if (!res.data) fetchAllLocations()
+    else dispatch(getSomeLocations(res.data))
   } catch (err) {
     console.error(err, 'Error fetching some locations')
   }

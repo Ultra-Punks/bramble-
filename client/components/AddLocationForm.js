@@ -30,9 +30,14 @@ export class AddLocationForm extends React.Component {
       [event.target.name]: event.target.value
     })
   }
+
   handleSubmit = event => {
     event.preventDefault()
-    this.props.add(this.props.location)
+    const newLocation = {
+      ...this.props.location,
+      ...this.state
+    }
+    this.props.add(newLocation)
     this.setState({
       name: '',
       address: '',

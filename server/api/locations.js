@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Location, User, LocationReview} = require('../db/models')
+const {Location, User, LocationReview, Community} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
@@ -48,7 +48,8 @@ router.post('/add', async (req, res, next) => {
       context,
       name,
       city,
-      address
+      address,
+      description
     } = req.body
     const location = await Location.create({
       mapId: id,
@@ -62,6 +63,7 @@ router.post('/add', async (req, res, next) => {
       name,
       city,
       address,
+      description,
       popup: false
     })
     res.json(location)
@@ -73,7 +75,11 @@ router.post('/add', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const location = await Location.findByPk(req.params.id, {
-      include: [{model: LocationReview}]
+      include: [
+        {model: LocationReview, include: [{model: User}]},
+        {model: Community},
+        {model: User}
+      ]
     })
     res.json(location)
   } catch (err) {
