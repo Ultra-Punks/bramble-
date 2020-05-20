@@ -847,6 +847,8 @@ form div {
   width: 50%;
   height: 75%;
   margin: 50px;
+  background-color: white;
+  border-radius: 15px;
 }
 
 .single-post-view-img {
@@ -862,6 +864,12 @@ form div {
   display: flex;
   justify-content: center;
   margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+}
+
+.single-post-img-container {
+  display: flex;
   margin-right: 1%;
   margin-bottom: 3%;
 }
@@ -1010,7 +1018,6 @@ form div {
   margin-bottom: 25px;
 }
 
-
 /* single location stuff here */
 
 .stars {
@@ -1144,4 +1151,3 @@ form div {
 .edit-profile-container {
   display: flex;
 }
-

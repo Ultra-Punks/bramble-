@@ -21,6 +21,7 @@ export {default as LandingPage} from './LandingPage'
 export {default as CommunityFeed} from './CommunityFeed'
 export {default as FullPicture} from './FullPicture'
 export {default as EditProfile} from './EditProfile'
+export {default as EditProfileForm} from './EditProfileForm'
 
 export {default as SingleComment} from './SingleComment'
 export {default as LoginButton} from './login'
