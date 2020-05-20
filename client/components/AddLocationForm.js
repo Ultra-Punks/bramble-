@@ -3,6 +3,17 @@ import {connect} from 'react-redux'
 import {addLocationThunk, fetchAllLocations} from '../store/locations'
 import {InputGroup, Form, Button} from 'react-bootstrap'
 
+const communities = [
+  'Food',
+  'Fitness',
+  'Skating',
+  'Fashion',
+  'blah',
+  'hello',
+  'something',
+  'something else'
+]
+
 export class AddLocationForm extends React.Component {
   constructor() {
     super()
@@ -48,6 +59,25 @@ export class AddLocationForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="location-modal">
+        {/* copied for dropdown menu */}
+        <div className="exit-add-post">
+          <Form.Group controlId="community">
+            <Form.Label>Community</Form.Label>
+            <Form.Control name="community" as="select" custom>
+              <option value="none">None</option>
+              {communities &&
+                communities.map(community => {
+                  return (
+                    // <option key={community.id} value={community.id}>
+                    //   {community.name}
+                    // </option>
+                    <option key={community}>{community}</option>
+                  )
+                })}
+            </Form.Control>
+          </Form.Group>
+        </div>
+
         <Form.Label htmlFor="name" className="signup-label">
           Name
         </Form.Label>
@@ -103,10 +133,14 @@ export class AddLocationForm extends React.Component {
     )
   }
 }
+
+const mapState = state => ({
+  // communites: state.allCommunities
+})
 const mapDispatch = dispatch => ({
   add: location => {
     dispatch(addLocationThunk(location))
     dispatch(fetchAllLocations())
   }
 })
-export default connect(null, mapDispatch)(AddLocationForm)
+export default connect(mapState, mapDispatch)(AddLocationForm)

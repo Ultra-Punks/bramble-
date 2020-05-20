@@ -4,10 +4,15 @@ import axios from 'axios'
 const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS'
 const GET_SOME_LOCATIONS = 'GET_SOME_LOCATIONS'
 const ADD_LOCATION = 'ADD_LOCATION'
+const GET_HOME_FEED_LOCATIONS = 'GET_HOME_FEED_LOCATIONS'
 
 // action creators
 const getAllLocations = locations => ({type: GET_ALL_LOCATIONS, locations})
 const getSomeLocations = locations => ({type: GET_SOME_LOCATIONS, locations})
+const getHomeFeedLocations = locations => ({
+  type: GET_HOME_FEED_LOCATIONS,
+  locations
+})
 const addLocation = location => ({type: ADD_LOCATION, location})
 
 // thunk creators
@@ -25,11 +30,22 @@ export const fetchSomeLocations = (id, type) => async dispatch => {
     let res
     if (type === 'community') res = await axios.get(`/api/locations/of/${id}`)
     else if (type === 'user') res = await axios.get(`/api/locations/from/${id}`)
-
+    else if (type === 'homeFeed')
+      res = await axios.get(`/api/locations/home/${id}`)
     if (!res.data) fetchAllLocations()
     else dispatch(getSomeLocations(res.data))
   } catch (err) {
     console.error(err, 'Error fetching some locations')
+  }
+}
+
+export const fetchHomeFeedLocations = userId => async dispatch => {
+  try {
+    const res = await axios.get(`/api/locations/home/${userId}`)
+    if (!res.data) return
+    else dispatch(getHomeFeedLocations(res.data))
+  } catch (err) {
+    console.error(err, 'Error fetching home feed locations')
   }
 }
 
@@ -51,6 +67,8 @@ export default function(state = [], action) {
       return action.locations
     case ADD_LOCATION:
       return [...state, action.location]
+    case GET_HOME_FEED_LOCATIONS:
+      return action.locations
     default:
       return state
   }

@@ -14,9 +14,13 @@ import {Button} from 'react-bootstrap'
 import Geocoder from 'react-map-gl-geocoder'
 import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
-import {AddLocationForm, SingleLocation, AddLocation} from './index'
+import {AddLocationForm, AddLocation} from './index'
 import {connect} from 'react-redux'
-import {fetchAllLocations, fetchSomeLocations} from '../store/locations'
+import {
+  fetchAllLocations,
+  fetchSomeLocations,
+  fetchHomeFeedLocations
+} from '../store/locations'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -44,7 +48,12 @@ class Map extends React.Component {
     }
   }
   componentDidMount() {
-    if (this.props.singleLocation && this.props.singleLocation.geometry) {
+    if (this.props.homeId) {
+      this.props.getSomeLocations(this.props.homeId)
+    } else if (
+      this.props.singleLocation &&
+      this.props.singleLocation.geometry
+    ) {
       this.addMarker(
         this.props.singleLocation.geometry.coordinates,
         this.props.singleLocation

@@ -34,6 +34,14 @@ router.get('/from/:username', async (req, res, next) => {
     next(err)
   }
 })
+// get locations for logged in user's home feed
+router.get('/home/:id', async (req, res, next) => {
+  try {
+    res.send('route not done yet')
+  } catch (err) {
+    next(err)
+  }
+})
 // single location routes
 router.post('/add', async (req, res, next) => {
   try {
