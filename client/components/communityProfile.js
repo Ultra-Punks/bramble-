@@ -7,11 +7,11 @@ import {
 } from '../store/community'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
-// import {fetchProfile} from '../store/singleProfile'
 import {Button} from 'react-bootstrap'
 import {CommunityFeed, Map} from './index'
 import ShowMembers from './ShowMembers'
 import DisplaySubUnsub from './DisplaySubUnsub'
+import {me} from '../store'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
@@ -58,12 +58,7 @@ class CommunityProfile extends React.Component {
     this.setState({wasliked: true})
   }
 
-  // updateLikes(){
-  //   this.set
-  // }
-
   render() {
-    console.log('stateeeeee', this.state)
     const community = this.props.community.communityProfile
     const postClass = this.state.postFeed
       ? 'profileFeedButton selected-feed'
@@ -100,6 +95,7 @@ class CommunityProfile extends React.Component {
               unsubscribe={this.props.unsubscribe}
               subscribe={this.props.subscribe}
               isSubscribed={this.props.community.isSubscribed}
+              updateUser={this.props.updateUser}
             />
           ) : (
             <div />

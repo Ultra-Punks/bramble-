@@ -1,15 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {fetchSinglePost} from '../store/singlePost'
+import {PostComment, FullPicture} from './index'
 import {Image} from 'react-bootstrap'
 
 function PostingPictures(props) {
   const {post} = props
+  const [showPicture, setShowPicture] = useState(false)
   if (post !== undefined && post.photos !== undefined && post.photos.length) {
     return (
-      <div className="img-container">
-        <img src={post.photos[0].imgFile} className="single-post-view-img" />
+      <div className="single-post-img-container">
+        <img
+          src={post.photos[0].imgFile}
+          className="single-post-view-img"
+          onClick={() => setShowPicture(true)}
+        />
+        <FullPicture
+          show={showPicture}
+          image={post.photos[0].imgFile}
+          onHide={() => setShowPicture(false)}
+        />
       </div>
     )
   } else {
@@ -26,10 +37,17 @@ function ImageRec(props) {
     post.photos.length > 0
   ) {
     return (
-      <div className="image-rec-container">
-        {post.photos[0].tags.map(tag => {
-          return <p key={tag.id}>{tag.imageTag}</p>
-        })}
+      <div className="label-container">
+        <div className="label-container-header">Labels</div>
+        <div className="image-rec-container">
+          {post.photos[0].tags.map(tag => {
+            return (
+              <div className="individual-labels" key={tag.id}>
+                {tag.imageTag}
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   } else {
@@ -77,22 +95,29 @@ class SinglePostView extends React.Component {
       <div className="page-container">
         <div className="single-post-view-container">
           <div key={post.id} className="single-post">
-            <div className="post-header">
+            <div>
               <UserPFP post={post} />
+            </div>
+            <div className="post-header">
               <div className="post-info">
                 <UserInformation post={post} />
                 <div className="description-container">
                   <p className="post-text">{post.description}</p>
                 </div>
               </div>
-            </div>
-            <PostingPictures className="post-photos" post={post} />
-            <div className="single-post-feedback">
-              <img
-                className="reply-comment-button"
-                src="https://cdn4.iconfinder.com/data/icons/pictype-free-vector-icons/16/reply-512.png"
-              />
-              <p>Reply</p>
+
+              <PostingPictures className="post-photos" post={post} />
+              <div className="single-post-feedback" />
+              <div className="single-post-break" />
+              {post !== undefined &&
+              post.postComments !== undefined &&
+              post.postComments.length ? (
+                <div className="replies">Replies</div>
+              ) : (
+                <div className="replies"> No Replies</div>
+              )}
+
+              <PostComment post={post} openComments={true} />
             </div>
           </div>
         </div>

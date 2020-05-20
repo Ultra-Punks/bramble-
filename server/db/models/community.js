@@ -4,7 +4,7 @@ const db = require('../db')
 const Community = db.define('community', {
   name: {
     type: Sequelize.STRING,
-    unique: true,
+    // unique: true,
     // allowNull: false,
     validate: {
       notEmpty: true

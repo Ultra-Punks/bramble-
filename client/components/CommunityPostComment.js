@@ -9,7 +9,7 @@ export default function PostComments(props) {
   if (
     post.user !== undefined &&
     post.user !== undefined &&
-    post.user.postComments.length &&
+    post.postComments.length &&
     openComments
   ) {
     return (

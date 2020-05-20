@@ -8,6 +8,7 @@ import {fetchOneCommunity} from '../store/community'
 import {fetchUsers} from '../store/allProfiles'
 import {fetchUserPosts} from '../store/userFeed'
 import {fetchRandomCommunities} from '../store/allCommunities'
+import {fetchAllPosts, fetchRandomPosts} from '../store/singlePost'
 
 // -----------------------------------------------------------
 // -----------------------------------------------------------
@@ -34,18 +35,18 @@ class LandingPage extends Component {
     this.state = {
       community: ''
     }
-    this.randomDisplay = this.randomDisplay.bind(this)
     this.randomCommunityIds = this.randomCommunityIds.bind(this)
+    this.randomPosts = this.randomPosts.bind(this)
   }
 
   componentDidMount() {
     // this.props.fetchCommunity(this.state.community)
     this.props.fetchUsers()
-
+    this.props.fetchAllPosts()
     let arrOfIds = this.randomCommunityIds()
     this.props.getRandomCommunities(arrOfIds)
-    // const username = this.props.match.params.username
-    // this.props.fetchUserPosts(username)
+    let arrayOfPostIds = this.randomPosts()
+    this.props.getRandomPosts(arrayOfPostIds)
   }
 
   randomCommunityIds() {
@@ -57,45 +58,23 @@ class LandingPage extends Component {
     return arr
   }
 
-  randomDisplay() {
-    // create an array of sample communities
-    const sampleCommunities = []
-
-    if (this.props.community.length) {
-      const randomOne = this.props.community[
-        getRandomInt(0, this.props.community.length - 1)
-      ]
-      let randomTwo = this.props.community[
-        getRandomInt(0, this.props.community.length - 1)
-      ]
-      // if the id on randomOne matches randomTwo
-      if (randomOne.id === randomTwo.id) {
-        randomTwo = this.props.community[
-          getRandomInt(0, this.props.community.length - 1)
-        ]
-      }
-      let randomThree = this.props.community[
-        getRandomInt(0, this.props.community.length - 1)
-      ]
-      // if the id on randomThree matches randomOne or randomTwo
-      if (randomOne.id === randomTwo.id && randomOne.id === randomThree.id) {
-        randomThree = this.props.community[
-          getRandomInt(0, this.props.community.length - 1)
-        ]
-      }
-      sampleCommunities.push(randomOne, randomTwo, randomThree)
-
-      return sampleCommunities
-    } else {
-      return false
+  randomPosts() {
+    var newArr = []
+    while (newArr.length < 6) {
+      var r = Math.floor(Math.random() * 10) + 1
+      if (newArr.indexOf(r) === -1) newArr.push(r)
     }
+    return newArr
   }
 
   render() {
-    // console.log('this.props>>>>>', this.props)
+    console.log('this.props>>>>>', this.props)
     this.randomCommunityIds()
-    // const samplesComms = this.randomDisplay()
     const randomCommunities = this.props.communities
+
+    this.randomPosts()
+    const randomPosts = this.props.posts
+
     return (
       <div className="landingPage">
         <div className="welcomePhotoContainer">
@@ -112,21 +91,32 @@ class LandingPage extends Component {
                 randomCommunities.map(singleCommunity => {
                   return (
                     <div key={singleCommunity.id} className="sampleContainer">
-                      <img
-                        src={singleCommunity.profileImg}
-                        className="community-card-image"
-                      />
+                      <Link to={`/community/list/${singleCommunity.id}`}>
+                        <div>
+                          <img
+                            src={singleCommunity.profileImg}
+                            className="community-card-image"
+                          />
 
-                      <div className="community-card-content">
-                        <div className="community-card-title">
-                          {singleCommunity.name}
+                          <div className="community-card-content">
+                            <div className="community-card-title">
+                              {singleCommunity.name}
+                            </div>
+                            <div className="community-card-text">
+                              {singleCommunity.description}
+                            </div>
+                          </div>
                         </div>
-                        <div className="community-card-text">
-                          {singleCommunity.description}
-                        </div>
-                      </div>
+                      </Link>
                     </div>
                   )
+                })}
+            </div>
+            <h2>Check out what the Bramblers are talking about.</h2>
+            <div className="samplePostsContainer">
+              {Array.isArray(randomPosts) &&
+                randomPosts.map(post => {
+                  return <div key={post.id}>{post.description}</div>
                 })}
             </div>
           </div>
@@ -139,17 +129,19 @@ class LandingPage extends Component {
 const mapToState = state => {
   return {
     communities: state.allCommunities,
-    profiles: state.profiles
-    // posts: state.userPosts,
+    profiles: state.profiles,
+    posts: state.singlePost
   }
 }
 
-const mapToDispatch = dispatch => {
+const mapToDispatch = (dispatch, ownProps) => {
+  // console.log('>>>>', ownProps.match.params)
   return {
+    getRandomPosts: arrOfIds => dispatch(fetchRandomPosts(arrOfIds)),
     getRandomCommunities: arrOfIds =>
       dispatch(fetchRandomCommunities(arrOfIds)),
-    fetchUsers: () => dispatch(fetchUsers())
-    // fetchUserPosts: (username) => dispatch(fetchUserPosts(username)),
+    fetchUsers: () => dispatch(fetchUsers()),
+    fetchAllPosts: () => dispatch(fetchAllPosts())
   }
 }
 

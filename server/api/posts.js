@@ -30,7 +30,11 @@ router.get('/', async (req, res, next) => {
 router.get('/:postId', async (req, res, next) => {
   try {
     const singlePost = await UserPost.findByPk(req.params.postId, {
-      include: [{model: Photo, include: {model: Tag}}, {model: User}]
+      include: [
+        {model: Photo, include: {model: Tag}},
+        {model: User},
+        {model: PostComment, include: [{model: User}]}
+      ]
     })
     res.json(singlePost)
   } catch (error) {
@@ -40,23 +44,7 @@ router.get('/:postId', async (req, res, next) => {
 
 //gets all posts from specific user
 router.get('/from/:username', async (req, res, next) => {
-  // order: [['createdAt', 'DESC']],
   try {
-    // const allUserPosts = await User.findOne({
-    //   where: {
-    //     username: req.params.username,
-    //   },
-    //   include: [
-    //     {
-    //       model: UserPost,
-    //       include: [
-    //         {model: Photo, include: [{model: Tag}]},
-    //         {model: PostComment, include: [{model: User}]},
-    //       ],
-    //     },
-    //   ],
-    // })
-
     const user = await User.findOne({
       where: {
         username: req.params.username
@@ -69,6 +57,7 @@ router.get('/from/:username', async (req, res, next) => {
       },
       include: [
         {model: Photo, include: [{model: Tag}]},
+        {model: Community, attributes: ['name']},
         {model: PostComment, include: [{model: User}]}
       ],
       order: [['createdAt', 'DESC']]
@@ -91,8 +80,6 @@ router.get('/from/:username/following', async (req, res, next) => {
     const allFollowing = await loggedInUser.getFollowing()
     const allSubs = await loggedInUser.getSubscriber()
 
-    console.log(Object.keys(User.prototype))
-
     let arrOfIds = allFollowing.map(user => {
       return user.id
     })
@@ -105,11 +92,16 @@ router.get('/from/:username/following', async (req, res, next) => {
     arrOfIds.push(loggedInUser.id)
 
     const feed = await UserPost.findAll({
-      where: {userId: arrOfIds},
+      where: {[Op.or]: [{userId: arrOfIds}, {communityId: arrOfComIds}]},
       include: [
         {model: User},
+        {model: Community, attributes: ['name']},
         {model: Photo, include: [{model: Tag}]},
-        {model: PostComment, include: [{model: User}]}
+        {
+          model: PostComment,
+          include: [{model: User}],
+          order: [['createdAt', 'DESC']]
+        }
       ],
       order: [['createdAt', 'DESC']]
     })
@@ -123,24 +115,21 @@ router.get('/from/:username/following', async (req, res, next) => {
 //gets all posts for user by community
 router.get('/for/:id', async (req, res, next) => {
   try {
-    const allCommunityPosts = await Community.findOne({
-      where: {
-        id: req.params.id
-      },
+    const feed = await UserPost.findAll({
+      where: {communityId: req.params.id},
       include: [
+        {model: User},
+        {model: Photo, include: [{model: Tag}]},
         {
-          model: UserPost,
-          include: [
-            {
-              model: User,
-              include: [{model: PostComment, include: [{model: User}]}]
-            },
-            {model: PostComment, include: [{model: User}]}
-          ]
+          model: PostComment,
+          include: [{model: User}],
+          order: [['createdAt', 'DESC']]
         }
-      ]
+      ],
+      order: [['createdAt', 'DESC']]
     })
-    res.json(allCommunityPosts)
+
+    res.json(feed)
   } catch (error) {
     next(error)
   }
@@ -155,9 +144,12 @@ router.post('/add/:username', async (req, res, next) => {
       }
     })
 
+    let comId = req.body.communityId
+    if (comId === 'none') comId = null
     let newPost = await UserPost.create({
       userId: user.id,
-      description: req.body.description
+      description: req.body.description,
+      communityId: comId
     })
 
     if (req.body.photo) {
@@ -202,6 +194,19 @@ router.put('/:postId/likes', async (req, res, next) => {
     updatedPostLikes.likes++
     await updatedPostLikes.save()
     res.status(200).json(updatedPostLikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get random posts
+router.put('/random', async (req, res, next) => {
+  try {
+    const arrOfIds = req.body.postIds
+    const randomPosts = await UserPost.findAll({
+      where: {id: arrOfIds}
+    })
+    res.json(randomPosts)
   } catch (error) {
     next(error)
   }

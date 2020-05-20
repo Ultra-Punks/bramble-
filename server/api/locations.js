@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Location, User} = require('../db/models')
+const {Location, User, LocationReview, Community} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
 
@@ -34,6 +34,14 @@ router.get('/from/:username', async (req, res, next) => {
     next(err)
   }
 })
+// get locations for logged in user's home feed
+router.get('/home/:id', async (req, res, next) => {
+  try {
+    res.send('route not done yet')
+  } catch (err) {
+    next(err)
+  }
+})
 // single location routes
 router.post('/add', async (req, res, next) => {
   try {
@@ -48,7 +56,8 @@ router.post('/add', async (req, res, next) => {
       context,
       name,
       city,
-      address
+      address,
+      description
     } = req.body
     const location = await Location.create({
       mapId: id,
@@ -62,6 +71,7 @@ router.post('/add', async (req, res, next) => {
       name,
       city,
       address,
+      description,
       popup: false
     })
     res.json(location)
@@ -72,7 +82,13 @@ router.post('/add', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const location = await Location.findByPk(req.params.id)
+    const location = await Location.findByPk(req.params.id, {
+      include: [
+        {model: LocationReview, include: [{model: User}]},
+        {model: Community},
+        {model: User}
+      ]
+    })
     res.json(location)
   } catch (err) {
     next(err)
