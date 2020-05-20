@@ -29,7 +29,7 @@ export const fetchCommunityPosts = id => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/posts/for/${id}`)
-      dispatch(getCommunityPosts(data.userPosts))
+      dispatch(getCommunityPosts(data))
     } catch (error) {
       console.log(error)
     }
