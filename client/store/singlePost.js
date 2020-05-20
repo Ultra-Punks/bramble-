@@ -47,6 +47,9 @@ export const fetchRandomPosts = ids => {
       dispatch(getAllPosts(data))
     } catch (error) {
       console.log('Error ', error)
+    }
+  }
+}
 
 // LIKE a post thunk creator
 export const likedPost = postId => {
