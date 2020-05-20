@@ -11,12 +11,11 @@ class UserHome extends React.Component {
   }
 
   render() {
-    const {username} = this.props
-    console.log('PROPS', this.props)
     return (
-      <div>
-        <h3>Welcome {username}!</h3>
+      <div className="home-feed-container">
+        <div className="welcome-container" />
         <FollowingFeed posts={this.props.followingFeed} />
+        <div className="map-container">Map</div>
       </div>
     )
   }
@@ -27,7 +26,6 @@ class UserHome extends React.Component {
  */
 const mapState = state => {
   return {
-    // email: state.user.email,
     username: state.user.username,
     followingFeed: state.followingFeed
   }

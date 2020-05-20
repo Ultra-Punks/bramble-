@@ -45,7 +45,7 @@ class ShowSubscriptions extends React.Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <ShowInfo profile={this.props.profile} />
+        <ShowInfo className="testing" profile={this.props.profile} />
       </Modal>
     )
   }
