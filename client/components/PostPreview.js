@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import {FullPicture} from './index'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import history from '../history'
+import AddCommentForm from './AddCommentForm'
 
 function PostingPictures(props) {
   const {post} = props
@@ -30,7 +32,7 @@ function PostingPictures(props) {
 
 export default function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
-
+  const [commentForm, setCommentForm] = useState(false)
   function handleComments() {
     if (openComments) {
       setOpenComment(false)
@@ -40,7 +42,7 @@ export default function PostPreview(props) {
   }
 
   const {post, profile} = props
-
+  console.log('this is the propsss>>>>', props)
   return (
     <div className="single-post-preview-container">
       {post.communityId ? (
@@ -77,7 +79,14 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/all/500/comments.png"
                 className="commentIcon"
                 type="button"
+                onClick={() => setCommentForm(true)}
               />
+              <AddCommentForm
+                show={commentForm}
+                onHide={() => setCommentForm(false)}
+                postId={post.id}
+              />
+
               {post.postComments !== undefined && post.postComments.length ? (
                 <p
                   className="seeReplies"

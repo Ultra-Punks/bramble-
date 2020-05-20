@@ -847,6 +847,8 @@ form div {
   width: 50%;
   height: 75%;
   margin: 50px;
+  background-color: white;
+  border-radius: 15px;
 }
 
 .single-post-view-img {
@@ -862,6 +864,12 @@ form div {
   display: flex;
   justify-content: center;
   margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+}
+
+.single-post-img-container {
+  display: flex;
   margin-right: 1%;
   margin-bottom: 3%;
 }
@@ -985,10 +993,32 @@ form div {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  background-color: red;
+  background-color: rgba(152, 148, 148, 0.612);
   width: 20%;
   border-radius: 10px;
   margin-top: 1%;
+}
+
+.sampleContainer:hover {
+  border-bottom: solid #181818aa 4px;
+  color: rgb(55, 55, 55);
+  text-decoration: none;
+  transform: translateY(-3px) scale(1.025);
+}
+
+.footer {
+  display: flex;
+  height: 5%;
+  background-color: rgba(230, 230, 230, 0.893);
+  align-items: center;
+  justify-content: center;
+}
+
+.goatIcon {
+  height: 3%;
+  width: 3%;
+  padding-right: 10px;
+  margin-bottom: 10px;
 }
 
 .location-modal {
