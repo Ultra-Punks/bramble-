@@ -316,28 +316,49 @@ form div {
   flex-direction: column;
   justify-content: space-around;
   border-radius: 10px;
+  margin-right: 35px;
 }
 
 .single-post {
   display: flex;
-  flex-direction: column;
-  background-color: white;
   height: auto;
-  margin: 3px;
   padding: 10px;
+}
+
+.community-post-label {
+  display: flex;
+  background-color: lightblue;
+  height: 35px;
+  justify-content: flex-end;
+  padding: 5px;
+  padding-right: 25px;
+  align-items: center;
+  font-family: 'Roboto';
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.community-post-label:hover {
+  background-color: lightskyblue;
+}
+
+.single-post-preview-container {
+  background-color: white;
+  margin: 1%;
   border-radius: 5px;
 }
 
 .post-text {
   margin: 0;
-  margin-top: 15px;
-  margin-left: 10px;
-  margin-bottom: 20px;
-  margin-right: 15px;
+  margin-top: 3%;
+  margin-left: 2%;
+  margin-bottom: 5%;
+  margin-right: 10%;
 }
 
 .post-header {
   display: flex;
+  flex-direction: column;
 }
 
 .post-handle {
@@ -357,7 +378,6 @@ form div {
   border-style: solid;
   border-width: 3px;
   border-color: #3d4a63;
-  background-color: rgb(249, 111, 111);
 }
 
 .post-photos {
@@ -367,11 +387,15 @@ form div {
 }
 
 .post-images {
-  height: 400px;
-  width: 630px;
+  height: 50%;
+  width: 85%;
   object-fit: cover;
   border-radius: 10px;
   border: solid 2px #8793a9;
+}
+
+.post-images {
+  cursor: pointer;
 }
 
 .modal-post-container {
@@ -508,8 +532,6 @@ form div {
 
 .image-rec-container {
   background-color: #fff;
-  height: 450px;
-  width: 500px;
   overflow-y: auto;
 }
 
@@ -707,13 +729,20 @@ form div {
 
 .commentsAndShares {
   display: flex;
-  margin-left: 55px;
-  justify-content: space-evenly;
 }
 
 .likesAndDislikes {
   display: flex;
   justify-content: space-around;
+}
+
+.likes {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+.dislikes {
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 .commentRepliesContainer {
@@ -823,6 +852,10 @@ form div {
 .single-post-view-img {
   height: 30%;
   width: 90%;
+}
+
+.single-post-view-img {
+  cursor: pointer;
 }
 
 .img-container {
@@ -977,6 +1010,7 @@ form div {
   margin-bottom: 25px;
 }
 
+
 /* single location stuff here */
 
 .stars {
@@ -1007,3 +1041,107 @@ form div {
   width: 33%;
   height: 33%
 } */
+
+.home-feed-container {
+  display: flex;
+  margin: 3%;
+}
+
+.map-container {
+  height: 60%;
+  width: 40%;
+  background-color: red;
+}
+
+.welcome-container {
+  width: 50px;
+}
+
+.home-feed-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border-radius: 10px;
+  width: 50%;
+  margin-right: 35px;
+}
+
+.label-container-header {
+  background-color: #3d4a63;
+  font-size: 2.3em;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 500;
+  padding-left: 5%;
+}
+
+.label-container {
+  margin-top: 117px;
+  position: fixed;
+  top: 0;
+  height: 450px;
+  width: 35%;
+  overflow-y: auto;
+}
+
+.individual-labels {
+  height: 40px;
+  padding: 2%;
+  font-size: 1.5em;
+  font-family: 'Roboto';
+}
+
+.single-post-break {
+  border-top: 1px solid #3d4a63;
+}
+
+.replies {
+  margin-top: 2%;
+  margin-left: 12%;
+  margin-bottom: 1%;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 1.3em;
+}
+
+.testing {
+  height: 80vh;
+  object-fit: contain;
+}
+
+.link-to-post {
+  color: black;
+  display: block;
+}
+
+.link-to-community {
+  color: black;
+  display: block;
+}
+
+.link-to-community:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.link-to-post:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.post-feed-preview-info {
+  width: 100%;
+}
+
+.post-info {
+  width: 100%;
+}
+
+.pfp-col {
+  height: 100%;
+}
+
+.edit-profile-container {
+  display: flex;
+}
+

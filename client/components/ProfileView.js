@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {
   fetchProfile,
@@ -101,6 +102,13 @@ class ProfileView extends React.Component {
             <div>
               <p className="profile-name">{profile.name}</p>
               <p className="profile-username">@{profile.username}</p>
+              {this.props.user.username === profile.username ? (
+                <Link to="/edit-profile">
+                  <Button>Edit Profile</Button>
+                </Link>
+              ) : (
+                ''
+              )}
             </div>
           </div>
           <div className="underline">
