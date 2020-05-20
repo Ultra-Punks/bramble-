@@ -65,13 +65,12 @@ export class AddLocationForm extends React.Component {
             <Form.Label>Community</Form.Label>
             <Form.Control name="community" as="select" custom>
               <option value="none">None</option>
-              {communities &&
-                communities.map(community => {
+              {this.props.subscribedCommunities &&
+                this.props.subscribedCommunities.map(community => {
                   return (
-                    // <option key={community.id} value={community.id}>
-                    //   {community.name}
-                    // </option>
-                    <option key={community}>{community}</option>
+                    <option key={community.id} value={community.id}>
+                      {community.name}
+                    </option>
                   )
                 })}
             </Form.Control>
@@ -135,7 +134,7 @@ export class AddLocationForm extends React.Component {
 }
 
 const mapState = state => ({
-  // communites: state.allCommunities
+  subscribedCommunities: state.user.subscriber
 })
 const mapDispatch = dispatch => ({
   add: location => {

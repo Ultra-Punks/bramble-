@@ -35,9 +35,44 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 // get locations for logged in user's home feed
-router.get('/home/:id', async (req, res, next) => {
+router.get('/home', async (req, res, next) => {
   try {
-    res.send('route not done yet')
+    const loggedInUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    })
+
+    const allFollowing = await loggedInUser.getFollowing()
+    const allSubs = await loggedInUser.getSubscriber()
+
+    let arrOfIds = allFollowing.map(user => {
+      return user.id
+    })
+    let arrOfComIds = allSubs.map(sub => {
+      return sub.id
+    })
+
+    arrOfIds.push(loggedInUser.id)
+
+    const locations = await Location.findAll({
+      where: {
+        geometry: {[Op.ne]: null},
+        [Op.or]: [{userId: arrOfIds}, {communityId: arrOfComIds}]
+      },
+      include: [
+        {model: User},
+        {model: Community, attributes: ['name']},
+        // {model: Photo, include: [{model: Tag}]},
+        {
+          model: LocationReview,
+          include: [{model: User}],
+          order: [['createdAt', 'DESC']]
+        }
+      ],
+      order: [['createdAt', 'DESC']]
+    })
+    res.json(locations)
   } catch (err) {
     next(err)
   }

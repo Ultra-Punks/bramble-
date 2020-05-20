@@ -48,8 +48,8 @@ class Map extends React.Component {
     }
   }
   componentDidMount() {
-    if (this.props.homeId) {
-      this.props.getSomeLocations(this.props.homeId)
+    if (this.props.userHomeId) {
+      this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
     } else if (
       this.props.singleLocation &&
       this.props.singleLocation.geometry
@@ -100,6 +100,7 @@ class Map extends React.Component {
   renderPopup(loc) {
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
+    console.log('loc in renderpopup', loc)
     return (
       <Popup
         tipSize={7}
@@ -115,12 +116,18 @@ class Map extends React.Component {
         closeButton={true}
         closeOnClick={true}
       >
-        <p>
-          <strong>{loc.name}</strong>
-          <br />
-          {`${loc.address} ${loc.city}`}
-          {loc.description && `${loc.description}`}
-        </p>
+        <div className="popup">
+          <p className="popup-header">
+            <strong>{loc.name && loc.name}</strong>
+            {loc.community.name && loc.community.name}
+          </p>
+          <p className="popup-body">
+            {/* {`${loc.address} ${loc.city}`} */}
+            {loc.address && `${loc.address}`}
+            {loc.city && `${loc.city}`}
+            {loc.description && `${loc.description}`}
+          </p>
+        </div>
       </Popup>
     )
   }
@@ -284,7 +291,7 @@ class Map extends React.Component {
               </div>
             )}
           {/* map() through locations and create Markers for all of them */}
-
+          {/* {!this.props.locations[0] ? '' :''} */}
           {this.props.locations.map((loc, idx) => {
             const long = loc.geometry.coordinates[0]
             const lat = loc.geometry.coordinates[1]

@@ -2,7 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchFollowingPosts} from '../store/generalUserFeed'
-import {PostFeed} from './index'
+import {PostFeed, Map} from './index'
 import FollowingFeed from './FollowingFeed'
 
 class UserHome extends React.Component {
@@ -15,7 +15,9 @@ class UserHome extends React.Component {
       <div className="home-feed-container">
         <div className="welcome-container" />
         <FollowingFeed posts={this.props.followingFeed} />
-        <div className="map-container">Map</div>
+        <div className="map-container">
+          <Map userHomeId={this.props.id} />
+        </div>
       </div>
     )
   }
@@ -27,7 +29,8 @@ class UserHome extends React.Component {
 const mapState = state => {
   return {
     username: state.user.username,
-    followingFeed: state.followingFeed
+    followingFeed: state.followingFeed,
+    id: state.user.id
   }
 }
 

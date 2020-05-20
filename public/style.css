@@ -1010,7 +1010,6 @@ form div {
   margin-bottom: 25px;
 }
 
-
 /* single location stuff here */
 
 .stars {
@@ -1022,6 +1021,7 @@ form div {
 }
 .single-location-view-container {
   display: flex;
+  flex-direction: column;
   width: 50%;
   height: 75%;
   margin: 50px;
@@ -1144,4 +1144,3 @@ form div {
 .edit-profile-container {
   display: flex;
 }
-
