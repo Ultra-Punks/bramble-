@@ -3,6 +3,7 @@ import PostComment from './PostComment'
 import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import history from '../history'
 
 function PostingPictures(props) {
   const {post} = props
@@ -25,7 +26,7 @@ export default function PostPreview(props) {
   }
 
   const {post, profile} = props
-
+  console.log('this is the propsss>>>>', props)
   return (
     <div key={post.id} className="single-post">
       <div className="post-header">
@@ -51,7 +52,9 @@ export default function PostPreview(props) {
             src="https://img.icons8.com/all/500/comments.png"
             className="commentIcon"
             type="button"
+            onClick={() => history.push(`/post/addComment/${props.post.id}`)}
           />
+
           {post.postComments !== undefined && post.postComments.length ? (
             <p className="seeReplies" type="button" onClick={handleComments}>
               {post.postComments.length > 1

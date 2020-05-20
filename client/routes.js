@@ -19,6 +19,7 @@ import Test from './components/test'
 import CommunitySearch from './components/communitySearch'
 import {me} from './store'
 import CommunityProfile from './components/communityProfile'
+import AddCommentForm from './components/AddCommentForm'
 
 /**
  * COMPONENT
@@ -38,6 +39,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/map" component={Map} />
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/post/addComment/:id" component={AddCommentForm} />
 
         {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
         <Route path="/l/:id" component={SingleLocation} />
