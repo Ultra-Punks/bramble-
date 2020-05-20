@@ -6,7 +6,7 @@
 export {default as Map} from './Map'
 export {default as AddLocationForm} from './AddLocationForm'
 export {default as AddLocation} from './AddLocation'
-export {default as SingleLocationView} from './SingleLocation'
+export {default as SingleLocation} from './SingleLocation'
 export {default as LocationReviews} from './LocationReviews'
 export {default as Navbar} from './navbar'
 export {default as ProfileView} from './ProfileView'

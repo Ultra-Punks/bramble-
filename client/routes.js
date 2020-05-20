@@ -11,6 +11,7 @@ import {
   AllProfiles,
   ProfileView,
   SingleComment,
+  SingleLocation,
   SingleLocationView,
   AddLocationForm,
   LandingPage,
@@ -73,7 +74,6 @@ class Routes extends Component {
         <br />
         <Route path="/" component={Footer} />
       </div>
-
     )
   }
 }

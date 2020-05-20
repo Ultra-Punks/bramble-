@@ -999,7 +999,7 @@ form div {
   margin-top: 1%;
 }
 
- .sampleContainer:hover {
+.sampleContainer:hover {
   border-bottom: solid #181818aa 4px;
   color: rgb(55, 55, 55);
   text-decoration: none;
@@ -1020,7 +1020,7 @@ form div {
   padding-right: 10px;
   margin-bottom: 10px;
 }
- 
+
 .location-modal {
   padding: 45px;
 }
