@@ -20,9 +20,8 @@ function makeid(length) {
 }
 
 function ShowPictures(props) {
-  if (props.image[0] === undefined)
-    return <div className="display-img placeholder" />
-  else return <img className="display-img" src={props.image} />
+  if (props.image[0] === undefined) return <div />
+  else return <img className="add-post-img" src={props.image} />
 }
 
 export default function AddPostForm(props) {
@@ -86,18 +85,21 @@ export default function AddPostForm(props) {
           <input name="file" value={url} readOnly style={{display: 'none'}} />
         </Form.Group>
         <div className="input-form-container">
-          <Form.File
-            id="custom-file"
-            label="Custom file input"
-            custom
-            onChange={uploadImage}
-            style={{margin: 0, width: 400}}
-          />
           <ShowPictures image={image} />
         </div>
-        <Button className="post-button" variant="outline-light" type="submit">
-          Post
-        </Button>
+        <div className="bottom-form-container">
+          <Form.File
+            id="custom-file"
+            className="profileimg-button"
+            label=""
+            custom
+            onChange={uploadImage}
+            style={{margin: 0, width: 75}}
+          />
+          <Button className="post-button" variant="outline-light" type="submit">
+            Post
+          </Button>
+        </div>
       </Form>
     </div>
   )

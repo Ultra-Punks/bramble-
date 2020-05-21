@@ -50,23 +50,25 @@ router.get('/:username', async (req, res, next) => {
 // update an existing user (according to ID)
 router.put('/:username', async (req, res, next) => {
   try {
-    const user = await User.findOne({
-      where: {
-        username: req.params.username
-      }
-    })
-    if (user) {
-      const updatedUser = user.update({
-        name: req.body.name,
-        email: req.body.email,
-        imageUrl: req.body.imageUrl,
-        password: req.body.password,
-        description: req.body.description
-      })
-      res.json(updatedUser)
-    } else {
-      res.sendStatus(404)
+    const updateFields = {
+      description: req.body.description,
+      name: req.body.name,
+      email: req.body.email
     }
+
+    if (req.body.password) updateFields.password = req.body.password
+    if (req.body.profileImg) updateFields.profileImg = req.body.profileImg
+
+    const [numOfAffected, affected] = await User.update(updateFields, {
+      where: {username: req.params.username},
+      returning: true
+    })
+
+    const user = await User.findByPk(affected[0].id, {
+      include: [{model: Community, as: 'subscriber'}]
+    })
+
+    res.json(user)
   } catch (error) {
     next(error)
   }
