@@ -3,10 +3,23 @@ import CommunityPostComment from './CommunityPostComment'
 import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import ReactPlayer from 'react-player'
+import AddCommentFormCom from './AddCommentFormCom'
 
 function PostingPictures(props) {
   const {post} = props
-  if (post.photos && post.photos[0] !== undefined) {
+  if (post.videoUrl !== null) {
+    return (
+      <div className="vid-container">
+        <ReactPlayer
+          controls={true}
+          width="100%"
+          height="100%"
+          url={post.videoUrl}
+        />
+      </div>
+    )
+  } else if (post.photos && post.photos[0] !== undefined) {
     return <img src={post.photos[0].imgFile} className="post-images" />
   } else {
     return <div />
@@ -15,6 +28,7 @@ function PostingPictures(props) {
 
 export default function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
+  const [commentForm, setCommentForm] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -40,8 +54,13 @@ export default function PostPreview(props) {
               <p className="handle-text">{user.name}</p>
               <p className="handle-text">@{user.username}</p>
             </div>
-            <TimeAgo className="time-ago" date={post.createdAt} live={false} />
-            <Link to={`/p/${post.id}`}>
+            <Link className="link-to-post" to={`/p/${post.id}`}>
+              <TimeAgo
+                className="time-ago"
+                date={post.createdAt}
+                live={false}
+              />
+
               <p className="post-text">{post.description}</p>
             </Link>
             <div />
@@ -56,7 +75,14 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/all/500/comments.png"
                 className="commentIcon"
                 type="button"
+                onClick={() => setCommentForm(true)}
               />
+              <AddCommentFormCom
+                show={commentForm}
+                onHide={() => setCommentForm(false)}
+                postId={post.id}
+              />
+
               {post.postComments !== undefined && post.postComments.length ? (
                 <p
                   className="seeReplies"

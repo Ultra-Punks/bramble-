@@ -1,6 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import {EditProfileForm} from './index'
+import {connect} from 'react-redux'
+import {updateUserThunk} from '../store'
 
 class EditProfile extends React.Component {
   constructor() {
@@ -11,28 +12,40 @@ class EditProfile extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
 
-    let photo = false
-
-    if (event.target.file.value) {
-      photo = true
+    const profileInfo = {
+      description: event.target.bio.value,
+      profileImg: event.target.file.value,
+      name: event.target.name.value,
+      password: event.target.password.value || null,
+      email: event.target.email.value
     }
-    const postInfo = {
-      username: this.props.user.username,
-      description: event.target.description.value,
-      photo: photo,
-      photoInfo: event.target.file.value,
-      communityId: event.target.community.value
-    }
-    this.props.addPost(postInfo)
+    this.props.updateUser(this.props.user.username, profileInfo)
   }
 
   render() {
+    const user = this.props.user
     return (
       <div>
-        <EditProfileForm handleSubmit={this.handleSubmit} username="example" />
+        <EditProfileForm
+          profileImg={user.profileImg}
+          handleSubmit={this.handleSubmit}
+          user={user}
+        />
       </div>
     )
   }
 }
 
-export default EditProfile
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    updateUser: (username, info) => dispatch(updateUserThunk(username, info))
+  }
+}
+
+export default connect(mapState, mapDispatch)(EditProfile)

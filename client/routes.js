@@ -65,7 +65,7 @@ class Routes extends Component {
             path="/u/:username"
             component={withRouter(ProfileView)}
           />
-          <Route path="/p/:postId" component={SinglePostView} />
+          <Route path="/p/:postId" component={withRouter(SinglePostView)} />
           <Route path="/comments/:commentId" component={SingleComment} />
 
           {isLoggedIn && (

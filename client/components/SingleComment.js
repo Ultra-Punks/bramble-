@@ -12,33 +12,12 @@ import {
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
 class SingleComment extends Component {
-  constructor() {
-    super()
-
-    // this.likeComment = this.likeComment.bind(this)
-    // this.dislikeComment = this.dislikeComment.bind(this)
-  }
-
   componentDidMount() {
     this.props.fetchSingleComment()
-
-    // this.props.fetchLikes()
-    // this.props.fetchDislikes()
   }
-
-  // likeComment() {
-  //   console.log('likes before increment', this.props.singleComment.likes)
-  //   this.props.singleComment.likes++
-  //   console.log('likes AFTER increment', this.props.singleComment.likes)
-  // }
-
-  // dislikeComment() {
-  //   this.props.singleComment.dislikes++
-  // }
 
   render() {
     const commenter = this.props.singleComment.user
-    console.log('COMMENTER>>>>', commenter)
     const {likes, dislikes, comment} = this.props.singleComment
     return (
       <div className="commentContainer">

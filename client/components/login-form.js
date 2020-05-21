@@ -67,8 +67,6 @@ const mapDispatch = dispatch => {
       evt.preventDefault()
       const password = evt.target.password.value
       const username = evt.target.username.value
-      console.log('THIS IS USERNAME', username)
-      console.log('THIS IS PASSWORD', password)
       dispatch(auth(null, password, 'login', null, username))
     }
   }

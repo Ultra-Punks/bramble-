@@ -188,6 +188,7 @@ class ProfileView extends React.Component {
                 profile={this.props.profile.profile}
                 handleComments={this.handleComments}
                 openComments={this.state.openComments}
+                loggedInUser={this.props.user.username}
               />
             </div>
           </div>

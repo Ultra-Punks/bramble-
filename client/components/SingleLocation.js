@@ -153,6 +153,7 @@ class SingleLocationView extends React.Component {
   // }
 
   render() {
+
     const location = this.props.location
     // const location = this.state.location
 
