@@ -143,9 +143,6 @@ const videoTypes = ['.mp4', '.avi', '.mov', '.flv', '.wmv']
 //creates new post according to user
 router.post('/add/:username', async (req, res, next) => {
   try {
-    console.log('\n')
-    console.log('REQ BODY', req.body)
-    console.log('\n')
     const user = await User.findOne({
       where: {
         username: req.params.username

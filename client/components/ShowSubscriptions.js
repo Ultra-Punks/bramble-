@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 function ShowInfo(props) {
   const {profile} = props
-  console.log('THIS IS PROFILE', profile)
   if (
     profile !== undefined &&
     profile.subscriber !== undefined &&

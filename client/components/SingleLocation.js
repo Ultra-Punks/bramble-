@@ -84,7 +84,6 @@ class SingleLocationView extends React.Component {
   }
 
   render() {
-    console.log('THIS IS PROPS', this.props)
     const location = this.props.singleLocation
     return (
       <div className="page-container">
