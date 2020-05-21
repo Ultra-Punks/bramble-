@@ -913,6 +913,10 @@ form div {
   align-items: center;
 }
 
+.commentHeader {
+  display: flex;
+}
+
 .singleCommentPreview {
   display: flex;
   flex-direction: column;
