@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import ReactPlayer from 'react-player'
+import AddCommentFormCom from './AddCommentFormCom'
 
 function PostingPictures(props) {
   const {post} = props
@@ -27,6 +28,7 @@ function PostingPictures(props) {
 
 export default function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
+  const [commentForm, setCommentForm] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -73,7 +75,14 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/all/500/comments.png"
                 className="commentIcon"
                 type="button"
+                onClick={() => setCommentForm(true)}
               />
+              <AddCommentFormCom
+                show={commentForm}
+                onHide={() => setCommentForm(false)}
+                postId={post.id}
+              />
+
               {post.postComments !== undefined && post.postComments.length ? (
                 <p
                   className="seeReplies"

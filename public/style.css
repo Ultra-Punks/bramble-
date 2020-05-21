@@ -323,6 +323,7 @@ form div {
   display: flex;
   height: auto;
   padding: 10px;
+  width: 100%;
 }
 
 .community-post-label {
@@ -1128,7 +1129,7 @@ form div {
 
 .replies {
   margin-top: 2%;
-  margin-left: 12%;
+  margin-left: 1%;
   margin-bottom: 1%;
   font-family: 'Roboto';
   font-weight: 500;
