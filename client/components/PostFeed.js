@@ -14,6 +14,7 @@ export default function PostFeed(props) {
                 post={post}
                 profile={props.profile}
                 className="all-comment-preview-container"
+                loggedInUser={props.loggedInUser}
               />
             )
           })}

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 // action types:
 const GET_USER_POSTS = 'GET_USER_POSTS'
@@ -43,6 +44,7 @@ export const addPostThunk = postInfo => {
         `/api/posts/add/${postInfo.username}`,
         postInfo
       )
+      history.push(`/p/${data.id}`)
       dispatch(addUserPost(data))
     } catch (error) {
       console.log(error)

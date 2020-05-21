@@ -4,11 +4,27 @@ import {connect} from 'react-redux'
 import {fetchSinglePost} from '../store/singlePost'
 import {PostComment, FullPicture} from './index'
 import {Image} from 'react-bootstrap'
+import ReactPlayer from 'react-player'
 
 function PostingPictures(props) {
   const {post} = props
   const [showPicture, setShowPicture] = useState(false)
-  if (post !== undefined && post.photos !== undefined && post.photos.length) {
+  if (post.videoUrl !== null) {
+    return (
+      <div className="vid-container">
+        <ReactPlayer
+          controls={true}
+          width="100%"
+          height="100%"
+          url={post.videoUrl}
+        />
+      </div>
+    )
+  } else if (
+    post !== undefined &&
+    post.photos !== undefined &&
+    post.photos.length
+  ) {
     return (
       <div className="single-post-img-container">
         <img

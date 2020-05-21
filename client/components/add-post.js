@@ -13,18 +13,13 @@ class AddPost extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
 
-    let photo = false
-
-    if (event.target.file.value) {
-      photo = true
-    }
     const postInfo = {
       username: this.props.user.username,
       description: event.target.description.value,
-      photo: photo,
-      photoInfo: event.target.file.value,
+      file: event.target.file.value,
       communityId: event.target.community.value
     }
+    console.log(postInfo)
     this.props.addPost(postInfo)
   }
 
@@ -41,6 +36,7 @@ class AddPost extends React.Component {
           handleSubmit={this.handleSubmit}
           username={this.props.user.username}
           communities={this.props.user.subscriber}
+          closeForm={this.props.onHide}
         />
       </Modal>
     )
