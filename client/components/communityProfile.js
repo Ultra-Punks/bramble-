@@ -154,11 +154,11 @@ const mapDispatch = (dispatch, ownProps) => {
     fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id)),
     subscribe: () => {
       dispatch(subToCommunity(id))
-      setTimeout(() => dispatch(me()), 10)
+      setTimeout(() => dispatch(me()), 500)
     },
     unsubscribe: () => {
       dispatch(unSubToCommunity(id))
-      setTimeout(() => dispatch(me()), 10)
+      setTimeout(() => dispatch(me()), 500)
     }
   }
 }

@@ -359,6 +359,7 @@ form div {
 .post-header {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .post-handle {
@@ -729,6 +730,7 @@ form div {
 
 .commentsAndShares {
   display: flex;
+  width: 100%;
 }
 
 .likesAndDislikes {
@@ -1243,4 +1245,15 @@ form div {
   height: 40em;
   width: 95%;
   object-fit: contain;
+}
+
+.vid-container {
+  background-color: #3d4a63;
+  height: 30em;
+  width: 20em;
+}
+
+.delete-button {
+  align-self: flex-end;
+  margin-left: 45%;
 }

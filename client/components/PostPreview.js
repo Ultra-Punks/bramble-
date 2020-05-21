@@ -1,14 +1,29 @@
+/* eslint-disable complexity */
 import React, {useState} from 'react'
 import PostComment from './PostComment'
 import {Link} from 'react-router-dom'
 import {FullPicture} from './index'
-import {Image} from 'react-bootstrap'
+import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import ReactPlayer from 'react-player'
 
 function PostingPictures(props) {
   const {post} = props
   const [showPicture, setShowPicture] = useState(false)
-  if (post.photos[0] !== undefined) {
+
+  if (post.videoUrl !== null) {
+    return (
+      <div className="vid-container">
+        <ReactPlayer
+          controls={true}
+          width="100%"
+          height="100%"
+          url={post.videoUrl}
+          light={true}
+        />
+      </div>
+    )
+  } else if (post.photos[0] !== undefined) {
     return (
       <div>
         <img
@@ -43,7 +58,9 @@ export default function PostPreview(props) {
 
   return (
     <div className="single-post-preview-container">
-      {post.communityId ? (
+      {post.communityId &&
+      post.community &&
+      post.community.name !== undefined ? (
         <div className="community-post-label">{post.community.name}</div>
       ) : (
         ''
@@ -117,6 +134,13 @@ export default function PostPreview(props) {
                 // onClick={() => this.dislikeComment()}
               />
             </div>
+            {profile.username === props.loggedInUser ? (
+              <Button className="delete-button" variant="danger">
+                X
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
           <br />
           <PostComment post={post} openComments={openComments} />

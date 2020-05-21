@@ -1,6 +1,6 @@
 const vision = require('@google-cloud/vision')
 
-async function scanner(image, options) {
+async function scanner(image) {
   let allLabels = []
 
   const client = new vision.ImageAnnotatorClient({
@@ -31,4 +31,4 @@ async function scanner(image, options) {
   return allLabels
 }
 
-module.exports = {scanner}
+module.exports = scanner

@@ -6,6 +6,9 @@ const UserPost = db.define('userPost', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  videoUrl: {
+    type: Sequelize.TEXT
+  },
   likes: {
     type: Sequelize.INTEGER,
     defaultValue: 0

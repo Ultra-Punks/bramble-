@@ -1,6 +1,7 @@
+/* eslint-disable max-statements */
 /* eslint-disable camelcase */
 const router = require('express').Router()
-const {scanner} = require('../imageRec')
+const scanner = require('../imageRec')
 const {Op} = require('sequelize')
 
 const {
@@ -33,6 +34,7 @@ router.get('/:postId', async (req, res, next) => {
       include: [
         {model: Photo, include: {model: Tag}},
         {model: User},
+        {model: Community, attributes: ['name']},
         {model: PostComment, include: [{model: User}]}
       ]
     })
@@ -119,6 +121,7 @@ router.get('/for/:id', async (req, res, next) => {
       where: {communityId: req.params.id},
       include: [
         {model: User},
+        {model: Community, attributes: ['name']},
         {model: Photo, include: [{model: Tag}]},
         {
           model: PostComment,
@@ -135,49 +138,113 @@ router.get('/for/:id', async (req, res, next) => {
   }
 })
 
+const videoTypes = ['.mp4', '.avi', '.mov', '.flv', '.wmv']
+
 //creates new post according to user
 router.post('/add/:username', async (req, res, next) => {
   try {
+    console.log('\n')
+    console.log('REQ BODY', req.body)
+    console.log('\n')
     const user = await User.findOne({
       where: {
         username: req.params.username
       }
     })
 
-    let comId = req.body.communityId
-    if (comId === 'none') comId = null
-    let newPost = await UserPost.create({
-      userId: user.id,
-      description: req.body.description,
-      communityId: comId
-    })
+    //check to see if body has a file url
+    if (req.body.file) {
+      const file = req.body.file
+      const fileType = file.slice(file.lastIndexOf('.'))
 
-    if (req.body.photo) {
-      const newPhoto = await Photo.create({
-        userPostId: newPost.id,
-        userId: user.id,
-        imgFile: req.body.photoInfo
-      })
-
-      const scannedLabels = await scanner(req.body.photoInfo)
-
-      scannedLabels.forEach(label => {
-        Tag.create({
-          imageTag: label,
-          userPostId: newPost.id,
-          photoId: newPhoto.id,
-          userId: user.id
+      //check to see if the url type is a video
+      if (videoTypes.includes(fileType)) {
+        let comId = req.body.communityId
+        if (comId === 'none') comId = null
+        let newPost = await UserPost.create({
+          userId: user.id,
+          description: req.body.description,
+          communityId: comId,
+          videoUrl: req.body.file
         })
-      })
 
-      const postWithPics = await UserPost.findByPk(newPost.id, {
-        include: [{model: Photo, include: [{model: Tag}]}]
-      })
+        newPost = await UserPost.findByPk(newPost.id, {
+          include: [
+            {model: User},
+            {model: Community, attributes: ['name']},
+            {model: Photo, include: [{model: Tag}]},
+            {
+              model: PostComment,
+              include: [{model: User}],
+              order: [['createdAt', 'DESC']]
+            }
+          ]
+        })
 
-      res.json(postWithPics)
+        res.json(newPost)
+      } else {
+        //file is an image
+        let comId = req.body.communityId
+        if (comId === 'none') comId = null
+        let newPost = await UserPost.create({
+          userId: user.id,
+          description: req.body.description,
+          communityId: comId
+        })
+
+        const newPhoto = await Photo.create({
+          userPostId: newPost.id,
+          userId: user.id,
+          imgFile: req.body.file
+        })
+
+        const scannedLabels = await scanner(req.body.file)
+
+        scannedLabels.forEach(label => {
+          Tag.create({
+            imageTag: label,
+            userPostId: newPost.id,
+            photoId: newPhoto.id,
+            userId: user.id
+          })
+        })
+
+        const postWithPics = await UserPost.findByPk(newPost.id, {
+          include: [
+            {model: User},
+            {model: Community, attributes: ['name']},
+            {model: Photo, include: [{model: Tag}]},
+            {
+              model: PostComment,
+              include: [{model: User}],
+              order: [['createdAt', 'DESC']]
+            }
+          ]
+        })
+
+        res.json(postWithPics)
+      }
     } else {
+      //body has no file url
+      let comId = req.body.communityId
+      if (comId === 'none') comId = null
+      let newPost = await UserPost.create({
+        userId: user.id,
+        description: req.body.description,
+        communityId: comId
+      })
+
       newPost = await UserPost.findByPk(newPost.id, {
-        include: [{model: Photo}]
+        include: [
+          {model: User},
+          {model: Community, attributes: ['name']},
+          {model: Photo, include: [{model: Tag}]},
+          {
+            model: PostComment,
+            include: [{model: User}],
+            order: [['createdAt', 'DESC']]
+          }
+        ]
       })
 
       res.json(newPost)
@@ -187,10 +254,21 @@ router.post('/add/:username', async (req, res, next) => {
   }
 })
 
-// increase the nuber of likes on a post
+// increase the number of likes on a post
 router.put('/:postId/likes', async (req, res, next) => {
   try {
-    let updatedPostLikes = await UserPost.findByPk(req.params.postId)
+    let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
+      include: [
+        {model: User},
+        {model: Community, attributes: ['name']},
+        {model: Photo, include: [{model: Tag}]},
+        {
+          model: PostComment,
+          include: [{model: User}],
+          order: [['createdAt', 'DESC']]
+        }
+      ]
+    })
     updatedPostLikes.likes++
     await updatedPostLikes.save()
     res.status(200).json(updatedPostLikes)
@@ -199,25 +277,22 @@ router.put('/:postId/likes', async (req, res, next) => {
   }
 })
 
-// get random posts
-router.put('/random', async (req, res, next) => {
-  try {
-    const arrOfIds = req.body.postIds
-    const randomPosts = await UserPost.findAll({
-      where: {id: arrOfIds}
-    })
-    res.json(randomPosts)
-  } catch (error) {
-    next(error)
-  }
-})
-
 // increase the number of dislikes on a post
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {
-    let updatedPostDislikes = await UserPost.findByPk(req.params.postId)
+    let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
+      include: [
+        {model: User},
+        {model: Community, attributes: ['name']},
+        {model: Photo, include: [{model: Tag}]},
+        {
+          model: PostComment,
+          include: [{model: User}],
+          order: [['createdAt', 'DESC']]
+        }
+      ]
+    })
     updatedPostDislikes.dislikes++
-    // await updatedPostDislikes.increaseDislikes()
     await updatedPostDislikes.save()
     res.status(200).json(updatedPostDislikes)
   } catch (error) {
@@ -232,6 +307,19 @@ router.delete('/:postId', async (req, res, next) => {
       where: {id: req.params.postId}
     })
     res.status(200).json(numOfDeleted)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get random posts
+router.put('/random', async (req, res, next) => {
+  try {
+    const arrOfIds = req.body.postIds
+    const randomPosts = await UserPost.findAll({
+      where: {id: arrOfIds}
+    })
+    res.json(randomPosts)
   } catch (error) {
     next(error)
   }

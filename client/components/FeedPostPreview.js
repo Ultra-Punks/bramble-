@@ -1,26 +1,40 @@
 import React, {useState} from 'react'
-import PostComment from './PostComment'
 import {Link} from 'react-router-dom'
 import {Image} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
-import {FullPicture} from './index'
+import {FullPicture, FeedPostComment} from './index'
+import ReactPlayer from 'react-player'
+import history from '../history'
+import {likeUserPostThunk, dislikeUserPostThunk} from '../store/generalUserFeed'
+import {connect} from 'react-redux'
 
 function PostingPictures(props) {
   const {post} = props
   const [showPicture, setShowPicture] = useState(false)
 
-  if (post.photos[0] !== undefined) {
+  if (post.videoUrl !== null) {
+    return (
+      <div className="vid-container">
+        <ReactPlayer
+          controls={true}
+          width="100%"
+          height="100%"
+          url={post.videoUrl}
+        />
+      </div>
+    )
+  } else if (post.photos[0] !== undefined) {
     return (
       <div>
         <img
           src={post.photos[0].imgFile}
           className="post-images"
-          onClick={() => setShowPicture(true)}
+          onClick={e => setShowPicture(true)}
         />
         <FullPicture
           show={showPicture}
           image={post.photos[0].imgFile}
-          onHide={() => setShowPicture(false)}
+          onHide={e => setShowPicture(false)}
         />
       </div>
     )
@@ -29,7 +43,7 @@ function PostingPictures(props) {
   }
 }
 
-export default function FeedPostPreview(props) {
+function FeedPostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
 
   function handleComments() {
@@ -116,6 +130,7 @@ export default function FeedPostPreview(props) {
                 src="https://img.icons8.com/ios/64/000000/like.png"
                 className="likeIcon"
                 type="button"
+                onClick={() => props.likePost(post.id)}
               />
             </div>
             <div className="dislikes">
@@ -128,13 +143,26 @@ export default function FeedPostPreview(props) {
                 src="https://img.icons8.com/windows/80/000000/dislike.png"
                 className="dislikeIcon"
                 type="button"
-                // onClick={() => this.dislikeComment()}
+                onClick={() => props.dislikePost(post.id)}
               />
             </div>
           </div>
-          <PostComment post={post} openComments={openComments} />
+          <FeedPostComment
+            post={post}
+            openComments={openComments}
+            postId={post.id}
+          />
         </div>
       </div>
     </div>
   )
 }
+
+const mapDispatch = dispatch => {
+  return {
+    likePost: postId => dispatch(likeUserPostThunk(postId)),
+    dislikePost: postId => dispatch(dislikeUserPostThunk(postId))
+  }
+}
+
+export default connect(null, mapDispatch)(FeedPostPreview)

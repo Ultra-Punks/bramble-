@@ -96,7 +96,12 @@ export default function AddPostForm(props) {
             onChange={uploadImage}
             style={{margin: 0, width: 75}}
           />
-          <Button className="post-button" variant="outline-light" type="submit">
+          <Button
+            className="post-button"
+            variant="outline-light"
+            type="submit"
+            onClick={() => props.closeForm()}
+          >
             Post
           </Button>
         </div>
