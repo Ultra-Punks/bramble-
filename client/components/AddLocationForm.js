@@ -28,6 +28,7 @@ export class AddLocationForm extends React.Component {
   }
   componentDidMount() {
     if (this.props.location) {
+      console.log('in the if in compdidmount addLocation', this.props.location)
       this.setState({
         name: this.props.location.name,
         address: this.props.location.address,
@@ -57,6 +58,7 @@ export class AddLocationForm extends React.Component {
     })
   }
   render() {
+    console.log('location in addlocation form', this.props.location)
     return (
       <form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}
@@ -65,13 +67,12 @@ export class AddLocationForm extends React.Component {
             <Form.Label>Community</Form.Label>
             <Form.Control name="community" as="select" custom>
               <option value="none">None</option>
-              {communities &&
-                communities.map(community => {
+              {this.props.subscribedCommunities &&
+                this.props.subscribedCommunities.map(community => {
                   return (
-                    // <option key={community.id} value={community.id}>
-                    //   {community.name}
-                    // </option>
-                    <option key={community}>{community}</option>
+                    <option key={community.id} value={community.id}>
+                      {community.name}
+                    </option>
                   )
                 })}
             </Form.Control>
@@ -135,7 +136,7 @@ export class AddLocationForm extends React.Component {
 }
 
 const mapState = state => ({
-  // communites: state.allCommunities
+  subscribedCommunities: state.user.subscriber
 })
 const mapDispatch = dispatch => ({
   add: location => {

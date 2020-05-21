@@ -1,0 +1,36 @@
+/* single location stuff here */
+
+.stars {
+  display: flex;
+}
+.stars img {
+  width: 33px;
+  height: 33px;
+}
+.single-location-view-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 75%;
+  margin: 50px;
+}
+
+.single-location-view-img {
+  height: 44%;
+  width: 44%;
+}
+
+.single-location-feedback {
+  display: flex;
+  align-items: center;
+}
+
+/* .location-photos {
+  width: 33%;
+  height: 33%
+} */
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1043,37 +1043,6 @@ form div {
   margin-bottom: 25px;
 }
 
-/* single location stuff here */
-
-.stars {
-  display: flex;
-}
-.stars img {
-  width: 33px;
-  height: 33px;
-}
-.single-location-view-container {
-  display: flex;
-  width: 50%;
-  height: 75%;
-  margin: 50px;
-}
-
-.single-location-view-img {
-  height: 44%;
-  width: 44%;
-}
-
-.single-location-feedback {
-  display: flex;
-  align-items: center;
-}
-
-/* .location-photos {
-  width: 33%;
-  height: 33%
-} */
-
 .home-feed-container {
   display: flex;
   margin: 3%;

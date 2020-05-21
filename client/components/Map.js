@@ -21,6 +21,7 @@ import {
   fetchSomeLocations,
   fetchHomeFeedLocations
 } from '../store/locations'
+import {fetchOneLocation} from '../store/singleLocation'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -48,16 +49,16 @@ class Map extends React.Component {
     }
   }
   componentDidMount() {
-    if (this.props.homeId) {
-      this.props.getSomeLocations(this.props.homeId)
-    } else if (
-      this.props.singleLocation &&
-      this.props.singleLocation.geometry
-    ) {
-      this.addMarker(
-        this.props.singleLocation.geometry.coordinates,
-        this.props.singleLocation
-      )
+    if (this.props.userHomeId) {
+      this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
+      // } else if (this.props.locationId) {
+      //   this.props.fetchLocation(this.props.locationId)
+      //   this.setState({selectedLocation: this.props.singleLocation})
+      //   console.log('state after setstate in the singleLocation check in map compdidmount', this.state.selectedLocation)
+      // this.addMarker(
+      //   this.state.selectedLocation.geometry.coordinates,
+      //   this.state.singleLocation
+      // )
     } else if (this.props.cId) {
       this.props.getSomeLocations(this.props.cId, 'community')
     } else if (this.props.username) {
@@ -100,6 +101,7 @@ class Map extends React.Component {
   renderPopup(loc) {
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
+    // console.log('loc in renderpopup', loc)
     return (
       <Popup
         tipSize={7}
@@ -107,20 +109,42 @@ class Map extends React.Component {
         longitude={long}
         latitude={lat}
         // onMouseLeave={() => this.setState({displayPopup: false})}
-        onClose={() => {
-          console.log('in the onclose func', loc)
-          loc.popup = false
-          this.setState({displayPopup: false})
-        }}
+        // onClose={() => {
+        //   console.log('in the onclose func', loc)
+        //   loc.popup = false
+        //   this.setState({displayPopup: false})
+        // }}
         closeButton={true}
         closeOnClick={true}
       >
-        <p>
-          <strong>{loc.name}</strong>
-          <br />
-          {`${loc.address} ${loc.city}`}
-          {loc.description && `${loc.description}`}
-        </p>
+        <div className="popup">
+          <p className="popup-header">
+            <Link to={`/l/${loc.id}`}>
+              <strong>{loc.name && loc.name}</strong>
+            </Link>
+            <Link to={`/community/list/${loc.communityId}`}>
+              {loc.community && loc.community.name && loc.community.name}
+            </Link>
+          </p>
+          <p className="popup-body">
+            {/* {`${loc.address} ${loc.city}`} */}
+            {loc.address && `${loc.address}`}
+            {loc.city && `${loc.city}`}
+            {loc.description && `${loc.description}`}
+          </p>
+          <Button
+            type="submit"
+            variant="danger"
+            onClick={() => this.handleShowForm()}
+          >
+            Add Location Form
+          </Button>
+          <AddLocation
+            show={this.state.show}
+            location={this.state.selectedLocation}
+            onHide={() => this.handleHideForm()}
+          />
+        </div>
       </Popup>
     )
   }
@@ -132,8 +156,8 @@ class Map extends React.Component {
       city = ''
     if (result) {
       name = result.text
-      address = result.properties.address
-      city = result.context[3].text
+      if (result.properties) address = result.properties.address
+      if (result.context && result.context[3]) city = result.context[3].text
     }
     this.setState({
       selectedLocation: {
@@ -153,7 +177,8 @@ class Map extends React.Component {
     this.addMarker(event.result.geometry.coordinates, event.result)
   }
   render() {
-    if (!this.props.locations[0] || !this.props.locations[0].id) return <div />
+    // if (!this.props.locations[0] || !this.props.locations[0].id
+    //   || !this.props.singleLocation || !this.props.singleLocation.geometry) return <div />
     //styles for geolocated and navigation
     const geolocateStyle = {
       float: 'left',
@@ -182,21 +207,7 @@ class Map extends React.Component {
         >
           Add My Location To Map
         </button>
-        {/* {this.state.displayForm && (
-          <AddLocationForm location={this.state.selectedLocation} />
-        )} */}
-        <Button
-          type="submit"
-          variant="danger"
-          onClick={() => this.handleShowForm()}
-        >
-          Add Location Form
-        </Button>
-        <AddLocation
-          show={this.state.show}
-          location={this.state.selectedLocation}
-          onHide={() => this.handleHideForm()}
-        />
+
         {/* our main interactive map component */}
         <MapGL
           ref={this.mapRef}
@@ -284,7 +295,7 @@ class Map extends React.Component {
               </div>
             )}
           {/* map() through locations and create Markers for all of them */}
-
+          {/* {!this.props.locations[0] ? '' :''} */}
           {this.props.locations.map((loc, idx) => {
             const long = loc.geometry.coordinates[0]
             const lat = loc.geometry.coordinates[1]
@@ -312,10 +323,13 @@ class Map extends React.Component {
   }
 }
 
-const mapState = state => ({locations: state.locations})
+const mapState = state => ({
+  locations: state.locations,
+  singleLocation: state.singleLocation
+})
 const mapDispatch = dispatch => ({
+  fetchLocation: id => dispatch(fetchOneLocation(id)),
   getAllLocations: () => dispatch(fetchAllLocations()),
   getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type))
 })
-
 export default connect(mapState, mapDispatch)(Map)
