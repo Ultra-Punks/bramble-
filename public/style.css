@@ -5,7 +5,12 @@ body {
   padding: 0;
   padding-top: 65px;
   margin: 0;
-  background-color: #53658a;
+  background-color: #f3f3f3;
+  /* background-image: linear-gradient(
+    to bottom right,
+    rgb(228, 228, 228),
+    rgb(255, 255, 255)
+  ); */
 }
 
 a {
@@ -35,7 +40,7 @@ form div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #3d4a63;
+  background-color: #2d3e4f;
   height: 75px;
   position: fixed;
   top: 0;
@@ -44,6 +49,13 @@ form div {
   z-index: 5;
 }
 
+.nav-bar-text {
+  color: white;
+}
+
+.nav-logo {
+  background-color: 31cb71;
+}
 .nav-group {
   display: flex;
 }
@@ -915,6 +927,11 @@ form div {
 
 .commentHeader {
   display: flex;
+}
+
+.coment-handle {
+  display: flex;
+  flex-direction: row;
 }
 
 .singleCommentPreview {

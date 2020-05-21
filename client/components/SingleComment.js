@@ -28,12 +28,12 @@ class SingleComment extends Component {
               <Link to={`/u/${commenter.username}`}>
                 <img src={commenter.profileImg} className="commentImg" />
               </Link>
-              <div className="post-handle">
+              <div className="comment-handle">
                 <Link to={`/u/${commenter.username}`}>
                   <p>{commenter.name}</p>
                 </Link>
                 <Link to={`/u/${commenter.username}`}>
-                  <ul>@{commenter.username}</ul>
+                  <p>@{commenter.username}</p>
                 </Link>
               </div>
             </div>
