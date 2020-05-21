@@ -28,6 +28,7 @@ export class AddLocationForm extends React.Component {
   }
   componentDidMount() {
     if (this.props.location) {
+      console.log('in the if in compdidmount addLocation', this.props.location)
       this.setState({
         name: this.props.location.name,
         address: this.props.location.address,
@@ -57,6 +58,7 @@ export class AddLocationForm extends React.Component {
     })
   }
   render() {
+    console.log('location in addlocation form', this.props.location)
     return (
       <form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}

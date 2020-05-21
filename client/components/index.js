@@ -5,6 +5,7 @@
  */
 export {default as Map} from './Map'
 export {default as AddLocationForm} from './AddLocationForm'
+export {default as AddLocationReview} from './AddLocationReview'
 export {default as AddLocation} from './AddLocation'
 export {default as SingleLocation} from './SingleLocation'
 export {default as LocationReviews} from './LocationReviews'
