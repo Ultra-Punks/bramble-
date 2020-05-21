@@ -55,6 +55,23 @@ router.get('/from/:username', async (req, res, next) => {
   }
 })
 
+// add a new review
+router.post('/of/:locationId', async (req, res, next) => {
+  try {
+    const location = Location.findByPk(req.params.locationId)
+    const {ratings, comments} = req.body
+    const newReview = await LocationReview.create({
+      locationId: req.params.locationId,
+      ratings,
+      comments
+    })
+
+    res.json(newReview)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // delete a review by Id
 router.delete('/:reviewId', async (req, res, next) => {
   try {
