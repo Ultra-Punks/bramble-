@@ -7,7 +7,6 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const allCommunity = await Community.findAll()
-    console.log(allCommunity)
 
     res.json(allCommunity)
   } catch (error) {

@@ -17,21 +17,6 @@ const addPostComment = comment => ({
   comment
 })
 
-// =================================================
-// // thunk creators below (remember, this returns an async function!)
-// export const fetchComments = (id) => {
-//   return async (dispatch) => {
-//     try {
-//       // get all the post's comments
-//       const {data} = await axios.get(`/api/comments/on/${id}`)
-//       dispatch(getPostComments(data))
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-// }
-// =================================================
-
 export const fetchComments = () => {
   return async dispatch => {
     try {

@@ -19,7 +19,6 @@ class AddPost extends React.Component {
       file: event.target.file.value,
       communityId: event.target.community.value
     }
-    console.log(postInfo)
     this.props.addPost(postInfo)
   }
 

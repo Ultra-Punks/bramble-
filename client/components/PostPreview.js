@@ -21,7 +21,6 @@ function PostingPictures(props) {
           width="100%"
           height="100%"
           url={post.videoUrl}
-          light={true}
         />
       </div>
     )
