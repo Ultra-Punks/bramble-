@@ -11,13 +11,15 @@ const CommentProfilePic = styled.div`
   padding: 20px;
   display: flex;
 `
-const CommentHandle = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding-left: 2%;
-`
+// const CommentHandle = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   padding-left: 2%;
+// `
 const CommentHeader = styled.div`
   background-color: rgba(60, 78, 96, 0.879);
+  display: flex;
+  align-items: center;
 `
 
 //import thunk:
@@ -46,14 +48,20 @@ class SingleComment extends Component {
               <CommentProfilePic to={`/u/${commenter.username}`}>
                 <img src={commenter.profileImg} className="commentImg" />
               </CommentProfilePic>
-              <CommentHandle>
-                <StyledLink to={`/u/${commenter.username}`}>
+              <StyledLink to={`/u/${commenter.username}`}>
+                <p>{commenter.name}</p>
+              </StyledLink>
+              <StyledLink to={`/u/${commenter.username}`}>
+                <p>@{commenter.username}</p>
+              </StyledLink>
+              {/* <CommentHandle> */}
+              {/* <StyledLink to={`/u/${commenter.username}`}>
                   <p>{commenter.name}</p>
                 </StyledLink>
                 <StyledLink to={`/u/${commenter.username}`}>
                   <p>@{commenter.username}</p>
-                </StyledLink>
-              </CommentHandle>
+                </StyledLink> */}
+              {/* </CommentHandle> */}
             </CommentHeader>
           ) : (
             <p>'loading'</p>
