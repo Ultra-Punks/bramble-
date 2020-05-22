@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {addLocationThunk, fetchAllLocations} from '../store/locations'
 import {InputGroup, Form, Button} from 'react-bootstrap'
 
@@ -10,7 +11,9 @@ export class AddLocationForm extends React.Component {
       name: '',
       address: '',
       city: '',
-      description: ''
+      description: '',
+      communityId: 0,
+      redirect: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,6 +32,7 @@ export class AddLocationForm extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    console.log('state in handlechange', this.state)
   }
 
   handleSubmit = event => {
@@ -42,17 +46,37 @@ export class AddLocationForm extends React.Component {
       name: '',
       address: '',
       city: '',
-      description: ''
+      description: '',
+      communityId: 0,
+      redirect: true
     })
   }
   render() {
+    const nextLocId = this.props.nextLocId
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          // to="/map"
+          //the below will work to redirect to the new location if all of the locations
+          //in the database have coordinates and aren't being excluded from props.locations
+          //like they are now - for now just redirecting to the map
+          to={`/l/${nextLocId}`}
+        />
+      )
+    }
     return (
       <form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}
         <div className="exit-add-post">
           <Form.Group controlId="community">
             <Form.Label>Community</Form.Label>
-            <Form.Control name="community" as="select" custom>
+            <Form.Control
+              value={this.state.communityId}
+              onChange={this.handleChange}
+              name="communityId"
+              as="select"
+              custom
+            >
               <option value="none">None</option>
               {this.props.subscribedCommunities &&
                 this.props.subscribedCommunities.map(community => {
@@ -123,12 +147,13 @@ export class AddLocationForm extends React.Component {
 }
 
 const mapState = state => ({
-  subscribedCommunities: state.user.subscriber
+  subscribedCommunities: state.user.subscriber,
+  singleLocation: state.singleLocation
 })
 const mapDispatch = dispatch => ({
   add: location => {
     dispatch(addLocationThunk(location))
-    dispatch(fetchAllLocations())
+    // dispatch(fetchAllLocations())
   }
 })
 export default connect(mapState, mapDispatch)(AddLocationForm)
