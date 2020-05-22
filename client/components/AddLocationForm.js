@@ -3,17 +3,6 @@ import {connect} from 'react-redux'
 import {addLocationThunk, fetchAllLocations} from '../store/locations'
 import {InputGroup, Form, Button} from 'react-bootstrap'
 
-const communities = [
-  'Food',
-  'Fitness',
-  'Skating',
-  'Fashion',
-  'blah',
-  'hello',
-  'something',
-  'something else'
-]
-
 export class AddLocationForm extends React.Component {
   constructor() {
     super()
@@ -28,7 +17,6 @@ export class AddLocationForm extends React.Component {
   }
   componentDidMount() {
     if (this.props.location) {
-      console.log('in the if in compdidmount addLocation', this.props.location)
       this.setState({
         name: this.props.location.name,
         address: this.props.location.address,
@@ -58,7 +46,6 @@ export class AddLocationForm extends React.Component {
     })
   }
   render() {
-    console.log('location in addlocation form', this.props.location)
     return (
       <form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}

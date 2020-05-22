@@ -26,7 +26,6 @@ import AddCommentForm from './components/AddCommentForm'
 
 import Footer from './components/Footer'
 
-
 /**
  * COMPONENT
  */
@@ -39,7 +38,6 @@ class Routes extends Component {
     const {isLoggedIn} = this.props
 
     return (
-
       <div className="Routes-Container">
         <Switch>
           {/* Routes placed here are available to all visitors */}
@@ -48,7 +46,6 @@ class Routes extends Component {
           <Route path="/map" component={Map} />
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/post/addComment/:id" component={AddCommentForm} />
-
 
           {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
           <Route path="/l/:id" component={SingleLocation} />

@@ -31,8 +31,7 @@ router.get('/of/:locationId', async (req, res, next) => {
     const locationReviews = await Location.findOne({
       where: {
         id: req.params.locationId
-      },
-      include: [{model: LocationReview}]
+      }
     })
     res.json(locationReviews)
   } catch (error) {
@@ -58,15 +57,18 @@ router.get('/from/:username', async (req, res, next) => {
 // add a new review
 router.post('/of/:locationId', async (req, res, next) => {
   try {
-    const location = Location.findByPk(req.params.locationId)
     const {ratings, comments} = req.body
     const newReview = await LocationReview.create({
       locationId: req.params.locationId,
+      userId: req.user.id,
       ratings,
       comments
     })
-
-    res.json(newReview)
+    const location = await Location.findByPk(req.params.locationId, {
+      include: [{model: LocationReview}, {model: User}]
+    })
+    // console.log('new review', newReview)
+    res.json(location)
   } catch (error) {
     next(error)
   }

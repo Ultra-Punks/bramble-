@@ -4,8 +4,6 @@ import {fetchOneLocation, addLocationReviewThunk} from '../store/singleLocation'
 import {Link} from 'react-router-dom'
 import {Image, Modal} from 'react-bootstrap'
 import {Map, LocationReviews, AddLocationReview} from './index'
-import MapGL from 'react-map-gl'
-import {mapboxToken} from '../../secrets'
 
 function PostingPictures(props) {
   const {post} = props
@@ -107,25 +105,9 @@ class SingleLocationView extends React.Component {
   }
   componentDidMount() {
     this.props.fetchLocation()
-    console.log('props in comp did mount singlelocation', this.props)
     this.setState({location: this.props.location})
-    console.log('state in comp did mount singlelocation', this.state)
-    // if(this.props.location.geometry && this.props.location.geometry.coordinates){
-    //   const coords = this.props.location.geometry.coordinates
-    //   this.setState({viewport: {width: 1000,
-    //     height: 700,
-    //     latitude: coords[1],
-    //     longitude: coords[0],
-    //     zoom: 12}})
+  }
 
-    //   console.log('state in comp did mount singlelocation', this.state)
-    // }
-  }
-  componentDidUpdate() {
-    if (this.state.location.id !== this.props.location.id) {
-      this.setState({location: this.props.location})
-    }
-  }
   handleShowForm() {
     this.setState({show: true})
   }
@@ -133,29 +115,9 @@ class SingleLocationView extends React.Component {
   handleHideForm() {
     this.setState({show: false})
   }
-  // renderMap(coords) {
-  //   this.setState({
-  //     viewport: {width: 1000,
-  //     height: 700,
-  //     latitude: coords[1],
-  //     longitude: coords[0],
-  //     zoom: 12}
-  //   })
-  //   this.setState({location: this.props.location})
-  //   console.log('state in method singlelocation', this.state)
-  //   return <Map locationId={this.props.location.id} />
-  //   return (<MapGL
-  //   mapStyle="mapbox://styles/mapbox/streets-v11"
-  //   mapboxApiAccessToken={mapboxToken}
-  //   {...this.state.viewport}
-  //   // onViewportChange={viewport => this.setState({viewport})}
-  //   ></MapGL>)
-  // }
 
   render() {
-
     const location = this.props.location
-    // const location = this.state.location
 
     if (!location || !location.id)
       return <div>Not enough info about this location yet</div>
@@ -218,15 +180,14 @@ class SingleLocationView extends React.Component {
               <p>Rate</p>
               <AddLocationReview
                 addReview={this.props.addReview}
+                // fetch={this.props.fetchLocation}
                 locationId={location.id}
               />
             </div>
-            <LocationReviews post={location} />
+            <LocationReviews location={location} />
           </div>
           <div className="profileMapContainer sticky">
-            {this.state.location.id && (
-              <Map locationId={this.state.location.id} />
-            )}
+            <Map singleLocation={this.props.location} />
           </div>
           {/* <div className="post-header">
             <UserPFP post={location} />
