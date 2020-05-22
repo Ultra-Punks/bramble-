@@ -43,7 +43,7 @@ class Routes extends Component {
           {/* Routes placed here are available to all visitors */}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/map" component={Map} />
+          <Route path="/map" component={withRouter(Map)} />
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/post/addComment/:id" component={AddCommentForm} />
 

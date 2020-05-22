@@ -348,7 +348,6 @@ class Map extends React.Component {
                 <Marker longitude={long} latitude={lat}>
                   <div
                     onClick={() => {
-                      console.log('in onclick in the div in marker', loc)
                       loc.popup = !loc.popup
                       this.setState({displayPopup: loc.popup})
                     }}
