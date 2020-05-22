@@ -119,7 +119,41 @@ const manualLocations = [
     geometry: {type: 'point', coordinates: [-73.956137, 40.650774]},
     name: 'Four Seasons Bakery & Juice Bar',
     description: 'Caribbean Food'
+  },
+  {
+    address: '100 N Moore St, New York, NY 10013',
+    geometry: {type: 'point', coordinates: [-74.011574, 40.720112]},
+    name: 'Tribeca Skatepark',
+    description:
+      'Street-style skatepark offering skateboarding & rollerblading with views of the Hudson River.'
+  },
+  {
+    address: '61 Bayard St, Brooklyn, NY 11222',
+    geometry: {type: 'point', coordinates: [-73.94941, 40.71911]},
+    name: 'McCarren Skatepark',
+    description:
+      'This small, free public skate park with steep banks offers a ledge feature & a quarter pipe.'
+  },
+  {
+    address: '140 Broadway, New York, NY 10005',
+    geometry: {type: 'point', coordinates: [-74.010689, 40.709042]},
+    name: 'Crunch Fitness - FiDi',
+    description:
+      'Our Gym is Your Gym Kick your feet up! With a gym designed around you, we think you’ll love it here.'
+  },
+  {
+    address: '9000-9038, Bay Pkwy, Brooklyn, NY 11214',
+    geometry: {type: 'point', coordinates: [-74.0015, 40.59477]},
+    name: 'Match point nyc',
+    description: 'Sports & fitness for the entire family.'
   }
+  // {
+  //   address: '61 Bayard St, Brooklyn, NY 11222',
+  //   geometry: {type: 'point', coordinates: [-73.94941, 40.71911]},
+  //   name: 'McCarren Skatepark',
+  //   description:
+  //     'This small, free public skate park with steep banks offers a ledge feature & a quarter pipe.',
+  // },
 ]
 
 // store 10 new locations created by generateUser into in the locationArray
