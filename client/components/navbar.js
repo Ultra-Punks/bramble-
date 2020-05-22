@@ -39,9 +39,13 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                   user={user}
                 />
 
-                <Link to="/home">Home</Link>
-                <Link to="/community">Community</Link>
-                <a href="#" onClick={handleClick}>
+                <Link to="/home" className="nav-bar-text">
+                  Home
+                </Link>
+                <Link to="/community" className="nav-bar-text">
+                  Community
+                </Link>
+                <a href="#" onClick={handleClick} className="nav-bar-text">
                   Logout
                 </a>
                 <Link to={`/u/${user.username}`}>
@@ -56,7 +60,9 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
               <div>
                 {/* The navbar will show these links before you log in */}
                 {/* <Link to="/login">Login</Link> */}
-                <Link to="/community">Community</Link>
+                <Link to="/community" className="nav-bar-text">
+                  Community
+                </Link>
                 <Button onClick={() => setLoginShow(true)}>Login</Button>
                 <LoginButton
                   show={loginShow}

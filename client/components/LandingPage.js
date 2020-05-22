@@ -36,7 +36,6 @@ class LandingPage extends Component {
       community: ''
     }
     this.randomCommunityIds = this.randomCommunityIds.bind(this)
-    this.randomPosts = this.randomPosts.bind(this)
   }
 
   componentDidMount() {
@@ -45,34 +44,20 @@ class LandingPage extends Component {
     this.props.fetchAllPosts()
     let arrOfIds = this.randomCommunityIds()
     this.props.getRandomCommunities(arrOfIds)
-    let arrayOfPostIds = this.randomPosts()
-    this.props.getRandomPosts(arrayOfPostIds)
   }
 
   randomCommunityIds() {
     var arr = []
-    while (arr.length < 4) {
+    while (arr.length < 3) {
       var r = Math.floor(Math.random() * 10) + 1
       if (arr.indexOf(r) === -1) arr.push(r)
     }
     return arr
   }
 
-  randomPosts() {
-    var newArr = []
-    while (newArr.length < 6) {
-      var r = Math.floor(Math.random() * 10) + 1
-      if (newArr.indexOf(r) === -1) newArr.push(r)
-    }
-    return newArr
-  }
-
   render() {
     this.randomCommunityIds()
     const randomCommunities = this.props.communities
-
-    this.randomPosts()
-    const randomPosts = this.props.posts
 
     return (
       <div className="landingPage">
@@ -109,13 +94,6 @@ class LandingPage extends Component {
                       </Link>
                     </div>
                   )
-                })}
-            </div>
-            <h2>Check out what the Bramblers are talking about.</h2>
-            <div className="samplePostsContainer">
-              {Array.isArray(randomPosts) &&
-                randomPosts.map(post => {
-                  return <div key={post.id}>{post.description}</div>
                 })}
             </div>
           </div>
