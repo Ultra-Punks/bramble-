@@ -1,9 +1,11 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import {Image, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import Heart from 'react-animated-heart'
 import {connect} from 'react-redux'
 import {
   likeProfileCommentThunk,
+  unlikeProfileCommentThunk,
   dislikeProfileCommentThunk,
   deleteCommentThunk
 } from '../store/userFeed'
@@ -18,6 +20,7 @@ const CommentHeader = styled.div`
 
 function PostComments(props) {
   const {post, openComments} = props
+  const [isClick, setClick] = useState(false)
   if (
     post !== undefined &&
     post.postComments !== undefined &&
@@ -52,12 +55,25 @@ function PostComments(props) {
                     {comment.likes}
                   </div>
                 )}
-                <img
-                  src="https://img.icons8.com/ios/64/000000/like.png"
-                  className="likeIcon"
-                  type="button"
-                  onClick={() => props.likeComment(comment.id, post.id)}
-                />
+                {isClick ? (
+                  <Heart
+                    className="likeIcon"
+                    isClick={isClick}
+                    onClick={() => {
+                      setClick(false)
+                      props.unlikeComment(comment.id, post.id)
+                    }}
+                  />
+                ) : (
+                  <Heart
+                    className="likeIcon"
+                    isClick={isClick}
+                    onClick={() => {
+                      setClick(true)
+                      props.likeComment(comment.id, post.id)
+                    }}
+                  />
+                )}
               </div>
               <div>
                 {comment.dislikes >= 1 && (
@@ -97,6 +113,8 @@ const mapDispatch = dispatch => {
   return {
     likeComment: (commentId, postId) =>
       dispatch(likeProfileCommentThunk(commentId, postId)),
+    unlikeComment: (commentId, postId) =>
+      dispatch(unlikeProfileCommentThunk(commentId, postId)),
     dislikeComment: (commentId, postId) =>
       dispatch(dislikeProfileCommentThunk(commentId, postId)),
     deleteComment: (commentId, postId) =>

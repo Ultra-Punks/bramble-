@@ -279,6 +279,29 @@ router.put('/:postId/likes', async (req, res, next) => {
   }
 })
 
+// remove like on a post
+router.put('/:postId/likes/remove', async (req, res, next) => {
+  try {
+    let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
+      include: [
+        {model: User},
+        {model: Community, attributes: ['name']},
+        {model: Photo, include: [{model: Tag}]},
+        {
+          model: PostComment,
+          include: [{model: User}]
+        }
+      ],
+      order: [[{model: PostComment}, 'createdAt', 'ASC']]
+    })
+    updatedPostLikes.likes--
+    await updatedPostLikes.save()
+    res.status(200).json(updatedPostLikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // increase the number of dislikes on a post
 router.put('/:postId/dislikes', async (req, res, next) => {
   try {

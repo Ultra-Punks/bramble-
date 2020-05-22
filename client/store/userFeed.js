@@ -74,6 +74,13 @@ export const likePostThunk = postId => {
   }
 }
 
+export const removelikePostThunk = postId => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/posts/${postId}/likes/remove`)
+    dispatch(updateUserPost(data))
+  }
+}
+
 export const dislikePostThunk = postId => {
   return async dispatch => {
     const {data} = await axios.put(`/api/posts/${postId}/dislikes`)
@@ -84,6 +91,13 @@ export const dislikePostThunk = postId => {
 export const likeProfileCommentThunk = (commentId, postId) => {
   return async dispatch => {
     const {data} = await axios.put(`/api/comments/${commentId}/likes`)
+    dispatch(updateUserComment(data, postId))
+  }
+}
+
+export const unlikeProfileCommentThunk = (commentId, postId) => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/likes/remove`)
     dispatch(updateUserComment(data, postId))
   }
 }
@@ -118,6 +132,17 @@ export const likeCommunityPost = postId => {
   }
 }
 
+export const unlikeCommunityPost = postId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/posts/${postId}/likes/remove`)
+      dispatch(updateCommunityPost(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 export const dislikeCommunityPost = postId => {
   return async dispatch => {
     try {
@@ -132,6 +157,13 @@ export const dislikeCommunityPost = postId => {
 export const likeCommunityCommentThunk = (commentId, postId) => {
   return async dispatch => {
     const {data} = await axios.put(`/api/comments/${commentId}/likes`)
+    dispatch(updateCommunityComment(data, postId))
+  }
+}
+
+export const unlikeCommunityCommentThunk = (commentId, postId) => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/likes/remove`)
     dispatch(updateCommunityComment(data, postId))
   }
 }
