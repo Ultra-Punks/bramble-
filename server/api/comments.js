@@ -101,6 +101,20 @@ router.put('/:commentId/likes', async (req, res, next) => {
   }
 })
 
+//remove like on post
+router.put('/:commentId/likes/remove', async (req, res, next) => {
+  try {
+    let updatedComment = await PostComment.findByPk(req.params.commentId, {
+      include: [{model: User}]
+    })
+    updatedComment.likes--
+    await updatedComment.save()
+    res.status(200).json(updatedComment)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // increase the number of dislikes on a comment
 router.put('/:commentId/dislikes', async (req, res, next) => {
   try {

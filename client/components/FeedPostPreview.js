@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Image, Button} from 'react-bootstrap'
@@ -5,9 +6,11 @@ import TimeAgo from 'react-timeago'
 import {FullPicture, FeedPostComment} from './index'
 import AddCommentFormFeed from './AddCommentFormFeed'
 import ReactPlayer from 'react-player'
+import Heart from 'react-animated-heart'
 import history from '../history'
 import {
   likeUserPostThunk,
+  removeLikeUserPostThunk,
   dislikeUserPostThunk,
   deletePostThunk
 } from '../store/generalUserFeed'
@@ -51,6 +54,7 @@ function PostingPictures(props) {
 function FeedPostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
+  const [isClick, setClick] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -62,6 +66,7 @@ function FeedPostPreview(props) {
 
   const {post} = props
 
+  const likeClass = isClick ? 'likes-number-active' : 'likes-number-unactive'
   return (
     <div className="single-post-preview-container">
       {post.communityId ? (
@@ -86,8 +91,21 @@ function FeedPostPreview(props) {
           <div>
             <div className="post-info">
               <div className="post-handle">
-                <p className="handle-text">{post.user.name}</p>
-                <p className="handle-text">@{post.user.username}</p>
+                <div className="post-info-inner">
+                  <p className="handle-text">{post.user.name}</p>
+                  <p className="handle-text">@{post.user.username}</p>
+                </div>
+                {post.user.username === props.loggedInUser ? (
+                  <Button
+                    className="delete-button"
+                    variant="danger"
+                    onClick={() => props.deletePost(post.id)}
+                  >
+                    X
+                  </Button>
+                ) : (
+                  ''
+                )}
               </div>
               <div className="post-feed-preview-info">
                 <Link className="link-to-post" to={`/p/${post.id}`}>
@@ -106,70 +124,70 @@ function FeedPostPreview(props) {
             <PostingPictures post={post} />
           </div>
           <div className="commentsAndShares">
-            <div className="commentRepliesContainer">
-              <img
-                src="https://img.icons8.com/all/500/comments.png"
-                className="commentIcon"
-                type="button"
-                onClick={() => setCommentForm(true)}
-              />
-              <AddCommentFormFeed
-                show={commentForm}
-                onHide={() => setCommentForm(false)}
-                postId={post.id}
-              />
-              {post.postComments !== undefined && post.postComments.length ? (
-                <p
-                  className="seeReplies"
-                  type="button"
-                  onClick={handleComments}
-                >
-                  {post.postComments.length > 1
-                    ? `See ${post.postComments.length} replies`
-                    : 'See 1 reply'}
-                </p>
-              ) : (
-                <p className="seeReplies">0 replies</p>
-              )}
-            </div>
+            {/* <div className="commentRepliesContainer"> */}
+            <img
+              src="https://img.icons8.com/all/500/comments.png"
+              className="commentIcon"
+              type="button"
+              onClick={() => setCommentForm(true)}
+            />
+            <AddCommentFormFeed
+              show={commentForm}
+              onHide={() => setCommentForm(false)}
+              postId={post.id}
+            />
+            {/* </div> */}
             <div className="likes">
-              {post.likes >= 1 && (
-                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-                  {post.likes}
-                </div>
+              {post.likes >= 1 && <p className={likeClass}>{post.likes}</p>}
+              {isClick ? (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(false)
+                    props.unlikePost(post.id)
+                  }}
+                />
+              ) : (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(true)
+                    props.likePost(post.id)
+                  }}
+                />
               )}
-              <img
-                src="https://img.icons8.com/ios/64/000000/like.png"
-                className="likeIcon"
-                type="button"
-                onClick={() => props.likePost(post.id)}
-              />
             </div>
             <div className="dislikes">
               {post.dislikes >= 1 && (
-                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-                  {post.dislikes}
-                </div>
+                <p className="dislikes-number">{post.dislikes}</p>
               )}
               <img
-                src="https://img.icons8.com/windows/80/000000/dislike.png"
+                src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
                 className="dislikeIcon"
                 type="button"
                 onClick={() => props.dislikePost(post.id)}
               />
             </div>
-            {post.user.username === props.loggedInUser ? (
-              <Button
-                className="delete-button"
-                variant="danger"
-                onClick={() => props.deletePost(post.id)}
-              >
-                X
-              </Button>
-            ) : (
-              ''
-            )}
           </div>
+          {post.postComments !== undefined && post.postComments.length ? (
+            <div className="see-replies-container" onClick={handleComments}>
+              <p className="seeReplies" type="button">
+                {post.postComments.length > 1
+                  ? `${post.postComments.length} replies`
+                  : '1 reply'}
+              </p>
+              <img
+                className="replies-button"
+                src="https://image.flaticon.com/icons/svg/271/271210.svg"
+              />
+            </div>
+          ) : (
+            <div className="see-replies-container">
+              <p className="seeReplies">0 replies</p>
+            </div>
+          )}
           <FeedPostComment
             post={post}
             openComments={openComments}
@@ -185,6 +203,7 @@ function FeedPostPreview(props) {
 const mapDispatch = dispatch => {
   return {
     likePost: postId => dispatch(likeUserPostThunk(postId)),
+    unlikePost: postId => dispatch(removeLikeUserPostThunk(postId)),
     dislikePost: postId => dispatch(dislikeUserPostThunk(postId)),
     deletePost: postId => dispatch(deletePostThunk(postId))
   }

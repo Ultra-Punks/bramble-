@@ -50,6 +50,17 @@ export const likeUserPostThunk = postId => {
   }
 }
 
+export const removeLikeUserPostThunk = postId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/posts/${postId}/likes/remove`)
+      dispatch(updateUserPost(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const dislikeUserPostThunk = postId => {
   return async dispatch => {
     try {
@@ -65,6 +76,17 @@ export const likeCommentThunk = (commentId, postId) => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`/api/comments/${commentId}/likes`)
+      dispatch(updateComment(data, postId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const unlikeCommentThunk = (commentId, postId) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(`/api/comments/${commentId}/likes/remove`)
       dispatch(updateComment(data, postId))
     } catch (error) {
       console.log(error)

@@ -6,11 +6,12 @@ import {FullPicture} from './index'
 import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import ReactPlayer from 'react-player'
-import history from '../history'
+import Heart from 'react-animated-heart'
 import AddCommentForm from './AddCommentForm'
 import {connect} from 'react-redux'
 import {
   likePostThunk,
+  removelikePostThunk,
   dislikePostThunk,
   deletePostThunk
 } from '../store/userFeed'
@@ -53,6 +54,8 @@ function PostingPictures(props) {
 function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
+  const [isClick, setClick] = useState(false)
+
   function handleComments() {
     if (openComments) {
       setOpenComment(false)
@@ -128,12 +131,25 @@ function PostPreview(props) {
                   {post.likes}
                 </div>
               )}
-              <img
-                src="https://img.icons8.com/ios/64/000000/like.png"
-                className="likeIcon"
-                type="button"
-                onClick={() => props.likePost(post.id)}
-              />
+              {isClick ? (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(false)
+                    props.unlikePost(post.id)
+                  }}
+                />
+              ) : (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(true)
+                    props.likePost(post.id)
+                  }}
+                />
+              )}
             </div>
             <div className="dislikes">
               {post.dislikes >= 1 && (
@@ -175,6 +191,7 @@ function PostPreview(props) {
 const mapDispatch = dispatch => {
   return {
     likePost: postId => dispatch(likePostThunk(postId)),
+    unlikePost: postId => dispatch(removelikePostThunk(postId)),
     dislikePost: postId => dispatch(dislikePostThunk(postId)),
     deletePost: postId => dispatch(deletePostThunk(postId))
   }

@@ -3,10 +3,12 @@ import CommunityPostComment from './CommunityPostComment'
 import {Link} from 'react-router-dom'
 import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
+import Heart from 'react-animated-heart'
 import ReactPlayer from 'react-player'
 import AddCommentFormCom from './AddCommentFormCom'
 import {
   likeCommunityPost,
+  unlikeCommunityPost,
   dislikeCommunityPost,
   deleteCommunityPostThunk
 } from '../store/userFeed'
@@ -35,6 +37,7 @@ function PostingPictures(props) {
 function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
+  const [isClick, setClick] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -109,12 +112,25 @@ function PostPreview(props) {
                   {post.likes}
                 </div>
               )}
-              <img
-                src="https://img.icons8.com/ios/64/000000/like.png"
-                className="likeIcon"
-                type="button"
-                onClick={() => props.likePost(post.id)}
-              />
+              {isClick ? (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(false)
+                    props.unlikePost(post.id)
+                  }}
+                />
+              ) : (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(true)
+                    props.likePost(post.id)
+                  }}
+                />
+              )}
             </div>
             <div className="dislikes">
               {post.dislikes >= 1 && (
@@ -156,6 +172,7 @@ function PostPreview(props) {
 const mapDispatch = dispatch => {
   return {
     likePost: postId => dispatch(likeCommunityPost(postId)),
+    unlikePost: postId => dispatch(unlikeCommunityPost(postId)),
     dislikePost: postId => dispatch(dislikeCommunityPost(postId)),
     deletePost: postId => dispatch(deleteCommunityPostThunk(postId))
   }
