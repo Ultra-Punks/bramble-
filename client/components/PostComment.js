@@ -1,9 +1,14 @@
 import React, {Component} from 'react'
 import {Image} from 'react-bootstrap'
-
 import {Link} from 'react-router-dom'
+import styled from 'styled-components'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
+const CommentHeader = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 2%;
+`
 
 export default function PostComments(props) {
   const {post, openComments} = props
@@ -18,21 +23,21 @@ export default function PostComments(props) {
       <div className="commentPreviewContainer">
         {postComments.map(comment => (
           <div key={comment.id} className="singleCommentPreview">
-            <div>
+            <CommentHeader>
               <Image
                 className="post-pfp"
                 src={comment.user.profileImg}
                 roundedCircle
               />
-              <div className="post-handle">
-                <Link to={`/u/${comment.user.username}`}>
-                  <p className="handle-text">{comment.user.name}</p>
-                </Link>
-                <Link to={`/u/${comment.user.username}`}>
-                  <p className="handle-text">@{comment.user.username}</p>
-                </Link>
-              </div>
-            </div>
+              {/* <div className="post-handle"> */}
+              <Link to={`/u/${comment.user.username}`}>
+                <p className="handle-text">{comment.user.name}</p>
+              </Link>
+              <Link to={`/u/${comment.user.username}`}>
+                <p className="handle-text">@{comment.user.username}</p>
+              </Link>
+              {/* </div> */}
+            </CommentHeader>
             <Link to={`/comments/${comment.id}`}>{comment.comment}</Link>
             <div className="commentShareBar">
               <div>
