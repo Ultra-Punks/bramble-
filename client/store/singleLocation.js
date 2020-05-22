@@ -31,7 +31,7 @@ export const fetchAddress = () => async dispatch => {
 }
 export const addLocationReviewThunk = (id, review) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/locationreviews/of/${id}`, review)
+    const {data} = await axios.post(`/api/reviews/of/${id}`, review)
     dispatch(addLocationReview(data))
   } catch (err) {
     console.error(err, 'Error adding location review')
@@ -46,10 +46,7 @@ export default function(state = {}, action) {
     case GET_ADDRESS:
       return {...state, address: action.address}
     case ADD_LOCATION_REVIEW:
-      return {
-        ...state,
-        locationReviews: [...state.locationReviews, action.review]
-      }
+      return action.review
     default:
       return state
   }

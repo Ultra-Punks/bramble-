@@ -9,7 +9,7 @@ export default class AddLocationReview extends React.Component {
     super()
     this.state = {
       comments: '',
-      rating: 0,
+      ratings: 1,
       show: false
     }
     this.handleChange = this.handleChange.bind(this)
@@ -35,10 +35,12 @@ export default class AddLocationReview extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
     this.props.addReview(this.props.locationId, this.state)
+    // this.props.fetch(this.props.locationId)
     this.setState({
       comments: '',
-      rating: 0
+      ratings: 1
     })
+    this.handleHideForm()
   }
 
   render() {
@@ -59,6 +61,17 @@ export default class AddLocationReview extends React.Component {
           centered
         >
           <form onSubmit={this.handleSubmit}>
+            <select
+              name="ratings"
+              value={this.state.ratings}
+              onChange={this.handleChange}
+            >
+              <option value={1}>One Star</option>
+              <option value={2}>Two Stars</option>
+              <option value={3}>Three Stars</option>
+              <option value={4}>Four Stars</option>
+              <option value={5}>Five Stars</option>
+            </select>
             <label htmlFor="comments">Comment:</label>
             <input
               name="comments"

@@ -1,5 +1,16 @@
 /* single location stuff here */
 
+.profileMapContainer {
+  display: flex;
+  align-items: center;
+  padding: 15%;
+}
+
+#map {
+  display: flex;
+  padding: 5%;
+  align-items: flex-end;
+}
 .stars {
   display: flex;
 }

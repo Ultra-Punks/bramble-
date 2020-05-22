@@ -36,8 +36,8 @@ class Map extends React.Component {
     this.state = {
       show: false,
       viewport: {
-        width: 1000,
-        height: 700,
+        width: window.innerWidth * 0.8,
+        height: window.innerHeight * 0.8,
         latitude: 40.705112,
         longitude: -74.009123,
         zoom: 12
@@ -48,23 +48,55 @@ class Map extends React.Component {
       // displayForm: false
     }
   }
+  // eslint-disable-next-line complexity
   componentDidMount() {
+    // this.setState({viewport: {
+    // ...this.state.viewport, width: window.innerWidth, height: window.innerHeight}})
+    const {userHomeId, singleLocation, cId, username} = this.props
+    // console.log('checks', userHomeId, singleLocation.id, cId, username)
     if (this.props.userHomeId) {
       this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
-      // } else if (this.props.locationId) {
-      //   this.props.fetchLocation(this.props.locationId)
-      //   this.setState({selectedLocation: this.props.singleLocation})
-      //   console.log('state after setstate in the singleLocation check in map compdidmount', this.state.selectedLocation)
-      // this.addMarker(
-      //   this.state.selectedLocation.geometry.coordinates,
-      //   this.state.singleLocation
-      // )
+      this.setState({selectedLocation: {}})
+    } else if (this.props.singleLocation.id) {
+      this.props.fetchLocation(this.props.singleLocation.id)
+      this.setState({selectedLocation: this.props.singleLocation})
+      this.addMarker(
+        this.props.singleLocation.geometry.coordinates,
+        this.props.singleLocation
+      )
     } else if (this.props.cId) {
       this.props.getSomeLocations(this.props.cId, 'community')
+      this.setState({selectedLocation: {}})
     } else if (this.props.username) {
       this.props.getSomeLocations(this.props.username, 'user')
+      this.setState({selectedLocation: {}})
     } else {
       this.props.getAllLocations()
+      this.setState({selectedLocation: {}})
+    }
+    let mapSize
+    if (
+      // typeof window.innerWidth != undefined &&
+      userHomeId ||
+      singleLocation.id ||
+      cId ||
+      username
+    ) {
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
+      // console.log('this is mapsize', mapSize)
+    } else {
+      // console.log('in the mapsize else', window.innerWidth)
+      mapSize = window.innerWidth
+      this.setState({
+        viewport: {
+          ...this.state.viewport,
+          width: window.innerWidth * 0.8,
+          height: window.innerHeight * 0.8
+        }
+      })
     }
   }
 
@@ -120,7 +152,7 @@ class Map extends React.Component {
         <div className="popup">
           <p className="popup-header">
             <Link to={`/l/${loc.id}`}>
-              <strong>{loc.name && loc.name}</strong>
+              <strong>{loc.name}</strong>
             </Link>
             <Link to={`/community/list/${loc.communityId}`}>
               {loc.community && loc.community.name && loc.community.name}
@@ -132,18 +164,24 @@ class Map extends React.Component {
             {loc.city && `${loc.city}`}
             {loc.description && `${loc.description}`}
           </p>
-          <Button
-            type="submit"
-            variant="danger"
-            onClick={() => this.handleShowForm()}
-          >
-            Add Location Form
-          </Button>
-          <AddLocation
-            show={this.state.show}
-            location={this.state.selectedLocation}
-            onHide={() => this.handleHideForm()}
-          />
+          {loc.id.length > 5 ? (
+            <div>
+              <Button
+                type="submit"
+                variant="danger"
+                onClick={() => this.handleShowForm()}
+              >
+                Add Location Form
+              </Button>
+              <AddLocation
+                show={this.state.show}
+                location={this.state.selectedLocation}
+                onHide={() => this.handleHideForm()}
+              />
+            </div>
+          ) : (
+            console.log('NOT in conditional render for addlocation button')
+          )}
         </div>
       </Popup>
     )
@@ -166,12 +204,17 @@ class Map extends React.Component {
         name,
         city,
         address: address
+      },
+      viewport: {
+        ...this.state.viewport,
+        latitude: coordinates[1],
+        longitude: coordinates[0]
       }
     })
-    console.log(
-      'selectedLocation in addMarker func',
-      this.state.selectedLocation
-    )
+    // console.log(
+    //   'selectedLocation in addMarker func',
+    //   this.state.selectedLocation
+    // )
   }
   handleResult(event) {
     this.addMarker(event.result.geometry.coordinates, event.result)
@@ -179,6 +222,7 @@ class Map extends React.Component {
   render() {
     // if (!this.props.locations[0] || !this.props.locations[0].id
     //   || !this.props.singleLocation || !this.props.singleLocation.geometry) return <div />
+
     //styles for geolocated and navigation
     const geolocateStyle = {
       float: 'left',
@@ -193,7 +237,7 @@ class Map extends React.Component {
     }
     return (
       <div id="map">
-        <button
+        {/* <button
           type="submit"
           onClick={() => {
             //if state.userLocation exists, addMarker is called with the
@@ -206,7 +250,7 @@ class Map extends React.Component {
           }}
         >
           Add My Location To Map
-        </button>
+        </button> */}
 
         {/* our main interactive map component */}
         <MapGL
