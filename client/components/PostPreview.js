@@ -8,6 +8,12 @@ import TimeAgo from 'react-timeago'
 import ReactPlayer from 'react-player'
 import history from '../history'
 import AddCommentForm from './AddCommentForm'
+import {connect} from 'react-redux'
+import {
+  likePostThunk,
+  dislikePostThunk,
+  deletePostThunk
+} from '../store/userFeed'
 
 function PostingPictures(props) {
   const {post} = props
@@ -44,7 +50,7 @@ function PostingPictures(props) {
   }
 }
 
-export default function PostPreview(props) {
+function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
   function handleComments() {
@@ -126,6 +132,7 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/ios/64/000000/like.png"
                 className="likeIcon"
                 type="button"
+                onClick={() => props.likePost(post.id)}
               />
             </div>
             <div className="dislikes">
@@ -138,11 +145,15 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/windows/80/000000/dislike.png"
                 className="dislikeIcon"
                 type="button"
-                // onClick={() => this.dislikeComment()}
+                onClick={() => props.dislikePost(post.id)}
               />
             </div>
             {profile.username === props.loggedInUser ? (
-              <Button className="delete-button" variant="danger">
+              <Button
+                className="delete-button"
+                variant="danger"
+                onClick={() => props.deletePost(post.id)}
+              >
                 X
               </Button>
             ) : (
@@ -150,9 +161,23 @@ export default function PostPreview(props) {
             )}
           </div>
           <br />
-          <PostComment post={post} openComments={openComments} />
+          <PostComment
+            post={post}
+            openComments={openComments}
+            loggedInUser={props.loggedInUser}
+          />
         </div>
       </div>
     </div>
   )
 }
+
+const mapDispatch = dispatch => {
+  return {
+    likePost: postId => dispatch(likePostThunk(postId)),
+    dislikePost: postId => dispatch(dislikePostThunk(postId)),
+    deletePost: postId => dispatch(deletePostThunk(postId))
+  }
+}
+
+export default connect(null, mapDispatch)(PostPreview)

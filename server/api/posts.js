@@ -35,8 +35,12 @@ router.get('/:postId', async (req, res, next) => {
         {model: Photo, include: {model: Tag}},
         {model: User},
         {model: Community, attributes: ['name']},
-        {model: PostComment, include: [{model: User}]}
-      ]
+        {
+          model: PostComment,
+          include: [{model: User}]
+        }
+      ],
+      order: [[{model: PostComment}, 'createdAt', 'ASC']]
     })
     res.json(singlePost)
   } catch (error) {
@@ -60,9 +64,12 @@ router.get('/from/:username', async (req, res, next) => {
       include: [
         {model: Photo, include: [{model: Tag}]},
         {model: Community, attributes: ['name']},
-        {model: PostComment, include: [{model: User}]}
+        {
+          model: PostComment,
+          include: [{model: User}]
+        }
       ],
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC'], [{model: PostComment}, 'createdAt', 'ASC']]
     })
 
     res.json(allUserPosts)
@@ -101,11 +108,10 @@ router.get('/from/:username/following', async (req, res, next) => {
         {model: Photo, include: [{model: Tag}]},
         {
           model: PostComment,
-          include: [{model: User}],
-          order: [['createdAt', 'DESC']]
+          include: [{model: User}]
         }
       ],
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC'], [{model: PostComment}, 'createdAt', 'ASC']]
     })
 
     res.json(feed)
@@ -125,11 +131,10 @@ router.get('/for/:id', async (req, res, next) => {
         {model: Photo, include: [{model: Tag}]},
         {
           model: PostComment,
-          include: [{model: User}],
-          order: [['createdAt', 'DESC']]
+          include: [{model: User}]
         }
       ],
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC'], [{model: PostComment}, 'createdAt', 'ASC']]
     })
 
     res.json(feed)
@@ -172,10 +177,10 @@ router.post('/add/:username', async (req, res, next) => {
             {model: Photo, include: [{model: Tag}]},
             {
               model: PostComment,
-              include: [{model: User}],
-              order: [['createdAt', 'DESC']]
+              include: [{model: User}]
             }
-          ]
+          ],
+          order: [[{model: PostComment}, 'createdAt', 'ASC']]
         })
 
         res.json(newPost)
@@ -213,10 +218,10 @@ router.post('/add/:username', async (req, res, next) => {
             {model: Photo, include: [{model: Tag}]},
             {
               model: PostComment,
-              include: [{model: User}],
-              order: [['createdAt', 'DESC']]
+              include: [{model: User}]
             }
-          ]
+          ],
+          order: [[{model: PostComment}, 'createdAt', 'ASC']]
         })
 
         res.json(postWithPics)
@@ -238,10 +243,10 @@ router.post('/add/:username', async (req, res, next) => {
           {model: Photo, include: [{model: Tag}]},
           {
             model: PostComment,
-            include: [{model: User}],
-            order: [['createdAt', 'DESC']]
+            include: [{model: User}]
           }
-        ]
+        ],
+        order: [[{model: PostComment}, 'createdAt', 'ASC']]
       })
 
       res.json(newPost)
@@ -261,10 +266,10 @@ router.put('/:postId/likes', async (req, res, next) => {
         {model: Photo, include: [{model: Tag}]},
         {
           model: PostComment,
-          include: [{model: User}],
-          order: [['createdAt', 'DESC']]
+          include: [{model: User}]
         }
-      ]
+      ],
+      order: [[{model: PostComment}, 'createdAt', 'ASC']]
     })
     updatedPostLikes.likes++
     await updatedPostLikes.save()
@@ -284,10 +289,10 @@ router.put('/:postId/dislikes', async (req, res, next) => {
         {model: Photo, include: [{model: Tag}]},
         {
           model: PostComment,
-          include: [{model: User}],
-          order: [['createdAt', 'DESC']]
+          include: [{model: User}]
         }
-      ]
+      ],
+      order: [[{model: PostComment}, 'createdAt', 'ASC']]
     })
     updatedPostDislikes.dislikes++
     await updatedPostDislikes.save()

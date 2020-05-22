@@ -5,6 +5,8 @@ import axios from 'axios'
 const GET_FOLLOWING_POSTS = 'GET_FOLLOWING_POSTS'
 const UPDATE_POST = 'UPDATE_POST'
 const UPDATE_COMMENT = 'UPDATE_COMMENT'
+const DELETE_POST = 'DELETE_POST'
+const DELETE_COMMENT = 'DELETE_COMMENT'
 
 // action creator:
 const getFollowingPosts = posts => ({type: GET_FOLLOWING_POSTS, posts})
@@ -14,6 +16,14 @@ const updateUserPost = post => ({type: UPDATE_POST, post})
 const updateComment = (comment, postId) => ({
   type: UPDATE_COMMENT,
   comment,
+  postId
+})
+
+const deletePost = postId => ({type: DELETE_POST, postId})
+
+const deleteComment = (commentId, postId) => ({
+  type: DELETE_COMMENT,
+  commentId,
   postId
 })
 
@@ -73,6 +83,20 @@ export const dislikeCommentThunk = (commentId, postId) => {
   }
 }
 
+export const deletePostThunk = postId => {
+  return async dispatch => {
+    await axios.delete(`/api/posts/${postId}`)
+    dispatch(deletePost(postId))
+  }
+}
+
+export const deleteCommentThunk = (commentId, postId) => {
+  return async dispatch => {
+    await axios.delete(`/api/comments/${commentId}`)
+    dispatch(deleteComment(commentId, postId))
+  }
+}
+
 // initial state:
 const initialState = []
 
@@ -119,6 +143,39 @@ export default function followingPostsReducer(state = initialState, action) {
         }
       })
       return updatedPost
+    case DELETE_POST:
+      let deletedPosts = state.filter(post => {
+        return post.id !== action.postId
+      })
+      return deletedPosts
+    case DELETE_COMMENT:
+      let filteredPost
+      let filteredComments
+      state.map(post => {
+        if (post.id === action.postId) {
+          filteredPost = post
+          filteredComments = post.postComments.filter(comment => {
+            return comment.id !== action.commentId
+          })
+          return post
+        } else {
+          return post
+        }
+      })
+
+      const deletedComPost = {
+        ...filteredPost,
+        postComments: [...filteredComments]
+      }
+
+      let newComPosts = state.map(post => {
+        if (post.id === action.postId) {
+          return deletedComPost
+        } else {
+          return post
+        }
+      })
+      return newComPosts
     default:
       return state
   }

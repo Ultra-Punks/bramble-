@@ -123,7 +123,7 @@ class CommunityProfile extends React.Component {
                 postFeed={this.state.postFeed}
                 images={this.props.gallery}
                 posts={this.props.posts.communityPosts}
-                // profile={this.props.profile}
+                loggedInUser={this.props.user.username}
               />
             </div>
           </div>
@@ -142,7 +142,8 @@ const mapState = state => {
     community: state.community,
     isLoggedIn: !!state.user.id,
     gallery: state.allPhotos,
-    posts: state.userPosts
+    posts: state.userPosts,
+    user: state.user
   }
 }
 

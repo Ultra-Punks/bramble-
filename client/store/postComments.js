@@ -50,7 +50,7 @@ export default function allPostCommentsReducer(state = initialState, action) {
     case GET_POST_COMMENTS:
       return [...action.comments]
     case ADD_POST_COMMENT:
-      return [action.comment, ...state]
+      return [...state, action.comment]
     default:
       return state
   }

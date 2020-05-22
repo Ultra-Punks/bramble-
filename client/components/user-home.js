@@ -14,7 +14,10 @@ class UserHome extends React.Component {
     return (
       <div className="home-feed-container">
         <div className="welcome-container" />
-        <FollowingFeed posts={this.props.followingFeed} />
+        <FollowingFeed
+          posts={this.props.followingFeed}
+          loggedInUser={this.props.username}
+        />
         <div className="map-container">
           <Map userHomeId={this.props.id} />
         </div>
