@@ -171,11 +171,83 @@ const manualCommunities = [
     description: 'Being yourself never goes out of fashion ',
     profileImg:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp_FYgM-HuoNgldG9lW9a4L5cZ9IgLhZNi4EPCTA2H1EC2GonC&usqp=CAU'
+  },
+  {
+    name: 'Technology',
+    description: 'Its not that we use Technology, we live Technology',
+    profileImg:
+      'https://www.trainingzone.co.uk/sites/default/files/learning_technology_solutions_0.jpg'
+  },
+  {
+    name: 'Music',
+    description: 'Good Music doesnt have an expiration date',
+    profileImg:
+      'https://www.freeportnewsnetwork.com/wp-content/uploads/2016/12/music-07.jpg'
+  },
+  {
+    name: 'Film',
+    description: 'Heres looking at you, kid',
+    profileImg:
+      'https://booksandbooks.com/wp-content/uploads/2019/12/1555941845-O9VYc4IYj_md.jpg'
+  },
+  {
+    name: 'Art',
+    description: 'Art is too important not to share',
+    profileImg:
+      'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/65/78ce0081ad11e681d7bb31b0a632ef/starry-night.jpg?auto=format%2Ccompress&dpr=1'
+  },
+  {
+    name: 'Pets',
+    description: 'What greater gift than the love of a pet',
+    profileImg:
+      'https://lh3.googleusercontent.com/proxy/4Q_3tYgnB6Bl6VWkT4Bi2uStWREkF5ugTfeX3PoyQOt_sRtgLOVtuIyJ9R9CpqU3XnRJcNmHO3TiO6csnVjEAmUNsem1HFwVIIxpaS3Uu16uCohw7iGoaFJR0NXyXtS2WEze-ubk4tamC53T'
+  },
+  {
+    name: 'Books',
+    description: 'Once you learn to read, you will be forever free',
+    profileImg:
+      'https://www.nypl.org/sites/default/files/8435321969_c1eea0631a_o.jpg'
+  },
+  {
+    name: 'Career',
+    description: 'All progress takes place outside the comfort Zone',
+    profileImg:
+      'https://careerconnections.nj.gov/careerconnections/images/hero/RightCareer-480922793.jpg'
+  },
+  {
+    name: 'Games',
+    description: 'Life is More fun if you Play Games',
+    profileImg:
+      'https://media.playstation.com/is/image/SCEA/fortnite-chapter-2-normalhero-01-ps4-us-15oct2019?$native_nt$'
+  },
+  {
+    name: 'Sports',
+    description: 'You re never a loser until you quit',
+    profileImg:
+      'https://img.freepik.com/free-vector/sports-elements-collection_1096-210.jpg?size=338&ext=jpg'
+  },
+  {
+    name: 'Meme',
+    description: 'I never said that',
+    profileImg:
+      'https://ww2.kqed.org/app/uploads/sites/38/2019/03/tomemeornot3-800x400.jpg'
+  },
+  {
+    name: 'Outdoors',
+    description: 'The greatest adventure is what lies ahead',
+    profileImg:
+      'https://mymodernmet.com/wp/wp-content/uploads/2018/03/karl-shakur-travel-photos-1.jpg'
+  },
+  {
+    name: 'Health',
+    description: 'Happiness is the highest form of health',
+    profileImg:
+      'https://s19499.pcdn.co/wp-content/uploads/2019/09/093019-PIC-B.jpg'
   }
 ]
 
 // store 10 new communities created by generateUser into in the communityArray
-const communityArray = Array.from({length: 8}, generateCommunity)
+const communityArray = Array.from({length: 0}, generateCommunity)
 const updatedCommunities = manualCommunities.concat(communityArray)
 
 // create random post seed data
