@@ -245,7 +245,7 @@ const manualLocations = [
     name: 'Metropolitan Opera House',
     description:
       'The Metropolitan Opera House is an opera house located on Broadway at Lincoln Square on the Upper West Side of Manhattan in New York City. Part of Lincoln Center for the Performing Arts, the theater was designed by Wallace K. Harrison.',
-    communityId: 8,
+    // communityId: 8,
     coverImg:
       'https://www.metopera.org/globalassets/visit/daytime-access/1600x685_2.jpg'
   },
@@ -274,7 +274,7 @@ const manualLocations = [
     name: 'Rockwood Music Hall',
     description:
       'Rockwood Music Hall is a music venue at 196 Allen Street on the Lower East Side of Manhattan, New York City. Owner Ken Rockwood opened the establishment in 2005 as a small bar and music venue. The venue features three stages and a record label of the same name.',
-    communityId: 6,
+    // communityId: 6,
     coverImg:
       'https://rockwoodmusichall.com/wp-content/uploads/2020/01/Rockwood-Approved-1_3000x2000.jpg'
   },
@@ -284,22 +284,10 @@ const manualLocations = [
     name: 'Pet Promise Inc.',
     description:
       'PetPromise is a cat and dog rescue made up of a group of volunteers who care about the future of companion animals and who work together to help change the future of homeless pets.',
-    communityId: 9,
+    // communityId: 9,
     coverImg:
       'https://s3-media0.fl.yelpcdn.com/bphoto/RbcnEjmijlhl9A-r1tqgTA/l.jpg'
   },
-
-  {
-    address: '140 Plymouth St, Brooklyn, NY 11201',
-    geometry: {type: 'point', coordinates: [-73.987792, 40.703623]},
-    name: 'Pet Promise Inc.',
-    description:
-      'PetPromise is a cat and dog rescue made up of a group of volunteers who care about the future of companion animals and who work together to help change the future of homeless pets.',
-    communityId: 9,
-    coverImg:
-      'https://s3-media0.fl.yelpcdn.com/bphoto/RbcnEjmijlhl9A-r1tqgTA/l.jpg'
-  },
-
   {
     address:
       'Liberty State Park 222 Jersey City Boulevard Jersey City, NJ 07305',
@@ -307,7 +295,7 @@ const manualLocations = [
     name: 'Liberty Science Center',
     description:
       'Liberty Science Center (LSC.org) is a 300,000-square-foot learning center located in Liberty State Park on the Jersey City bank of the Hudson near the Statue of Liberty.',
-    communityId: 5,
+    // communityId: 5,
     coverImg:
       'https://hudsonreporter.com/wp-content/uploads/sites/15/2018/08/76FP_Liberty_Science_Center.jpg'
   }
@@ -452,13 +440,13 @@ async function seed() {
     await locations[i].setCommunity(communities[randomCommNum])
   }
 
-  // loop through locations in case communityId is null...
-  for (let i = 0; i < locations.length; i++) {
-    if (locations[i].communityId === undefined) {
-      locations[i].communityId = 1
-      await locations[i].save()
-    }
-  }
+  // // loop through locations in case communityId is null...
+  // for (let i = 0; i < locations.length; i++) {
+  //   if (locations[i].communityId === undefined) {
+  //     locations[i].communityId = 1
+  //     await locations[i].save()
+  //   }
+  // }
 
   for (let i = 0; i < userPostArray.length; i++) {
     const newPost = await UserPost.create(userPostArray[i])
