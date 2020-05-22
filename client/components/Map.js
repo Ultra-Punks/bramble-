@@ -52,58 +52,80 @@ class Map extends React.Component {
   // eslint-disable-next-line complexity
   componentDidMount() {
     const {userHomeId, singleLocation, cId, username} = this.props
-    // console.log('checks', userHomeId, singleLocation.id, cId, username)
-    if (this.props.userHomeId) {
+    console.log('checks', userHomeId, singleLocation.id, cId, username)
+    let mapSize
+    if (userHomeId) {
       this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
       // this.setState({selectedLocation: {}, viewParam: userHomeId})
-      this.setState({selectedLocation: {}})
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        selectedLocation: {},
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
     } else if (this.props.singleLocation.id) {
       // this.setState({viewParam: singleLocation.id})
       this.props.fetchLocation(this.props.singleLocation.id)
-      // this.setState({selectedLocation: this.props.singleLocation, viewParam: singleLocation.id})
-      this.setState({selectedLocation: {}})
+      // this.setState({selectedLocation: {}})
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        selectedLocation: this.props.singleLocation,
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
       this.addMarker(
         this.props.singleLocation.geometry.coordinates,
         this.props.singleLocation
       )
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        selectedLocation: this.props.singleLocation,
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
     } else if (this.props.cId) {
       this.props.getSomeLocations(this.props.cId, 'community')
       // this.setState({selectedLocation: {}, viewParam: cId})
-      this.setState({selectedLocation: {}})
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        selectedLocation: {},
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
     } else if (this.props.username) {
       this.props.getSomeLocations(this.props.username, 'user')
       // this.setState({selectedLocation: {}, viewParam: username})
-      this.setState({selectedLocation: {}})
+      mapSize = window.innerWidth * 0.4
+      this.setState({
+        selectedLocation: {},
+        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+      })
     } else {
       this.props.getAllLocations()
       // this.setState({selectedLocation: {}, viewParam: null})
       this.setState({selectedLocation: {}})
     }
-    let mapSize
-    if (
-      // typeof window.innerWidth != undefined &&
-      // userHomeId ||
-      // singleLocation.id ||
-      // cId ||
-      // username
-      this.state.viewParam !== null
-    ) {
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-      // console.log('this is mapsize', mapSize)
-    } else {
-      // console.log('in the mapsize else', window.innerWidth)
-      mapSize = window.innerWidth
-      this.setState({
-        viewport: {
-          ...this.state.viewport,
-          width: window.innerWidth * 0.8,
-          height: window.innerHeight * 0.8
-        }
-      })
-    }
+    // if (
+    // typeof window.innerWidth != undefined &&
+    // userHomeId ||
+    // singleLocation.id ||
+    // cId ||
+    // username
+    //      or
+    //   this.state.viewParam !== null
+    // ) {
+    //   mapSize = window.innerWidth * 0.4
+    //   this.setState({
+    //     viewport: {...this.state.viewport, width: mapSize, height: mapSize}
+    //   })
+    // console.log('this is mapsize', mapSize)
+    // } else {
+    // console.log('in the mapsize else', window.innerWidth)
+    // mapSize = window.innerWidth
+    // this.setState({
+    //   viewport: {
+    //     ...this.state.viewport,
+    //     width: window.innerWidth * 0.8,
+    //     height: window.innerHeight * 0.8
+    //   }
+    // })
+    // }
   }
 
   handleShowForm() {
@@ -140,6 +162,12 @@ class Map extends React.Component {
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
     // console.log('loc in renderpopup', loc)
+    // this checks if the id of the location is a number, since
+    // locations not from our database will have an id that is a string.
+    // conditionally rendering links and the addlocation button based on this variable
+    const dbCheck = typeof loc.id === 'number'
+    const numOfNextLocation = this.props.locations.length
+
     return (
       <Popup
         tipSize={7}
@@ -156,21 +184,27 @@ class Map extends React.Component {
         closeOnClick={true}
       >
         <div className="popup">
-          <p className="popup-header">
-            <Link to={`/l/${loc.id}`}>
+          <div className="popup-header">
+            {dbCheck ? (
+              <div>
+                <Link to={`/l/${loc.id}`}>
+                  <strong>{loc.name}</strong>
+                </Link>
+                <Link to={`/community/list/${loc.communityId}`}>
+                  {loc.community && loc.community.name && loc.community.name}
+                </Link>
+              </div>
+            ) : (
               <strong>{loc.name}</strong>
-            </Link>
-            <Link to={`/community/list/${loc.communityId}`}>
-              {loc.community && loc.community.name && loc.community.name}
-            </Link>
-          </p>
+            )}
+          </div>
           <p className="popup-body">
             {/* {`${loc.address} ${loc.city}`} */}
             {loc.address && `${loc.address}`}
             {loc.city && `${loc.city}`}
             {loc.description && `${loc.description}`}
           </p>
-          {loc.id.length > 5 ? (
+          {!dbCheck ? (
             <div>
               <Button
                 type="submit"
@@ -180,6 +214,7 @@ class Map extends React.Component {
                 Add Location Form
               </Button>
               <AddLocation
+                nextLocId={numOfNextLocation}
                 show={this.state.show}
                 location={this.state.selectedLocation}
                 onHide={() => this.handleHideForm()}

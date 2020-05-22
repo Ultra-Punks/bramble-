@@ -39,11 +39,11 @@ const Location = db.define('location', {
       'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
   },
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
     // allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    //   validate: {
+    //     notEmpty: true
+    //   }
   },
   city: {
     type: Sequelize.STRING

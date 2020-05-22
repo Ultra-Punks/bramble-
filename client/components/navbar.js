@@ -22,6 +22,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
           className="nav-logo"
           src="https://cdn0.iconfinder.com/data/icons/kirrkle-maps-and-navigation/60/10_-_Map_marker-512.png"
           roundedCircle
+          // onClick={() => props.history.push('/map')}
         />
       </Link>
       <div className="nav-group">

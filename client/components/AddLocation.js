@@ -18,6 +18,8 @@ class AddLocation extends React.Component {
           handleSubmit={this.handleSubmit}
           handleChange={this.handleChange}
           location={this.props.location}
+          show={this.props.show}
+          nextLocId={this.props.nextLocId}
         />
       </Modal>
     )
