@@ -1,6 +1,24 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import styled from 'styled-components'
+
+const StyledLink = styled(Link)`
+  padding-right: 7px;
+`
+
+const CommentProfilePic = styled.div`
+  padding: 20px;
+  display: flex;
+`
+const CommentHandle = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-left: 2%;
+`
+const CommentHeader = styled.div`
+  background-color: rgba(60, 78, 96, 0.879);
+`
 
 //import thunk:
 import {
@@ -24,19 +42,19 @@ class SingleComment extends Component {
         <div className="singleComment">
           {/* if commenter exists, then we create the comment header */}
           {commenter !== undefined ? (
-            <div className="commentHeader">
-              <Link to={`/u/${commenter.username}`}>
+            <CommentHeader>
+              <CommentProfilePic to={`/u/${commenter.username}`}>
                 <img src={commenter.profileImg} className="commentImg" />
-              </Link>
-              <div className="comment-handle">
-                <Link to={`/u/${commenter.username}`}>
+              </CommentProfilePic>
+              <CommentHandle>
+                <StyledLink to={`/u/${commenter.username}`}>
                   <p>{commenter.name}</p>
-                </Link>
-                <Link to={`/u/${commenter.username}`}>
+                </StyledLink>
+                <StyledLink to={`/u/${commenter.username}`}>
                   <p>@{commenter.username}</p>
-                </Link>
-              </div>
-            </div>
+                </StyledLink>
+              </CommentHandle>
+            </CommentHeader>
           ) : (
             <p>'loading'</p>
           )}
