@@ -97,33 +97,212 @@ const manualLocations = [
     name: 'Fullstack Academy',
     description:
       'Fullstack Academy is an immersive software engineering coding bootcamp located in New York City and Chicago. Students of the full-time flagship course learn full stack JavaScript over the course of a 13-week, on-campus program.',
-    isAdmin: false
+    isAdmin: false,
+    communityId: 11,
+    coverImg:
+      'https://coursereport-s3-production.global.ssl.fastly.net/rich/rich_files/rich_files/640/s1200/fsa-20campus-203.jpg'
   },
   {
     address: '2 W 69th St, New York, NY 10023',
-    geometry: {type: 'point', coordinates: [-73.977721, 40.774355]},
+    geometry: {type: 'point', coordinates: [-73.974348, 40.77301]},
     name: 'Le Pain Quotidien',
     description:
       "Nestled above Sheep’s Meadow in Central Park, our store is located within the historic Mineral Springs pavilion. In the late 1800s and early 1900s, this pavilion served 30 varieties of natural spring water to New Yorker's.",
-    isAdmin: false
+    isAdmin: false,
+    communityId: 1,
+    coverImg:
+      'https://a.mktgcdn.com/p/LisFZCGZItfBlBmAAS4CR7Kff22kefNrJ-uWfCstjNA/1280x720.jpg'
   },
   {
     address: '773 Flatbush Ave, Brooklyn, NY, 11226',
     geometry: {type: 'point', coordinates: [-73.959496, 40.653919]},
     mapId: 'poi.755914263725',
-    name: 'Zen Vegetarian',
-    description: 'Best Chinese Food'
+    name: 'Zen Vegetarian House',
+    description: 'Best Chinese Food',
+    communityId: 1,
+    coverImg:
+      'https://veggiebucks.com/wp-content/themes/directorypress/thumbs/Zen-Vegetarian-House-3.jpg'
   },
   {
     address: '2281 Church Ave, Brooklyn, NY, 11226',
     geometry: {type: 'point', coordinates: [-73.956137, 40.650774]},
     name: 'Four Seasons Bakery & Juice Bar',
-    description: 'Caribbean Food'
+    description: 'Caribbean Food',
+    communityId: 1,
+    coverImg:
+      'https://cdn.usarestaurants.info/assets/uploads/847b80d645a8d56b5c81f19f5c7a51e6_-united-states-new-york-kings-county-967121-four-seasons-bakery-juice-barhtm.jpg'
+  },
+  {
+    address: '100 N Moore St, New York, NY 10013',
+    geometry: {type: 'point', coordinates: [-74.011574, 40.720112]},
+    name: 'Tribeca Skatepark',
+    description:
+      'Street-style skatepark offering skateboarding & rollerblading with views of the Hudson River.',
+    communityId: 3,
+    coverImg: 'https://i.ytimg.com/vi/X4UUEU_sHf0/maxresdefault.jpg'
+  },
+  {
+    address: '61 Bayard St, Brooklyn, NY 11222',
+    geometry: {type: 'point', coordinates: [-73.94941, 40.71911]},
+    name: 'McCarren Skatepark',
+    description:
+      'This small, free public skate park with steep banks offers a ledge feature & a quarter pipe.',
+    communityId: 3,
+    coverImg:
+      'https://i1.wp.com/nyskateboarding.com/wp/wp-content/uploads/2016/07/OldMccarren.jpg?ssl=1'
+  },
+  {
+    address: '140 Broadway, New York, NY 10005',
+    geometry: {type: 'point', coordinates: [-74.010689, 40.709042]},
+    name: 'Crunch Fitness - FiDi',
+    description:
+      'Our Gym is Your Gym Kick your feet up! With a gym designed around you, we think you’ll love it here.',
+    communityId: 2,
+    coverImg:
+      'https://s3-media0.fl.yelpcdn.com/bphoto/I8DkuSXF7Sv1Id9Rdrn-Ag/348s.jpg'
+  },
+  {
+    address: '9000-9038, Bay Pkwy, Brooklyn, NY 11214',
+    geometry: {type: 'point', coordinates: [-74.0015, 40.59477]},
+    name: 'Match point nyc',
+    description: 'Sports & fitness for the entire family.',
+    communityId: 2,
+    coverImg:
+      'https://images.squarespace-cdn.com/content/v1/57503b614c2f85c0e9457833/1465432627465-VQH25BFJR25CHIKZJ0U4/ke17ZwdGBToddI8pDm48kEiW2HMzXzufahHAFnxN3XR7gQa3H78H3Y0txjaiv_0fvbklG0cZ21UMsOO4RokMHB9cqTGTRbQKUrg7YbXc0SlqROx17-M3CJ_uqF218_GRZGjoBKy3azqku80C789l0k6sq9GEl9ZUDkp1sRKcAyKwvhSD1lk0p3Mkr1CFacdcMnkSfZTXFO8RHjUDmBQP4Q/MATCHPOINT.jpg?format=1500w'
+  },
+  {
+    address: '41 Seaver Way, Queens, NY 11368',
+    geometry: {type: 'point', coordinates: [-73.84584799999999, 40.757258]},
+    name: 'Citi Field',
+    description:
+      'Citi Field is a baseball park located in Flushing Meadows–Corona Park in New York City. Completed in 2009, it is the home field of the New York Mets of the National League division of Major League Baseball.',
+    // communityId: 13,
+    coverImg:
+      'https://elitesportsny.com/wp-content/uploads/2018/03/cincinnati-reds-v-new-york-mets-1-e1522096086300.jpg'
+  },
+  {
+    address: '1240 6th Ave, New York, NY 10020',
+    geometry: {type: 'point', coordinates: [-73.980782, 40.759409]},
+    name: 'Magnolia Bakery',
+    description:
+      'This down-home destination for classic baked desserts specializes in a variety of creative cupcakes.',
+    communityId: 1,
+    coverImg:
+      'https://d1v5vpeyrmf36z.cloudfront.net/media/CACHE/images/image-previews/landscape/Magnolia_Bakery/01455edf2201ab02ffa8041bdabea9c4.jpg'
+  },
+  {
+    address: '200 5th Ave, New York, NY 10010',
+    geometry: {type: 'point', coordinates: [-73.98954, 40.741973]},
+    name: 'Eataly NYC - Flatiron',
+    description:
+      'Branch of the famed Italian market, offering counters, restaurants & cooking demos.',
+    communityId: 1,
+    coverImg: 'https://pbs.twimg.com/media/CjV9AkDXIAQkvGC.jpg'
+  },
+  {
+    address: '465 W Broadway, New York, NY 10012',
+    geometry: {type: 'point', coordinates: [-74.000028, 40.726421]},
+    name: 'Harbs',
+    description:
+      'HARBS is a café born in Japan, pursuing freshness and hand-made quality above all else. Ever since we started, our one and only wish has been to make our customers say “DELICIOUS!” from the bottom of their hearts. We hope you savor every moment of joy you experience here at HARBS.',
+    communityId: 1,
+    coverImg:
+      'https://blankcreations.com/wp-content/uploads/2018/12/HARBS_SOHO_02.jpg'
+  },
+  {
+    address: '116 Greene St, New York, NY 10012',
+    geometry: {type: 'point', coordinates: [-73.999279, 40.724771]},
+    name: 'Louis Vuitton New York SoHo',
+    description:
+      'Luxury brand known for signature monogrammed handbags, luggage & more.',
+    communityId: 4,
+    coverImg:
+      'https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-find-a-store-us-louis-vuitton-new-york-soho-temporarily-closed--StFi_Louis_Vuitton_NEW_YORK_SOHO_Facede_556_DI3.jpg'
+  },
+  {
+    address: '2310 Broadway, New York, NY 10024',
+    geometry: {type: 'point', coordinates: [-73.97732, 40.786655]},
+    name: 'AMC Movie Theaters',
+    description:
+      'Experience the difference of AMC amenities. From spacious rocking seats to luxury recliners, innovative menus and premium offerings like IMAX, Dolby Cinema, and Prime at AMC, AMC Theatres offers a range of ways to get more out of movies.',
+    communityId: 7,
+    coverImg:
+      'https://amc-theatres-res.cloudinary.com/amc-cdn/production/2/theatres/2102/21020_mobile_84thst.jpg'
+  },
+  {
+    address: '1000 5th Ave, New York, NY 10028',
+    geometry: {type: 'point', coordinates: [-73.962879, 40.779209]},
+    name: 'The Metropolitan Museum of Art',
+    description:
+      'The Metropolitan Museum of Art of New York City, colloquially "the Met", is the largest art museum in the United States. With 6,479,548 visitors to its three locations in 2019, it was the fourth most visited art museum in the world.',
+    communityId: 8,
+    coverImg:
+      'https://www.metmuseum.org/-/media/images/visit/met-fifth-avenue/fifthave_teaser.jpg?la=en'
+  },
+  {
+    address: '30 Lincoln Center Plaza, New York, NY 10023',
+    geometry: {type: 'point', coordinates: [-73.984154, 40.772628]},
+    name: 'Metropolitan Opera House',
+    description:
+      'The Metropolitan Opera House is an opera house located on Broadway at Lincoln Square on the Upper West Side of Manhattan in New York City. Part of Lincoln Center for the Performing Arts, the theater was designed by Wallace K. Harrison.',
+    // communityId: 8,
+    coverImg:
+      'https://www.metopera.org/globalassets/visit/daytime-access/1600x685_2.jpg'
+  },
+  {
+    address: '58 Warren St, New York, NY 10007',
+    geometry: {type: 'point', coordinates: [-74.009166, 40.714899]},
+    name: 'Mysterious Book Shop',
+    description:
+      'Bookstore with a floor-to-ceiling stock of new, used, rare & collectible crime & suspense titles.',
+    // communityId: 10,
+    coverImg: 'https://i.ytimg.com/vi/QYWxbDxMl4E/maxresdefault.jpg'
+  },
+  {
+    address: '202 E 6th St, New York, NY 10003',
+    geometry: {type: 'point', coordinates: [-73.990404, 40.728039]},
+    name: 'Videogamesnewyork',
+    description:
+      'NYC Local Video Game Boutique that carries all generation of games from USA and Japan. Specializeing is Retro Video Games, System Restoration and Event Rental. Stocking everything from the Atari to the Nintendo Switch.',
+    // communityId: 12,
+    coverImg:
+      'https://cdn7.bigcommerce.com/s-kzjsut/product_images/uploaded_images/storefront.jpg'
+  },
+  {
+    address: '196 Allen St, New York, NY 10002',
+    geometry: {type: 'point', coordinates: [-73.988559, 40.72235]},
+    name: 'Rockwood Music Hall',
+    description:
+      'Rockwood Music Hall is a music venue at 196 Allen Street on the Lower East Side of Manhattan, New York City. Owner Ken Rockwood opened the establishment in 2005 as a small bar and music venue. The venue features three stages and a record label of the same name.',
+    // communityId: 6,
+    coverImg:
+      'https://rockwoodmusichall.com/wp-content/uploads/2020/01/Rockwood-Approved-1_3000x2000.jpg'
+  },
+  {
+    address: '140 Plymouth St, Brooklyn, NY 11201',
+    geometry: {type: 'point', coordinates: [-73.987792, 40.703623]},
+    name: 'Pet Promise Inc.',
+    description:
+      'PetPromise is a cat and dog rescue made up of a group of volunteers who care about the future of companion animals and who work together to help change the future of homeless pets.',
+    // communityId: 9,
+    coverImg:
+      'https://s3-media0.fl.yelpcdn.com/bphoto/RbcnEjmijlhl9A-r1tqgTA/l.jpg'
+  },
+  {
+    address:
+      'Liberty State Park 222 Jersey City Boulevard Jersey City, NJ 07305',
+    geometry: {type: 'point', coordinates: [-74.054482, 40.708336]},
+    name: 'Liberty Science Center',
+    description:
+      'Liberty Science Center (LSC.org) is a 300,000-square-foot learning center located in Liberty State Park on the Jersey City bank of the Hudson near the Statue of Liberty.',
+    // communityId: 5,
+    coverImg:
+      'https://hudsonreporter.com/wp-content/uploads/sites/15/2018/08/76FP_Liberty_Science_Center.jpg'
   }
 ]
 
 // store 10 new locations created by generateUser into in the locationArray
-const locationArray = Array.from({length: 10}, generateLocation)
+const locationArray = [] // Array.from({length: 10}, generateLocation)
 const updatedLocations = locationArray.concat(manualLocations)
 
 // possible community names array
@@ -261,13 +440,13 @@ async function seed() {
     await locations[i].setCommunity(communities[randomCommNum])
   }
 
-  // loop through locations in case communityId is null...
-  for (let i = 0; i < locations.length; i++) {
-    if (locations[i].communityId === undefined) {
-      locations[i].communityId = 1
-      await locations[i].save()
-    }
-  }
+  // // loop through locations in case communityId is null...
+  // for (let i = 0; i < locations.length; i++) {
+  //   if (locations[i].communityId === undefined) {
+  //     locations[i].communityId = 1
+  //     await locations[i].save()
+  //   }
+  // }
 
   for (let i = 0; i < userPostArray.length; i++) {
     const newPost = await UserPost.create(userPostArray[i])
