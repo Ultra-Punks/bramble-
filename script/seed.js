@@ -101,7 +101,7 @@ const manualLocations = [
   },
   {
     address: '2 W 69th St, New York, NY 10023',
-    geometry: {type: 'point', coordinates: [-73.977721, 40.774355]},
+    geometry: {type: 'point', coordinates: [-73.974348, 40.77301]},
     name: 'Le Pain Quotidien',
     description:
       "Nestled above Sheep’s Meadow in Central Park, our store is located within the historic Mineral Springs pavilion. In the late 1800s and early 1900s, this pavilion served 30 varieties of natural spring water to New Yorker's.",
@@ -146,16 +146,59 @@ const manualLocations = [
     geometry: {type: 'point', coordinates: [-74.0015, 40.59477]},
     name: 'Match point nyc',
     description: 'Sports & fitness for the entire family.'
+  },
+  {
+    address: '41 Seaver Way, Queens, NY 11368',
+    geometry: {type: 'point', coordinates: [-73.84584799999999, 40.757258]},
+    name: 'Citi Field',
+    description:
+      'Citi Field is a baseball park located in Flushing Meadows–Corona Park in New York City. Completed in 2009, it is the home field of the New York Mets of the National League division of Major League Baseball.'
+  },
+  {
+    address: '1240 6th Ave, New York, NY 10020',
+    geometry: {type: 'point', coordinates: [-73.980782, 40.759409]},
+    name: 'Magnolia Bakery',
+    description:
+      'This down-home destination for classic baked desserts specializes in a variety of creative cupcakes.'
+  },
+  {
+    address: '200 5th Ave, New York, NY 10010',
+    geometry: {type: 'point', coordinates: [-73.98954, 40.741973]},
+    name: 'Eataly NYC - Flatiron',
+    description:
+      'Branch of the famed Italian market, offering counters, restaurants & cooking demos.'
+  },
+  {
+    address: '465 W Broadway, New York, NY 10012',
+    geometry: {type: 'point', coordinates: [-74.000028, 40.726421]},
+    name: 'Harbs',
+    description:
+      'HARBS is a café born in Japan, pursuing freshness and hand-made quality above all else. Ever since we started, our one and only wish has been to make our customers say “DELICIOUS!” from the bottom of their hearts. We hope you savor every moment of joy you experience here at HARBS.'
+  },
+  {
+    address: '116 Greene St, New York, NY 10012',
+    geometry: {type: 'point', coordinates: [-73.999279, 40.724771]},
+    name: 'Louis Vuitton New York SoHo',
+    description:
+      'Luxury brand known for signature monogrammed handbags, luggage & more.'
+  },
+  {
+    address: '2310 Broadway, New York, NY 10024',
+    geometry: {type: 'point', coordinates: [-73.97732, 40.786655]},
+    name: 'AMC Movie Theaters',
+    description:
+      'Experience the difference of AMC amenities. From spacious rocking seats to luxury recliners, innovative menus and premium offerings like IMAX, Dolby Cinema, and Prime at AMC, AMC Theatres offers a range of ways to get more out of movies.',
+    communityId: 7
+  },
+  {
+    address: '1000 5th Ave, New York, NY 10028',
+    geometry: {type: 'point', coordinates: [-73.962879, 40.779209]},
+    name: 'The Metropolitan Museum of Art',
+    description:
+      'The Metropolitan Museum of Art of New York City, colloquially "the Met", is the largest art museum in the United States. With 6,479,548 visitors to its three locations in 2019, it was the fourth most visited art museum in the world.',
+    communityId: 8
   }
-  // {
-  //   address: '61 Bayard St, Brooklyn, NY 11222',
-  //   geometry: {type: 'point', coordinates: [-73.94941, 40.71911]},
-  //   name: 'McCarren Skatepark',
-  //   description:
-  //     'This small, free public skate park with steep banks offers a ledge feature & a quarter pipe.',
-  // },
 ]
-
 // store 10 new locations created by generateUser into in the locationArray
 const locationArray = Array.from({length: 10}, generateLocation)
 const updatedLocations = locationArray.concat(manualLocations)

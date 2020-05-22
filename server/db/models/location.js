@@ -45,9 +45,9 @@ const Location = db.define('location', {
       notEmpty: true
     }
   },
-  city: {
-    type: Sequelize.STRING
-  },
+  // city: {
+  //   type: Sequelize.STRING
+  // },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
