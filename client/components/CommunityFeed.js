@@ -13,6 +13,7 @@ export default function PostFeed(props) {
                 key={post.id}
                 post={post}
                 className="all-comment-preview-container"
+                loggedInUser={props.loggedInUser}
               />
             )
           })}

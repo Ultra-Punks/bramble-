@@ -1,11 +1,16 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import {Image} from 'react-bootstrap'
+import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import {FullPicture, FeedPostComment} from './index'
+import AddCommentFormFeed from './AddCommentFormFeed'
 import ReactPlayer from 'react-player'
 import history from '../history'
-import {likeUserPostThunk, dislikeUserPostThunk} from '../store/generalUserFeed'
+import {
+  likeUserPostThunk,
+  dislikeUserPostThunk,
+  deletePostThunk
+} from '../store/generalUserFeed'
 import {connect} from 'react-redux'
 
 function PostingPictures(props) {
@@ -29,12 +34,12 @@ function PostingPictures(props) {
         <img
           src={post.photos[0].imgFile}
           className="post-images"
-          onClick={e => setShowPicture(true)}
+          onClick={() => setShowPicture(true)}
         />
         <FullPicture
           show={showPicture}
           image={post.photos[0].imgFile}
-          onHide={e => setShowPicture(false)}
+          onHide={() => setShowPicture(false)}
         />
       </div>
     )
@@ -45,6 +50,7 @@ function PostingPictures(props) {
 
 function FeedPostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
+  const [commentForm, setCommentForm] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -105,6 +111,12 @@ function FeedPostPreview(props) {
                 src="https://img.icons8.com/all/500/comments.png"
                 className="commentIcon"
                 type="button"
+                onClick={() => setCommentForm(true)}
+              />
+              <AddCommentFormFeed
+                show={commentForm}
+                onHide={() => setCommentForm(false)}
+                postId={post.id}
               />
               {post.postComments !== undefined && post.postComments.length ? (
                 <p
@@ -146,11 +158,23 @@ function FeedPostPreview(props) {
                 onClick={() => props.dislikePost(post.id)}
               />
             </div>
+            {post.user.username === props.loggedInUser ? (
+              <Button
+                className="delete-button"
+                variant="danger"
+                onClick={() => props.deletePost(post.id)}
+              >
+                X
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
           <FeedPostComment
             post={post}
             openComments={openComments}
             postId={post.id}
+            loggedInUser={props.loggedInUser}
           />
         </div>
       </div>
@@ -161,7 +185,8 @@ function FeedPostPreview(props) {
 const mapDispatch = dispatch => {
   return {
     likePost: postId => dispatch(likeUserPostThunk(postId)),
-    dislikePost: postId => dispatch(dislikeUserPostThunk(postId))
+    dislikePost: postId => dispatch(dislikeUserPostThunk(postId)),
+    deletePost: postId => dispatch(deletePostThunk(postId))
   }
 }
 

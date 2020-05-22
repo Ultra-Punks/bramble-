@@ -1,10 +1,16 @@
 import React, {Component} from 'react'
-import {Image} from 'react-bootstrap'
+import {Image, Button} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import {
+  likeCommunityCommentThunk,
+  dislikeCommunityCommentThunk,
+  deleteCommunityCommentThunk
+} from '../store/userFeed'
+import {connect} from 'react-redux'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
-export default function PostComments(props) {
+function PostComments(props) {
   const {post, openComments} = props
   if (
     post.user !== undefined &&
@@ -43,7 +49,7 @@ export default function PostComments(props) {
                   src="https://img.icons8.com/ios/64/000000/like.png"
                   className="likeIcon"
                   type="button"
-                  // onClick={() => this.likeComment()}
+                  onClick={() => props.likeComment(comment.id, post.id)}
                 />
               </div>
               <div>
@@ -56,9 +62,20 @@ export default function PostComments(props) {
                   src="https://img.icons8.com/windows/80/000000/dislike.png"
                   className="dislikeIcon"
                   type="button"
-                  // onClick={() => this.dislikeComment()}
+                  onClick={() => props.dislikeComment(comment.id, post.id)}
                 />
               </div>
+              {comment.user.username === props.loggedInUser ? (
+                <Button
+                  className="delete-button"
+                  variant="danger"
+                  onClick={() => props.deleteComment(comment.id, post.id)}
+                >
+                  X
+                </Button>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         ))}
@@ -68,3 +85,16 @@ export default function PostComments(props) {
     return <div />
   }
 }
+
+const mapDispatch = dispatch => {
+  return {
+    likeComment: (commentId, postId) =>
+      dispatch(likeCommunityCommentThunk(commentId, postId)),
+    dislikeComment: (commentId, postId) =>
+      dispatch(dislikeCommunityCommentThunk(commentId, postId)),
+    deleteComment: (commentId, postId) =>
+      dispatch(deleteCommunityCommentThunk(commentId, postId))
+  }
+}
+
+export default connect(null, mapDispatch)(PostComments)

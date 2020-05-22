@@ -1,9 +1,13 @@
 import React from 'react'
-import {Image} from 'react-bootstrap'
+import {Image, Button} from 'react-bootstrap'
 
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {likeCommentThunk, dislikeCommentThunk} from '../store/generalUserFeed'
+import {
+  likeCommentThunk,
+  dislikeCommentThunk,
+  deleteCommentThunk
+} from '../store/generalUserFeed'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
@@ -63,6 +67,17 @@ function FeedPostComment(props) {
                   onClick={() => props.dislikeComment(comment.id, props.postId)}
                 />
               </div>
+              {comment.user.username === props.loggedInUser ? (
+                <Button
+                  className="delete-button"
+                  variant="danger"
+                  onClick={() => props.deleteComment(comment.id, post.id)}
+                >
+                  X
+                </Button>
+              ) : (
+                ''
+              )}
             </div>
           </div>
         ))}
@@ -78,7 +93,9 @@ const mapDispatch = dispatch => {
     likeComment: (commentId, postId) =>
       dispatch(likeCommentThunk(commentId, postId)),
     dislikeComment: (commentId, postId) =>
-      dispatch(dislikeCommentThunk(commentId, postId))
+      dispatch(dislikeCommentThunk(commentId, postId)),
+    deleteComment: (commentId, postId) =>
+      dispatch(deleteCommentThunk(commentId, postId))
   }
 }
 

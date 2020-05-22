@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addCommentThunk} from '../store/postComments'
-import {fetchCommunityPosts} from '../store/userFeed'
+import {fetchFollowingPosts} from '../store/generalUserFeed'
 import {InputGroup, Form, Button, Modal} from 'react-bootstrap'
 
 export class AddCommentForm extends React.Component {
@@ -28,11 +28,7 @@ export class AddCommentForm extends React.Component {
   }
   handleSubmit = event => {
     event.preventDefault()
-    this.props.add(
-      this.props.postId,
-      this.state.comment,
-      this.props.communityId
-    )
+    this.props.add(this.props.postId, this.state.comment, this.props.username)
     this.setState({
       comment: ''
     })
@@ -67,14 +63,14 @@ export class AddCommentForm extends React.Component {
 const mapState = state => {
   return {
     allCommemts: state.comment,
-    communityId: state.community.communityProfile.id
+    username: state.user.username
   }
 }
 
 const mapDispatch = dispatch => ({
-  add: (id, comment, communityId) => {
+  add: (id, comment, username) => {
     dispatch(addCommentThunk(id, comment))
-    dispatch(fetchCommunityPosts(communityId))
+    dispatch(fetchFollowingPosts(username))
   }
 })
 export default connect(mapState, mapDispatch)(AddCommentForm)

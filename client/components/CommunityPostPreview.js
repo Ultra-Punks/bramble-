@@ -1,10 +1,16 @@
 import React, {useState} from 'react'
 import CommunityPostComment from './CommunityPostComment'
 import {Link} from 'react-router-dom'
-import {Image} from 'react-bootstrap'
+import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import ReactPlayer from 'react-player'
 import AddCommentFormCom from './AddCommentFormCom'
+import {
+  likeCommunityPost,
+  dislikeCommunityPost,
+  deleteCommunityPostThunk
+} from '../store/userFeed'
+import {connect} from 'react-redux'
 
 function PostingPictures(props) {
   const {post} = props
@@ -26,7 +32,7 @@ function PostingPictures(props) {
   }
 }
 
-export default function PostPreview(props) {
+function PostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
 
@@ -107,6 +113,7 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/ios/64/000000/like.png"
                 className="likeIcon"
                 type="button"
+                onClick={() => props.likePost(post.id)}
               />
             </div>
             <div className="dislikes">
@@ -119,14 +126,39 @@ export default function PostPreview(props) {
                 src="https://img.icons8.com/windows/80/000000/dislike.png"
                 className="dislikeIcon"
                 type="button"
-                // onClick={() => this.dislikeComment()}
+                onClick={() => props.dislikePost(post.id)}
               />
             </div>
+            {user.username === props.loggedInUser ? (
+              <Button
+                className="delete-button"
+                variant="danger"
+                onClick={() => props.deletePost(post.id)}
+              >
+                X
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
           <br />
-          <CommunityPostComment post={post} openComments={openComments} />
+          <CommunityPostComment
+            post={post}
+            openComments={openComments}
+            loggedInUser={props.loggedInUser}
+          />
         </div>
       </div>
     </div>
   )
 }
+
+const mapDispatch = dispatch => {
+  return {
+    likePost: postId => dispatch(likeCommunityPost(postId)),
+    dislikePost: postId => dispatch(dislikeCommunityPost(postId)),
+    deletePost: postId => dispatch(deleteCommunityPostThunk(postId))
+  }
+}
+
+export default connect(null, mapDispatch)(PostPreview)

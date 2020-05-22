@@ -20,6 +20,6 @@ router.get('/from/:username', async (req, res, next) => {
 
     res.json(allPhotos)
   } catch (error) {
-    console.error(error)
+    next(error)
   }
 })

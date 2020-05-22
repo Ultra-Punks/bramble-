@@ -8,7 +8,13 @@ export default function FollowingFeed(props) {
     return (
       <div className="home-feed-view">
         {posts.map(post => {
-          return <FeedPostPreview key={post.id} post={post} />
+          return (
+            <FeedPostPreview
+              key={post.id}
+              post={post}
+              loggedInUser={props.loggedInUser}
+            />
+          )
         })}
       </div>
     )
