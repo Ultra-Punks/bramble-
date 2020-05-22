@@ -62,6 +62,7 @@
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-animated-heart": "0.0.4",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-map-gl": "^5.2.5",

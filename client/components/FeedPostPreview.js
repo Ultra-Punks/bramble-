@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
 import {Image, Button} from 'react-bootstrap'
@@ -5,6 +6,7 @@ import TimeAgo from 'react-timeago'
 import {FullPicture, FeedPostComment} from './index'
 import AddCommentFormFeed from './AddCommentFormFeed'
 import ReactPlayer from 'react-player'
+import Heart from 'react-animated-heart'
 import history from '../history'
 import {
   likeUserPostThunk,
@@ -51,6 +53,7 @@ function PostingPictures(props) {
 function FeedPostPreview(props) {
   const [openComments, setOpenComment] = useState(false)
   const [commentForm, setCommentForm] = useState(false)
+  const [isClick, setClick] = useState(false)
 
   function handleComments() {
     if (openComments) {
@@ -138,12 +141,24 @@ function FeedPostPreview(props) {
                   {post.likes}
                 </div>
               )}
-              <img
-                src="https://img.icons8.com/ios/64/000000/like.png"
-                className="likeIcon"
-                type="button"
-                onClick={() => props.likePost(post.id)}
-              />
+              {isClick ? (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(false)
+                  }}
+                />
+              ) : (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(true)
+                    props.likePost(post.id)
+                  }}
+                />
+              )}
             </div>
             <div className="dislikes">
               {post.dislikes >= 1 && (
