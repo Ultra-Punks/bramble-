@@ -68,7 +68,6 @@ class LandingPage extends Component {
   }
 
   render() {
-    console.log('this.props>>>>>', this.props)
     this.randomCommunityIds()
     const randomCommunities = this.props.communities
 
@@ -135,7 +134,6 @@ const mapToState = state => {
 }
 
 const mapToDispatch = (dispatch, ownProps) => {
-  // console.log('>>>>', ownProps.match.params)
   return {
     getRandomPosts: arrOfIds => dispatch(fetchRandomPosts(arrOfIds)),
     getRandomCommunities: arrOfIds =>

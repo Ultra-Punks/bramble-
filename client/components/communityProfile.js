@@ -5,13 +5,13 @@ import {
   subToCommunity,
   unSubToCommunity
 } from '../store/community'
+import {me} from '../store/user'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
 import {Button} from 'react-bootstrap'
 import {CommunityFeed, Map} from './index'
 import ShowMembers from './ShowMembers'
 import DisplaySubUnsub from './DisplaySubUnsub'
-import {me} from '../store'
 
 class CommunityProfile extends React.Component {
   constructor(props) {
@@ -152,8 +152,14 @@ const mapDispatch = (dispatch, ownProps) => {
     fetchSingleCommunity: () => dispatch(fetchSingleCommunity(id)),
     fetchGallery: () => dispatch(fetchAllPhotos(id)),
     fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id)),
-    subscribe: () => dispatch(subToCommunity(id)),
-    unsubscribe: () => dispatch(unSubToCommunity(id))
+    subscribe: () => {
+      dispatch(subToCommunity(id))
+      setTimeout(() => dispatch(me()), 500)
+    },
+    unsubscribe: () => {
+      dispatch(unSubToCommunity(id))
+      setTimeout(() => dispatch(me()), 500)
+    }
   }
 }
 

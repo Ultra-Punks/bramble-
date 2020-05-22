@@ -323,6 +323,7 @@ form div {
   display: flex;
   height: auto;
   padding: 10px;
+  width: 100%;
 }
 
 .community-post-label {
@@ -359,6 +360,7 @@ form div {
 .post-header {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .post-handle {
@@ -729,6 +731,7 @@ form div {
 
 .commentsAndShares {
   display: flex;
+  width: 100%;
 }
 
 .likesAndDislikes {
@@ -1095,7 +1098,7 @@ form div {
 
 .replies {
   margin-top: 2%;
-  margin-left: 12%;
+  margin-left: 1%;
   margin-bottom: 1%;
   font-family: 'Roboto';
   font-weight: 500;
@@ -1141,4 +1144,86 @@ form div {
 
 .edit-profile-container {
   display: flex;
+}
+
+.edit-profile-form-container {
+  display: flex;
+}
+
+.display-img-edit {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.edit-profileimg-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-pic-form-text {
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 600;
+  font-size: 2em;
+  margin-bottom: 0;
+}
+
+.profileimg-button {
+  margin: 0 !important;
+}
+
+.edit-form-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 2%;
+}
+
+.edit-form-container-outer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-form-inner-middle-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.bio-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bio-box {
+  margin-top: 25%;
+}
+
+.bottom-form-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-post-img {
+  height: 40em;
+  width: 95%;
+  object-fit: contain;
+}
+
+.vid-container {
+  background-color: #3d4a63;
+  height: 30em;
+  width: 20em;
+}
+
+.delete-button {
+  align-self: flex-end;
+  margin-left: 45%;
 }
