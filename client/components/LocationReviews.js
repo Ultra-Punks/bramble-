@@ -3,9 +3,23 @@ import {Image} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
-
+function getStars(rating) {
+  const numOfStars = Array(rating).fill('')
+  return (
+    <div className="stars">
+      {/* <p>Rating:</p> */}
+      {numOfStars.map((e, i) => (
+        <img
+          key={i}
+          src="https://png.pngtree.com/png-clipart/20190619/original/pngtree-vector-star-icon-png-image_4013709.jpg"
+        />
+      ))}
+    </div>
+  )
+}
 export default function LocationReviews(props) {
   const {location} = props
+  let numOfStars
   if (
     location !== undefined &&
     location.locationReviews !== undefined &&
@@ -38,7 +52,7 @@ export default function LocationReviews(props) {
                   </div>
                 )}
             </div>
-            <p>{review.ratings}</p>
+            {getStars(review.ratings)}
             <p>{review.comments}</p>
           </div>
         ))}

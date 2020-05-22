@@ -10,7 +10,8 @@ export class AddLocationForm extends React.Component {
       name: '',
       address: '',
       city: '',
-      description: ''
+      description: '',
+      communityId: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,6 +30,7 @@ export class AddLocationForm extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
+    console.log('state in handlechange', this.state)
   }
 
   handleSubmit = event => {
@@ -42,7 +44,8 @@ export class AddLocationForm extends React.Component {
       name: '',
       address: '',
       city: '',
-      description: ''
+      description: '',
+      communityId: 0
     })
   }
   render() {
@@ -52,7 +55,13 @@ export class AddLocationForm extends React.Component {
         <div className="exit-add-post">
           <Form.Group controlId="community">
             <Form.Label>Community</Form.Label>
-            <Form.Control name="community" as="select" custom>
+            <Form.Control
+              value={this.state.communityId}
+              onChange={this.handleChange}
+              name="communityId"
+              as="select"
+              custom
+            >
               <option value="none">None</option>
               {this.props.subscribedCommunities &&
                 this.props.subscribedCommunities.map(community => {

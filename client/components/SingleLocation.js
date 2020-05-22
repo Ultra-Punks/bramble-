@@ -91,14 +91,7 @@ class SingleLocationView extends React.Component {
   constructor() {
     super()
     this.state = {
-      location: {},
-      viewport: {
-        width: 1000,
-        height: 700,
-        // latitude: coords[1],
-        // longitude: coords[0],
-        zoom: 12
-      }
+      location: {}
     }
     // this.state = {location: {}}
     // this.renderMap = this.renderMap.bind(this)
@@ -121,24 +114,6 @@ class SingleLocationView extends React.Component {
 
     if (!location || !location.id)
       return <div>Not enough info about this location yet</div>
-    // let map
-    // if(location.geometry && location.geometry.coordinates
-    //   && !this.state.location.geometry
-    //   ) {
-    //     console.log('state in if before singleLocation render', this.state.location)
-    //   let coordinates = location.geometry.coordinates
-    //   map = this.renderMap(coordinates)
-    // }
-    // {location && location.geometry && location.geometry.coordinates
-    //   && this.state.location.id !== location.id ?
-    //     this.renderMap()
-    //     // (<MapGL
-    //     //   mapStyle="mapbox://styles/mapbox/streets-v11"
-    //     //   mapboxApiAccessToken={mapboxToken}
-    //     //   {...this.state.viewport}
-    //     //   onViewportChange={viewport => this.setState({viewport})}
-    //     // ></MapGL>)
-    //     : ''}
 
     return (
       <div className="page-container">

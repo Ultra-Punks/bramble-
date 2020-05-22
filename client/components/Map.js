@@ -44,43 +44,49 @@ class Map extends React.Component {
       },
       userLocation: {},
       displayPopup: false,
-      selectedLocation: {}
+      selectedLocation: {},
+      viewParam: null
       // displayForm: false
     }
   }
   // eslint-disable-next-line complexity
   componentDidMount() {
-    // this.setState({viewport: {
-    // ...this.state.viewport, width: window.innerWidth, height: window.innerHeight}})
     const {userHomeId, singleLocation, cId, username} = this.props
     // console.log('checks', userHomeId, singleLocation.id, cId, username)
     if (this.props.userHomeId) {
       this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
+      // this.setState({selectedLocation: {}, viewParam: userHomeId})
       this.setState({selectedLocation: {}})
     } else if (this.props.singleLocation.id) {
+      // this.setState({viewParam: singleLocation.id})
       this.props.fetchLocation(this.props.singleLocation.id)
-      this.setState({selectedLocation: this.props.singleLocation})
+      // this.setState({selectedLocation: this.props.singleLocation, viewParam: singleLocation.id})
+      this.setState({selectedLocation: {}})
       this.addMarker(
         this.props.singleLocation.geometry.coordinates,
         this.props.singleLocation
       )
     } else if (this.props.cId) {
       this.props.getSomeLocations(this.props.cId, 'community')
+      // this.setState({selectedLocation: {}, viewParam: cId})
       this.setState({selectedLocation: {}})
     } else if (this.props.username) {
       this.props.getSomeLocations(this.props.username, 'user')
+      // this.setState({selectedLocation: {}, viewParam: username})
       this.setState({selectedLocation: {}})
     } else {
       this.props.getAllLocations()
+      // this.setState({selectedLocation: {}, viewParam: null})
       this.setState({selectedLocation: {}})
     }
     let mapSize
     if (
       // typeof window.innerWidth != undefined &&
-      userHomeId ||
-      singleLocation.id ||
-      cId ||
-      username
+      // userHomeId ||
+      // singleLocation.id ||
+      // cId ||
+      // username
+      this.state.viewParam !== null
     ) {
       mapSize = window.innerWidth * 0.4
       this.setState({
@@ -180,7 +186,7 @@ class Map extends React.Component {
               />
             </div>
           ) : (
-            console.log('NOT in conditional render for addlocation button')
+            ''
           )}
         </div>
       </Popup>

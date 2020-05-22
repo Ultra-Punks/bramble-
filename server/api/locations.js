@@ -102,7 +102,8 @@ router.post('/add', async (req, res, next) => {
       name,
       city,
       address,
-      description
+      description,
+      communityId
     } = req.body
     const location = await Location.create({
       mapId: id,
@@ -117,7 +118,9 @@ router.post('/add', async (req, res, next) => {
       city,
       address,
       description,
-      popup: false
+      communityId,
+      popup: false,
+      userId: req.user.id
     })
     res.json(location)
   } catch (err) {
