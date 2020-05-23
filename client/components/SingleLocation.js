@@ -3,7 +3,12 @@ import {connect} from 'react-redux'
 import {fetchOneLocation, addLocationReviewThunk} from '../store/singleLocation'
 import {Link} from 'react-router-dom'
 import {Image, Modal} from 'react-bootstrap'
-import {Map, LocationReviews, AddLocationReview} from './index'
+import {
+  Map,
+  MapForSingleLocation,
+  LocationReviews,
+  AddLocationReview
+} from './index'
 
 function PostingPictures(props) {
   const {post} = props
@@ -162,7 +167,7 @@ class SingleLocationView extends React.Component {
             <LocationReviews location={location} />
           </div>
           <div className="profileMapContainer sticky">
-            <Map singleLocation={this.props.location} />
+            <MapForSingleLocation singleLocation={this.props.location} />
           </div>
           {/* <div className="post-header">
             <UserPFP post={location} />

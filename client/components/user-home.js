@@ -2,7 +2,7 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchFollowingPosts} from '../store/generalUserFeed'
-import {PostFeed, Map} from './index'
+import {PostFeed, Map, MapForProfile} from './index'
 import FollowingFeed from './FollowingFeed'
 
 class UserHome extends React.Component {
@@ -19,7 +19,7 @@ class UserHome extends React.Component {
           loggedInUser={this.props.username}
         />
         <div className="map-container">
-          <Map userHomeId={this.props.id} />
+          <MapForProfile userHomeId={this.props.id} />
         </div>
       </div>
     )

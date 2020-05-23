@@ -9,6 +9,7 @@ import {
 import {
   PostFeed,
   Map,
+  MapForProfile,
   PopUpDisplay,
   ShowFollowing,
   DisplayFollowUnfollow,
@@ -194,7 +195,7 @@ class ProfileView extends React.Component {
           </div>
         </div>
         <div className="profileMapContainer sticky">
-          <Map username={this.props.match.params.username} />
+          <MapForProfile username={this.props.match.params.username} />
         </div>
       </div>
     )

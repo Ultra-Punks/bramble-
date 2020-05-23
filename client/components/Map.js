@@ -45,14 +45,22 @@ class Map extends React.Component {
       userLocation: {},
       displayPopup: false,
       selectedLocation: {},
-      viewParam: null
+      userHomeIdS: '',
+      singleLocationS: {},
+      cIdS: '',
+      usernameS: ''
       // displayForm: false
     }
   }
   // eslint-disable-next-line complexity
   componentDidMount() {
     const {userHomeId, singleLocation, cId, username} = this.props
-    console.log('checks', userHomeId, singleLocation.id, cId, username)
+    // const {userHomeIdS, singleLocationS, cIdS, usernameS} = this.state.viewParams
+    const userHomeIdS = this.state.userHomeIdS
+    const singleLocationS = this.state.singleLocationS
+    const cIdS = this.state.cIdS
+    const usernameS = this.state.usernameS
+
     let mapSize
     if (userHomeId) {
       this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
