@@ -11,7 +11,7 @@ import RedPin from './RedPin'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {fetchAllLocations, fetchSomeLocations} from '../store/locations'
-import {fetchOneLocation} from '../store/singleLocation'
+// import {fetchOneLocation} from '../store/singleLocation'
 import {mapboxToken} from '../../secrets'
 
 class MapForProfile extends React.Component {
@@ -28,10 +28,9 @@ class MapForProfile extends React.Component {
         zoom: 12
       },
       allLocations: [],
-      displayPopup: false,
       selectedLocation: {},
+      displayPopup: false,
       userHomeIdS: null,
-      singleLocationIdS: null,
       cIdS: null,
       usernameS: null,
       message: null
@@ -39,25 +38,15 @@ class MapForProfile extends React.Component {
   }
   // eslint-disable-next-line complexity
   componentDidMount() {
-    const {userHomeId, singleLocation, cId, username, locations} = this.props
+    const {userHomeId, cId, username, locations} = this.props
 
     const userHomeIdS = this.state.userHomeIdS
-    const singleLocationIdS = this.state.singleLocationIdS
+
     const cIdS = this.state.cIdS
     const usernameS = this.state.usernameS
 
-    console.log(
-      'props in compdidmount',
-      userHomeId,
-      singleLocation.id,
-      cId,
-      username
-    )
-    console.log('singleLocationIdS in compdidmount', singleLocationIdS)
-    console.log(
-      'selected location in compdidmount',
-      this.state.selectedLocation
-    )
+    console.log('props in compdidmount', userHomeId, cId, username)
+
     // console.log('cIdS ', cIdS)
     console.log('state in compdidmount', this.state)
 
@@ -74,35 +63,16 @@ class MapForProfile extends React.Component {
     if (userHomeId) {
       this.props.getSomeLocations(userHomeId, 'homeFeed')
       this.setState({
-        selectedLocation: {},
         userHomeIdS: userHomeId,
-        singleLocationIdS: null,
         cIdS: null,
         usernameS: null,
         locations
       })
-    } else if (singleLocation.id && singleLocation.id !== singleLocationIdS) {
-      this.props.fetchLocation(singleLocation.id)
-      this.setState({
-        selectedLocation: singleLocation,
-        singleLocationIdS: singleLocation.id,
-        userHomeIdS: null,
-        cIdS: null,
-        usernameS: null,
-        locations: []
-      })
-
-      this.addMarker(
-        this.props.singleLocation.geometry.coordinates,
-        this.props.singleLocation
-      )
     } else if (cId) {
       this.props.getSomeLocations(cId, 'community')
 
       this.setState({
-        selectedLocation: {},
         cIdS: cId,
-        singleLocationIdS: null,
         userHomeIdS: null,
         usernameS: null,
         locations
@@ -111,9 +81,7 @@ class MapForProfile extends React.Component {
       this.props.getSomeLocations(username, 'user')
 
       this.setState({
-        selectedLocation: {},
         usernameS: username,
-        singleLocationIdS: null,
         userHomeIdS: null,
         cIdS: null,
         locations
@@ -122,10 +90,8 @@ class MapForProfile extends React.Component {
       this.props.getAllLocations()
 
       this.setState({
-        selectedLocation: {},
         usernameS: null,
         cIdS: null,
-        singleLocationIdS: null,
         userHomeIdS: null,
         locations,
         message:
@@ -137,13 +103,9 @@ class MapForProfile extends React.Component {
   componentWillUnmount() {
     this.setState({
       userHomeIdS: null,
-      singleLocationIdS: null,
       cIdS: null,
-      usernameS: null,
-      selectedLocation: {}
+      usernameS: null
     })
-
-    console.log('singlelocationidS', this.state.singleLocationIdS)
     console.log('COMPONENT UNMOUNTING', this.state)
   }
 
