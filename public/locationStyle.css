@@ -53,5 +53,7 @@
 }
 
 #map-message {
-  background-color: crimson;
+  background-color: cornflowerblue;
+  width: max-content;
+  color: white;
 }

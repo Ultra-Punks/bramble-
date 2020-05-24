@@ -29,9 +29,9 @@ class MapForProfile extends React.Component {
       locations: [],
       selectedLocation: {},
       displayPopup: false,
-      userHomeIdS: null,
-      cIdS: null,
-      usernameS: null,
+      userHomeId: null,
+      cId: null,
+      username: null,
       message: null
     }
   }
@@ -42,41 +42,46 @@ class MapForProfile extends React.Component {
     if (userHomeId) {
       this.props.getSomeLocations(userHomeId, 'homeFeed')
       this.setState({
-        userHomeIdS: userHomeId,
-        cIdS: null,
-        usernameS: null,
+        userHomeId: userHomeId,
+        cId: null,
+        username: null,
         locations
       })
     } else if (cId) {
       this.props.getSomeLocations(cId, 'community')
       this.setState({
-        cIdS: cId,
-        userHomeIdS: null,
-        usernameS: null,
+        cId: cId,
+        userHomeId: null,
+        username: null,
         locations
       })
     } else if (username) {
       this.props.getSomeLocations(username, 'user')
 
       this.setState({
-        usernameS: username,
-        userHomeIdS: null,
-        cIdS: null,
+        username: username,
+        userHomeId: null,
+        cId: null,
         locations
       })
     } else {
       this.props.getAllLocations()
 
       this.setState({
-        usernameS: null,
-        cIdS: null,
-        userHomeIdS: null,
+        username: null,
+        cId: null,
+        userHomeId: null,
         locations,
-        message:
-          'No locations associated with this community/user - check out some places related to other communities below!'
+        message: `No locations associated with this community/user ${(
+          <br />
+        )} Check out some places related to other communities below!`
       })
     }
     if (this.props.locations[0]) {
+      const randomLocationIdx = Math.floor(
+        Math.random() * this.props.locations.length
+      )
+      console.log('this is the random location index', randomLocationIdx)
       const coords = this.props.locations[0].geometry.coordinates
       this.setState({
         viewport: {
@@ -157,8 +162,9 @@ class MapForProfile extends React.Component {
       left: 0,
       padding: '10px'
     }
+    console.log('this is the messagein render', this.state.message)
     return (
-      <div>
+      <div className="profileMapContainer sticky">
         <p id="map-message">{this.state.message}</p>
         <div id="map">
           {/* our main interactive map component */}

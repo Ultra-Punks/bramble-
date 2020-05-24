@@ -170,17 +170,18 @@ form div {
 .sticky {
   position: fixed;
   /* left: 60.2%; */
-  left: 55%;
+  left: 52%;
   top: 20%;
 }
 
 .profileMapContainer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: cornflowerblue;
-  height: 40%;
-  width: 38%;
+  height: 50%;
+  width: 45%;
   padding: 15%;
   border-radius: 20px;
   margin: 25px;

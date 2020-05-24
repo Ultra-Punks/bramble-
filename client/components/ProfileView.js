@@ -194,9 +194,9 @@ class ProfileView extends React.Component {
             </div>
           </div>
         </div>
-        <div className="profileMapContainer sticky">
-          <MapForProfile username={this.props.match.params.username} />
-        </div>
+        {/* <div className="profileMapContainer sticky"> */}
+        <MapForProfile username={this.props.match.params.username} />
+        {/* </div> */}
       </div>
     )
   }
