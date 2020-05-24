@@ -95,7 +95,7 @@ class CommunitySearch extends React.Component {
 
         <div className="communityPic">
           <img
-            src="https://youmatter.world/app/uploads/sites/2/2020/03/coronavirus-bad-ecology.jpg"
+            src="https://i.postimg.cc/t70TLvxJ/city.jpg"
             className="communitySinglePix"
           />
         </div>
