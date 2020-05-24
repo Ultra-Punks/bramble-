@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAllCommunities, fetchOneCommunity} from '../store/allCommunities'
+import history from '../history'
+import {AwesomeButton} from 'react-awesome-button'
 
 class CommunitySearch extends React.Component {
   constructor() {
@@ -23,16 +25,13 @@ class CommunitySearch extends React.Component {
     })
   }
 
+  handleKeyPress = () => {
+    this.props.fetchOneCommunity(this.state.community)
+  }
+
   handleSubmit() {
     event.preventDefault()
-    try {
-      this.props.fetchOneCommunity(this.state.community)
-      this.setState({
-        community: ''
-      })
-    } catch (error) {
-      console.log('error')
-    }
+    this.props.fetchOneCommunity(this.state.community)
   }
 
   searchResults() {
@@ -56,11 +55,14 @@ class CommunitySearch extends React.Component {
                         {result.description}
                       </div>
                       <div className="community-button">
-                        <Link to={`/Community/list/${result.id}`}>
-                          <button className="followbutton" type="button">
-                            View
-                          </button>
-                        </Link>
+                        <AwesomeButton
+                          type="primary"
+                          onPress={() =>
+                            history.push(`/Community/list/${result.id}`)
+                          }
+                        >
+                          View
+                        </AwesomeButton>
                       </div>
                     </div>
                   </div>
@@ -76,31 +78,32 @@ class CommunitySearch extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            className="searchbar"
-            name="community"
-            type="text"
-            onChange={this.handleChange}
-            value={this.state.community}
-          />
-          <button className="searchCommunitybutton" type="submit">
-            <img
-              src="https://cdn3.iconfinder.com/data/icons/social-messaging-ui-color-line/245532/58-512.png"
-              className="community-magPic"
-            />
-          </button>
-        </form>
-        <br />
-
         <div className="communityPic">
-          <img
-            src="https://i.postimg.cc/t70TLvxJ/city.jpg"
-            className="communitySinglePix"
-          />
-        </div>
-        <div className="communityText">
-          <div className="communityText2">Find Your Community</div>
+          <div className="community-first-container">
+            <p className="community-search-title">Find your community</p>
+          </div>
+          <div className="community-second-container">
+            <form onSubmit={this.handleSubmit}>
+              <input
+                className="searchbar"
+                name="community"
+                type="text"
+                onChange={this.handleChange}
+                onKeyUp={this.handleKeyPress}
+                value={this.state.community}
+              />
+              <button className="searchCommunitybutton" type="submit">
+                <img
+                  src="https://image.flaticon.com/icons/svg/1086/1086933.svg"
+                  className="community-magPic"
+                />
+              </button>
+            </form>
+            <img
+              src="https://youmatter.world/app/uploads/sites/2/2020/03/coronavirus-bad-ecology.jpg"
+              className="communitySinglePix"
+            />
+          </div>
         </div>
 
         <div>{this.searchResults()}</div>

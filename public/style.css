@@ -127,10 +127,9 @@ form div {
 
 .modal-content {
   height: auto;
-  min-height: 425px;
   display: flex;
   flex-direction: column;
-  background-color: #3d4a63;
+  /* background-color: #337a8c; */
 }
 
 .add-post-container {
@@ -165,6 +164,8 @@ form div {
 .profileImgContentContainer {
   /* display: flex; */
   padding: 20px;
+  width: 50%;
+  background-color: #f0f0f0;
 }
 
 .sticky {
@@ -253,27 +254,36 @@ form div {
 
 .profile-username {
   margin: 0;
-  margin-bottom: 5px;
   font-family: 'Roboto';
-  color: #c8cfde;
+  color: #5d5d5d;
   font-size: 1em;
 }
+
+.empty-feed {
+  color: #323232;
+  font-family: 'Roboto';
+  font-weight: 600;
+  font-size: 2em;
+  margin-top: 5%;
+}
+
 .profile-name {
   margin: 0;
   margin-top: 5px;
   font-family: 'Roboto';
-  color: black;
+  color: #323232;
   font-weight: 600;
   font-size: 2em;
 }
 
 .profileBio {
   font-family: 'Roboto';
-  font-weight: 400;
-  color: black;
+  font-weight: 500;
+  color: #323232;
   margin: 0;
   height: auto;
   padding-bottom: 10px;
+  margin-top: 2%;
 }
 
 .underline {
@@ -282,7 +292,7 @@ form div {
 
 .contentContainer {
   height: auto;
-  width: 825px;
+  width: 100%;
 }
 
 .buttonContainer {
@@ -290,23 +300,22 @@ form div {
 }
 
 .profileFeedButton {
-  width: 412px;
   height: 50px;
-  color: #bccdec;
+  color: #323232;
   font-size: 1.2em;
   font-family: 'Roboto';
   font-weight: 600;
 }
 
 .profileFeedButton:hover {
-  border-bottom: solid #7092d4 4px;
-  color: white;
+  border-bottom: solid #323232 2px;
+  color: #00d290;
   text-decoration: none;
 }
 
 .selected-feed {
-  border-bottom: solid #7092d4 4px;
-  color: white;
+  border-bottom: solid #00d290 4px;
+  color: #323232;
 }
 
 .gallery-container {
@@ -315,12 +324,79 @@ form div {
   padding: 5.5px;
 }
 
+.following-header {
+  margin: 0;
+  font-family: 'Roboto';
+  font-size: 2em;
+  color: #323232;
+  font-weight: 600;
+  margin-top: 2%;
+  margin-left: 3.5%;
+}
+
+.profile-preview-container {
+  display: flex;
+  cursor: pointer;
+  margin: 3%;
+  background-color: #fff;
+  padding: 3%;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+}
+
+.profile-preview-name {
+  font-family: 'Roboto';
+  font-weight: 600;
+  color: #323232;
+  font-size: 1.4em;
+  margin-right: 1.5%;
+}
+
+.following-container {
+  height: 600px;
+  background-color: #f0f0f0;
+  overflow-y: scroll;
+}
+
+.text-hover:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.profile-top-name {
+  display: flex;
+  justify-content: space-between;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.profile-preview-handle {
+  display: flex;
+  align-items: center;
+}
+
+.profile-preview-username {
+  font-family: 'Roboto';
+  color: #5d5d5d;
+  font-size: 1em;
+}
+
+.profile-preview {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.2%;
+  width: 100%;
+}
+
 .gallery-photo {
   height: 195px;
   width: 195px;
   object-fit: cover;
-  background-color: red;
+  border-radius: 7px;
   margin: 4px;
+  cursor: pointer;
 }
 
 .feedView {
@@ -329,17 +405,21 @@ form div {
   justify-content: space-around;
   border-radius: 10px;
   margin-right: 35px;
-  background-color: #f0f0f0;
 }
 
 .single-post {
   display: flex;
+  flex-direction: column;
   height: auto;
   padding: 10px;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #fff;
   border-radius: 0 0 15px 15px;
   box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+}
+
+.inner-single-post {
+  display: flex;
 }
 
 .community-post-label {
@@ -353,10 +433,13 @@ form div {
   font-family: 'Roboto';
   font-size: 1.3em;
   font-weight: 600;
+  transition: all 0.4s ease 0s;
+  color: #2b3b2e;
 }
 
 .community-post-label:hover {
-  background-color: lightskyblue;
+  background-color: #337a8c;
+  color: white;
 }
 
 .single-post-preview-container {
@@ -386,6 +469,11 @@ form div {
 
 .handle-text {
   margin: 5px;
+  cursor: pointer;
+}
+
+.handle-text:hover {
+  text-decoration: underline;
 }
 
 .post-pfp {
@@ -396,6 +484,7 @@ form div {
   border-style: solid;
   border-width: 3px;
   border-color: #3d4a63;
+  cursor: pointer;
 }
 
 .post-photos {
@@ -409,7 +498,6 @@ form div {
   width: 85%;
   object-fit: cover;
   border-radius: 10px;
-  border: solid 2px #8793a9;
 }
 
 .post-images {
@@ -478,6 +566,7 @@ form div {
 
 .logged-in-container {
   display: flex;
+  align-items: center;
 }
 
 .example {
@@ -498,21 +587,18 @@ form div {
 }
 
 .signup-label {
-  color: white;
-}
-
-.signup-input {
-  background-color: white;
-  color: black;
+  color: #3e3e3e;
+  font-family: 'Roboto';
+  font-weight: 500;
 }
 
 .signup-input:active {
-  background-color: white;
+  background-color: #dadada;
   color: black;
 }
 
 .signup-input:focus {
-  background-color: white;
+  background-color: #dadada;
   color: black;
 }
 
@@ -522,12 +608,26 @@ form div {
 }
 
 .sub {
-  color: #dee1e8 !important;
+  color: #878787 !important;
+}
+
+.first-input {
+  margin-top: 0;
+}
+
+.create-account-text {
+  font-family: 'Roboto';
+  font-weight: 600;
+  margin: 0;
+  margin-left: 33px;
+  margin-top: 4%;
+  font-size: 1.5em;
 }
 
 .signup-username {
   display: flex;
   margin: 0;
+  height: 37.5px;
 }
 
 .input-group-text {
@@ -582,6 +682,13 @@ form div {
   }
 }
 
+.add-post-nav {
+  cursor: pointer;
+  height: 35px;
+  width: 35px;
+  margin-right: 20px;
+}
+
 .community-card {
   background-color: white;
   border-radius: 0.25rem;
@@ -595,6 +702,7 @@ form div {
 
 .community-card-image {
   display: flex;
+  object-fit: cover;
   justify-content: center;
   align-items: center;
   background-color: black;
@@ -662,21 +770,32 @@ form div {
 
 .communitySinglePix {
   display: flex;
+  object-fit: cover;
   width: 100%;
-  height: 600px;
+  height: 250px;
   margin-bottom: 25px;
 }
 
-.searchbar {
+.community-search-title {
   position: absolute;
-  top: 45%;
-  right: 30%;
-  left: 20%;
+  top: 15%;
+  font-family: 'Roboto';
+  font-weight: 700;
+  color: #373737;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.searchbar {
+  border-radius: 25px;
+  box-shadow: inset 0 0 5px grey;
+  padding-left: 25px;
+  position: absolute;
+  right: 25%;
   display: block;
   margin: 0;
-  padding: var(--inputPaddingV) var(--inputPaddingH);
   color: inherit;
-  width: 55%;
+  width: 50%;
   height: 50px;
   font-family: inherit;
   font-size: var(--inputFontSize);
@@ -684,35 +803,28 @@ form div {
   line-height: var(--inputLineHeight);
   border: none;
   transition: box-shadow var(--transitionDuration);
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
 }
 
 .searchCommunitybutton {
   position: absolute;
-  top: 45%;
-  width: 20%;
+  border-radius: 0 25px 25px 0;
   height: 50px;
   right: 25%;
-  color: #fff !important;
-  text-transform: uppercase;
-  text-decoration: none;
-  background: #ed3330;
-  display: inline-block;
+  background-color: #00d290;
   border: none;
   transition: all 0.4s ease 0s;
 }
 
 .community-magPic {
-  height: 45px;
+  height: 30px;
   width: 50px;
 }
 
 .searchCommunitybutton:hover {
-  background: #434343;
-  letter-spacing: 1px;
-  -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
-  box-shadow: 5px 40px -10px rgba(0, 0, 0, 0.57);
-  transition: all 0.4s ease 0s;
+  background-color: #00ae73;
 }
 
 .followbutton {
@@ -728,8 +840,22 @@ form div {
   margin-top: 5px;
 }
 
+.community-first-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.community-second-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .communityPic {
   display: flex;
+  flex-direction: column;
+  height: 250px;
 }
 
 .communityText {
@@ -798,15 +924,17 @@ form div {
 } */
 
 .see-replies-container {
+  cursor: pointer;
   display: flex;
   justify-content: flex-end;
   padding-right: 3%;
+  margin-bottom: 3%;
 }
 
-.see-replies-container:hover {
-  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
-    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-  transform: translateY(-2px) scale(1.025);
+.no-replies-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 3%;
 }
 
 .replies-button {
@@ -860,12 +988,6 @@ form div {
   padding-top: 2px;
   height: 35px;
   width: 35px;
-}
-
-.dislikeIcon:hover {
-  text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
-    rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
-  transform: translateY(-3px) scale(1.025);
 }
 
 .commentContainer {
@@ -989,15 +1111,15 @@ form div {
 
 .singleCommentPreview {
   display: flex;
-  flex-direction: column;
   height: auto;
-  width: 80%;
-  background-color: rgba(224, 232, 240, 0.879);
+  width: 100%;
+  border: solid 1px #c7c7c7;
   justify-content: center;
   border-radius: 20px;
   justify-content: space-evenly;
   margin: 10px;
   padding: 25px;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
 }
 .communityBio {
   font-family: 'Roboto';
@@ -1014,8 +1136,8 @@ form div {
 }
 
 .profilePagePhoto {
-  height: 300px;
-  width: 300px;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
 }
 
@@ -1028,9 +1150,7 @@ form div {
 
 /* Container holding the image and the text */
 .welcomePhotoContainer {
-  position: relative;
-  text-align: center;
-  color: white;
+  align-items: center;
   margin-bottom: 30px;
   overflow: hidden; /*hide bounds of image */
   margin: 0; /*reset margin of figure tag*/
@@ -1039,11 +1159,24 @@ form div {
 .welcomePhoto {
   display: block; /*remove inline-block spaces*/
   width: 100%; /*make image streatch*/
+  margin: -10.875% 0;
 }
 
-.welcomePhoto {
-  /* crops image...must be added separately */
-  margin: -10.875% 0;
+.community-discover {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 3%;
+}
+
+.landing-community-preview {
+  color: black;
+}
+
+.landing-community-preview:hover {
+  color: black;
+  text-decoration: none;
 }
 
 .onPhotoText {
@@ -1066,6 +1199,22 @@ form div {
   justify-content: space-around;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-text-button {
+  color: white;
+  margin: 1em;
+  cursor: pointer;
+}
+
+.nav-text-button:hover {
+  color: #00d290;
+  text-decoration: none;
+}
+
 .sampleContainer {
   display: flex;
   flex-direction: column;
@@ -1074,6 +1223,7 @@ form div {
   width: 20%;
   border-radius: 10px;
   margin-top: 1%;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
 }
 
 .sampleContainer:hover {
@@ -1089,6 +1239,9 @@ form div {
   /* background-color: rgba(230, 230, 230, 0.893); */
   align-items: center;
   justify-content: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 
 .goatIcon {
@@ -1112,9 +1265,12 @@ form div {
 }
 
 .signup-input {
-  background-color: white;
+  background-color: #dadada;
   color: black;
-  margin-bottom: 25px;
+}
+
+.signin-signup {
+  display: flex;
 }
 
 .home-feed-container {
@@ -1297,7 +1453,7 @@ form div {
 }
 
 .vid-container {
-  background-color: #3d4a63;
+  background-color: #f0f0f0;
   height: 30em;
   width: 20em;
 }
@@ -1309,4 +1465,29 @@ form div {
 
 .post-info-inner {
   display: flex;
+}
+
+.aws-btn {
+  --button-default-height: 48px;
+  --button-default-font-size: 14px;
+  --button-default-border-radius: 6px;
+  --button-horizontal-padding: 20px;
+  --button-raise-level: 5px;
+  --button-hover-pressure: 2;
+  --transform-speed: 0.185s;
+  --button-primary-color: #00e28d;
+  --button-primary-color-dark: #008458;
+  --button-primary-color-light: #050505;
+  --button-primary-color-hover: #424e6a;
+  --button-primary-border: none;
+  --button-secondary-color: #fffc6c;
+  --button-secondary-color-dark: #b9b500;
+  --button-secondary-color-light: #6c6a00;
+  --button-secondary-color-hover: #fffb3e;
+  --button-secondary-border: none;
+  --button-anchor-color: #f3c8ad;
+  --button-anchor-color-dark: #734922;
+  --button-anchor-color-light: #4c3016;
+  --button-anchor-color-hover: #f1bfa0;
+  --button-anchor-border: 1px solid #8c633c;
 }

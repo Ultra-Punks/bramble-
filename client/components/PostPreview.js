@@ -7,6 +7,7 @@ import {Image, Button} from 'react-bootstrap'
 import TimeAgo from 'react-timeago'
 import ReactPlayer from 'react-player'
 import Heart from 'react-animated-heart'
+import history from '../history'
 import AddCommentForm from './AddCommentForm'
 import {connect} from 'react-redux'
 import {
@@ -65,40 +66,78 @@ function PostPreview(props) {
   }
 
   const {post, profile} = props
+  const likeClass = isClick ? 'likes-number-active' : 'likes-number-unactive'
   return (
     <div className="single-post-preview-container">
       {post.communityId &&
       post.community &&
       post.community.name !== undefined ? (
-        <div className="community-post-label">{post.community.name}</div>
+        <Link
+          className="link-to-community"
+          to={`/community/list/${post.communityId}`}
+        >
+          <div className="community-post-label">{post.community.name}</div>
+        </Link>
       ) : (
         ''
       )}
       <div key={post.id} className="single-post">
-        <div className="pfp-col">
-          <Image className="post-pfp" src={profile.profileImg} roundedCircle />
-        </div>
-        <div className="post-header">
-          <div className="post-info">
-            <div className="post-handle">
-              <p className="handle-text">{profile.name}</p>
-              <p className="handle-text">@{profile.username}</p>
+        <div className="inner-single-post">
+          <div className="pfp-col">
+            <Image
+              className="post-pfp"
+              src={profile.profileImg}
+              roundedCircle
+              onClick={() => history.push(`/u/${profile.username}`)}
+            />
+          </div>
+          <div className="post-header">
+            <div>
+              <div className="post-info">
+                <div className="post-handle">
+                  <div className="post-info-inner">
+                    <p
+                      className="handle-text"
+                      onClick={() => history.push(`/u/${profile.username}`)}
+                    >
+                      {profile.name}
+                    </p>
+                    <p
+                      className="handle-text"
+                      onClick={() => history.push(`/u/${profile.username}`)}
+                    >
+                      @{profile.username}
+                    </p>
+                  </div>
+                  {profile.username === props.loggedInUser ? (
+                    <Button
+                      className="delete-button"
+                      variant="secondary"
+                      onClick={() => props.deletePost(post.id)}
+                    >
+                      X
+                    </Button>
+                  ) : (
+                    ''
+                  )}
+                </div>
+                <div className="post-feed-preview-info">
+                  <Link className="link-to-post" to={`/p/${post.id}`}>
+                    <TimeAgo
+                      className="time-ago"
+                      date={post.createdAt}
+                      live={false}
+                    />
+                    <p className="post-text">{post.description}</p>
+                  </Link>
+                </div>
+              </div>
             </div>
-            <Link className="link-to-post" to={`/p/${post.id}`}>
-              <TimeAgo
-                className="time-ago"
-                date={post.createdAt}
-                live={false}
-              />
-              <p className="post-text">{post.description}</p>
-            </Link>
-          </div>
 
-          <div className="post-photos">
-            <PostingPictures post={post} />
-          </div>
-          <div className="commentsAndShares">
-            <div className="commentRepliesContainer">
+            <div className="post-photos">
+              <PostingPictures post={post} />
+            </div>
+            <div className="commentsAndShares">
               <img
                 src="https://img.icons8.com/all/500/comments.png"
                 className="commentIcon"
@@ -111,78 +150,66 @@ function PostPreview(props) {
                 postId={post.id}
               />
 
-              {post.postComments !== undefined && post.postComments.length ? (
-                <p
-                  className="seeReplies"
+              <div className="likes">
+                {post.likes >= 1 && <p className={likeClass}>{post.likes}</p>}
+                {isClick ? (
+                  <Heart
+                    className="likeIcon"
+                    isClick={isClick}
+                    onClick={() => {
+                      setClick(false)
+                      props.unlikePost(post.id)
+                    }}
+                  />
+                ) : (
+                  <Heart
+                    className="likeIcon"
+                    isClick={isClick}
+                    onClick={() => {
+                      setClick(true)
+                      props.likePost(post.id)
+                    }}
+                  />
+                )}
+              </div>
+              <div className="dislikes">
+                {post.dislikes >= 1 && (
+                  <p className="dislikes-number">{post.dislikes}</p>
+                )}
+                <img
+                  src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                  className="dislikeIcon"
                   type="button"
-                  onClick={handleComments}
-                >
+                  onClick={() => props.dislikePost(post.id)}
+                />
+              </div>
+            </div>
+
+            {post.postComments !== undefined && post.postComments.length ? (
+              <div className="see-replies-container" onClick={handleComments}>
+                <p className="seeReplies" type="button">
                   {post.postComments.length > 1
-                    ? `See ${post.postComments.length} replies`
-                    : 'See 1 reply'}
+                    ? `${post.postComments.length} replies`
+                    : '1 reply'}
                 </p>
-              ) : (
-                <p className="seeReplies">0 replies</p>
-              )}
-            </div>
-            <div className="likes">
-              {post.likes >= 1 && (
-                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-                  {post.likes}
-                </div>
-              )}
-              {isClick ? (
-                <Heart
-                  className="likeIcon"
-                  isClick={isClick}
-                  onClick={() => {
-                    setClick(false)
-                    props.unlikePost(post.id)
-                  }}
+                <img
+                  className="replies-button"
+                  src="https://image.flaticon.com/icons/svg/271/271210.svg"
                 />
-              ) : (
-                <Heart
-                  className="likeIcon"
-                  isClick={isClick}
-                  onClick={() => {
-                    setClick(true)
-                    props.likePost(post.id)
-                  }}
-                />
-              )}
-            </div>
-            <div className="dislikes">
-              {post.dislikes >= 1 && (
-                <div style={{paddingLeft: '13px', marginBottom: '-25px'}}>
-                  {post.dislikes}
-                </div>
-              )}
-              <img
-                src="https://img.icons8.com/windows/80/000000/dislike.png"
-                className="dislikeIcon"
-                type="button"
-                onClick={() => props.dislikePost(post.id)}
-              />
-            </div>
-            {profile.username === props.loggedInUser ? (
-              <Button
-                className="delete-button"
-                variant="danger"
-                onClick={() => props.deletePost(post.id)}
-              >
-                X
-              </Button>
+              </div>
             ) : (
-              ''
+              <div className="see-replies-container">
+                <p className="seeReplies">0 replies</p>
+              </div>
             )}
           </div>
-          <br />
-          <PostComment
-            post={post}
-            openComments={openComments}
-            loggedInUser={props.loggedInUser}
-          />
         </div>
+        <PostComment
+          post={post}
+          openComments={openComments}
+          postId={post.id}
+          loggedInUser={props.loggedInUser}
+        />
       </div>
     </div>
   )

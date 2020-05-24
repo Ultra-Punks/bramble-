@@ -13,43 +13,46 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
   return (
     <div className="nav-container">
       <div className="nav-group">
-        <Link to="/">
+        <Link className="nav-text-button" to="/">
           <p className="nav-title">Bramble</p>
         </Link>
       </div>
-      <Link to="/map">
-        <Image
-          className="nav-logo"
-          src="https://cdn0.iconfinder.com/data/icons/kirrkle-maps-and-navigation/60/10_-_Map_marker-512.png"
-          roundedCircle
-          // onClick={() => props.history.push('/map')}
-        />
-      </Link>
+
       <div className="nav-group">
         <nav>
           <div className="signin-signup">
+            <Link to="/map">
+              <Image
+                className="nav-logo"
+                src="https://res.cloudinary.com/bramble/image/upload/v1590192635/user_uploads/map_icon_mkn6se.png"
+                roundedCircle
+                // onClick={() => props.history.push('/map')}
+              />
+            </Link>
             {isLoggedIn ? (
               <div className="logged-in-container">
                 {/* The navbar will show these links after you log in */}
-                <Button variant="danger" onClick={() => setModalShow(true)}>
-                  Add Post
-                </Button>
+                <img
+                  className="add-post-nav"
+                  src="https://res.cloudinary.com/bramble/image/upload/v1590216347/user_uploads/add_post_j1qlhq.png"
+                  onClick={() => setModalShow(true)}
+                />
                 <AddPost
                   show={modalShow}
                   onHide={() => setModalShow(false)}
                   user={user}
                 />
 
-                <Link to="/home" className="nav-bar-text">
+                <Link className="nav-text-button" to="/home">
                   Home
                 </Link>
-                <Link to="/community" className="nav-bar-text">
-                  Community
+                <Link className="nav-text-button" to="/community">
+                  Communities
                 </Link>
-                <a href="#" onClick={handleClick} className="nav-bar-text">
+                <a className="nav-text-button" href="#" onClick={handleClick}>
                   Logout
                 </a>
-                <Link to={`/u/${user.username}`}>
+                <Link className="nav-text-button" to={`/u/${user.username}`}>
                   <Image
                     className="nav-logo"
                     src={user.profileImg}
@@ -58,18 +61,28 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                 </Link>
               </div>
             ) : (
-              <div>
+              <div className="nav-right">
                 {/* The navbar will show these links before you log in */}
                 {/* <Link to="/login">Login</Link> */}
-                <Link to="/community" className="nav-bar-text">
-                  Community
+                <Link to="/community" className="nav-text-button">
+                  Communities
                 </Link>
-                <Button onClick={() => setLoginShow(true)}>Login</Button>
+                <p
+                  className="nav-text-button"
+                  onClick={() => setLoginShow(true)}
+                >
+                  Login
+                </p>
                 <LoginButton
                   show={loginShow}
                   onHide={() => setLoginShow(false)}
                 />
-                <Button onClick={() => setSignupShow(true)}>Signup</Button>
+                <p
+                  className="nav-text-button"
+                  onClick={() => setSignupShow(true)}
+                >
+                  Signup
+                </p>
                 <SignupButton
                   show={signupShow}
                   onHide={() => setSignupShow(false)}

@@ -9,6 +9,7 @@ class LoginButton extends React.Component {
         onHide={this.props.onHide}
         show={this.props.show}
         size="lg"
+        animation
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
