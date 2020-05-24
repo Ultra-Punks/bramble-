@@ -4,6 +4,8 @@
  * having to figure out which file they belong to!
  */
 export {default as Map} from './Map'
+export {default as MapForProfile} from './MapForProfile'
+export {default as MapForSingleLocation} from './MapForSingleLocation'
 export {default as AddLocationForm} from './AddLocationForm'
 export {default as AddLocationReview} from './AddLocationReview'
 export {default as AddLocation} from './AddLocation'

@@ -90,6 +90,7 @@ router.get('/home', async (req, res, next) => {
 // single location routes
 router.post('/add', async (req, res, next) => {
   try {
+    // let {communityId} = req.body
     const {
       id,
       place_type,
@@ -105,6 +106,8 @@ router.post('/add', async (req, res, next) => {
       description,
       communityId
     } = req.body
+    // if (communityId === 0) communityId = null
+    // else communityId = req.body.communityId
     const location = await Location.create({
       mapId: id,
       place_type,

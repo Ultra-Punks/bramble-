@@ -9,7 +9,7 @@ import {me} from '../store/user'
 import {fetchAllPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
 import {Button} from 'react-bootstrap'
-import {CommunityFeed, Map} from './index'
+import {CommunityFeed, Map, MapForProfile} from './index'
 import ShowMembers from './ShowMembers'
 import DisplaySubUnsub from './DisplaySubUnsub'
 
@@ -130,7 +130,7 @@ class CommunityProfile extends React.Component {
         </div>
 
         <div className="profileMapContainer sticky">
-          <Map cId={this.props.match.params.id} />
+          <MapForProfile cId={this.props.match.params.id} />
         </div>
       </div>
     )

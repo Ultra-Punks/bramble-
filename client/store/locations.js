@@ -21,13 +21,16 @@ export const fetchAllLocations = () => async dispatch => {
 }
 export const fetchSomeLocations = (id, type) => async dispatch => {
   try {
+    console.log('type of fetch in some', type)
     let res
     if (type === 'community') res = await axios.get(`/api/locations/of/${id}`)
     else if (type === 'user') res = await axios.get(`/api/locations/from/${id}`)
     else if (type === 'homeFeed') res = await axios.get(`/api/locations/home`)
     if (!res.data || !res.data[0]) {
-      fetchAllLocations()
-      console.log('fetched All Locations instead of Some')
+      // res = await axios.get('/api/locations')
+      // dispatch(getAllLocations(res.data))
+      // console.log('fetched All Locations instead of Some')
+      dispatch(getSomeLocations([`No Locations related to this ${type}`]))
     } else dispatch(getSomeLocations(res.data))
   } catch (err) {
     console.error(err, 'Error fetching some locations')

@@ -42,90 +42,13 @@ class Map extends React.Component {
         longitude: -74.009123,
         zoom: 12
       },
-      userLocation: {},
-      displayPopup: false,
-      selectedLocation: {},
-      viewParam: null
-      // displayForm: false
+      selectedLocation: {}
     }
   }
-  // eslint-disable-next-line complexity
+
   componentDidMount() {
-    const {userHomeId, singleLocation, cId, username} = this.props
-    console.log('checks', userHomeId, singleLocation.id, cId, username)
-    let mapSize
-    if (userHomeId) {
-      this.props.getSomeLocations(this.props.userHomeId, 'homeFeed')
-      // this.setState({selectedLocation: {}, viewParam: userHomeId})
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        selectedLocation: {},
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-    } else if (this.props.singleLocation.id) {
-      // this.setState({viewParam: singleLocation.id})
-      this.props.fetchLocation(this.props.singleLocation.id)
-      // this.setState({selectedLocation: {}})
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        selectedLocation: this.props.singleLocation,
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-      this.addMarker(
-        this.props.singleLocation.geometry.coordinates,
-        this.props.singleLocation
-      )
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        selectedLocation: this.props.singleLocation,
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-    } else if (this.props.cId) {
-      this.props.getSomeLocations(this.props.cId, 'community')
-      // this.setState({selectedLocation: {}, viewParam: cId})
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        selectedLocation: {},
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-    } else if (this.props.username) {
-      this.props.getSomeLocations(this.props.username, 'user')
-      // this.setState({selectedLocation: {}, viewParam: username})
-      mapSize = window.innerWidth * 0.4
-      this.setState({
-        selectedLocation: {},
-        viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-      })
-    } else {
-      this.props.getAllLocations()
-      // this.setState({selectedLocation: {}, viewParam: null})
-      this.setState({selectedLocation: {}})
-    }
-    // if (
-    // typeof window.innerWidth != undefined &&
-    // userHomeId ||
-    // singleLocation.id ||
-    // cId ||
-    // username
-    //      or
-    //   this.state.viewParam !== null
-    // ) {
-    //   mapSize = window.innerWidth * 0.4
-    //   this.setState({
-    //     viewport: {...this.state.viewport, width: mapSize, height: mapSize}
-    //   })
-    // console.log('this is mapsize', mapSize)
-    // } else {
-    // console.log('in the mapsize else', window.innerWidth)
-    // mapSize = window.innerWidth
-    // this.setState({
-    //   viewport: {
-    //     ...this.state.viewport,
-    //     width: window.innerWidth * 0.8,
-    //     height: window.innerHeight * 0.8
-    //   }
-    // })
-    // }
+    this.props.getAllLocations()
+    this.setState({selectedLocation: {}})
   }
 
   handleShowForm() {
@@ -166,21 +89,26 @@ class Map extends React.Component {
     // locations not from our database will have an id that is a string.
     // conditionally rendering links and the addlocation button based on this variable
     const dbCheck = typeof loc.id === 'number'
-    const numOfNextLocation = this.props.locations.length
+    const numOfNextLocation = this.props.locations.length + 1
 
     return (
       <Popup
+        className="popup-main"
         tipSize={7}
         anchor="bottom-right"
         longitude={long}
         latitude={lat}
-        // onMouseLeave={() => this.setState({displayPopup: false})}
-        // onClose={() => {
-        //   console.log('in the onclose func', loc)
+        sortByDepth={true}
+        // onMouseLeave={(e) => {
+        //   this.setState({displayPopup: false})
+        //   console.log('event in the onmouseleave func', e)
+        // }}
+        // onClose={(e) => {
+        //   console.log('event in the onclose func', e)
         //   loc.popup = false
         //   this.setState({displayPopup: false})
         // }}
-        closeButton={true}
+        closeButton={false}
         closeOnClick={true}
       >
         <div className="popup">
@@ -199,7 +127,6 @@ class Map extends React.Component {
             )}
           </div>
           <p className="popup-body">
-            {/* {`${loc.address} ${loc.city}`} */}
             {loc.address && `${loc.address}`}
             {loc.city && `${loc.city}`}
             {loc.description && `${loc.description}`}
@@ -229,7 +156,7 @@ class Map extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    // console.log('coordinates in addMarker func', coordinates)
+    console.log('result in addMarker func', result)
     let name,
       address,
       city = ''

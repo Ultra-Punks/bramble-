@@ -12,7 +12,7 @@ export class AddLocationForm extends React.Component {
       address: '',
       city: '',
       description: '',
-      communityId: 0,
+      communityId: null,
       redirect: false
     }
     this.handleChange = this.handleChange.bind(this)
@@ -47,7 +47,7 @@ export class AddLocationForm extends React.Component {
       address: '',
       city: '',
       description: '',
-      communityId: 0,
+      communityId: null,
       redirect: true
     })
   }
@@ -69,7 +69,9 @@ export class AddLocationForm extends React.Component {
         {/* copied for dropdown menu */}
         <div className="exit-add-post">
           <Form.Group controlId="community">
-            <Form.Label>Community</Form.Label>
+            <Form.Label>
+              Which Community Are You Adding This Place To?
+            </Form.Label>
             <Form.Control
               value={this.state.communityId}
               onChange={this.handleChange}
@@ -77,7 +79,7 @@ export class AddLocationForm extends React.Component {
               as="select"
               custom
             >
-              <option value="none">None</option>
+              <option value={null}>None</option>
               {this.props.subscribedCommunities &&
                 this.props.subscribedCommunities.map(community => {
                   return (
