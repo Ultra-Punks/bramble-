@@ -1,10 +1,10 @@
 /* single location stuff here */
 
-.profileMapContainer {
+/* .profileMapContainer {
   display: flex;
   align-items: center;
   padding: 15%;
-}
+} */
 
 #map {
   display: flex;
@@ -18,6 +18,7 @@
   width: 33px;
   height: 33px;
 }
+
 .single-location-view-container {
   display: flex;
   flex-direction: column;
@@ -44,4 +45,13 @@
 .popup-header {
   display: flex;
   justify-content: space-between;
+}
+
+.popup-main {
+  /* padding: 30%; */
+  background-color: blue;
+}
+
+#map-message {
+  background-color: crimson;
 }

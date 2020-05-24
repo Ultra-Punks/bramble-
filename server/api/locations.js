@@ -102,9 +102,12 @@ router.post('/add', async (req, res, next) => {
       name,
       city,
       address,
-      description,
-      communityId
+      description
+      // communityId
     } = req.body
+    let communityId
+    if (communityId === 0) communityId = null
+    else communityId = req.body.communityId
     const location = await Location.create({
       mapId: id,
       place_type,

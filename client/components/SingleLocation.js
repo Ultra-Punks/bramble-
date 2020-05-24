@@ -93,26 +93,24 @@ function Ratings(props) {
 }
 
 class SingleLocationView extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      location: {}
-    }
-    // this.state = {location: {}}
-    // this.renderMap = this.renderMap.bind(this)
-  }
+  // constructor() {
+  //   super()
+  //   this.state = {
+  //     location: {}
+  //   }
+  // }
   componentDidMount() {
     this.props.fetchLocation()
-    this.setState({location: this.props.location})
+    // this.setState({location: this.props.location})
   }
 
-  handleShowForm() {
-    this.setState({show: true})
-  }
+  // handleShowForm() {
+  //   this.setState({show: true})
+  // }
 
-  handleHideForm() {
-    this.setState({show: false})
-  }
+  // handleHideForm() {
+  //   this.setState({show: false})
+  // }
 
   render() {
     const location = this.props.location
@@ -126,15 +124,13 @@ class SingleLocationView extends React.Component {
           <div key={location.id} className="single-post">
             {/* <PostingPictures className="post-photos" post={post} /> */}
             <div className="photo-and-map">
-              {location.coverImg ? (
+              {location.coverImg && (
                 <div className="location-photos">
                   <img
                     src={location.coverImg}
                     className="single-location-view-img"
                   />
                 </div>
-              ) : (
-                ''
               )}
             </div>
             <div className="rating-and-address">

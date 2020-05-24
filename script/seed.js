@@ -136,6 +136,7 @@ const manualLocations = [
     address: '100 N Moore St, New York, NY 10013',
     geometry: {type: 'point', coordinates: [-74.011574, 40.720112]},
     name: 'Tribeca Skatepark',
+    mapId: 'poi.317827637293',
     description:
       'Street-style skatepark offering skateboarding & rollerblading with views of the Hudson River.',
     communityId: 3,
@@ -145,6 +146,7 @@ const manualLocations = [
     address: '61 Bayard St, Brooklyn, NY 11222',
     geometry: {type: 'point', coordinates: [-73.94941, 40.71911]},
     name: 'McCarren Skatepark',
+    mapId: 'poi.558345805093',
     description:
       'This small, free public skate park with steep banks offers a ledge feature & a quarter pipe.',
     communityId: 3,
@@ -174,6 +176,7 @@ const manualLocations = [
     address: '41 Seaver Way, Queens, NY 11368',
     geometry: {type: 'point', coordinates: [-73.84584799999999, 40.757258]},
     name: 'Citi Field',
+    mapId: 'poi.266287997901',
     description:
       'Citi Field is a baseball park located in Flushing Meadows–Corona Park in New York City. Completed in 2009, it is the home field of the New York Mets of the National League division of Major League Baseball.',
     // communityId: 13,
@@ -184,6 +187,7 @@ const manualLocations = [
     address: '1240 6th Ave, New York, NY 10020',
     geometry: {type: 'point', coordinates: [-73.980782, 40.759409]},
     name: 'Magnolia Bakery',
+    mapId: 'poi.446676654734',
     description:
       'This down-home destination for classic baked desserts specializes in a variety of creative cupcakes.',
     communityId: 1,
@@ -194,6 +198,7 @@ const manualLocations = [
     address: '200 5th Ave, New York, NY 10010',
     geometry: {type: 'point', coordinates: [-73.98954, 40.741973]},
     name: 'Eataly NYC - Flatiron',
+    mapId: 'poi.833223738151',
     description:
       'Branch of the famed Italian market, offering counters, restaurants & cooking demos.',
     communityId: 1,
@@ -203,6 +208,7 @@ const manualLocations = [
     address: '465 W Broadway, New York, NY 10012',
     geometry: {type: 'point', coordinates: [-74.000028, 40.726421]},
     name: 'Harbs',
+    mapId: 'poi.240518236968',
     description:
       'HARBS is a café born in Japan, pursuing freshness and hand-made quality above all else. Ever since we started, our one and only wish has been to make our customers say “DELICIOUS!” from the bottom of their hearts. We hope you savor every moment of joy you experience here at HARBS.',
     communityId: 1,
@@ -213,6 +219,7 @@ const manualLocations = [
     address: '116 Greene St, New York, NY 10012',
     geometry: {type: 'point', coordinates: [-73.999279, 40.724771]},
     name: 'Louis Vuitton New York SoHo',
+    mapId: 'poi.377957173793',
     description:
       'Luxury brand known for signature monogrammed handbags, luggage & more.',
     communityId: 4,
@@ -233,6 +240,7 @@ const manualLocations = [
     address: '1000 5th Ave, New York, NY 10028',
     geometry: {type: 'point', coordinates: [-73.962879, 40.779209]},
     name: 'The Metropolitan Museum of Art',
+    mapId: 'poi.867583421865',
     description:
       'The Metropolitan Museum of Art of New York City, colloquially "the Met", is the largest art museum in the United States. With 6,479,548 visitors to its three locations in 2019, it was the fourth most visited art museum in the world.',
     communityId: 8,
@@ -243,6 +251,7 @@ const manualLocations = [
     address: '30 Lincoln Center Plaza, New York, NY 10023',
     geometry: {type: 'point', coordinates: [-73.984154, 40.772628]},
     name: 'Metropolitan Opera House',
+    mapId: 'poi.171798725881',
     description:
       'The Metropolitan Opera House is an opera house located on Broadway at Lincoln Square on the Upper West Side of Manhattan in New York City. Part of Lincoln Center for the Performing Arts, the theater was designed by Wallace K. Harrison.',
     // communityId: 8,
@@ -253,6 +262,7 @@ const manualLocations = [
     address: '58 Warren St, New York, NY 10007',
     geometry: {type: 'point', coordinates: [-74.009166, 40.714899]},
     name: 'Mysterious Book Shop',
+    mapId: 'poi.670014940514',
     description:
       'Bookstore with a floor-to-ceiling stock of new, used, rare & collectible crime & suspense titles.',
     // communityId: 10,
@@ -262,6 +272,7 @@ const manualLocations = [
     address: '202 E 6th St, New York, NY 10003',
     geometry: {type: 'point', coordinates: [-73.990404, 40.728039]},
     name: 'Videogamesnewyork',
+    mapId: 'poi.781684075121',
     description:
       'NYC Local Video Game Boutique that carries all generation of games from USA and Japan. Specializeing is Retro Video Games, System Restoration and Event Rental. Stocking everything from the Atari to the Nintendo Switch.',
     // communityId: 12,
@@ -272,6 +283,7 @@ const manualLocations = [
     address: '196 Allen St, New York, NY 10002',
     geometry: {type: 'point', coordinates: [-73.988559, 40.72235]},
     name: 'Rockwood Music Hall',
+    mapId: 'poi.970662627739',
     description:
       'Rockwood Music Hall is a music venue at 196 Allen Street on the Lower East Side of Manhattan, New York City. Owner Ken Rockwood opened the establishment in 2005 as a small bar and music venue. The venue features three stages and a record label of the same name.',
     // communityId: 6,
@@ -282,6 +294,7 @@ const manualLocations = [
     address: '140 Plymouth St, Brooklyn, NY 11201',
     geometry: {type: 'point', coordinates: [-73.987792, 40.703623]},
     name: 'Pet Promise Inc.',
+    mapId: 'poi.824633769240',
     description:
       'PetPromise is a cat and dog rescue made up of a group of volunteers who care about the future of companion animals and who work together to help change the future of homeless pets.',
     // communityId: 9,
@@ -293,6 +306,7 @@ const manualLocations = [
       'Liberty State Park 222 Jersey City Boulevard Jersey City, NJ 07305',
     geometry: {type: 'point', coordinates: [-74.054482, 40.708336]},
     name: 'Liberty Science Center',
+    mapId: 'poi.566935739357',
     description:
       'Liberty Science Center (LSC.org) is a 300,000-square-foot learning center located in Liberty State Park on the Jersey City bank of the Hudson near the Statue of Liberty.',
     // communityId: 5,

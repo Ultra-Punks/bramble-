@@ -32,21 +32,9 @@ class MapForSingleLocation extends React.Component {
   }
   // eslint-disable-next-line complexity
   componentDidMount() {
-    const {userHomeId, singleLocation, cId, username, locations} = this.props
+    const {singleLocation} = this.props
 
-    const userHomeIdS = this.state.userHomeIdS
-    const singleLocationIdS = this.state.singleLocationIdS
-    const cIdS = this.state.cIdS
-    const usernameS = this.state.usernameS
-
-    console.log(
-      'props in compdidmount',
-      userHomeId,
-      singleLocation.id,
-      cId,
-      username
-    )
-    console.log('singleLocationIdS in compdidmount', singleLocationIdS)
+    console.log('props in compdidmount', this.props)
     console.log(
       'selected location in compdidmount',
       this.state.selectedLocation
@@ -64,16 +52,15 @@ class MapForSingleLocation extends React.Component {
     // if (username === usernameS) this.setState({username: null})
     // console.log('state after equality checks', this.state)
 
-    if (singleLocation.id && singleLocation.id !== singleLocationIdS) {
+    if (singleLocation && singleLocation.id) {
       this.props.fetchLocation(singleLocation.id)
       this.setState({
-        selectedLocation: singleLocation,
-        singleLocationIdS: singleLocation.id,
-        viewport: {
-          ...this.state.viewport,
-          latitude: singleLocation.geometry.coordinates[1],
-          longitude: singleLocation.geometry.coordinates[0]
-        }
+        selectedLocation: singleLocation
+        // viewport: {
+        //   ...this.state.viewport,
+        //   latitude: singleLocation.geometry.coordinates[1],
+        //   longitude: singleLocation.geometry.coordinates[0]
+        // }
       })
 
       this.addMarker(
@@ -95,10 +82,7 @@ class MapForSingleLocation extends React.Component {
   renderPopup(loc) {
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
-    // console.log('loc in renderpopup', loc)
-    // this checks if the id of the location is a number, since
-    // locations not from our database will have an id that is a string.
-    // conditionally rendering links and the addlocation button based on this variable
+    console.log('loc in renderpopup', loc)
 
     return (
       <Popup
@@ -112,13 +96,13 @@ class MapForSingleLocation extends React.Component {
         //   loc.popup = false
         //   this.setState({displayPopup: false})
         // }}
-        closeButton={true}
-        closeOnClick={true}
+        closeButton={false}
+        // closeOnClick={true}
       >
         <div className="popup">
           <div className="popup-header">
             <div>
-              <strong>{loc.name}</strong>
+              <strong>{loc.name && loc.name}</strong>
               <Link to={`/community/list/${loc.communityId}`}>
                 {loc.community && loc.community.name && loc.community.name}
               </Link>
@@ -136,47 +120,25 @@ class MapForSingleLocation extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    // console.log('coordinates in addMarker func', coordinates)
-    let name,
-      address,
-      city = ''
-    if (result) {
-      name = result.text
-      if (result.properties) address = result.properties.address
-      if (result.context && result.context[3]) city = result.context[3].text
-    }
     this.setState({
-      selectedLocation: {
-        ...result,
-        popup: true,
-        name,
-        city,
-        address: address
-      },
+      selectedLocation: {...result, popup: true},
       viewport: {
         ...this.state.viewport,
         latitude: coordinates[1],
         longitude: coordinates[0]
       }
     })
-    // console.log(
-    //   'selectedLocation in addMarker func',
-    //   this.state.selectedLocation
-    // )
   }
   render() {
-    // if (!this.props.locations[0] || !this.props.locations[0].id
-    //   || !this.props.singleLocation || !this.props.singleLocation.geometry) return <div />
     const navStyle = {
       position: 'absolute',
       top: 0,
       left: 0,
       padding: '10px'
     }
-    console.log('state in the render', this.state)
     return (
       <div id="map">
-        {this.state.message}
+        <p>{this.state.message}</p>
 
         {/* our main interactive map component */}
         <MapGL
@@ -191,7 +153,6 @@ class MapForSingleLocation extends React.Component {
             />
           </div>
 
-          {/* if state.selectedLocation exists, then we create a marker for it */}
           {this.state.selectedLocation.geometry &&
             this.state.selectedLocation.geometry.type && (
               <div>
@@ -201,14 +162,7 @@ class MapForSingleLocation extends React.Component {
                   }
                   latitude={this.state.selectedLocation.geometry.coordinates[1]}
                 >
-                  <div
-                    onClick={() => {
-                      // const oldDisplay = this.state.selectedLocation.displayPopup
-                      // this.setState({selectedLocation: {popup: !oldDisplay}})
-                    }}
-                  >
-                    <RedPin />
-                  </div>
+                  <RedPin />
                 </Marker>
                 {this.state.selectedLocation.popup &&
                   this.renderPopup(this.state.selectedLocation)}

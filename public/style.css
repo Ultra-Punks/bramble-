@@ -169,7 +169,8 @@ form div {
 
 .sticky {
   position: fixed;
-  left: 60.2%;
+  /* left: 60.2%; */
+  left: 55%;
   top: 20%;
 }
 
@@ -178,8 +179,9 @@ form div {
   justify-content: center;
   align-items: center;
   background-color: cornflowerblue;
-  height: 500px;
-  width: 500px;
+  height: 40%;
+  width: 38%;
+  padding: 15%;
   border-radius: 20px;
   margin: 25px;
   margin-top: 65px;
