@@ -1,12 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {
-  Form,
-  Button,
-  InputGroup,
-  DropdownButton,
-  Dropdown
-} from 'react-bootstrap'
+import {Form, Button} from 'react-bootstrap'
 
 function makeid(length) {
   var result = ''

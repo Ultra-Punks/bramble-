@@ -1,29 +1,30 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 function DisplayFollowUnfollow(props) {
   const {following, followUser, username, unfollowUser} = props
   if (following) {
     return (
-      <Button
+      <AwesomeButton
         className="follow-button"
         variant="outline-light"
-        onClick={() => unfollowUser(username)}
+        onPress={() => unfollowUser(username)}
       >
         Unfollow
-      </Button>
+      </AwesomeButton>
     )
   } else {
     return (
-      <Button
+      <AwesomeButton
         className="follow-button"
         variant="outline-light"
-        onClick={() => {
+        onPress={() => {
           followUser(username)
         }}
       >
         Follow
-      </Button>
+      </AwesomeButton>
     )
   }
 }

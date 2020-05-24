@@ -1,5 +1,5 @@
 import React from 'react'
-
+import 'react-awesome-button/dist/styles.css'
 import {Navbar} from './components'
 import Routes from './routes'
 

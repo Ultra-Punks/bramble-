@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import React from 'react'
 import {Modal, Image} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import history from '../history'
 
 function ShowInfo(props) {
   const {profile} = props
@@ -15,15 +15,24 @@ function ShowInfo(props) {
       <div>
         {communities.map(community => {
           return (
-            <div key={community.id}>
+            <div
+              className="profile-preview-container"
+              key={community.id}
+              onClick={() => history.push(`/community/list/${community.id}`)}
+            >
               <Image
                 className="post-pfp"
                 src={community.profileImg}
                 roundedCircle
               />
-              <Link to={`/community/list/${community.id}`}>
-                <p>{community.name}</p>
-              </Link>
+              <div className="profile-preview">
+                <div className="profile-preview-handle">
+                  <p className="profile-preview-name text-hover">
+                    {community.name}
+                  </p>
+                </div>
+                <p>{community.description}</p>
+              </div>
             </div>
           )
         })}
@@ -44,7 +53,12 @@ class ShowSubscriptions extends React.Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <ShowInfo className="testing" profile={this.props.profile} />
+        <div className="following-container">
+          <h1 className="following-header">
+            {this.props.profile.name}'s communities
+          </h1>
+          <ShowInfo className="testing" profile={this.props.profile} />
+        </div>
       </Modal>
     )
   }

@@ -1,5 +1,7 @@
+/* eslint-disable complexity */
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {AwesomeButton} from 'react-awesome-button'
 import {connect} from 'react-redux'
 import {
   fetchProfile,
@@ -99,12 +101,25 @@ class ProfileView extends React.Component {
             roundedCircle
           />
           <div className="profileInfo">
-            <div>
-              <p className="profile-name">{profile.name}</p>
+            <div className="width-100">
+              <div className="profile-top-name">
+                <p className="profile-name">{profile.name}</p>
+                {this.props.isLoggedIn &&
+                this.props.user.username !== profile.username ? (
+                  <DisplayFollowUnfollow
+                    following={this.props.profile.isFollowing}
+                    followUser={this.props.followUserThunk}
+                    unfollowUser={this.props.unfollowUserThunk}
+                    username={this.props.match.params.username}
+                  />
+                ) : (
+                  <div />
+                )}
+              </div>
               <p className="profile-username">@{profile.username}</p>
               {this.props.user.username === profile.username ? (
                 <Link to="/edit-profile">
-                  <Button>Edit Profile</Button>
+                  <AwesomeButton>Edit Profile</AwesomeButton>
                 </Link>
               ) : (
                 ''
@@ -115,53 +130,57 @@ class ProfileView extends React.Component {
             <p className="profileBio">{profile.description}</p>
           </div>
           <div className="profile-follows">
-            <p
-              onClick={() => this.showFollowersOnClick()}
-              className="first-list"
-            >
-              Followers: {profile.followerCount}
-            </p>
+            {profile.followerCount ? (
+              <p
+                onClick={() => this.showFollowersOnClick()}
+                className="first-list text-hover"
+              >
+                {profile.followerCount} Followers
+              </p>
+            ) : (
+              <p className="first-list text-hover">0 Followers</p>
+            )}
+
             {/* DISPLAY FOR FOLLOWERS */}
             <PopUpDisplay
               show={this.state.showFollowers}
               onHide={() => this.hideFollowers()}
               profile={profile}
             />
-            <p
-              className="profile-info-text"
-              onClick={() => this.showFollowingOnClick()}
-            >
-              Following: {profile.followingCount}
-            </p>
+            {profile.followingCount ? (
+              <p
+                className="profile-info-text text-hover"
+                onClick={() => this.showFollowingOnClick()}
+              >
+                {profile.followingCount} Following
+              </p>
+            ) : (
+              <p className="profile-info-text text-hover"> 0 Following</p>
+            )}
+
             {/* DISPLAY FOR FOLLOWING */}
             <ShowFollowing
               show={this.state.showFollowing}
               onHide={() => this.hideFollowing()}
               profile={profile}
             />
-            <p
-              className="profile-info-text"
-              onClick={() => this.showSubscriptions()}
-            >
-              Communities
-            </p>
+            {profile.subscriber !== undefined && profile.subscriber.length ? (
+              <p
+                className="profile-info-text text-hover"
+                onClick={() => this.showSubscriptions()}
+              >
+                {profile.subscriber.length} Communities
+              </p>
+            ) : (
+              <p className="profile-info-text text-hover">0 Communities</p>
+            )}
+
             <ShowSubscriptions
               show={this.state.showSubs}
               onHide={() => this.hideSubscriptions()}
               profile={profile}
             />
           </div>
-          {this.props.isLoggedIn &&
-          this.props.user.username !== profile.username ? (
-            <DisplayFollowUnfollow
-              following={this.props.profile.isFollowing}
-              followUser={this.props.followUserThunk}
-              unfollowUser={this.props.unfollowUserThunk}
-              username={this.props.match.params.username}
-            />
-          ) : (
-            <div />
-          )}
 
           <div className="contentContainer">
             <div className="buttonContainer">

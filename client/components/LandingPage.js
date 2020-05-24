@@ -1,47 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-// import {AllProfiles} from './index'  // TESTER COMP ONLY...
-
-// bring in thunks here
-import {fetchOneCommunity} from '../store/community'
-import {fetchUsers} from '../store/allProfiles'
-import {fetchUserPosts} from '../store/userFeed'
+import history from '../history'
+import {AwesomeButton} from 'react-awesome-button'
 import {fetchRandomCommunities} from '../store/allCommunities'
-import {fetchAllPosts, fetchRandomPosts} from '../store/singlePost'
-
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-// few ideas for landing page:
-const option1 =
-  'https://d39l2hkdp2esp1.cloudfront.net/img/photo/122786/122786_00_2x.jpg'
-const option2 =
-  'https://avsmindfulness.com/wp-content/uploads/2018/03/5-Health-Benefits-of-Socialization-1.jpg'
-const option3 =
-  'https://www.elikarealestate.com/blog/wp-content/uploads/2018/02/millennials.jpeg'
-// -----------------------------------------------------------
-// -----------------------------------------------------------
-
-// define a helper function to get a random number!
-function getRandomInt(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min)) + min //The maximum is exclusive and the minimum is inclusive}
-}
 
 class LandingPage extends Component {
   constructor() {
     super()
-    this.state = {
-      community: ''
-    }
     this.randomCommunityIds = this.randomCommunityIds.bind(this)
   }
 
   componentDidMount() {
-    // this.props.fetchCommunity(this.state.community)
-    this.props.fetchUsers()
-    this.props.fetchAllPosts()
     let arrOfIds = this.randomCommunityIds()
     this.props.getRandomCommunities(arrOfIds)
   }
@@ -56,42 +25,53 @@ class LandingPage extends Component {
   }
 
   render() {
-    this.randomCommunityIds()
     const randomCommunities = this.props.communities
 
     return (
       <div className="landingPage">
         <div className="welcomePhotoContainer">
-          <img src={option1} className="welcomePhoto" />
+          <img
+            src="https://res.cloudinary.com/bramble/image/upload/v1590192370/user_uploads/landing-page_copy_pxdnkp.png"
+            className="welcomePhoto"
+          />
         </div>
         <div className="introContainer">
           <div className="welcomePageContent">
-            <h2>
-              Discover the things you love. Check out a Bramble community to see
-              what's happening in your area.
+            <h2 className="community-discover">
+              Discover the things you love.
+              <br />
+              Check out a Bramble community to see what's happening in your
+              area.
             </h2>
             <div className="samplesDisplay">
               {Array.isArray(randomCommunities) &&
-                randomCommunities.map(singleCommunity => {
+                randomCommunities.map(community => {
                   return (
-                    <div key={singleCommunity.id} className="sampleContainer">
-                      <Link to={`/community/list/${singleCommunity.id}`}>
-                        <div>
-                          <img
-                            src={singleCommunity.profileImg}
-                            className="community-card-image"
-                          />
-
-                          <div className="community-card-content">
-                            <div className="community-card-title">
-                              {singleCommunity.name}
-                            </div>
-                            <div className="community-card-text">
-                              {singleCommunity.description}
-                            </div>
+                    <div key={community.id} className="community-cards-item">
+                      <div className="community-card">
+                        <img
+                          src={community.profileImg}
+                          className="community-card-image"
+                        />
+                        <div className="community-card-content">
+                          <div className="community-card-title">
+                            {community.name}
+                          </div>
+                          <div className="community-card-text">
+                            {community.description}
+                          </div>
+                          <div className="community-button">
+                            <AwesomeButton
+                              type="primary"
+                              onPress={() =>
+                                history.push(`/Community/list/${community.id}`)
+                              }
+                            >
+                              View
+                            </AwesomeButton>
                           </div>
                         </div>
-                      </Link>
+                      </div>
                     </div>
                   )
                 })}
@@ -111,13 +91,9 @@ const mapToState = state => {
   }
 }
 
-const mapToDispatch = (dispatch, ownProps) => {
+const mapToDispatch = dispatch => {
   return {
-    getRandomPosts: arrOfIds => dispatch(fetchRandomPosts(arrOfIds)),
-    getRandomCommunities: arrOfIds =>
-      dispatch(fetchRandomCommunities(arrOfIds)),
-    fetchUsers: () => dispatch(fetchUsers()),
-    fetchAllPosts: () => dispatch(fetchAllPosts())
+    getRandomCommunities: arrOfIds => dispatch(fetchRandomCommunities(arrOfIds))
   }
 }
 

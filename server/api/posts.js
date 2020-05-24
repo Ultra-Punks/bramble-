@@ -325,6 +325,29 @@ router.put('/:postId/dislikes', async (req, res, next) => {
   }
 })
 
+// remove dislike on a post
+router.put('/:postId/dislikes/remove', async (req, res, next) => {
+  try {
+    let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
+      include: [
+        {model: User},
+        {model: Community, attributes: ['name']},
+        {model: Photo, include: [{model: Tag}]},
+        {
+          model: PostComment,
+          include: [{model: User}]
+        }
+      ],
+      order: [[{model: PostComment}, 'createdAt', 'ASC']]
+    })
+    updatedPostDislikes.dislikes--
+    await updatedPostDislikes.save()
+    res.status(200).json(updatedPostDislikes)
+  } catch (error) {
+    next(error)
+  }
+})
+
 //delete post by Id
 router.delete('/:postId', async (req, res, next) => {
   try {

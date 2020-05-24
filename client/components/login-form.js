@@ -1,15 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {auth} from '../store'
-import {InputGroup, Form, Button} from 'react-bootstrap'
+import {InputGroup, Form} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 const LoginForm = props => {
   const {name, handleSubmit, error} = props
   return (
     <div>
+      <p className="create-account-text">Log in to Bramble</p>
       <form onSubmit={handleSubmit} name={name}>
         <div className="signup-container">
-          <div>
+          <div className="first-input">
             <Form.Label htmlFor="username" className="signup-label">
               Username
             </Form.Label>
@@ -37,13 +39,7 @@ const LoginForm = props => {
             />
           </div>
           <div>
-            <Button
-              className="post-button"
-              variant="outline-light"
-              type="submit"
-            >
-              Login
-            </Button>
+            <AwesomeButton type="primary">Login</AwesomeButton>
           </div>
         </div>
 
