@@ -330,98 +330,82 @@ const manualCommunities = [
   {
     name: 'Food',
     description: 'Food is the ingredient that binds us together',
-    profileImg:
-      'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg'
+    profileImg: 'https://i.postimg.cc/V6zJNtSL/Food.jpg'
   },
   {
     name: 'Fitness',
     description: 'Be the hardest worker in the room',
-    profileImg:
-      'https://www.maxim.com/.image/t_share/MTY1MDc5NTMwMzgwMjA3NDE2/dwayne-the-rock-johnson-chest-drop-sets.png'
+    profileImg: 'https://i.postimg.cc/ZqBGysdw/Fitness.png'
   },
   {
     name: 'Skating',
     description: 'Life is alot like skateboarding ',
-    profileImg:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTSeXvrFrdX237gzTMITf4vFommaqJOYBTOk2Xf8IHthyzDnK2K&usqp=CAU'
+    profileImg: 'https://i.postimg.cc/508DsHpv/skating.jpg'
   },
   {
     name: 'Fashion',
     description: 'Being yourself never goes out of fashion ',
-    profileImg:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp_FYgM-HuoNgldG9lW9a4L5cZ9IgLhZNi4EPCTA2H1EC2GonC&usqp=CAU'
+    profileImg: 'https://i.postimg.cc/YCVVkNsY/fashion.jpg'
   },
   {
     name: 'Technology',
     description: 'Its not that we use Technology, we live Technology',
-    profileImg:
-      'https://www.trainingzone.co.uk/sites/default/files/learning_technology_solutions_0.jpg'
+    profileImg: 'https://i.postimg.cc/ZnTsjwWt/tech.jpg'
   },
   {
     name: 'Music',
     description: 'Good Music doesnt have an expiration date',
-    profileImg:
-      'https://www.freeportnewsnetwork.com/wp-content/uploads/2016/12/music-07.jpg'
+    profileImg: 'https://i.postimg.cc/L68010dj/music.jpg'
   },
   {
     name: 'Film',
     description: 'Heres looking at you, kid',
-    profileImg:
-      'https://booksandbooks.com/wp-content/uploads/2019/12/1555941845-O9VYc4IYj_md.jpg'
+    profileImg: 'https://i.postimg.cc/yYppXXBt/film.jpg'
   },
   {
     name: 'Art',
     description: 'Art is too important not to share',
-    profileImg:
-      'https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/65/78ce0081ad11e681d7bb31b0a632ef/starry-night.jpg?auto=format%2Ccompress&dpr=1'
+    profileImg: 'https://i.postimg.cc/vHT3Bg9z/starry-night.jpg'
   },
   {
     name: 'Pets',
     description: 'What greater gift than the love of a pet',
-    profileImg:
-      'https://lh3.googleusercontent.com/proxy/4Q_3tYgnB6Bl6VWkT4Bi2uStWREkF5ugTfeX3PoyQOt_sRtgLOVtuIyJ9R9CpqU3XnRJcNmHO3TiO6csnVjEAmUNsem1HFwVIIxpaS3Uu16uCohw7iGoaFJR0NXyXtS2WEze-ubk4tamC53T'
+    profileImg: 'https://i.postimg.cc/HL9LFLSG/pets.jpg'
   },
   {
     name: 'Books',
     description: 'Once you learn to read, you will be forever free',
-    profileImg:
-      'https://www.nypl.org/sites/default/files/8435321969_c1eea0631a_o.jpg'
+    profileImg: 'https://i.postimg.cc/fbNcxJ31/book.jpg'
   },
   {
     name: 'Career',
     description: 'All progress takes place outside the comfort Zone',
-    profileImg:
-      'https://careerconnections.nj.gov/careerconnections/images/hero/RightCareer-480922793.jpg'
+    profileImg: 'https://i.postimg.cc/zXHK6nK9/career.jpg'
   },
   {
     name: 'Games',
     description: 'Life is More fun if you Play Games',
-    profileImg:
-      'https://media.playstation.com/is/image/SCEA/fortnite-chapter-2-normalhero-01-ps4-us-15oct2019?$native_nt$'
+    profileImg: 'https://i.postimg.cc/mgxCstSh/game.jpg'
   },
   {
     name: 'Sports',
     description: 'You re never a loser until you quit',
-    profileImg:
-      'https://img.freepik.com/free-vector/sports-elements-collection_1096-210.jpg?size=338&ext=jpg'
+    profileImg: 'https://i.postimg.cc/T3rmYfk0/sports.jpg'
   },
   {
     name: 'Meme',
     description: 'I never said that',
-    profileImg:
-      'https://ww2.kqed.org/app/uploads/sites/38/2019/03/tomemeornot3-800x400.jpg'
+    profileImg: 'https://i.postimg.cc/7L920XrT/meme.jpg'
   },
   {
     name: 'Outdoors',
     description: 'The greatest adventure is what lies ahead',
-    profileImg:
-      'https://mymodernmet.com/wp/wp-content/uploads/2018/03/karl-shakur-travel-photos-1.jpg'
+    profileImg: 'https://i.postimg.cc/Cx3YhnPB/outdoor.jpg'
   },
   {
     name: 'Health',
     description: 'Happiness is the highest form of health',
-    profileImg:
-      'https://s19499.pcdn.co/wp-content/uploads/2019/09/093019-PIC-B.jpg'
+    profileImg: 'https://i.postimg.cc/Rh6JrB6c/health.jpg'
   }
 ]
 
