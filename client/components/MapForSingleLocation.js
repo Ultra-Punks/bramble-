@@ -72,7 +72,7 @@ class MapForSingleLocation extends React.Component {
     console.log('state at end of compdidmount', this.state)
   }
   componentWillUnmount() {
-    this.setState({singleLocationIdS: null})
+    this.setState({singleLocationId: null, selectedLocation: {}})
     console.log('COMPONENT UNMOUNTING', this.state)
   }
 

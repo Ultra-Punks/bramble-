@@ -32,7 +32,7 @@ class MapForProfile extends React.Component {
       userHomeId: null,
       cId: null,
       username: null,
-      message: null
+      message: []
     }
   }
   // eslint-disable-next-line complexity
@@ -57,27 +57,40 @@ class MapForProfile extends React.Component {
       })
     } else if (username) {
       this.props.getSomeLocations(username, 'user')
-
       this.setState({
         username: username,
         userHomeId: null,
         cId: null,
         locations
       })
-    } else {
-      this.props.getAllLocations()
-
-      this.setState({
-        username: null,
-        cId: null,
-        userHomeId: null,
-        locations,
-        message: `No locations associated with this community/user ${(
-          <br />
-        )} Check out some places related to other communities below!`
-      })
     }
-    if (this.props.locations[0]) {
+    if (typeof locations[0] === 'string') {
+      this.setState({
+        message: [
+          locations[0],
+          `Check out some places related to other communities below!`
+        ]
+      })
+      this.props.getAllLocations()
+      console.log('props after getting all locations', this.props)
+    }
+    // } else {
+    //   this.props.getAllLocations()
+    //   this.setState({
+    //     username: null,
+    //     cId: null,
+    //     userHomeId: null,
+    //     locations,
+    //     message: `No locations associated with this community/user ${(
+    //       <br />
+    //     )} Check out some places related to other communities below!`
+    //   })
+    // }
+
+    console.log('these are locations in compdidmount', locations)
+    console.log('this is type of locations[0]', typeof locations[0])
+    console.log('locations.length', locations.length)
+    if (locations.length > 1) {
       const randomLocationIdx = Math.floor(
         Math.random() * this.props.locations.length
       )
@@ -94,9 +107,10 @@ class MapForProfile extends React.Component {
   }
   componentWillUnmount() {
     this.setState({
-      userHomeIdS: null,
-      cIdS: null,
-      usernameS: null
+      userHomeId: null,
+      cId: null,
+      username: null,
+      message: []
     })
   }
 
@@ -153,19 +167,23 @@ class MapForProfile extends React.Component {
       }
     })
   }
+  // eslint-disable-next-line complexity
   render() {
-    // if (!this.props.locations[0] || !this.props.locations[0].id
-    //   || !this.props.singleLocation || !this.props.singleLocation.geometry) return <div />
+    console.log('this is state in render', this.state)
+    if (!this.props.locations[0] || !this.props.locations[0].id) return <div />
     const navStyle = {
       position: 'absolute',
       top: 0,
       left: 0,
       padding: '10px'
     }
-    console.log('this is the messagein render', this.state.message)
     return (
       <div className="profileMapContainer sticky">
-        <p id="map-message">{this.state.message}</p>
+        {this.state.message[0] && (
+          <p id="map-message">
+            {`${this.state.message[0]}`} <br /> {`${this.state.message[1]}`}
+          </p>
+        )}
         <div id="map">
           {/* our main interactive map component */}
           <MapGL

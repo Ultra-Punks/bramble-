@@ -47,13 +47,13 @@
   justify-content: space-between;
 }
 
-.popup-main {
-  /* padding: 30%; */
-  background-color: blue;
-}
+/* .popup-main {
+  padding: 30%;
+} */
 
 #map-message {
   background-color: cornflowerblue;
   width: max-content;
   color: white;
+  font-size: 1.3em;
 }
