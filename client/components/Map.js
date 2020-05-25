@@ -2,6 +2,7 @@
 //Tutorial (Viewport, Markers, Popups): https://medium.com/@walkingtreetech/play-with-maps-in-react-using-mapbox-f74fdf386c8a
 //Geocoder example: https://codesandbox.io/s/l7p179qr6m & Docs: https://github.com/SamSamskies/react-map-gl-geocoder
 import React from 'react'
+import history from '../history'
 import MapGL, {
   GeolocateControl,
   NavigationControl,
@@ -112,45 +113,60 @@ class Map extends React.Component {
         closeOnClick={true}
       >
         <div className="popup">
-          <div className="popup-header">
-            {dbCheck ? (
-              <div>
-                <Link to={`/l/${loc.id}`}>
-                  <strong>{loc.name}</strong>
-                </Link>
-                <Link to={`/community/list/${loc.communityId}`}>
-                  {loc.community && loc.community.name && loc.community.name}
-                </Link>
-              </div>
-            ) : (
-              <strong>{loc.name}</strong>
-            )}
-          </div>
-          <p className="popup-body">
-            {loc.address && `${loc.address}`}
-            {loc.city && `${loc.city}`}
-            {loc.description && `${loc.description}`}
-          </p>
-          {!dbCheck ? (
+          {dbCheck ? (
             <div>
-              <Button
-                type="submit"
-                variant="danger"
-                onClick={() => this.handleShowForm()}
+              <p
+                className="popup-community-tag"
+                onClick={() =>
+                  history.push(`/community/list/${loc.communityId}`)
+                }
               >
-                Add Location Form
-              </Button>
-              <AddLocation
-                nextLocId={numOfNextLocation}
-                show={this.state.show}
-                location={this.state.selectedLocation}
-                onHide={() => this.handleHideForm()}
-              />
+                {loc.community && loc.community.name && loc.community.name}
+              </p>
+              <div className="popup-header">
+                <p
+                  onClick={() => history.push(`/l/${loc.id}`)}
+                  className="popup-loc-name"
+                >
+                  {loc.name}
+                </p>
+              </div>
             </div>
           ) : (
-            ''
+            <div className="popup-header">
+              <p
+                onClick={() => history.push(`/l/${loc.id}`)}
+                className="popup-loc-name"
+              >
+                {loc.name}
+              </p>
+            </div>
           )}
         </div>
+        <p className="popup-body">
+          {loc.address && `${loc.address}`}
+          {loc.city && `${loc.city}`}
+          {loc.description && `${loc.description}`}
+        </p>
+        {!dbCheck ? (
+          <div>
+            <Button
+              type="submit"
+              variant="danger"
+              onClick={() => this.handleShowForm()}
+            >
+              Add Location Form
+            </Button>
+            <AddLocation
+              nextLocId={numOfNextLocation}
+              show={this.state.show}
+              location={this.state.selectedLocation}
+              onHide={() => this.handleHideForm()}
+            />
+          </div>
+        ) : (
+          ''
+        )}
       </Popup>
     )
   }

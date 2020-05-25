@@ -1,4 +1,5 @@
 import React from 'react'
+import history from '../history'
 import MapGL, {
   NavigationControl,
   Marker,
@@ -139,13 +140,19 @@ class MapForProfile extends React.Component {
         }}
       >
         <div className="popup">
+          <p
+            className="popup-community-tag"
+            onClick={() => history.push(`/community/list/${loc.communityId}`)}
+          >
+            {loc.community && loc.community.name && loc.community.name}
+          </p>
           <div className="popup-header">
-            <Link to={`/l/${loc.id}`}>
-              <strong>{loc.name}</strong>
-            </Link>
-            <Link to={`/community/list/${loc.communityId}`}>
-              {loc.community && loc.community.name && loc.community.name}
-            </Link>
+            <p
+              onClick={() => history.push(`/l/${loc.id}`)}
+              className="popup-loc-name"
+            >
+              {loc.name}
+            </p>
           </div>
           <p className="popup-body">
             {loc.address && `${loc.address}`}
