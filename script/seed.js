@@ -176,7 +176,7 @@ const manualLocations = [
     name: 'Citi Field',
     description:
       'Citi Field is a baseball park located in Flushing Meadows–Corona Park in New York City. Completed in 2009, it is the home field of the New York Mets of the National League division of Major League Baseball.',
-    // communityId: 13,
+    communityId: 13,
     coverImg:
       'https://elitesportsny.com/wp-content/uploads/2018/03/cincinnati-reds-v-new-york-mets-1-e1522096086300.jpg'
   },
@@ -245,7 +245,7 @@ const manualLocations = [
     name: 'Metropolitan Opera House',
     description:
       'The Metropolitan Opera House is an opera house located on Broadway at Lincoln Square on the Upper West Side of Manhattan in New York City. Part of Lincoln Center for the Performing Arts, the theater was designed by Wallace K. Harrison.',
-    // communityId: 8,
+    communityId: 8,
     coverImg:
       'https://www.metopera.org/globalassets/visit/daytime-access/1600x685_2.jpg'
   },
@@ -255,7 +255,7 @@ const manualLocations = [
     name: 'Mysterious Book Shop',
     description:
       'Bookstore with a floor-to-ceiling stock of new, used, rare & collectible crime & suspense titles.',
-    // communityId: 10,
+    communityId: 10,
     coverImg: 'https://i.ytimg.com/vi/QYWxbDxMl4E/maxresdefault.jpg'
   },
   {
@@ -264,7 +264,7 @@ const manualLocations = [
     name: 'Videogamesnewyork',
     description:
       'NYC Local Video Game Boutique that carries all generation of games from USA and Japan. Specializeing is Retro Video Games, System Restoration and Event Rental. Stocking everything from the Atari to the Nintendo Switch.',
-    // communityId: 12,
+    communityId: 12,
     coverImg:
       'https://cdn7.bigcommerce.com/s-kzjsut/product_images/uploaded_images/storefront.jpg'
   },
@@ -274,7 +274,7 @@ const manualLocations = [
     name: 'Rockwood Music Hall',
     description:
       'Rockwood Music Hall is a music venue at 196 Allen Street on the Lower East Side of Manhattan, New York City. Owner Ken Rockwood opened the establishment in 2005 as a small bar and music venue. The venue features three stages and a record label of the same name.',
-    // communityId: 6,
+    communityId: 6,
     coverImg:
       'https://rockwoodmusichall.com/wp-content/uploads/2020/01/Rockwood-Approved-1_3000x2000.jpg'
   },
@@ -284,7 +284,7 @@ const manualLocations = [
     name: 'Pet Promise Inc.',
     description:
       'PetPromise is a cat and dog rescue made up of a group of volunteers who care about the future of companion animals and who work together to help change the future of homeless pets.',
-    // communityId: 9,
+    communityId: 9,
     coverImg:
       'https://s3-media0.fl.yelpcdn.com/bphoto/RbcnEjmijlhl9A-r1tqgTA/l.jpg'
   },
@@ -295,7 +295,7 @@ const manualLocations = [
     name: 'Liberty Science Center',
     description:
       'Liberty Science Center (LSC.org) is a 300,000-square-foot learning center located in Liberty State Park on the Jersey City bank of the Hudson near the Statue of Liberty.',
-    // communityId: 5,
+    communityId: 5,
     coverImg:
       'https://hudsonreporter.com/wp-content/uploads/sites/15/2018/08/76FP_Liberty_Science_Center.jpg'
   }
@@ -508,8 +508,8 @@ async function seed() {
     locations.push(newLocation)
     const randomUserNum = Math.floor(Math.random() * 9) + 1
     await locations[i].setUser(users[randomUserNum])
-    const randomCommNum = Math.floor(Math.random() * communities.length) + 1
-    await locations[i].setCommunity(communities[randomCommNum])
+    // const randomCommNum = Math.floor(Math.random() * communities.length) + 1
+    // await locations[i].setCommunity(communities[randomCommNum])
   }
 
   // // loop through locations in case communityId is null...
