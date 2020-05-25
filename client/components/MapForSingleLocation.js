@@ -26,54 +26,27 @@ class MapForSingleLocation extends React.Component {
         latitude: 40.705112,
         longitude: -74.009123,
         zoom: 12
-      },
-      selectedLocation: {}
+      }
     }
   }
   // eslint-disable-next-line complexity
   componentDidMount() {
-    const {singleLocation} = this.props
-
-    // console.log('props in compdidmount', this.props)
-    // console.log(
-    //   'selected location in compdidmount',
-    //   this.state.selectedLocation
-    // )
-    // console.log('cIdS ', cIdS)
-    // console.log('state in compdidmount', this.state)
-
-    //check if the prop equals the state, and if so reset it
-    // if (userHomeId === userHomeIdS) this.setState({userHomeIdS: null})
-    // if (singleLocation.id === singleLocationIdS){
-    //   console.log('In check if singlelocation ids match')
-    //   this.setState({singleLocationIdS: null})
-    // }
-    // if (cId === cIdS) this.setState({cIdS: null})
-    // if (username === usernameS) this.setState({username: null})
-    // console.log('state after equality checks', this.state)
-
-    if (singleLocation && singleLocation.id) {
-      this.props.fetchLocation(singleLocation.id)
+    const {location} = this.props
+    if (location && location.id) {
+      const coordinates = location.geometry.coordinates
       this.setState({
-        selectedLocation: singleLocation
-        // viewport: {
-        //   ...this.state.viewport,
-        //   latitude: singleLocation.geometry.coordinates[1],
-        //   longitude: singleLocation.geometry.coordinates[0]
-        // }
+        viewport: {
+          ...this.state.viewport,
+          latitude: coordinates[1],
+          longitude: coordinates[0]
+        }
       })
 
-      this.addMarker(
-        this.props.singleLocation.geometry.coordinates,
-        this.props.singleLocation
-      )
+      // this.addMarker(
+      //   this.props.singleLocation.geometry.coordinates,
+      //   this.props.singleLocation
+      // )
     }
-
-    // console.log('state at end of compdidmount', this.state)
-  }
-  componentWillUnmount() {
-    this.setState({singleLocationId: null, selectedLocation: {}})
-    // console.log('COMPONENT UNMOUNTING', this.state)
   }
 
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
@@ -82,7 +55,6 @@ class MapForSingleLocation extends React.Component {
   renderPopup(loc) {
     const long = loc.geometry.coordinates[0]
     const lat = loc.geometry.coordinates[1]
-    console.log('loc in renderpopup', loc)
 
     return (
       <Popup
@@ -103,6 +75,7 @@ class MapForSingleLocation extends React.Component {
           <div className="popup-header">
             <div>
               <strong>{loc.name && loc.name}</strong>
+              <br />
               <Link to={`/community/list/${loc.communityId}`}>
                 {loc.community && loc.community.name && loc.community.name}
               </Link>
@@ -112,6 +85,7 @@ class MapForSingleLocation extends React.Component {
             {/* {`${loc.address} ${loc.city}`} */}
             {loc.address && `${loc.address}`}
             {loc.city && `${loc.city}`}
+            <br />
             {loc.description && `${loc.description}`}
           </p>
         </div>
@@ -153,19 +127,18 @@ class MapForSingleLocation extends React.Component {
             />
           </div>
 
-          {this.state.selectedLocation.geometry &&
-            this.state.selectedLocation.geometry.type && (
+          {/* {this.state.selectedLocation.geometry &&
+            this.state.selectedLocation.geometry.type && ( */}
+          {this.props.location.geometry &&
+            this.props.location.geometry.type && (
               <div>
                 <Marker
-                  longitude={
-                    this.state.selectedLocation.geometry.coordinates[0]
-                  }
-                  latitude={this.state.selectedLocation.geometry.coordinates[1]}
+                  longitude={this.props.location.geometry.coordinates[0]}
+                  latitude={this.props.location.geometry.coordinates[1]}
                 >
                   <RedPin />
                 </Marker>
-                {this.state.selectedLocation.popup &&
-                  this.renderPopup(this.state.selectedLocation)}
+                {this.props.location && this.renderPopup(this.props.location)}
               </div>
             )}
         </MapGL>
@@ -175,7 +148,7 @@ class MapForSingleLocation extends React.Component {
 }
 
 const mapState = state => ({
-  singleLocation: state.singleLocation
+  // location: state.singleLocation
 })
 const mapDispatch = dispatch => ({
   fetchLocation: id => dispatch(fetchOneLocation(id))

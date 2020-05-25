@@ -21,7 +21,7 @@ export const fetchAllLocations = () => async dispatch => {
 }
 export const fetchSomeLocations = (id, type) => async dispatch => {
   try {
-    console.log('type of fetch in some', type)
+    // console.log('type of fetch in some', type)
     let res
     if (type === 'community') res = await axios.get(`/api/locations/of/${id}`)
     else if (type === 'user') res = await axios.get(`/api/locations/from/${id}`)
