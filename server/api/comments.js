@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {PostComment, UserPost, User} = require('../db/models')
+const isCurrentUserMiddleware = require('./middleware')
 
 module.exports = router
 
@@ -60,83 +61,103 @@ router.get('/from/:username', async (req, res, next) => {
 // ==============================================
 // KEEP WORKING THROUGH THIS...MAY NEED ADJUSTMENT
 // create a new comment on a particular UserPost
-router.post('/add/:postId/', async (req, res, next) => {
-  try {
-    // const post = await UserPost.findOne({
-    //   where: {
-    //     id: req.params.postId,
-    //   },
-    // })
+router.post(
+  '/add/:postId/',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      // const post = await UserPost.findOne({
+      //   where: {
+      //     id: req.params.postId,
+      //   },
+      // })
 
-    // const user = await User.findOne({
-    //   where: {
-    //     id: req.passport.user,
-    //   },
-    // })
+      // const user = await User.findOne({
+      //   where: {
+      //     id: req.passport.user,
+      //   },
+      // })
 
-    let newComment = await PostComment.create({
-      userPostId: req.params.postId,
-      comment: req.body.comment,
-      userId: req.session.passport.user // investigating
-    })
+      let newComment = await PostComment.create({
+        userPostId: req.params.postId,
+        comment: req.body.comment,
+        userId: req.session.passport.user // investigating
+      })
 
-    res.status(201).json(newComment)
-  } catch (error) {
-    next(error)
+      res.status(201).json(newComment)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 // ==============================================
 
 // increase the nuber of likes on a comment
-router.put('/:commentId/likes', async (req, res, next) => {
-  try {
-    let updatedComment = await PostComment.findByPk(req.params.commentId, {
-      include: [{model: User}]
-    })
-    updatedComment.likes++
-    await updatedComment.save()
-    res.status(200).json(updatedComment)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:commentId/likes',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedComment = await PostComment.findByPk(req.params.commentId, {
+        include: [{model: User}]
+      })
+      updatedComment.likes++
+      await updatedComment.save()
+      res.status(200).json(updatedComment)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 //remove like on post
-router.put('/:commentId/likes/remove', async (req, res, next) => {
-  try {
-    let updatedComment = await PostComment.findByPk(req.params.commentId, {
-      include: [{model: User}]
-    })
-    updatedComment.likes--
-    await updatedComment.save()
-    res.status(200).json(updatedComment)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:commentId/likes/remove',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedComment = await PostComment.findByPk(req.params.commentId, {
+        include: [{model: User}]
+      })
+      updatedComment.likes--
+      await updatedComment.save()
+      res.status(200).json(updatedComment)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 // increase the number of dislikes on a comment
-router.put('/:commentId/dislikes', async (req, res, next) => {
-  try {
-    let updatedComment = await PostComment.findByPk(req.params.commentId, {
-      include: [{model: User}]
-    })
-    updatedComment.dislikes++
-    await updatedComment.save()
-    res.status(200).json(updatedComment)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:commentId/dislikes',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedComment = await PostComment.findByPk(req.params.commentId, {
+        include: [{model: User}]
+      })
+      updatedComment.dislikes++
+      await updatedComment.save()
+      res.status(200).json(updatedComment)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 //delete comment by Id
-router.delete('/:commentId', async (req, res, next) => {
-  try {
-    const numOfDeleted = await PostComment.destroy({
-      where: {id: req.params.commentId}
-    })
-    res.status(200).json(numOfDeleted)
-  } catch (error) {
-    next(error)
+router.delete(
+  '/:commentId',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const numOfDeleted = await PostComment.destroy({
+        where: {id: req.params.commentId}
+      })
+      res.status(200).json(numOfDeleted)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)

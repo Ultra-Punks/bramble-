@@ -3,6 +3,7 @@
 const router = require('express').Router()
 const scanner = require('../imageRec')
 const {Op} = require('sequelize')
+const isCurrentUserMiddleware = require('./middleware')
 
 const {
   UserPost,
@@ -146,28 +147,97 @@ router.get('/for/:id', async (req, res, next) => {
 const videoTypes = ['.mp4', '.avi', '.mov', '.flv', '.wmv']
 
 //creates new post according to user
-router.post('/add/:username', async (req, res, next) => {
-  try {
-    const user = await User.findOne({
-      where: {
-        username: req.params.username
-      }
-    })
+router.post(
+  '/add/:username',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const user = await User.findOne({
+        where: {
+          username: req.params.username
+        }
+      })
 
-    //check to see if body has a file url
-    if (req.body.file) {
-      const file = req.body.file
-      const fileType = file.slice(file.lastIndexOf('.'))
+      //check to see if body has a file url
+      if (req.body.file) {
+        const file = req.body.file
+        const fileType = file.slice(file.lastIndexOf('.'))
 
-      //check to see if the url type is a video
-      if (videoTypes.includes(fileType)) {
+        //check to see if the url type is a video
+        if (videoTypes.includes(fileType)) {
+          let comId = req.body.communityId
+          if (comId === 'none') comId = null
+          let newPost = await UserPost.create({
+            userId: user.id,
+            description: req.body.description,
+            communityId: comId,
+            videoUrl: req.body.file
+          })
+
+          newPost = await UserPost.findByPk(newPost.id, {
+            include: [
+              {model: User},
+              {model: Community, attributes: ['name']},
+              {model: Photo, include: [{model: Tag}]},
+              {
+                model: PostComment,
+                include: [{model: User}]
+              }
+            ],
+            order: [[{model: PostComment}, 'createdAt', 'ASC']]
+          })
+
+          res.json(newPost)
+        } else {
+          //file is an image
+          let comId = req.body.communityId
+          if (comId === 'none') comId = null
+          let newPost = await UserPost.create({
+            userId: user.id,
+            description: req.body.description,
+            communityId: comId
+          })
+
+          const newPhoto = await Photo.create({
+            userPostId: newPost.id,
+            userId: user.id,
+            imgFile: req.body.file
+          })
+
+          const scannedLabels = await scanner(req.body.file)
+
+          scannedLabels.forEach(label => {
+            Tag.create({
+              imageTag: label,
+              userPostId: newPost.id,
+              photoId: newPhoto.id,
+              userId: user.id
+            })
+          })
+
+          const postWithPics = await UserPost.findByPk(newPost.id, {
+            include: [
+              {model: User},
+              {model: Community, attributes: ['name']},
+              {model: Photo, include: [{model: Tag}]},
+              {
+                model: PostComment,
+                include: [{model: User}]
+              }
+            ],
+            order: [[{model: PostComment}, 'createdAt', 'ASC']]
+          })
+
+          res.json(postWithPics)
+        }
+      } else {
+        //body has no file url
         let comId = req.body.communityId
         if (comId === 'none') comId = null
         let newPost = await UserPost.create({
           userId: user.id,
           description: req.body.description,
-          communityId: comId,
-          videoUrl: req.body.file
+          communityId: comId
         })
 
         newPost = await UserPost.findByPk(newPost.id, {
@@ -184,59 +254,20 @@ router.post('/add/:username', async (req, res, next) => {
         })
 
         res.json(newPost)
-      } else {
-        //file is an image
-        let comId = req.body.communityId
-        if (comId === 'none') comId = null
-        let newPost = await UserPost.create({
-          userId: user.id,
-          description: req.body.description,
-          communityId: comId
-        })
-
-        const newPhoto = await Photo.create({
-          userPostId: newPost.id,
-          userId: user.id,
-          imgFile: req.body.file
-        })
-
-        const scannedLabels = await scanner(req.body.file)
-
-        scannedLabels.forEach(label => {
-          Tag.create({
-            imageTag: label,
-            userPostId: newPost.id,
-            photoId: newPhoto.id,
-            userId: user.id
-          })
-        })
-
-        const postWithPics = await UserPost.findByPk(newPost.id, {
-          include: [
-            {model: User},
-            {model: Community, attributes: ['name']},
-            {model: Photo, include: [{model: Tag}]},
-            {
-              model: PostComment,
-              include: [{model: User}]
-            }
-          ],
-          order: [[{model: PostComment}, 'createdAt', 'ASC']]
-        })
-
-        res.json(postWithPics)
       }
-    } else {
-      //body has no file url
-      let comId = req.body.communityId
-      if (comId === 'none') comId = null
-      let newPost = await UserPost.create({
-        userId: user.id,
-        description: req.body.description,
-        communityId: comId
-      })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
-      newPost = await UserPost.findByPk(newPost.id, {
+// increase the number of likes on a post
+router.put(
+  '/:postId/likes',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
         include: [
           {model: User},
           {model: Community, attributes: ['name']},
@@ -248,108 +279,98 @@ router.post('/add/:username', async (req, res, next) => {
         ],
         order: [[{model: PostComment}, 'createdAt', 'ASC']]
       })
-
-      res.json(newPost)
+      updatedPostLikes.likes++
+      await updatedPostLikes.save()
+      res.status(200).json(updatedPostLikes)
+    } catch (error) {
+      next(error)
     }
-  } catch (error) {
-    next(error)
   }
-})
-
-// increase the number of likes on a post
-router.put('/:postId/likes', async (req, res, next) => {
-  try {
-    let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
-      include: [
-        {model: User},
-        {model: Community, attributes: ['name']},
-        {model: Photo, include: [{model: Tag}]},
-        {
-          model: PostComment,
-          include: [{model: User}]
-        }
-      ],
-      order: [[{model: PostComment}, 'createdAt', 'ASC']]
-    })
-    updatedPostLikes.likes++
-    await updatedPostLikes.save()
-    res.status(200).json(updatedPostLikes)
-  } catch (error) {
-    next(error)
-  }
-})
+)
 
 // remove like on a post
-router.put('/:postId/likes/remove', async (req, res, next) => {
-  try {
-    let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
-      include: [
-        {model: User},
-        {model: Community, attributes: ['name']},
-        {model: Photo, include: [{model: Tag}]},
-        {
-          model: PostComment,
-          include: [{model: User}]
-        }
-      ],
-      order: [[{model: PostComment}, 'createdAt', 'ASC']]
-    })
-    updatedPostLikes.likes--
-    await updatedPostLikes.save()
-    res.status(200).json(updatedPostLikes)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:postId/likes/remove',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedPostLikes = await UserPost.findByPk(req.params.postId, {
+        include: [
+          {model: User},
+          {model: Community, attributes: ['name']},
+          {model: Photo, include: [{model: Tag}]},
+          {
+            model: PostComment,
+            include: [{model: User}]
+          }
+        ],
+        order: [[{model: PostComment}, 'createdAt', 'ASC']]
+      })
+      updatedPostLikes.likes--
+      await updatedPostLikes.save()
+      res.status(200).json(updatedPostLikes)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 // increase the number of dislikes on a post
-router.put('/:postId/dislikes', async (req, res, next) => {
-  try {
-    let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
-      include: [
-        {model: User},
-        {model: Community, attributes: ['name']},
-        {model: Photo, include: [{model: Tag}]},
-        {
-          model: PostComment,
-          include: [{model: User}]
-        }
-      ],
-      order: [[{model: PostComment}, 'createdAt', 'ASC']]
-    })
-    updatedPostDislikes.dislikes++
-    await updatedPostDislikes.save()
-    res.status(200).json(updatedPostDislikes)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:postId/dislikes',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
+        include: [
+          {model: User},
+          {model: Community, attributes: ['name']},
+          {model: Photo, include: [{model: Tag}]},
+          {
+            model: PostComment,
+            include: [{model: User}]
+          }
+        ],
+        order: [[{model: PostComment}, 'createdAt', 'ASC']]
+      })
+      updatedPostDislikes.dislikes++
+      await updatedPostDislikes.save()
+      res.status(200).json(updatedPostDislikes)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 // remove dislike on a post
-router.put('/:postId/dislikes/remove', async (req, res, next) => {
-  try {
-    let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
-      include: [
-        {model: User},
-        {model: Community, attributes: ['name']},
-        {model: Photo, include: [{model: Tag}]},
-        {
-          model: PostComment,
-          include: [{model: User}]
-        }
-      ],
-      order: [[{model: PostComment}, 'createdAt', 'ASC']]
-    })
-    updatedPostDislikes.dislikes--
-    await updatedPostDislikes.save()
-    res.status(200).json(updatedPostDislikes)
-  } catch (error) {
-    next(error)
+router.put(
+  '/:postId/dislikes/remove',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedPostDislikes = await UserPost.findByPk(req.params.postId, {
+        include: [
+          {model: User},
+          {model: Community, attributes: ['name']},
+          {model: Photo, include: [{model: Tag}]},
+          {
+            model: PostComment,
+            include: [{model: User}]
+          }
+        ],
+        order: [[{model: PostComment}, 'createdAt', 'ASC']]
+      })
+      updatedPostDislikes.dislikes--
+      await updatedPostDislikes.save()
+      res.status(200).json(updatedPostDislikes)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 //delete post by Id
-router.delete('/:postId', async (req, res, next) => {
+router.delete('/:postId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const numOfDeleted = await UserPost.destroy({
       where: {id: req.params.postId}
