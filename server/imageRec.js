@@ -4,7 +4,7 @@ async function scanner(image) {
   let allLabels = []
 
   const client = new vision.ImageAnnotatorClient({
-    keyFilename: 'server/api/bramble-vision.json'
+    keyFilename: 'server/api/GoogleVisionSecret.json'
   })
   const [result] = await client.labelDetection(image)
   const labels = result.labelAnnotations
