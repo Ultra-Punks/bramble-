@@ -28,19 +28,36 @@
 }
 
 .single-location-view-img {
-  height: 44%;
-  width: 44%;
+  height: 100%;
+  width: 100%;
 }
 
-.single-location-feedback {
+/* .single-location-feedback {
   display: flex;
+  justify-content: center;
   align-items: center;
+} */
+.add-review-button {
+  font-size: 1.3em;
 }
 
-/* .location-photos {
-  width: 33%;
-  height: 33%
-} */
+.description-container {
+  font-size: 1.4em;
+  display: flex;
+}
+
+.location-description {
+  align-self: flex-end;
+}
+
+.location-name {
+  margin: 0;
+  margin-top: 3%;
+  margin-left: 2%;
+  margin-bottom: 1.5%;
+  margin-right: 10%;
+  font-size: 1.8em;
+}
 
 .popup-header {
   display: flex;

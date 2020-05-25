@@ -140,10 +140,10 @@ class SingleLocationView extends React.Component {
             </div>
 
             <div className="description-container">
-              <p className="post-text">
+              <p className="location-name">
                 <strong>{location.name}</strong>
               </p>
-              <p>{location.description}</p>
+              <p className="location-description">{location.description}</p>
             </div>
             {/* <div className="description-and-reviews"></div> */}
             <div className="single-location-feedback">

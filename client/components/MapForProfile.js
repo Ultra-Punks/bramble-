@@ -65,7 +65,7 @@ class MapForProfile extends React.Component {
       })
     }
     if (typeof locations[0] === 'string') {
-      console.log('typeof locations[0]', typeof locations[0])
+      // console.log('typeof locations[0]', typeof locations[0])
       this.setState(
         {
           message: [
@@ -75,7 +75,7 @@ class MapForProfile extends React.Component {
         },
         () => {
           this.props.getAllLocations()
-          console.log('props after getting all locations', this.props)
+          // console.log('props after getting all locations', this.props)
         }
       )
     }
@@ -84,7 +84,7 @@ class MapForProfile extends React.Component {
       const randomLocationIdx = Math.floor(
         Math.random() * this.props.locations.length
       )
-      console.log('this is the random location index', randomLocationIdx)
+      // console.log('this is the random location index', randomLocationIdx)
       const coords = this.props.locations[randomLocationIdx].geometry
         .coordinates
       this.setState({
@@ -131,17 +131,18 @@ class MapForProfile extends React.Component {
       >
         <div className="popup">
           <div className="popup-header">
-            <Link to={`/l/${loc.id}`}>
-              <strong>{loc.name}</strong>
-            </Link>
-            <br />
             <Link to={`/community/list/${loc.communityId}`}>
               {loc.community && loc.community.name && loc.community.name}
+            </Link>
+            <br />
+            <Link to={`/l/${loc.id}`}>
+              <strong>{loc.name}</strong>
             </Link>
           </div>
           <p className="popup-body">
             {loc.address && `${loc.address}`}
             {loc.city && `${loc.city}`}
+            <br />
             {loc.description && `${loc.description}`}
           </p>
         </div>

@@ -43,6 +43,7 @@ export default class AddLocationReview extends React.Component {
     return (
       <div>
         <Button
+          className="add-review-button"
           type="submit"
           variant="danger"
           onClick={() => this.handleShowForm()}
