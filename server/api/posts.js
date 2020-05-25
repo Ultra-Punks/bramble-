@@ -10,7 +10,8 @@ const {
   Photo,
   Community,
   Tag,
-  PostComment
+  PostComment,
+  Location
 } = require('../db/models')
 
 module.exports = router
@@ -114,7 +115,25 @@ router.get('/from/:username/following', async (req, res, next) => {
       order: [['createdAt', 'DESC'], [{model: PostComment}, 'createdAt', 'ASC']]
     })
 
-    res.json(feed)
+    const allLocations = await Location.findAll({
+      where: {[Op.or]: [{userId: arrOfIds}, {communityId: arrOfComIds}]},
+      include: [{model: User}, {model: Community}],
+      order: [['createdAt', 'DESC']]
+    })
+
+    let results = []
+
+    feed.forEach(post => {
+      results.push(post)
+    })
+
+    allLocations.forEach(location => {
+      results.push(location)
+    })
+
+    results.sort((a, b) => b.createdAt - a.createdAt)
+
+    res.json(results)
   } catch (error) {
     next(error)
   }
@@ -197,7 +216,8 @@ router.post('/add/:username', async (req, res, next) => {
         const newPhoto = await Photo.create({
           userPostId: newPost.id,
           userId: user.id,
-          imgFile: req.body.file
+          imgFile: req.body.file,
+          communityId: comId
         })
 
         const scannedLabels = await scanner(req.body.file)

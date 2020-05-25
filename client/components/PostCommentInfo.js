@@ -69,41 +69,47 @@ export default function PostCommentInfo(props) {
             <p className="post-text">{comment.comment}</p>
           </Link>
         </div>
-        <div className="commentsAndShares">
-          <div className="likes">
-            {comment.likes >= 1 && <p className={likeClass}>{comment.likes}</p>}
-            {isClick ? (
-              <Heart
-                className="likeIcon"
-                isClick={isClick}
-                onClick={() => {
-                  setClick(false)
-                  unlikeComment(comment.id, postId)
-                }}
+        {props.isLoggedIn ? (
+          <div className="commentsAndShares">
+            <div className="likes">
+              {comment.likes >= 1 && (
+                <p className={likeClass}>{comment.likes}</p>
+              )}
+              {isClick ? (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(false)
+                    unlikeComment(comment.id, postId)
+                  }}
+                />
+              ) : (
+                <Heart
+                  className="likeIcon"
+                  isClick={isClick}
+                  onClick={() => {
+                    setClick(true)
+                    likeComment(comment.id, postId)
+                  }}
+                />
+              )}
+            </div>
+            <div>
+              {comment.dislikes >= 1 && (
+                <p className="dislikes-number">{comment.dislikes}</p>
+              )}
+              <img
+                src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                className="dislikeIcon"
+                type="button"
+                onClick={() => dislikeComment(comment.id, postId)}
               />
-            ) : (
-              <Heart
-                className="likeIcon"
-                isClick={isClick}
-                onClick={() => {
-                  setClick(true)
-                  likeComment(comment.id, postId)
-                }}
-              />
-            )}
+            </div>
           </div>
-          <div>
-            {comment.dislikes >= 1 && (
-              <p className="dislikes-number">{comment.dislikes}</p>
-            )}
-            <img
-              src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
-              className="dislikeIcon"
-              type="button"
-              onClick={() => dislikeComment(comment.id, postId)}
-            />
-          </div>
-        </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   )

@@ -33,6 +33,7 @@ function FeedPostComment(props) {
               dislikeComment={props.dislikeComment}
               deleteComment={props.deleteComment}
               loggedInUser={loggedInUser}
+              isLoggedIn={props.isLoggedIn}
             />
           )
         })}

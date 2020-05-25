@@ -47,11 +47,15 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', async (req, res) => {
-  const user = await User.findByPk(req.user.id, {
-    include: [{model: Community, as: 'subscriber'}]
-  })
-  res.json(user)
+router.get('/me', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      include: [{model: Community, as: 'subscriber'}]
+    })
+    res.json(user)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.use('/google', require('./google'))

@@ -222,6 +222,7 @@ function FeedPostPreview(props) {
           openComments={openComments}
           postId={post.id}
           loggedInUser={props.loggedInUser}
+          isLoggedIn={props.isLoggedIn}
         />
       </div>
     </div>

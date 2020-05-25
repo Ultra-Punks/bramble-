@@ -137,54 +137,57 @@ function PostPreview(props) {
             <div className="post-photos">
               <PostingPictures post={post} />
             </div>
-            <div className="commentsAndShares">
-              <img
-                src="https://img.icons8.com/all/500/comments.png"
-                className="commentIcon"
-                type="button"
-                onClick={() => setCommentForm(true)}
-              />
-              <AddCommentForm
-                show={commentForm}
-                onHide={() => setCommentForm(false)}
-                postId={post.id}
-              />
-
-              <div className="likes">
-                {post.likes >= 1 && <p className={likeClass}>{post.likes}</p>}
-                {isClick ? (
-                  <Heart
-                    className="likeIcon"
-                    isClick={isClick}
-                    onClick={() => {
-                      setClick(false)
-                      props.unlikePost(post.id)
-                    }}
-                  />
-                ) : (
-                  <Heart
-                    className="likeIcon"
-                    isClick={isClick}
-                    onClick={() => {
-                      setClick(true)
-                      props.likePost(post.id)
-                    }}
-                  />
-                )}
-              </div>
-              <div className="dislikes">
-                {post.dislikes >= 1 && (
-                  <p className="dislikes-number">{post.dislikes}</p>
-                )}
+            {props.isLoggedIn ? (
+              <div className="commentsAndShares">
                 <img
-                  src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
-                  className="dislikeIcon"
+                  src="https://img.icons8.com/all/500/comments.png"
+                  className="commentIcon"
                   type="button"
-                  onClick={() => props.dislikePost(post.id)}
+                  onClick={() => setCommentForm(true)}
                 />
-              </div>
-            </div>
+                <AddCommentForm
+                  show={commentForm}
+                  onHide={() => setCommentForm(false)}
+                  postId={post.id}
+                />
 
+                <div className="likes">
+                  {post.likes >= 1 && <p className={likeClass}>{post.likes}</p>}
+                  {isClick ? (
+                    <Heart
+                      className="likeIcon"
+                      isClick={isClick}
+                      onClick={() => {
+                        setClick(false)
+                        props.unlikePost(post.id)
+                      }}
+                    />
+                  ) : (
+                    <Heart
+                      className="likeIcon"
+                      isClick={isClick}
+                      onClick={() => {
+                        setClick(true)
+                        props.likePost(post.id)
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="dislikes">
+                  {post.dislikes >= 1 && (
+                    <p className="dislikes-number">{post.dislikes}</p>
+                  )}
+                  <img
+                    src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                    className="dislikeIcon"
+                    type="button"
+                    onClick={() => props.dislikePost(post.id)}
+                  />
+                </div>
+              </div>
+            ) : (
+              ''
+            )}
             {post.postComments !== undefined && post.postComments.length ? (
               <div className="see-replies-container" onClick={handleComments}>
                 <p className="seeReplies" type="button">
@@ -209,6 +212,7 @@ function PostPreview(props) {
           openComments={openComments}
           postId={post.id}
           loggedInUser={props.loggedInUser}
+          isLoggedIn={props.isLoggedIn}
         />
       </div>
     </div>
