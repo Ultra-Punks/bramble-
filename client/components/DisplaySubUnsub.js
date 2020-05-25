@@ -1,29 +1,30 @@
 import React from 'react'
 import {Button} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 function DisplaySubUnsub(props) {
   const {isSubscribed, subscribe, unsubscribe} = props
   if (isSubscribed) {
     return (
-      <Button
+      <AwesomeButton
         className="follow-button"
         variant="outline-light"
-        onClick={() => unsubscribe()}
+        onPress={() => unsubscribe()}
       >
         Unsubscribe
-      </Button>
+      </AwesomeButton>
     )
   } else {
     return (
-      <Button
+      <AwesomeButton
         className="follow-button"
         variant="outline-light"
-        onClick={() => {
+        onPress={() => {
           subscribe()
         }}
       >
         Subscribe
-      </Button>
+      </AwesomeButton>
     )
   }
 }

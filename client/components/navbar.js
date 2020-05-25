@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {Image, Button} from 'react-bootstrap'
-import {AddPost, Map, SignupButton, LoginButton} from './index'
+import {Image} from 'react-bootstrap'
+import {AddPost, SignupButton, LoginButton} from './index'
 
 const Navbar = ({handleClick, isLoggedIn, user}) => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -26,7 +26,6 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                 className="nav-logo"
                 src="https://res.cloudinary.com/bramble/image/upload/v1590192635/user_uploads/map_icon_mkn6se.png"
                 roundedCircle
-                // onClick={() => props.history.push('/map')}
               />
             </Link>
             {isLoggedIn ? (
@@ -45,6 +44,9 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
 
                 <Link className="nav-text-button" to="/home">
                   Home
+                </Link>
+                <Link className="nav-text-button" to="/u">
+                  Search
                 </Link>
                 <Link className="nav-text-button" to="/community">
                   Communities

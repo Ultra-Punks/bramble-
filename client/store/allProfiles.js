@@ -17,8 +17,20 @@ export const fetchUsers = () => {
   return async dispatch => {
     try {
       // get all the artists
-      const res = await axios.get('/api/users')
-      dispatch(gotUsers(res.data))
+      const {data} = await axios.get('/api/users')
+      dispatch(gotUsers(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const searchUsers = username => {
+  return async dispatch => {
+    try {
+      // get all the artists
+      const {data} = await axios.get(`/api/users/search/${username}`)
+      dispatch(gotUsers(data))
     } catch (error) {
       console.error(error)
     }
@@ -32,7 +44,7 @@ const initialState = []
 export default function profiles(state = initialState, action) {
   switch (action.type) {
     case GOT_USERS:
-      return [...action.users]
+      return action.users
     default:
       return state
   }

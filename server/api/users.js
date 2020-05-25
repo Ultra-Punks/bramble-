@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {User, Community} = require('../db/models')
+const Sequelize = require('sequelize')
 const isCurrentUserMiddleware = require('./middleware')
+
 module.exports = router
 
 // get ALL users
@@ -17,6 +19,24 @@ router.get('/', async (req, res, next) => {
       ]
     })
     res.json(allUsers)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/search/:username', async (req, res, next) => {
+  try {
+    const username = req.params.username.toLowerCase()
+    const results = await User.findAll({
+      where: {
+        name: Sequelize.where(
+          Sequelize.fn('LOWER', Sequelize.col('username')),
+          'LIKE',
+          '%' + username + '%'
+        )
+      }
+    })
+    res.json(results)
   } catch (error) {
     next(error)
   }

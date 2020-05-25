@@ -23,3 +23,13 @@ router.get('/from/:username', async (req, res, next) => {
     next(error)
   }
 })
+
+router.get('/from/community/:id', async (req, res, next) => {
+  try {
+    let allPhotos = await Photo.findAll({where: {communityId: req.params.id}})
+
+    res.json(allPhotos)
+  } catch (error) {
+    next(error)
+  }
+})

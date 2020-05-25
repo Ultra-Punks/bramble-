@@ -3,6 +3,7 @@ import axios from 'axios'
 // action types:
 const GET_ALL_POSTS = 'GET_ALL_POSTS'
 const GET_SINGLE_POST = 'GET_SINGLE_POST'
+const DELETE_TAG = 'DELETE_TAG'
 
 // action creator:
 const getAllPosts = posts => {
@@ -18,6 +19,8 @@ const getSinglePost = post => {
     post
   }
 }
+
+const deleteTag = tagId => ({type: DELETE_TAG, tagId})
 
 // thunk creator (NOTE: this is a NAMED export! So deconstruct it!)
 export const fetchAllPosts = () => {
@@ -47,6 +50,16 @@ export const fetchRandomPosts = ids => {
       dispatch(getAllPosts(data))
     } catch (error) {
       console.log('Error ', error)
+    }
+  }
+}
+
+export const deleteTagThunk = tagId => {
+  return async () => {
+    try {
+      await axios.delete(`/api/tags/${tagId}`)
+    } catch (error) {
+      console.error(error)
     }
   }
 }

@@ -85,9 +85,7 @@ class LandingPage extends Component {
 
 const mapToState = state => {
   return {
-    communities: state.allCommunities,
-    profiles: state.profiles,
-    posts: state.singlePost
+    communities: state.allCommunities
   }
 }
 

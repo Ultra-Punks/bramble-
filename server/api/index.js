@@ -11,6 +11,7 @@ router.use('/reviews', require('./locationReviews'))
 router.use('/comments', require('./comments'))
 router.use('/followers', require('./followers'))
 router.use('/following', require('./following'))
+router.use('/tags', require('./tags'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
