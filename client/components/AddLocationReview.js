@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addCommentThunk} from '../store/postComments'
 import {fetchUserPosts} from '../store/userFeed'
 import {InputGroup, Form, Button, Modal} from 'react-bootstrap'
 
@@ -14,9 +13,6 @@ export default class AddLocationReview extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-  componentDidMount() {
-    // this.props.fetchUserPosts()
   }
 
   handleShowForm() {
@@ -47,6 +43,7 @@ export default class AddLocationReview extends React.Component {
     return (
       <div>
         <Button
+          className="add-review-button"
           type="submit"
           variant="danger"
           onClick={() => this.handleShowForm()}
@@ -89,17 +86,17 @@ export default class AddLocationReview extends React.Component {
   }
 }
 
-const mapState = state => {
-  return {
-    allCommemts: state.comment,
-    username: state.singleProfile.profile.username
-  }
-}
+// const mapState = state => {
+//   return {
+//     allCommemts: state.comment,
+//     username: state.singleProfile.profile.username
+//   }
+// }
 
-const mapDispatch = dispatch => ({
-  add: (id, comment, username) => {
-    dispatch(addCommentThunk(id, comment))
-    dispatch(fetchUserPosts(username))
-  }
-})
+// const mapDispatch = dispatch => ({
+//   add: (id, comment, username) => {
+//     dispatch(addCommentThunk(id, comment))
+//     dispatch(fetchUserPosts(username))
+//   }
+// })
 // export default connect(mapState, mapDispatch)(AddCommentForm)

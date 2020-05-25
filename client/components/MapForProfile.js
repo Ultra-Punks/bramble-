@@ -66,37 +66,28 @@ class MapForProfile extends React.Component {
       })
     }
     if (typeof locations[0] === 'string') {
-      this.setState({
-        message: [
-          locations[0],
-          `Check out some places related to other communities below!`
-        ]
-      })
-      this.props.getAllLocations()
-      // console.log('props after getting all locations', this.props)
+      // console.log('typeof locations[0]', typeof locations[0])
+      this.setState(
+        {
+          message: [
+            locations[0],
+            `Check out some places related to other communities below!`
+          ]
+        },
+        () => {
+          this.props.getAllLocations()
+          // console.log('props after getting all locations', this.props)
+        }
+      )
     }
-    // } else {
-    //   this.props.getAllLocations()
-    //   this.setState({
-    //     username: null,
-    //     cId: null,
-    //     userHomeId: null,
-    //     locations,
-    //     message: `No locations associated with this community/user ${(
-    //       <br />
-    //     )} Check out some places related to other communities below!`
-    //   })
-    // }
 
-    // console.log('these are locations in compdidmount', locations)
-    // console.log('this is type of locations[0]', typeof locations[0])
-    // console.log('locations.length', locations.length)
-    if (locations.length > 1) {
+    if (locations[0] && locations[0].geometry) {
       const randomLocationIdx = Math.floor(
         Math.random() * this.props.locations.length
       )
       // console.log('this is the random location index', randomLocationIdx)
-      const coords = this.props.locations[0].geometry.coordinates
+      const coords = this.props.locations[randomLocationIdx].geometry
+        .coordinates
       this.setState({
         viewport: {
           ...this.state.viewport,
@@ -157,6 +148,7 @@ class MapForProfile extends React.Component {
           <p className="popup-body">
             {loc.address && `${loc.address}`}
             {loc.city && `${loc.city}`}
+            <br />
             {loc.description && `${loc.description}`}
           </p>
         </div>
