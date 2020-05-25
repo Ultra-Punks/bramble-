@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {LocationReview, Location, User} = require('../db/models')
+const isCurrentUserMiddleware = require('./middleware')
 
 module.exports = router
 
@@ -55,27 +56,31 @@ router.get('/from/:username', async (req, res, next) => {
 })
 
 // add a new review
-router.post('/of/:locationId', async (req, res, next) => {
-  try {
-    const {ratings, comments} = req.body
-    const newReview = await LocationReview.create({
-      locationId: req.params.locationId,
-      userId: req.user.id,
-      ratings,
-      comments
-    })
-    const location = await Location.findByPk(req.params.locationId, {
-      include: [{model: LocationReview}, {model: User}]
-    })
-    // console.log('new review', newReview)
-    res.json(location)
-  } catch (error) {
-    next(error)
+router.post(
+  '/of/:locationId',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      const {ratings, comments} = req.body
+      const newReview = await LocationReview.create({
+        locationId: req.params.locationId,
+        userId: req.user.id,
+        ratings,
+        comments
+      })
+      const location = await Location.findByPk(req.params.locationId, {
+        include: [{model: LocationReview}, {model: User}]
+      })
+      // console.log('new review', newReview)
+      res.json(location)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 // delete a review by Id
-router.delete('/:reviewId', async (req, res, next) => {
+router.delete('/:reviewId', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     const numOfDeleted = await LocationReview.destroy({
       where: {id: req.params.reviewId}

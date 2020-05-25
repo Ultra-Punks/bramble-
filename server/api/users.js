@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User, Community} = require('../db/models')
+const isCurrentUserMiddleware = require('./middleware')
 module.exports = router
 
 // get ALL users
@@ -94,7 +95,7 @@ router.delete('/:username', async (req, res, next) => {
 })
 
 // increase the number of followers && follow a new user
-router.put('/follow/user', async (req, res, next) => {
+router.put('/follow/user', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     let loggedInUser = await User.findByPk(req.session.passport.user)
 
@@ -126,34 +127,38 @@ router.put('/follow/user', async (req, res, next) => {
 })
 
 // decrease the number of followers && unfollow a user
-router.put('/unfollow/user', async (req, res, next) => {
-  try {
-    let loggedInUser = await User.findByPk(req.session.passport.user)
+router.put(
+  '/unfollow/user',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let loggedInUser = await User.findByPk(req.session.passport.user)
 
-    let newUnfollowing = await User.findOne({
-      where: {
-        username: req.body.username
-      }
-    })
+      let newUnfollowing = await User.findOne({
+        where: {
+          username: req.body.username
+        }
+      })
 
-    loggedInUser.removeFollowing(newUnfollowing.id) //magic method
-    loggedInUser.decreaseFollowing() // instance method
-    newUnfollowing.decreaseFollowers() // instance method
+      loggedInUser.removeFollowing(newUnfollowing.id) //magic method
+      loggedInUser.decreaseFollowing() // instance method
+      newUnfollowing.decreaseFollowers() // instance method
 
-    await loggedInUser.save()
-    await newUnfollowing.save()
+      await loggedInUser.save()
+      await newUnfollowing.save()
 
-    const updatedUser = await User.findOne({
-      where: {
-        username: req.body.username
-      },
-      include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
-    })
+      const updatedUser = await User.findOne({
+        where: {
+          username: req.body.username
+        },
+        include: [{model: User, as: 'follower'}, {model: User, as: 'following'}]
+      })
 
-    const isFollowing = await loggedInUser.hasFollowing(updatedUser)
+      const isFollowing = await loggedInUser.hasFollowing(updatedUser)
 
-    res.json({profile: updatedUser, isFollowing: isFollowing})
-  } catch (error) {
-    next(error)
+      res.json({profile: updatedUser, isFollowing: isFollowing})
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
