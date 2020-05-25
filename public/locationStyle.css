@@ -48,7 +48,7 @@
 }
 
 /* .popup-main {
-  padding: 30%;
+  width: 35%;
 } */
 
 #map-message {
@@ -56,4 +56,9 @@
   width: max-content;
   color: white;
   font-size: 1.3em;
+}
+
+.mapboxgl-popup {
+  width: 35%;
+  /* color: #dadada */
 }

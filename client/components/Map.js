@@ -118,6 +118,7 @@ class Map extends React.Component {
                 <Link to={`/l/${loc.id}`}>
                   <strong>{loc.name}</strong>
                 </Link>
+                <br />
                 <Link to={`/community/list/${loc.communityId}`}>
                   {loc.community && loc.community.name && loc.community.name}
                 </Link>

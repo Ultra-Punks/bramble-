@@ -105,6 +105,7 @@ class MapForSingleLocation extends React.Component {
           <div className="popup-header">
             <div>
               <strong>{loc.name && loc.name}</strong>
+              <br />
               <Link to={`/community/list/${loc.communityId}`}>
                 {loc.community && loc.community.name && loc.community.name}
               </Link>
