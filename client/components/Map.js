@@ -89,7 +89,7 @@ class Map extends React.Component {
     // locations not from our database will have an id that is a string.
     // conditionally rendering links and the addlocation button based on this variable
     const dbCheck = typeof loc.id === 'number'
-    const numOfNextLocation = this.props.locations.length + 1
+    const numOfNextLocation = this.props.locations.length
 
     return (
       <Popup
@@ -156,7 +156,7 @@ class Map extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    console.log('result in addMarker func', result)
+    // console.log('result in addMarker func', result)
     let name,
       address,
       city = ''
@@ -308,26 +308,27 @@ class Map extends React.Component {
             )}
           {/* map() through locations and create Markers for all of them */}
           {/* {!this.props.locations[0] ? '' :''} */}
-          {this.props.locations.map((loc, idx) => {
-            const long = loc.geometry.coordinates[0]
-            const lat = loc.geometry.coordinates[1]
-            return (
-              <div key={idx}>
-                <Marker longitude={long} latitude={lat}>
-                  <div
-                    onClick={() => {
-                      loc.popup = !loc.popup
-                      this.setState({displayPopup: loc.popup})
-                    }}
-                  >
-                    <RedPin />
-                  </div>
-                </Marker>
-                {/* also checking if marker.popup boolean is true, then render Popup */}
-                {loc.popup ? this.renderPopup(loc) : <div />}
-              </div>
-            )
-          })}
+          {this.props.locations[0] &&
+            this.props.locations.map((loc, idx) => {
+              const long = loc.geometry.coordinates[0]
+              const lat = loc.geometry.coordinates[1]
+              return (
+                <div key={idx}>
+                  <Marker longitude={long} latitude={lat}>
+                    <div
+                      onClick={() => {
+                        loc.popup = !loc.popup
+                        this.setState({displayPopup: loc.popup})
+                      }}
+                    >
+                      <RedPin />
+                    </div>
+                  </Marker>
+                  {/* also checking if marker.popup boolean is true, then render Popup */}
+                  {loc.popup ? this.renderPopup(loc) : <div />}
+                </div>
+              )
+            })}
         </MapGL>
       </div>
     )
