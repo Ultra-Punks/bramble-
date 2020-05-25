@@ -103,20 +103,21 @@ class SingleLocationView extends React.Component {
     this.props.fetchLocation()
     // this.setState({location: this.props.location})
   }
+  // componentWillUnmount() {
+  //   this.setState({location: null})
+  // }
+  // handleShowForm() {
+  //   this.setState({show: true})
+  // }
 
-  handleShowForm() {
-    this.setState({show: true})
-  }
-
-  handleHideForm() {
-    this.setState({show: false})
-  }
+  // handleHideForm() {
+  //   this.setState({show: false})
+  // }
 
   render() {
     const location = this.props.location
-
     if (!location || !location.id)
-      return <div>Not enough info about this location yet</div>
+      return <div>Couldn't find this location, please try back later</div>
 
     return (
       <div className="page-container">
@@ -155,7 +156,7 @@ class SingleLocationView extends React.Component {
             <LocationReviews location={location} />
           </div>
           <div className="profileMapContainer sticky">
-            <MapForSingleLocation singleLocation={this.props.location} />
+            <MapForSingleLocation location={this.props.location} />
           </div>
           {/* <div className="post-header">
             <UserPFP post={location} />
