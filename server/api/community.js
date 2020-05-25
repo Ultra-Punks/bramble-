@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {Community, User} = require('../db/models')
 const Sequelize = require('sequelize')
 module.exports = router
+const isCurrentUserMiddleware = require('./middleware')
 
 // get all community
 router.get('/', async (req, res, next) => {
@@ -70,7 +71,7 @@ router.get('/list/:id', async (req, res, next) => {
 })
 
 //logged in user subscribe to a community
-router.put('/subscribe', async (req, res, next) => {
+router.put('/subscribe', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     let loggedIn = await User.findByPk(req.session.passport.user)
 
@@ -94,7 +95,7 @@ router.put('/subscribe', async (req, res, next) => {
 })
 
 //logged in user unsubscribe from community
-router.put('/unsubscribe', async (req, res, next) => {
+router.put('/unsubscribe', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     let loggedIn = await User.findByPk(req.session.passport.user)
 

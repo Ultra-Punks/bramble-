@@ -183,6 +183,19 @@ const manualLocations = [
     coverImg:
       'https://elitesportsny.com/wp-content/uploads/2018/03/cincinnati-reds-v-new-york-mets-1-e1522096086300.jpg'
   },
+
+  {
+    address: '620 Atlantic Ave, Brooklyn, NY 11217',
+    geometry: {type: 'point', coordinates: [-73.9753315, 40.6826173]},
+    name: 'Barclays Center',
+    mapId: '',
+    description:
+      'Barclays Center is a multi-purpose indoor arena in the New York City borough of Brooklyn. The arena is home to the Brooklyn Nets of the National Basketball Association, and is also one of the home arenas for the New York Islanders of the National Hockey League (the other is Nassau Coliseum).',
+    communityId: 13,
+    coverImg:
+      'https://thenypost.files.wordpress.com/2019/06/barclays-security.jpg?quality=80&strip=all'
+  },
+
   {
     address: '1240 6th Ave, New York, NY 10020',
     geometry: {type: 'point', coordinates: [-73.980782, 40.759409]},
@@ -279,6 +292,19 @@ const manualLocations = [
     coverImg:
       'https://cdn7.bigcommerce.com/s-kzjsut/product_images/uploaded_images/storefront.jpg'
   },
+
+  {
+    address: '65 Ludlow St, New York, NY 10002',
+    geometry: {type: 'point', coordinates: [-73.99003, 40.7173173]},
+    name: 'Waypoint Cafe NYC',
+    mapId: '',
+    description:
+      'Cafe outfitted with digital gaming stations, offering Intelligentsia coffee, tea & baked goods.',
+    communityId: 12,
+    coverImg:
+      'https://s3.amazonaws.com/nooklyn-pro/locationphotos/3906/standard/Waypoint_Cafe-9.jpg?1526308016'
+  },
+
   {
     address: '196 Allen St, New York, NY 10002',
     geometry: {type: 'point', coordinates: [-73.988559, 40.72235]},
@@ -312,6 +338,73 @@ const manualLocations = [
     communityId: 5,
     coverImg:
       'https://hudsonreporter.com/wp-content/uploads/sites/15/2018/08/76FP_Liberty_Science_Center.jpg'
+  },
+
+  {
+    address: '555 12th Ave, New York, NY 10019',
+    geometry: {type: 'point', coordinates: [-74.001505, 40.763997]},
+    name: 'Manhattan Kayak Company',
+    mapId: '',
+    description:
+      'Center providing kayaks & stand-up paddleboards for rent, plus classes, tours & camps for kids.',
+    communityId: 15,
+    coverImg:
+      'https://waterfrontalliance.org/wp-content/uploads/2018/11/Manhattan-circ-2018-e1541177914289.png'
+  },
+  {
+    address: '85 Delancey St, New York, NY 10002',
+    geometry: {type: 'point', coordinates: [-73.989662, 40.718681]},
+    name: 'Sourced Adventures',
+    mapId: '',
+    description:
+      'At Sourced Adventures™, our mission is making the outdoors accessible and affordable for everyone. By providing round-trip transportation and offering a plethora of trips for every season, all at a low cost, our tours allow any adventurer the opportunity to escape the city for the day, weekend, or week.',
+    communityId: 15,
+    coverImg: 'https://i.ytimg.com/vi/-I5UTuVlPvY/maxresdefault.jpg'
+  },
+
+  {
+    address: '301 E 17th St, New York, NY 10003',
+    geometry: {type: 'point', coordinates: [-73.9830163, 40.7343988]},
+    name: 'NYU Langone Orthopedic Hospital',
+    mapId: '',
+    description:
+      'At NYU Langone Orthopedic Hospital, formerly known as Hospital for Joint Diseases, our doctors, nurses, and other healthcare professionals provide the highest-quality medical and surgical care for the prevention, treatment, and rehabilitation of orthopedic, musculoskeletal, rheumatic, and neurological conditions, as well as other related diseases and injuries.',
+    communityId: 16,
+    coverImg:
+      'https://nyulangone.org/files/nyu-langone-orthopedic-hospital-inline.jpg'
+  },
+  {
+    address: '97 Bond St, Brooklyn, NY 11217',
+    geometry: {type: 'point', coordinates: [-73.9848386, 40.6867141]},
+    name: 'Jnana Wellness Center',
+    mapId: '',
+    description:
+      'Jnana studio is a unique healing space dedicated to offering yoga and wellness classes to the community. We look forward to seeing you soon.',
+    communityId: 16,
+    coverImg:
+      'https://nyulangone.org/files/nyu-langone-orthopedic-hospital-inline.jpg'
+  },
+  {
+    address: '416 W 13th St #207, New York, NY 10014',
+    geometry: {type: 'point', coordinates: [-74.0068871, 40.740451]},
+    name: 'GIPHY Offices - NYC',
+    mapId: '',
+    description:
+      'Pictures really are worth a 1000 words. Find the perfect GIF to say what whatever is on your mind! This is the HQ of all that GIPHY craziness.',
+    communityId: 14,
+    coverImg:
+      'https://www.officelovin.com/wp-content/uploads/2019/07/giphy-office-13.jpg'
+  },
+  {
+    address: '351 W Broadway, New York, NY 10013',
+    geometry: {type: 'point', coordinates: [-74.0031206, 40.7227908]},
+    name: 'What Goes Around Comes Around',
+    mapId: '',
+    description:
+      'Shop specializing in vintage designer apparel & accessories for men & women, plus line of originals.',
+    communityId: 4,
+    coverImg:
+      'https://www.officelovin.com/wp-content/uploads/2019/07/giphy-office-13.jpg'
   }
 ]
 
