@@ -32,7 +32,7 @@ export class AddLocationForm extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    console.log('state in handlechange', this.state)
+    // console.log('state in handlechange', this.state)
   }
 
   handleSubmit = event => {
@@ -52,7 +52,10 @@ export class AddLocationForm extends React.Component {
     })
   }
   render() {
+    // const nextLocId = this.props.nextLocId
     const nextLocId = this.props.nextLocId
+    // console.log('id of next location', nextLocId)
+
     if (this.state.redirect) {
       return (
         <Redirect
@@ -150,7 +153,8 @@ export class AddLocationForm extends React.Component {
 
 const mapState = state => ({
   subscribedCommunities: state.user.subscriber,
-  singleLocation: state.singleLocation
+  singleLocation: state.singleLocation,
+  locations: state.locations
 })
 const mapDispatch = dispatch => ({
   add: location => {

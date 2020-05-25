@@ -72,7 +72,7 @@ class MapForProfile extends React.Component {
         ]
       })
       this.props.getAllLocations()
-      console.log('props after getting all locations', this.props)
+      // console.log('props after getting all locations', this.props)
     }
     // } else {
     //   this.props.getAllLocations()
@@ -87,14 +87,14 @@ class MapForProfile extends React.Component {
     //   })
     // }
 
-    console.log('these are locations in compdidmount', locations)
-    console.log('this is type of locations[0]', typeof locations[0])
-    console.log('locations.length', locations.length)
+    // console.log('these are locations in compdidmount', locations)
+    // console.log('this is type of locations[0]', typeof locations[0])
+    // console.log('locations.length', locations.length)
     if (locations.length > 1) {
       const randomLocationIdx = Math.floor(
         Math.random() * this.props.locations.length
       )
-      console.log('this is the random location index', randomLocationIdx)
+      // console.log('this is the random location index', randomLocationIdx)
       const coords = this.props.locations[0].geometry.coordinates
       this.setState({
         viewport: {
@@ -135,7 +135,7 @@ class MapForProfile extends React.Component {
         closeButton={false}
         closeOnClick={true}
         onClick={() => {
-          console.log('event in the onclick in popup', event)
+          // console.log('event in the onclick in popup', event)
         }}
       >
         <div className="popup">
@@ -169,7 +169,7 @@ class MapForProfile extends React.Component {
   }
   // eslint-disable-next-line complexity
   render() {
-    console.log('this is state in render', this.state)
+    // console.log('this is state in render', thisx.state)
     if (!this.props.locations[0] || !this.props.locations[0].id) return <div />
     const navStyle = {
       position: 'absolute',

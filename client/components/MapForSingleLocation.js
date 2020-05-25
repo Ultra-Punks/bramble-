@@ -34,13 +34,13 @@ class MapForSingleLocation extends React.Component {
   componentDidMount() {
     const {singleLocation} = this.props
 
-    console.log('props in compdidmount', this.props)
-    console.log(
-      'selected location in compdidmount',
-      this.state.selectedLocation
-    )
+    // console.log('props in compdidmount', this.props)
+    // console.log(
+    //   'selected location in compdidmount',
+    //   this.state.selectedLocation
+    // )
     // console.log('cIdS ', cIdS)
-    console.log('state in compdidmount', this.state)
+    // console.log('state in compdidmount', this.state)
 
     //check if the prop equals the state, and if so reset it
     // if (userHomeId === userHomeIdS) this.setState({userHomeIdS: null})
@@ -69,11 +69,11 @@ class MapForSingleLocation extends React.Component {
       )
     }
 
-    console.log('state at end of compdidmount', this.state)
+    // console.log('state at end of compdidmount', this.state)
   }
   componentWillUnmount() {
     this.setState({singleLocationId: null, selectedLocation: {}})
-    console.log('COMPONENT UNMOUNTING', this.state)
+    // console.log('COMPONENT UNMOUNTING', this.state)
   }
 
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
