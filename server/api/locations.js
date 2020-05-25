@@ -2,6 +2,7 @@ const router = require('express').Router()
 const {Location, User, LocationReview, Community} = require('../db/models')
 const Op = require('sequelize').Op
 module.exports = router
+const isCurrentUserMiddleware = require('./middleware')
 
 // get locations by community
 router.get('/of/:id', async (req, res, next) => {
@@ -88,7 +89,7 @@ router.get('/home', async (req, res, next) => {
   }
 })
 // single location routes
-router.post('/add', async (req, res, next) => {
+router.post('/add', isCurrentUserMiddleware, async (req, res, next) => {
   try {
     // let {communityId} = req.body
     const {

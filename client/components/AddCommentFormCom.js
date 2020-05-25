@@ -2,24 +2,18 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {addCommentThunk} from '../store/postComments'
 import {fetchCommunityPosts} from '../store/userFeed'
-import {InputGroup, Form, Button, Modal} from 'react-bootstrap'
+import {Form, Modal} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 export class AddCommentForm extends React.Component {
   constructor() {
     super()
     this.state = {
       comment: ''
-      // likes : 0 ,
-      // dislikes : 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {
-    // this.props.fetchUserPosts()
-  }
-
-  //  add the props.id for activeuser
 
   handleChange(event) {
     this.setState({
@@ -47,18 +41,27 @@ export class AddCommentForm extends React.Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="comment">Comment:</label>
-          <input
-            name="comment"
-            type="text"
-            value={this.state.comment}
-            onChange={this.handleChange}
-          />
-          <button type="submit" onClick={this.handleSubmit}>
-            Submit
-          </button>
-        </form>
+        <div className="submit-comment-container">
+          <h1 className="reply-text">Reply</h1>
+          <form className="width-100" onSubmit={this.handleSubmit}>
+            <Form.Control
+              className="description-input"
+              name="comment"
+              placeholder="Reply to comment..."
+              as="textarea"
+              rows="5"
+              style={{color: 'black'}}
+              onChange={this.handleChange}
+            />
+            <div className="comment-submit">
+              {this.state.comment.length ? (
+                <AwesomeButton>Reply</AwesomeButton>
+              ) : (
+                <AwesomeButton disabled>Reply</AwesomeButton>
+              )}
+            </div>
+          </form>
+        </div>
       </Modal>
     )
   }

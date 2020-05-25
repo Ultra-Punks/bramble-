@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import React from 'react'
+import history from '../history'
 import {Modal, Image} from 'react-bootstrap'
 
 function ShowInfo(props) {
@@ -13,9 +14,21 @@ function ShowInfo(props) {
       <div>
         {community.users.map(user => {
           return (
-            <div key={user.id}>
+            <div
+              className="profile-preview-container"
+              key={user.id}
+              onClick={() => history.push(`/u/${user.username}`)}
+            >
               <Image className="post-pfp" src={user.profileImg} roundedCircle />
-              <p>{user.username}</p>
+              <div className="profile-preview">
+                <div className="profile-preview-handle">
+                  <p className="profile-preview-name text-hover">{user.name}</p>
+                  <p className="profile-preview-username text-hover">
+                    @{user.username}
+                  </p>
+                </div>
+                <p>{user.description}</p>
+              </div>
             </div>
           )
         })}
@@ -36,7 +49,10 @@ class ShowMembers extends React.Component {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <ShowInfo community={this.props.community} />
+        <div className="following-container">
+          <h1 className="following-header">Members</h1>
+          <ShowInfo community={this.props.community} />
+        </div>
       </Modal>
     )
   }

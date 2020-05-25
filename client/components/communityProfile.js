@@ -3,13 +3,14 @@ import {connect} from 'react-redux'
 import {
   fetchSingleCommunity,
   subToCommunity,
-  unSubToCommunity
+  unSubToCommunity,
+  fetchCommunityLocations
 } from '../store/community'
 import {me} from '../store/user'
-import {fetchAllPhotos} from '../store/photos'
+import {fetchAllCommunityPhotos} from '../store/photos'
 import {fetchCommunityPosts} from '../store/userFeed'
 import {Button} from 'react-bootstrap'
-import {CommunityFeed, Map, MapForProfile} from './index'
+import {CommunityFeed, MapForProfile} from './index'
 import ShowMembers from './ShowMembers'
 import DisplaySubUnsub from './DisplaySubUnsub'
 
@@ -17,29 +18,25 @@ class CommunityProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      postFeed: true,
+      postFeed: 'posts',
       showMembers: false,
       postlikes: false,
       commentLikes: false
     }
-    this.postSelector = this.postSelector.bind(this)
-    this.gallerySelector = this.gallerySelector.bind(this)
     this.showMembersOnClick = this.showMembersOnClick.bind(this)
     this.hideMembers = this.hideMembers.bind(this)
+    this.viewSelector = this.viewSelector.bind(this)
   }
   componentDidMount() {
     const id = this.props.match.params.id
     this.props.fetchSingleCommunity(id)
     this.props.fetchGallery()
     this.props.fetchCommunityPosts()
+    this.props.fetchLocations()
   }
 
-  postSelector() {
-    this.setState({postFeed: true})
-  }
-
-  gallerySelector() {
-    this.setState({postFeed: false})
+  viewSelector(view) {
+    this.setState({postFeed: view})
   }
 
   showMembersOnClick() {
@@ -60,13 +57,20 @@ class CommunityProfile extends React.Component {
 
   render() {
     const community = this.props.community.communityProfile
-    const postClass = this.state.postFeed
-      ? 'profileFeedButton selected-feed'
-      : 'profileFeedButton'
+    const postClass =
+      this.state.postFeed === 'posts'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
 
-    const galleryFeed = !this.state.postFeed
-      ? 'profileFeedButton selected-feed'
-      : 'profileFeedButton'
+    const galleryFeed =
+      this.state.postFeed === 'gallery'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
+
+    const locationFeed =
+      this.state.postFeed === 'locations'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
 
     return (
       <div className="profileContainer">
@@ -75,45 +79,59 @@ class CommunityProfile extends React.Component {
             src={community.profileImg}
             className="profilePagePhoto-Community"
           />
-          <div className="profileInfo">
-            <p className="profile-username"> Community: {community.name}</p>
+          <div className="profile-top-name">
+            <p className="profile-name">{community.name}</p>
+            {this.props.isLoggedIn ? (
+              <DisplaySubUnsub
+                unsubscribe={this.props.unsubscribe}
+                subscribe={this.props.subscribe}
+                isSubscribed={this.props.community.isSubscribed}
+                updateUser={this.props.updateUser}
+              />
+            ) : (
+              ''
+            )}
           </div>
           <div className="underCommunity">
-            <p className="communityBio">{community.description}</p>
+            <p className="profileBio">{community.description}</p>
           </div>
           <div className="profile-follows" />
-          <p className="first-list" onClick={() => this.showMembersOnClick()}>
-            {community.subscribers} members
-          </p>
+          {community.users !== undefined && community.users.length ? (
+            <p
+              className="first-list text-hover"
+              onClick={() => this.showMembersOnClick()}
+            >
+              {community.subscribers} Members
+            </p>
+          ) : (
+            <p className="first-list text-hover">0 Members</p>
+          )}
+
           <ShowMembers
             show={this.state.showMembers}
             onHide={() => this.hideMembers()}
             community={community}
           />
-          {this.props.isLoggedIn ? (
-            <DisplaySubUnsub
-              unsubscribe={this.props.unsubscribe}
-              subscribe={this.props.subscribe}
-              isSubscribed={this.props.community.isSubscribed}
-              updateUser={this.props.updateUser}
-            />
-          ) : (
-            <div />
-          )}
-
           <div className="contentContainer">
             <div className="buttonContainer">
               <Button
                 variant="link"
                 className={postClass}
-                onClick={() => this.postSelector()}
+                onClick={() => this.viewSelector('posts')}
               >
                 Posts
               </Button>
               <Button
                 variant="link"
+                className={locationFeed}
+                onClick={() => this.viewSelector('locations')}
+              >
+                Locations
+              </Button>
+              <Button
+                variant="link"
                 className={galleryFeed}
-                onClick={() => this.gallerySelector()}
+                onClick={() => this.viewSelector('gallery')}
               >
                 Gallery
               </Button>
@@ -124,6 +142,8 @@ class CommunityProfile extends React.Component {
                 images={this.props.gallery}
                 posts={this.props.posts.communityPosts}
                 loggedInUser={this.props.user.username}
+                isLoggedIn={this.props.isLoggedIn}
+                locations={this.props.community.locations}
               />
             </div>
           </div>
@@ -151,7 +171,7 @@ const mapDispatch = (dispatch, ownProps) => {
   const id = ownProps.match.params.id
   return {
     fetchSingleCommunity: () => dispatch(fetchSingleCommunity(id)),
-    fetchGallery: () => dispatch(fetchAllPhotos(id)),
+    fetchGallery: () => dispatch(fetchAllCommunityPhotos(id)),
     fetchCommunityPosts: () => dispatch(fetchCommunityPosts(id)),
     subscribe: () => {
       dispatch(subToCommunity(id))
@@ -160,7 +180,8 @@ const mapDispatch = (dispatch, ownProps) => {
     unsubscribe: () => {
       dispatch(unSubToCommunity(id))
       setTimeout(() => dispatch(me()), 500)
-    }
+    },
+    fetchLocations: () => dispatch(fetchCommunityLocations(id))
   }
 }
 

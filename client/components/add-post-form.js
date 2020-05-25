@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {Form, Button} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 function makeid(length) {
   var result = ''
@@ -46,8 +47,10 @@ export default function AddPostForm(props) {
     <div>
       <Form className="example" key="submit-form" onSubmit={handleSubmit}>
         <div className="exit-add-post">
-          <Form.Group controlId="community">
-            <Form.Label>Community</Form.Label>
+          <Form.Group controlId="community" className="choose-community">
+            <Form.Label className="choose-community-label">
+              Community
+            </Form.Label>
             <Form.Control name="community" as="select" custom>
               <option value="none">None</option>
               {props.communities ? (
@@ -71,7 +74,7 @@ export default function AddPostForm(props) {
             placeholder="What's on your mind?"
             as="textarea"
             rows="5"
-            style={{color: '#fff'}}
+            style={{color: 'black'}}
           />
         </Form.Group>
         {/* THIS IS ONLY TO PASS UP THE FILE URL FROM THE INPUT */}
@@ -90,14 +93,7 @@ export default function AddPostForm(props) {
             onChange={uploadImage}
             style={{margin: 0, width: 75}}
           />
-          <Button
-            className="post-button"
-            variant="outline-light"
-            type="submit"
-            onClick={() => props.closeForm()}
-          >
-            Post
-          </Button>
+          <AwesomeButton onPress={() => props.closeForm()}>Post</AwesomeButton>
         </div>
       </Form>
     </div>

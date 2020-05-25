@@ -6,7 +6,8 @@ import {connect} from 'react-redux'
 import {
   fetchProfile,
   addNewFollower,
-  unfollowUserThunk
+  unfollowUserThunk,
+  fetchProfileLocations
 } from '../store/singleProfile'
 import {
   PostFeed,
@@ -24,13 +25,12 @@ class ProfileView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      postFeed: true,
+      postFeed: 'posts',
       showSubs: false,
       showFollowers: false,
       showFollowing: false
     }
-    this.postSelector = this.postSelector.bind(this)
-    this.gallerySelector = this.gallerySelector.bind(this)
+    this.viewSelector = this.viewSelector.bind(this)
     this.showFollowersOnClick = this.showFollowersOnClick.bind(this)
     this.hideFollowers = this.hideFollowers.bind(this)
     this.showSubscriptions = this.showSubscriptions.bind(this)
@@ -41,14 +41,11 @@ class ProfileView extends React.Component {
 
     this.props.fetchProfile(username)
     this.props.fetchUserPosts(username)
+    this.props.fetchLocations(username)
   }
 
-  postSelector() {
-    this.setState({postFeed: true})
-  }
-
-  gallerySelector() {
-    this.setState({postFeed: false})
+  viewSelector(view) {
+    this.setState({postFeed: view})
   }
 
   showFollowersOnClick() {
@@ -85,13 +82,20 @@ class ProfileView extends React.Component {
 
   render() {
     const profile = this.props.profile.profile
-    const postClass = this.state.postFeed
-      ? 'profileFeedButton selected-feed'
-      : 'profileFeedButton'
+    const postClass =
+      this.state.postFeed === 'posts'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
 
-    const galleryFeed = !this.state.postFeed
-      ? 'profileFeedButton selected-feed'
-      : 'profileFeedButton'
+    const galleryFeed =
+      this.state.postFeed === 'gallery'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
+
+    const locationFeed =
+      this.state.postFeed === 'locations'
+        ? 'profileFeedButton selected-feed'
+        : 'profileFeedButton'
 
     return (
       <div className="profileContainer">
@@ -188,14 +192,21 @@ class ProfileView extends React.Component {
               <Button
                 variant="link"
                 className={postClass}
-                onClick={() => this.postSelector()}
+                onClick={() => this.viewSelector('posts')}
               >
                 Posts
               </Button>
               <Button
                 variant="link"
+                className={locationFeed}
+                onClick={() => this.viewSelector('locations')}
+              >
+                Locations
+              </Button>
+              <Button
+                variant="link"
                 className={galleryFeed}
-                onClick={() => this.gallerySelector()}
+                onClick={() => this.viewSelector('gallery')}
               >
                 Gallery
               </Button>
@@ -206,9 +217,11 @@ class ProfileView extends React.Component {
                 images={this.props.gallery}
                 posts={this.props.posts.profilePosts}
                 profile={this.props.profile.profile}
+                locations={this.props.profile.locations}
                 handleComments={this.handleComments}
                 openComments={this.state.openComments}
                 loggedInUser={this.props.user.username}
+                isLoggedIn={this.props.isLoggedIn}
               />
             </div>
           </div>
@@ -235,7 +248,8 @@ const mapDispatch = dispatch => {
     fetchProfile: username => dispatch(fetchProfile(username)),
     fetchUserPosts: username => dispatch(fetchUserPosts(username)),
     followUserThunk: info => dispatch(addNewFollower(info)),
-    unfollowUserThunk: info => dispatch(unfollowUserThunk(info))
+    unfollowUserThunk: info => dispatch(unfollowUserThunk(info)),
+    fetchLocations: username => dispatch(fetchProfileLocations(username))
   }
 }
 
