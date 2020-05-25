@@ -104,13 +104,13 @@ class SingleLocationView extends React.Component {
     // this.setState({location: this.props.location})
   }
 
-  // handleShowForm() {
-  //   this.setState({show: true})
-  // }
+  handleShowForm() {
+    this.setState({show: true})
+  }
 
-  // handleHideForm() {
-  //   this.setState({show: false})
-  // }
+  handleHideForm() {
+    this.setState({show: false})
+  }
 
   render() {
     const location = this.props.location
@@ -145,15 +145,7 @@ class SingleLocationView extends React.Component {
               <p>{location.description}</p>
             </div>
             {/* <div className="description-and-reviews"></div> */}
-            <div
-              className="single-location-feedback"
-              onClick={() => this.handleShowForm()}
-            >
-              <img
-                className="reply-comment-button"
-                src="https://cdn4.iconfinder.com/data/icons/pictype-free-vector-icons/16/reply-512.png"
-              />
-              <p>Rate</p>
+            <div className="single-location-feedback">
               <AddLocationReview
                 addReview={this.props.addReview}
                 // fetch={this.props.fetchLocation}
