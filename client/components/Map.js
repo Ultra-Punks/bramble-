@@ -89,7 +89,7 @@ class Map extends React.Component {
     // locations not from our database will have an id that is a string.
     // conditionally rendering links and the addlocation button based on this variable
     const dbCheck = typeof loc.id === 'number'
-    const numOfNextLocation = this.props.locations.length
+    const numOfNextLocation = this.props.locations.length + 1
 
     return (
       <Popup
