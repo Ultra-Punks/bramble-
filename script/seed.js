@@ -513,6 +513,12 @@ const manualCommunities = [
     name: 'Health',
     description: 'Happiness is the highest form of health',
     profileImg: 'https://i.postimg.cc/Rh6JrB6c/health.jpg'
+  },
+  {
+    name: 'Cooking',
+    description:
+      'Breathe new life into your creations that leave your dinner guests breathless',
+    profileImg: 'https://i.postimg.cc/vZFdMk8L/cooking.jpg'
   }
 ]
 
