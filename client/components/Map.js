@@ -76,7 +76,27 @@ class Map extends React.Component {
         longitude: position.coords.longitude,
         zoom: 10
       }
-      this.setState({viewport: newViewport, userLocation: currentLocation})
+      const coordinates = [currentLocation.long, currentLocation.lat]
+      const userLocation = {
+        name: 'User Location',
+        geometry: {type: 'point', coordinates},
+        popup: true
+      }
+      this.setState(
+        {viewport: newViewport, selectedLocation: userLocation},
+        () => {
+          // console.log(
+          //   'this is selectedLoc after setState',
+          //   this.state.selectedLocation
+          // )
+          this.addMarker(coordinates, userLocation)
+        }
+      )
+      // this.addMarker(
+      //   [currentLocation.long, currentLocation.lat],
+      //   {name: 'User Location', address: null, geometry: {
+      //     type: 'point', coordinates: [currentLocation.long, currentLocation.lat]
+      //   }})
     })
   }
   //renderPopup is called in the 'locations.map()', therefore takes an index as an argument
@@ -90,7 +110,7 @@ class Map extends React.Component {
     // locations not from our database will have an id that is a string.
     // conditionally rendering links and the addlocation button based on this variable
     const dbCheck = typeof loc.id === 'number'
-    const numOfNextLocation = this.props.locations.length
+    const numOfNextLocation = this.props.locations.length + 1
 
     return (
       <Popup
@@ -172,7 +192,6 @@ class Map extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    // console.log('result in addMarker func', result)
     let name,
       address,
       city = ''

@@ -12,7 +12,7 @@ export class AddLocationForm extends React.Component {
       address: '',
       city: '',
       description: '',
-      communityId: null,
+      communityId: 0,
       redirect: false
     }
     this.handleChange = this.handleChange.bind(this)
@@ -47,7 +47,7 @@ export class AddLocationForm extends React.Component {
       address: '',
       city: '',
       description: '',
-      communityId: null,
+      communityId: 0,
       redirect: true
     })
   }
@@ -68,7 +68,7 @@ export class AddLocationForm extends React.Component {
       )
     }
     return (
-      <form onSubmit={this.handleSubmit} className="location-modal">
+      <Form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}
         <div className="exit-add-post">
           <Form.Group controlId="community">
@@ -82,7 +82,7 @@ export class AddLocationForm extends React.Component {
               as="select"
               custom
             >
-              <option value={null}>None</option>
+              <option value={0}>None</option>
               {this.props.subscribedCommunities &&
                 this.props.subscribedCommunities.map(community => {
                   return (
@@ -146,7 +146,7 @@ export class AddLocationForm extends React.Component {
         >
           Submit
         </Button>
-      </form>
+      </Form>
     )
   }
 }

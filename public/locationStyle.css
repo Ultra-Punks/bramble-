@@ -13,6 +13,8 @@
 }
 .stars {
   display: flex;
+  align-self: center;
+  justify-self: center;
 }
 .stars img {
   width: 33px;
@@ -40,7 +42,10 @@
 .add-review-button {
   font-size: 1.3em;
 }
-
+.add-review-form {
+  display: flex;
+  justify-content: space-evenly;
+}
 .description-container {
   font-size: 1.4em;
   display: flex;
@@ -78,4 +83,13 @@
 .mapboxgl-popup {
   width: 35%;
   /* color: #dadada */
+}
+
+.location-review {
+  display: flex;
+  justify-content: space-between;
+}
+
+.location-review-text {
+  width: 33%;
 }
