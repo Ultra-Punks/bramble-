@@ -85,10 +85,10 @@ class Map extends React.Component {
       this.setState(
         {viewport: newViewport, selectedLocation: userLocation},
         () => {
-          console.log(
-            'this is selectedLoc after setState',
-            this.state.selectedLocation
-          )
+          // console.log(
+          //   'this is selectedLoc after setState',
+          //   this.state.selectedLocation
+          // )
           this.addMarker(coordinates, userLocation)
         }
       )
@@ -192,7 +192,6 @@ class Map extends React.Component {
   }
   //takes coordinate array as an argument, and sets selectedLocation on state
   addMarker(coordinates, result) {
-    console.log('result in addMarker func', result)
     let name,
       address,
       city = ''
