@@ -223,6 +223,8 @@ function FeedPostPreview(props) {
           postId={post.id}
           loggedInUser={props.loggedInUser}
           isLoggedIn={props.isLoggedIn}
+          fetchFeed={props.fetchFeed}
+          username={props.username}
         />
       </div>
     </div>

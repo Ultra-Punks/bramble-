@@ -1,9 +1,12 @@
+/* eslint-disable no-case-declarations */
 import axios from 'axios'
 
 // action types:
 const GET_ALL_POSTS = 'GET_ALL_POSTS'
 const GET_SINGLE_POST = 'GET_SINGLE_POST'
-const DELETE_TAG = 'DELETE_TAG'
+const ADD_COMMENT = 'ADD_COMMENT'
+const UPDATE_COMMENT = 'UPDATE_COMMENT'
+const DELETE_COMMENT_SINGLE = 'DELETE_COMMENT_SINGLE'
 
 // action creator:
 const getAllPosts = posts => {
@@ -20,13 +23,58 @@ const getSinglePost = post => {
   }
 }
 
-const deleteTag = tagId => ({type: DELETE_TAG, tagId})
+const updateComment = comment => ({
+  type: UPDATE_COMMENT,
+  comment
+})
+
+const deleteCommentSingle = commentId => ({
+  type: DELETE_COMMENT_SINGLE,
+  commentId
+})
+
+const addComment = comment => ({type: ADD_COMMENT, comment})
 
 // thunk creator (NOTE: this is a NAMED export! So deconstruct it!)
 export const fetchAllPosts = () => {
   return async dispatch => {
     const res = await axios.get('api/posts')
     dispatch(getAllPosts(res.data))
+  }
+}
+
+export const likeComment = commentId => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/likes`)
+    dispatch(updateComment(data))
+  }
+}
+
+export const unlikeComment = commentId => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/likes/remove`)
+    dispatch(updateComment(data))
+  }
+}
+
+export const dislikeComment = commentId => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/dislikes`)
+    dispatch(updateComment(data))
+  }
+}
+
+export const undislikeComment = commentId => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/comments/${commentId}/dislikes/remove`)
+    dispatch(updateComment(data))
+  }
+}
+
+export const deleteCommentSingleThunk = commentId => {
+  return async dispatch => {
+    await axios.delete(`/api/comments/${commentId}`)
+    dispatch(deleteCommentSingle(commentId))
   }
 }
 
@@ -68,8 +116,20 @@ export const deleteTagThunk = tagId => {
 export const likedPost = postId => {
   return async function(dispatch) {
     try {
-      let res = await axios.put(`/api/posts/${postId}/likes`)
-      dispatch(likedPost(res.data))
+      const {data} = await axios.put(`/api/posts/${postId}/likes`)
+      dispatch(getSinglePost(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+// LIKE a post thunk creator
+export const unlikedPost = postId => {
+  return async function(dispatch) {
+    try {
+      const {data} = await axios.put(`/api/posts/${postId}/likes/remove`)
+      dispatch(getSinglePost(data))
     } catch (error) {
       console.log(error)
     }
@@ -80,8 +140,32 @@ export const likedPost = postId => {
 export const dislikedPost = postId => {
   return async function(dispatch) {
     try {
-      let res = await axios.put(`/api/post/${postId}/dislikes`)
-      dispatch(dislikedPost(res.data))
+      let {data} = await axios.put(`/api/posts/${postId}/dislikes`)
+      dispatch(getSinglePost(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const undislikedPost = postId => {
+  return async function(dispatch) {
+    try {
+      let {data} = await axios.put(`/api/posts/${postId}/dislikes/remove`)
+      dispatch(getSinglePost(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addCommentThunk = (postId, comment) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.post(`/api/comments/add/${postId}`, {
+        comment: comment
+      })
+      dispatch(addComment(data))
     } catch (error) {
       console.log(error)
     }
@@ -98,6 +182,23 @@ export default function singlePostReducer(state = initialState, action) {
       return action.posts
     case GET_SINGLE_POST:
       return action.post
+    case ADD_COMMENT:
+      return {...state, postComments: [...state.postComments, action.comment]}
+    case UPDATE_COMMENT:
+      const updated = state.postComments.map(comment => {
+        if (comment.id === action.comment.id) {
+          return action.comment
+        } else {
+          return comment
+        }
+      })
+      return {...state, postComments: updated}
+
+    case DELETE_COMMENT_SINGLE:
+      const removed = state.postComments.filter(comment => {
+        return comment.id !== action.commentId
+      })
+      return {...state, postComments: removed}
     default:
       return state
   }

@@ -195,7 +195,6 @@ form div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: cornflowerblue;
   height: 50%;
   width: 45%;
   padding: 15%;
@@ -1387,7 +1386,6 @@ form div {
   height: 100%;
   width: 40%;
   left: 57%;
-  background-color: #dadada;
   position: fixed;
   top: 12.5%;
 }
@@ -1631,4 +1629,26 @@ form div {
 .popup-loc-name:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-body-text {
+  font-family: 'Roboto';
+  font-weight: 400;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+._loading_overlay_wrapper {
+  position: fixed !important;
+  height: 300vh;
+  width: 100%;
+}
+
+._loading_overlay_content {
+  padding-top: 55%;
 }

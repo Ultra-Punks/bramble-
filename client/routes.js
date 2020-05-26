@@ -41,16 +41,24 @@ class Routes extends Component {
       <div className="Routes-Container">
         <Switch>
           {/* Routes placed here are available to all visitors */}
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={withRouter(Login)} />
+          <Route path="/signup" component={withRouter(Signup)} />
           <Route path="/map" component={withRouter(Map)} />
-          <Route exact path="/" component={LandingPage} />
-          <Route exact path="/post/addComment/:id" component={AddCommentForm} />
+          <Route exact path="/" component={withRouter(LandingPage)} />
+          <Route
+            exact
+            path="/post/addComment/:id"
+            component={withRouter(AddCommentForm)}
+          />
 
           {/* <Route exact path="/l/add" component={AddLocationForm} /> */}
           <Route path="/l/:id" component={SingleLocation} />
           <Route path="/test" component={Test} />
-          <Route exact path="/community" component={CommunitySearch} />
+          <Route
+            exact
+            path="/community"
+            component={withRouter(CommunitySearch)}
+          />
           <Route
             exact
             path="/community/list/:id"

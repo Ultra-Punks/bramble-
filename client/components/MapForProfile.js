@@ -22,7 +22,7 @@ class MapForProfile extends React.Component {
       show: false,
       viewport: {
         width: window.innerWidth * 0.4,
-        height: window.innerHeight * 0.4,
+        height: window.innerHeight * 0.75,
         latitude: 40.705112,
         longitude: -74.009123,
         zoom: 12
@@ -145,12 +145,13 @@ class MapForProfile extends React.Component {
               {loc.name}
             </p>
           </div>
-          <p className="popup-body">
-            {loc.address && `${loc.address}`}
-            {loc.city && `${loc.city}`}
-            <br />
-            {loc.description && `${loc.description}`}
-          </p>
+          <div className="popup-body">
+            <p className="popup-body-text">{loc.address && `${loc.address}`}</p>
+            <p className="popup-body-text">{loc.city && `${loc.city}`}</p>
+            <p className="popup-body-text">
+              {loc.description && `${loc.description}`}
+            </p>
+          </div>
         </div>
       </Popup>
     )

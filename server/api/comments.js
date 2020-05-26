@@ -66,25 +66,17 @@ router.post(
   isCurrentUserMiddleware,
   async (req, res, next) => {
     try {
-      // const post = await UserPost.findOne({
-      //   where: {
-      //     id: req.params.postId,
-      //   },
-      // })
-
-      // const user = await User.findOne({
-      //   where: {
-      //     id: req.passport.user,
-      //   },
-      // })
-
-      let newComment = await PostComment.create({
+      const newComment = await PostComment.create({
         userPostId: req.params.postId,
         comment: req.body.comment,
-        userId: req.session.passport.user // investigating
+        userId: req.session.passport.user
       })
 
-      res.status(201).json(newComment)
+      const userIncludedComment = await PostComment.findByPk(newComment.id, {
+        include: [{model: User}]
+      })
+
+      res.status(201).json(userIncludedComment)
     } catch (error) {
       next(error)
     }
@@ -138,6 +130,24 @@ router.put(
         include: [{model: User}]
       })
       updatedComment.dislikes++
+      await updatedComment.save()
+      res.status(200).json(updatedComment)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+// remove dislike from post
+router.put(
+  '/:commentId/dislikes/remove',
+  isCurrentUserMiddleware,
+  async (req, res, next) => {
+    try {
+      let updatedComment = await PostComment.findByPk(req.params.commentId, {
+        include: [{model: User}]
+      })
+      updatedComment.dislikes--
       await updatedComment.save()
       res.status(200).json(updatedComment)
     } catch (error) {

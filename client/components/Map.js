@@ -163,11 +163,13 @@ class Map extends React.Component {
             </div>
           )}
         </div>
-        <p className="popup-body">
-          {loc.address && `${loc.address}`}
-          {loc.city && `${loc.city}`}
-          {loc.description && `${loc.description}`}
-        </p>
+        <div className="popup-body">
+          <p className="popup-body-text">{loc.address && `${loc.address}`}</p>
+          <p className="popup-body-text">{loc.city && `${loc.city}`}</p>
+          <p className="popup-body-text">
+            {loc.description && `${loc.description}`}
+          </p>
+        </div>
         {!dbCheck ? (
           <div>
             <Button

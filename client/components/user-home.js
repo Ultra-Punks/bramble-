@@ -18,6 +18,8 @@ class UserHome extends React.Component {
           posts={this.props.followingFeed}
           loggedInUser={this.props.username}
           isLoggedIn={this.props.isLoggedIn}
+          fetchFeed={this.props.fetchFollowingFeed}
+          username={this.props.username}
         />
         <div className="map-container">
           <MapForProfile userHomeId={this.props.id} />

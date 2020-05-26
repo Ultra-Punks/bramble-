@@ -1,10 +1,11 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable no-case-declarations */
 import axios from 'axios'
 
 // action types:
 const GET_FOLLOWING_POSTS = 'GET_FOLLOWING_POSTS'
 const UPDATE_POST = 'UPDATE_POST'
-const UPDATE_COMMENT = 'UPDATE_COMMENT'
+const UPDATE_COMMENT_FEED = 'UPDATE_COMMENT'
 const DELETE_POST = 'DELETE_POST'
 const DELETE_COMMENT = 'DELETE_COMMENT'
 
@@ -13,8 +14,8 @@ const getFollowingPosts = posts => ({type: GET_FOLLOWING_POSTS, posts})
 
 const updateUserPost = post => ({type: UPDATE_POST, post})
 
-const updateComment = (comment, postId) => ({
-  type: UPDATE_COMMENT,
+const updateCommentFeed = (comment, postId) => ({
+  type: UPDATE_COMMENT_FEED,
   comment,
   postId
 })
@@ -83,33 +84,46 @@ export const undislikeUserPostThunk = postId => {
   }
 }
 
-export const likeCommentThunk = (commentId, postId) => {
+export const likeCommentThunkFeed = (commentId, postId) => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`/api/comments/${commentId}/likes`)
-      dispatch(updateComment(data, postId))
+      // dispatch(updateCommentFeed(data, postId))
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-export const unlikeCommentThunk = (commentId, postId) => {
+export const unlikeCommentThunkFeed = (commentId, postId) => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`/api/comments/${commentId}/likes/remove`)
-      dispatch(updateComment(data, postId))
+      // dispatch(updateCommentFeed(data, postId))
     } catch (error) {
       console.log(error)
     }
   }
 }
 
-export const dislikeCommentThunk = (commentId, postId) => {
+export const dislikeCommentThunkFeed = (commentId, postId) => {
   return async dispatch => {
     try {
       const {data} = await axios.put(`/api/comments/${commentId}/dislikes`)
-      dispatch(updateComment(data, postId))
+      // dispatch(updateCommentFeed(data, postId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const undislikeCommentThunkFeed = (commentId, postId) => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.put(
+        `/api/comments/${commentId}/dislikes/remove`
+      )
+      // dispatch(updateCommentFeed(data, postId))
     } catch (error) {
       console.log(error)
     }
@@ -123,7 +137,7 @@ export const deletePostThunk = postId => {
   }
 }
 
-export const deleteCommentThunk = (commentId, postId) => {
+export const deleteCommentThunkFeed = (commentId, postId) => {
   return async dispatch => {
     await axios.delete(`/api/comments/${commentId}`)
     dispatch(deleteComment(commentId, postId))
@@ -147,35 +161,7 @@ export default function followingPostsReducer(state = initialState, action) {
         }
       })
       return liked
-    case UPDATE_COMMENT:
-      let focusedPost
-      let postComments
-      state.map(post => {
-        if (post.id === action.postId) {
-          focusedPost = post
-          postComments = post.postComments.map(comment => {
-            if (comment.id === action.comment.id) {
-              return action.comment
-            } else {
-              return comment
-            }
-          })
-          return post
-        } else {
-          return post
-        }
-      })
 
-      const newPost = {...focusedPost, postComments}
-
-      let updatedPost = state.map(post => {
-        if (post.id === action.postId) {
-          return newPost
-        } else {
-          return post
-        }
-      })
-      return updatedPost
     case DELETE_POST:
       let deletedPosts = state.filter(post => {
         return post.id !== action.postId

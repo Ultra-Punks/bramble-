@@ -43,14 +43,19 @@ export default class AddLocationReview extends React.Component {
   render() {
     return (
       <div>
-        <Button
+        <AwesomeButton
           className="add-review-button"
-          type="submit"
-          variant="danger"
-          onClick={() => this.handleShowForm()}
+          type="secondary"
+          variant="secondary"
+          onPress={() => this.handleShowForm()}
+          style={{
+            'font-size': '1.3em',
+            'margin-left': '10px',
+            'margin-bottom': '10px'
+          }}
         >
           Rate this place
-        </Button>
+        </AwesomeButton>
         <Modal
           onHide={() => this.handleHideForm()}
           show={this.state.show}
