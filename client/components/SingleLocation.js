@@ -94,7 +94,6 @@ function Ratings(props) {
 class SingleLocationView extends React.Component {
   componentDidMount() {
     this.props.fetchLocation()
-    // this.setState({location: this.props.location})
   }
 
   render() {

@@ -36,6 +36,7 @@ const Location = db.define('location', {
   coverImg: {
     type: Sequelize.TEXT,
     defaultValue:
+      // 'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
       'https://res.cloudinary.com/bramble/image/upload/v1590501899/user_uploads/map_zinnq2.jpg'
   },
   address: {

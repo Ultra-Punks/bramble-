@@ -21,10 +21,14 @@ export const fetchOneLocation = id => async dispatch => {
 }
 
 // fetchAddress doesn't do anything yet, but may get the address when the user drops a pin on the map
-export const fetchAddress = () => async dispatch => {
+export const fetchAddress = coordinates => async dispatch => {
+  const coords = coordinates.join(',')
   try {
-    // const res = await axios.get('/api/')
-    // dispatch(getAddress(res.data))
+    const res = await axios.get(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/coords.json?limit=1&access_token=${mapboxToken}`
+    )
+    // console.log('this is res from address', res.data)
+    dispatch(getAddress(res.data))
   } catch (err) {
     console.error(err, 'Error fetching address!')
   }
