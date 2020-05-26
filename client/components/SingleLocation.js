@@ -75,7 +75,6 @@ function Ratings(props) {
       .reduce((acc, cur) => acc + cur) / location.locationReviews.length
   const partial = averageRating % Math.floor(averageRating)
   const rounded = averageRating - partial
-  // console.log('partial + rating', partial, rating)
   const numOfStars = Array(rounded).fill('')
   return (
     <div className="stars">
@@ -93,26 +92,10 @@ function Ratings(props) {
 }
 
 class SingleLocationView extends React.Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     location: {}
-  //   }
-  // }
   componentDidMount() {
     this.props.fetchLocation()
     // this.setState({location: this.props.location})
   }
-  // componentWillUnmount() {
-  //   this.setState({location: null})
-  // }
-  // handleShowForm() {
-  //   this.setState({show: true})
-  // }
-
-  // handleHideForm() {
-  //   this.setState({show: false})
-  // }
 
   render() {
     const location = this.props.location
@@ -123,7 +106,6 @@ class SingleLocationView extends React.Component {
       <div className="page-container">
         <div className="single-location-view-container">
           <div key={location.id} className="single-post">
-            {/* <PostingPictures className="post-photos" post={post} /> */}
             <div className="photo-and-map">
               {location.coverImg && (
                 <div className="location-photos">
@@ -143,32 +125,30 @@ class SingleLocationView extends React.Component {
             <div className="description-container">
               <p className="location-description">{location.description}</p>
             </div>
-            {/* <div className="description-and-reviews"></div> */}
             <div className="single-location-feedback">
-              <AddLocationReview
-                addReview={this.props.addReview}
-                // fetch={this.props.fetchLocation}
-                locationId={location.id}
-              />
+              {this.props.isLoggedIn && (
+                <AddLocationReview
+                  addReview={this.props.addReview}
+                  locationId={location.id}
+                />
+              )}
             </div>
+
             <LocationReviews location={location} />
           </div>
           <div className="profileMapContainer sticky">
             <MapForSingleLocation location={this.props.location} />
           </div>
-          {/* <div className="post-header">
-            <UserPFP post={location} />
-            <div className="post-info">
-              <UserInformation post={location} />
-            </div>
-          </div> */}
         </div>
       </div>
     )
   }
 }
 
-const mapState = state => ({location: state.singleLocation})
+const mapState = state => ({
+  location: state.singleLocation,
+  isLoggedIn: !!state.user.id
+})
 
 const mapDispatch = (dispatch, ownProps) => {
   const id = ownProps.match.params.id

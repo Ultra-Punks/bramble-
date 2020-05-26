@@ -9,37 +9,43 @@ import history from '../history'
 function Ratings(props) {
   const {location} = props
   if (
-    !location ||
-    !location.locationReviews ||
-    !location.locationReviews[0] ||
-    !location.locationReviews[0].ratings
-  )
-    return <div />
+    location !== undefined &&
+    location.locationReviews !== undefined &&
+    location.locationReviews.length
+    // !location ||
+    // !location.locationReviews ||
+    // !location.locationReviews[0] ||
+    // !location.locationReviews[0].ratings
+  ) {
+    console.log(location)
+    const halfStar = (
+      <img src="https://img.icons8.com/material-sharp/452/star-half.png" />
+    )
+    const averageRating =
+      location.locationReviews
+        .map(r => r.ratings)
+        .reduce((acc, cur) => acc + cur) / location.locationReviews.length
+    const partial = averageRating % Math.floor(averageRating)
+    const rounded = averageRating - partial
+    // console.log('partial + rating', partial, rating)
+    const numOfStars = Array(rounded).fill('')
 
-  const halfStar = (
-    <img src="https://img.icons8.com/material-sharp/452/star-half.png" />
-  )
-  const averageRating =
-    location.locationReviews
-      .map(r => r.ratings)
-      .reduce((acc, cur) => acc + cur) / location.locationReviews.length
-  const partial = averageRating % Math.floor(averageRating)
-  const rounded = averageRating - partial
-  // console.log('partial + rating', partial, rating)
-  const numOfStars = Array(rounded).fill('')
-  return (
-    <div className="stars">
-      {/* <p>this is the rating average: <strong>{rounded}</strong></p> */}
-      <p className="rating-text">Rating:</p>
-      {numOfStars.map((e, i) => (
-        <img
-          key={i}
-          src="https://png.pngtree.com/png-clipart/20190619/original/pngtree-vector-star-icon-png-image_4013709.jpg"
-        />
-      ))}
-      {partial > 0.25 && partial < 0.75 && halfStar}
-    </div>
-  )
+    return (
+      <div className="stars">
+        {/* <p>this is the rating average: <strong>{rounded}</strong></p> */}
+        <p className="rating-text">Rating:</p>
+        {numOfStars.map((e, i) => (
+          <img
+            key={i}
+            src="https://png.pngtree.com/png-clipart/20190619/original/pngtree-vector-star-icon-png-image_4013709.jpg"
+          />
+        ))}
+        {partial > 0.25 && partial < 0.75 && halfStar}
+      </div>
+    )
+  } else {
+    return <div />
+  }
 }
 
 export default function FollowingFeed(props) {
@@ -60,6 +66,7 @@ export default function FollowingFeed(props) {
               />
             )
           } else {
+            console.log('POST >', post)
             return (
               <div key={post.id} className="single-post-preview-container">
                 {post.communityId &&
@@ -131,23 +138,21 @@ export default function FollowingFeed(props) {
                               ''
                             )} */}
                           </div>
-                          <div className="post-feed-preview-info">
-                            <Link className="link-to-post" to={`/l/${post.id}`}>
-                              <TimeAgo
-                                className="time-ago"
-                                date={post.createdAt}
-                                live={false}
-                              />
-                              <img
-                                className="post-images"
-                                src={post.coverImg}
-                              />
-                              <Ratings location={post} />
-                              <p className="address-text">{post.address}</p>
-                              <p className="post-text-location">
-                                {post.description}
-                              </p>
-                            </Link>
+                          <div
+                            className="post-feed-preview-info"
+                            onClick={() => history.push(`/l/${post.id}`)}
+                          >
+                            <TimeAgo
+                              className="time-ago"
+                              date={post.createdAt}
+                              live={false}
+                            />
+                            <img className="post-images" src={post.coverImg} />
+                            <Ratings location={post} />
+                            <p className="address-text">{post.address}</p>
+                            <p className="post-text-location">
+                              {post.description}
+                            </p>
                           </div>
                         </div>
                       </div>

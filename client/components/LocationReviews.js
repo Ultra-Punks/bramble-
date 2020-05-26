@@ -77,6 +77,10 @@ export default function LocationReviews(props) {
       </div>
     )
   } else {
-    return <div />
+    return (
+      <div className="no-reviews">
+        <p>No Reviews Yet</p>
+      </div>
+    )
   }
 }
