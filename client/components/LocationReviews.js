@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Image} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import history from '../history'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 function getStars(rating) {
@@ -35,25 +35,43 @@ export default function LocationReviews(props) {
             <div>
               {review.user &&
                 review.user.profileImg && (
-                  <div>
-                    <Image
-                      className="post-pfp"
-                      src={review.user.profileImg}
-                      roundedCircle
-                    />
-                    <div className="post-handle">
-                      <Link to={`/u/${review.user.username}`}>
-                        <p className="handle-text">{review.user.name}</p>
-                      </Link>
-                      <Link to={`/u/${review.user.username}`}>
-                        <p className="handle-text">@{review.user.username}</p>
-                      </Link>
+                  <div className="location-review-container">
+                    <div>
+                      <Image
+                        onClick={() =>
+                          history.push(`/u/${review.user.username}`)
+                        }
+                        className="post-pfp"
+                        src={review.user.profileImg}
+                        roundedCircle
+                      />
+                    </div>
+                    <div>
+                      <div className="post-handle">
+                        <p
+                          onClick={() =>
+                            history.push(`/u/${review.user.username}`)
+                          }
+                          className="handle-text"
+                        >
+                          {review.user.name}
+                        </p>
+
+                        <p
+                          onClick={() =>
+                            history.push(`/u/${review.user.username}`)
+                          }
+                          className="handle-text"
+                        >
+                          @{review.user.username}
+                        </p>
+                      </div>
+                      {getStars(review.ratings)}
+                      <p className="location-review-text">{review.comments}</p>
                     </div>
                   </div>
                 )}
             </div>
-            {getStars(review.ratings)}
-            <p className="location-review-text">{review.comments}</p>
           </div>
         ))}
       </div>

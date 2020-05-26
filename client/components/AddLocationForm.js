@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {addLocationThunk, fetchAllLocations} from '../store/locations'
 import {InputGroup, Form, Button} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 export class AddLocationForm extends React.Component {
   constructor() {
@@ -56,24 +57,13 @@ export class AddLocationForm extends React.Component {
     const nextLocId = this.props.nextLocId
     // console.log('id of next location', nextLocId)
 
-    if (this.state.redirect) {
-      return (
-        <Redirect
-          // to="/map"
-          //the below will work to redirect to the new location if all of the locations
-          //in the database have coordinates and aren't being excluded from props.locations
-          //like they are now - for now just redirecting to the map
-          to={`/l/${nextLocId}`}
-        />
-      )
-    }
     return (
       <Form onSubmit={this.handleSubmit} className="location-modal">
         {/* copied for dropdown menu */}
         <div className="exit-add-post">
-          <Form.Group controlId="community">
-            <Form.Label>
-              Which Community Are You Adding This Place To?
+          <Form.Group controlId="community" className="choose-community">
+            <Form.Label className="choose-community-label">
+              Community
             </Form.Label>
             <Form.Control
               value={this.state.communityId}
@@ -139,13 +129,13 @@ export class AddLocationForm extends React.Component {
           onChange={this.handleChange}
           name="description"
         />
-        <Button
+        <AwesomeButton
           className="post-button-location"
-          variant="outline-light"
-          type="submit"
+          type="primary"
+          style={{'margin-top': '15px'}}
         >
           Submit
-        </Button>
+        </AwesomeButton>
       </Form>
     )
   }
