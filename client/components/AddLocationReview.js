@@ -49,9 +49,9 @@ export default class AddLocationReview extends React.Component {
           variant="secondary"
           onPress={() => this.handleShowForm()}
           style={{
-            'font-size': '1.3em',
-            'margin-left': '10px',
-            'margin-bottom': '10px'
+            fontSize: '1.3em',
+            marginLeft: '10px',
+            marginBottom: '10px'
           }}
         >
           Rate this place

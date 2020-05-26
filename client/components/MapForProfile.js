@@ -25,7 +25,7 @@ class MapForProfile extends React.Component {
         height: window.innerHeight * 0.75,
         latitude: 40.705112,
         longitude: -74.009123,
-        zoom: 12
+        zoom: 11
       },
       locations: [],
       selectedLocation: {},
@@ -169,7 +169,6 @@ class MapForProfile extends React.Component {
   }
   // eslint-disable-next-line complexity
   render() {
-    // console.log('this is state in render', thisx.state)
     if (!this.props.locations[0] || !this.props.locations[0].id) return <div />
     const navStyle = {
       position: 'absolute',
