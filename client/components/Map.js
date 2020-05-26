@@ -22,7 +22,7 @@ import {
   fetchSomeLocations,
   fetchHomeFeedLocations
 } from '../store/locations'
-import {fetchOneLocation} from '../store/singleLocation'
+import {fetchOneLocation, fetchAddress} from '../store/singleLocation'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -77,6 +77,7 @@ class Map extends React.Component {
         zoom: 10
       }
       const coordinates = [currentLocation.long, currentLocation.lat]
+      // this.props.getAddress(coordinates)
       const userLocation = {
         name: 'User Location',
         geometry: {type: 'point', coordinates},
@@ -379,6 +380,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchLocation: id => dispatch(fetchOneLocation(id)),
   getAllLocations: () => dispatch(fetchAllLocations()),
-  getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type))
+  getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type)),
+  getAddress: coordinates => dispatch(fetchAddress(coordinates))
 })
 export default connect(mapState, mapDispatch)(Map)

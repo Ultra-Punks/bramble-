@@ -93,27 +93,9 @@ function Ratings(props) {
 }
 
 class SingleLocationView extends React.Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     location: {}
-  //   }
-  // }
   componentDidMount() {
     this.props.fetchLocation()
-    // this.setState({location: this.props.location})
   }
-  // componentWillUnmount() {
-  //   this.setState({location: null})
-  // }
-  // handleShowForm() {
-  //   this.setState({show: true})
-  // }
-
-  // handleHideForm() {
-  //   this.setState({show: false})
-  // }
-
   render() {
     const location = this.props.location
     if (!location || !location.id)
