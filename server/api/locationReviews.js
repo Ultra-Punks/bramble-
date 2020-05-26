@@ -68,11 +68,20 @@ router.post(
         ratings,
         comments
       })
-      const location = await Location.findByPk(req.params.locationId, {
-        include: [{model: LocationReview}, {model: User}]
-      })
+      // const location = await Location.findByPk(req.params.locationId, {
+      //   include: [{model: LocationReview}, {model: User}]
+      // })
       // console.log('new review', newReview)
-      res.json(location)
+
+      const review = await LocationReview.findByPk(newReview.id, {
+        include: [
+          {
+            model: User
+          }
+        ]
+      })
+
+      res.json(review)
     } catch (error) {
       next(error)
     }

@@ -109,6 +109,7 @@ class SingleLocationView extends React.Component {
             <div className="photo-and-map">
               {location.coverImg && (
                 <div className="location-photos">
+                  <p className="location-name">{location.name}</p>
                   <img
                     src={location.coverImg}
                     className="single-location-view-img"
@@ -118,13 +119,10 @@ class SingleLocationView extends React.Component {
             </div>
             <div className="rating-and-address">
               <Ratings location={location} />
-              <p>{location.address}</p>
+              <p className="single-location-address">{location.address}</p>
             </div>
 
             <div className="description-container">
-              <p className="location-name">
-                <strong>{location.name}</strong>
-              </p>
               <p className="location-description">{location.description}</p>
             </div>
             {/* <div className="description-and-reviews"></div> */}

@@ -3,6 +3,7 @@
 //Geocoder example: https://codesandbox.io/s/l7p179qr6m & Docs: https://github.com/SamSamskies/react-map-gl-geocoder
 import React from 'react'
 import history from '../history'
+import {AwesomeButton} from 'react-awesome-button'
 import MapGL, {
   GeolocateControl,
   NavigationControl,
@@ -173,13 +174,9 @@ class Map extends React.Component {
         </div>
         {!dbCheck ? (
           <div>
-            <Button
-              type="submit"
-              variant="danger"
-              onClick={() => this.handleShowForm()}
-            >
-              Add Location Form
-            </Button>
+            <AwesomeButton type="primary" onPress={() => this.handleShowForm()}>
+              Add Location
+            </AwesomeButton>
             <AddLocation
               nextLocId={numOfNextLocation}
               show={this.state.show}

@@ -37,7 +37,7 @@ const Location = db.define('location', {
     type: Sequelize.TEXT,
     defaultValue:
       // 'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Above_Gotham.jpg/650px-Above_Gotham.jpg'
+      'https://res.cloudinary.com/bramble/image/upload/v1590501899/user_uploads/map_zinnq2.jpg'
   },
   address: {
     type: Sequelize.STRING
@@ -46,9 +46,7 @@ const Location = db.define('location', {
     //     notEmpty: true
     //   }
   },
-  // city: {
-  //   type: Sequelize.STRING
-  // },
+
   name: {
     type: Sequelize.STRING,
     allowNull: false,

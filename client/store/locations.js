@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 // action types
 const GET_ALL_LOCATIONS = 'GET_ALL_LOCATIONS'
@@ -39,8 +40,9 @@ export const fetchSomeLocations = (id, type) => async dispatch => {
 
 export const addLocationThunk = location => async dispatch => {
   try {
-    const res = await axios.post('/api/locations/add', location)
-    dispatch(addLocation(res.data))
+    const {data} = await axios.post('/api/locations/add', location)
+    dispatch(addLocation(data))
+    history.push(`/l/${data.id}`)
   } catch (err) {
     console.error(err, 'Error adding location')
   }

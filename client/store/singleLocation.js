@@ -8,7 +8,7 @@ const ADD_LOCATION_REVIEW = 'ADD_LOCATION_REVIEW'
 // action creators
 const getOneLocation = location => ({type: GET_ONE_LOCATION, location})
 const getAddress = address => ({type: GET_ADDRESS, address})
-const addLocationReview = location => ({type: ADD_LOCATION_REVIEW, location})
+const addLocationReview = review => ({type: ADD_LOCATION_REVIEW, review})
 
 // thunk creators
 export const fetchOneLocation = id => async dispatch => {
@@ -50,7 +50,10 @@ export default function(state = {}, action) {
     case GET_ADDRESS:
       return {...state, address: action.address}
     case ADD_LOCATION_REVIEW:
-      return action.location
+      return {
+        ...state,
+        locationReviews: [...state.locationReviews, action.review]
+      }
     default:
       return state
   }

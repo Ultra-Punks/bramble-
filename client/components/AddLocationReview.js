@@ -30,7 +30,7 @@ export default class AddLocationReview extends React.Component {
     })
   }
   handleSubmit = event => {
-    // event.preventDefault()
+    event.preventDefault()
     this.props.addReview(this.props.locationId, this.state)
     // this.props.fetch(this.props.locationId)
     this.setState({
@@ -63,7 +63,11 @@ export default class AddLocationReview extends React.Component {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <Form className="add-review-form" onSubmit={this.handleSubmit}>
+          <Form
+            className="add-review-form"
+            onSubmit={this.handleSubmit}
+            style={{display: 'flex', flexDirection: 'column'}}
+          >
             <Form.Group controlId="ratings">
               <Form.Label>Rating</Form.Label>
               <Form.Control
@@ -81,7 +85,6 @@ export default class AddLocationReview extends React.Component {
               </Form.Control>
             </Form.Group>
             <Form.Group controlId="comments">
-              <Form.Label>Comment:</Form.Label>
               <Form.Control
                 name="comments"
                 // type="text"
@@ -91,7 +94,7 @@ export default class AddLocationReview extends React.Component {
                 value={this.state.comment}
                 onChange={this.handleChange}
               />
-              <AwesomeButton type="submit">Submit</AwesomeButton>
+              <AwesomeButton type="primary">Submit</AwesomeButton>
             </Form.Group>
           </Form>
         </Modal>
@@ -99,18 +102,3 @@ export default class AddLocationReview extends React.Component {
     )
   }
 }
-
-// const mapState = state => {
-//   return {
-//     allCommemts: state.comment,
-//     username: state.singleProfile.profile.username
-//   }
-// }
-
-// const mapDispatch = dispatch => ({
-//   add: (id, comment, username) => {
-//     dispatch(addCommentThunk(id, comment))
-//     dispatch(fetchUserPosts(username))
-//   }
-// })
-// export default connect(mapState, mapDispatch)(AddCommentForm)

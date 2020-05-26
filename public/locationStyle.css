@@ -15,10 +15,15 @@
   display: flex;
   align-self: center;
   justify-self: center;
+  margin-left: 10px;
 }
 .stars img {
   width: 33px;
   height: 33px;
+}
+
+.location-review-container {
+  display: flex;
 }
 
 .single-location-view-container {
@@ -53,15 +58,19 @@
 
 .location-description {
   align-self: flex-end;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 .location-name {
   margin: 0;
   margin-top: 3%;
-  margin-left: 2%;
   margin-bottom: 1.5%;
   margin-right: 10%;
   font-size: 1.8em;
+  font-family: 'Roboto';
+  font-size: 2em;
+  font-weight: 600;
 }
 
 .popup-header {
@@ -93,5 +102,6 @@
 }
 
 .location-review-text {
-  width: 33%;
+  width: 100%;
+  margin: 10px;
 }
