@@ -405,6 +405,17 @@ const manualLocations = [
     communityId: 4,
     coverImg:
       'https://www.officelovin.com/wp-content/uploads/2019/07/giphy-office-13.jpg'
+  },
+  {
+    address: '225 Liberty Street, 3rd Floor, New York, NY, 10281',
+    geometry: {type: 'point', coordinates: [-74.0154361, 40.7122721]},
+    name: 'Institute of Culinary Education',
+    mapId: '',
+    description:
+      "Our campuses in New York and Los Angeles offer ICE students the opportunity to develop their careers in two of the nation's most exciting food cities. With a global curriculum, dedicated instructors, a strong record in job placements and a clear entrepreneurial focus, ICE is recognized by top chefs and hospitality professionals as a leading pathway to begin or continue a wide range of careers..",
+    communityId: 17,
+    coverImg:
+      'https://kid101.com/wp-content/uploads/2017/04/cooking-classes.jpg'
   }
 ]
 
