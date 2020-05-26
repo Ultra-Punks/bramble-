@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchUserPosts} from '../store/userFeed'
 import {InputGroup, Form, Button, Modal} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 export default class AddLocationReview extends React.Component {
   constructor() {
@@ -29,7 +30,7 @@ export default class AddLocationReview extends React.Component {
     })
   }
   handleSubmit = event => {
-    event.preventDefault()
+    // event.preventDefault()
     this.props.addReview(this.props.locationId, this.state)
     // this.props.fetch(this.props.locationId)
     this.setState({
@@ -57,29 +58,39 @@ export default class AddLocationReview extends React.Component {
           aria-labelledby="contained-modal-title-vcenter"
           centered
         >
-          <form onSubmit={this.handleSubmit}>
-            <select
-              name="ratings"
-              value={this.state.ratings}
-              onChange={this.handleChange}
-            >
-              <option value={1}>One Star</option>
-              <option value={2}>Two Stars</option>
-              <option value={3}>Three Stars</option>
-              <option value={4}>Four Stars</option>
-              <option value={5}>Five Stars</option>
-            </select>
-            <label htmlFor="comments">Comment:</label>
-            <input
-              name="comments"
-              type="text"
-              value={this.state.comment}
-              onChange={this.handleChange}
-            />
-            <button type="submit" onClick={this.handleSubmit}>
-              Submit
-            </button>
-          </form>
+          <Form className="add-review-form" onSubmit={this.handleSubmit}>
+            <Form.Group controlId="ratings">
+              <Form.Label>Rating</Form.Label>
+              <Form.Control
+                name="ratings"
+                as="select"
+                custom
+                value={this.state.ratings}
+                onChange={this.handleChange}
+              >
+                <option value={1}>One Star</option>
+                <option value={2}>Two Stars</option>
+                <option value={3}>Three Stars</option>
+                <option value={4}>Four Stars</option>
+                <option value={5}>Five Stars</option>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group controlId="comments">
+              <Form.Label>Comment:</Form.Label>
+              <Form.Control
+                name="comments"
+                // type="text"
+                placeholder="What did you think of this place?"
+                as="textarea"
+                rows="5"
+                value={this.state.comment}
+                onChange={this.handleChange}
+              />
+              <AwesomeButton type="submit" onPress={this.handleSubmit}>
+                Submit
+              </AwesomeButton>
+            </Form.Group>
+          </Form>
         </Modal>
       </div>
     )

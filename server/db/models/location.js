@@ -36,7 +36,8 @@ const Location = db.define('location', {
   coverImg: {
     type: Sequelize.TEXT,
     defaultValue:
-      'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
+      // 'https://media.gettyimages.com/photos/aerial-view-of-lower-manhattan-new-york-picture-id946087016?s=612x612'
+      'https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FManhattan&psig=AOvVaw27y3q0_MPOVATsCqLcwyCw&ust=1590544137125000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKC24eq00OkCFQAAAAAdAAAAABAD'
   },
   address: {
     type: Sequelize.STRING

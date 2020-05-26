@@ -31,7 +31,7 @@ export default function LocationReviews(props) {
     return (
       <div className="commentPreviewContainer">
         {locationReviews.map(review => (
-          <div key={review.id} className="singleCommentPreview">
+          <div key={review.id} className="singleCommentPreview location-review">
             <div>
               {review.user &&
                 review.user.profileImg && (
@@ -53,7 +53,7 @@ export default function LocationReviews(props) {
                 )}
             </div>
             {getStars(review.ratings)}
-            <p>{review.comments}</p>
+            <p className="location-review-text">{review.comments}</p>
           </div>
         ))}
       </div>
