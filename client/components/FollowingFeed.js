@@ -55,6 +55,8 @@ export default function FollowingFeed(props) {
                 post={post}
                 loggedInUser={props.loggedInUser}
                 isLoggedIn={props.isLoggedIn}
+                fetchFeed={props.fetchFeed}
+                username={props.username}
               />
             )
           } else {

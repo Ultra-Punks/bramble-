@@ -1,14 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {
-  likeProfileCommentThunk,
-  unlikeProfileCommentThunk,
-  dislikeProfileCommentThunk,
-  deleteCommentThunk
-} from '../store/userFeed'
+  likeComment,
+  unlikeComment,
+  dislikeComment,
+  undislikeComment,
+  deleteCommentSingleThunk
+} from '../store/singlePost'
 import {PostCommentInfo} from './index'
 
-function PostComments(props) {
+function PostCommentSingle(props) {
   const {post, openComments, loggedInUser} = props
 
   if (
@@ -29,6 +30,7 @@ function PostComments(props) {
               likeComment={props.likeComment}
               unlikeComment={props.unlikeComment}
               dislikeComment={props.dislikeComment}
+              undislikeComment={props.undislikeComment}
               deleteComment={props.deleteComment}
               loggedInUser={loggedInUser}
               isLoggedIn={props.isLoggedIn}
@@ -45,14 +47,15 @@ function PostComments(props) {
 const mapDispatch = dispatch => {
   return {
     likeComment: (commentId, postId) =>
-      dispatch(likeProfileCommentThunk(commentId, postId)),
+      dispatch(likeComment(commentId, postId)),
     unlikeComment: (commentId, postId) =>
-      dispatch(unlikeProfileCommentThunk(commentId, postId)),
+      dispatch(unlikeComment(commentId, postId)),
     dislikeComment: (commentId, postId) =>
-      dispatch(dislikeProfileCommentThunk(commentId, postId)),
-    deleteComment: (commentId, postId) =>
-      dispatch(deleteCommentThunk(commentId, postId))
+      dispatch(dislikeComment(commentId, postId)),
+    undislikeComment: (commentId, postId) =>
+      dispatch(undislikeComment(commentId, postId)),
+    deleteComment: commentId => dispatch(deleteCommentSingleThunk(commentId))
   }
 }
 
-export default connect(null, mapDispatch)(PostComments)
+export default connect(null, mapDispatch)(PostCommentSingle)

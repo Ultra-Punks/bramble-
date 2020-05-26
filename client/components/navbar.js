@@ -1,15 +1,21 @@
-import React from 'react'
+import React, {useEffect} from 'react'
+import history from '../history'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {Image} from 'react-bootstrap'
 import {AddPost, SignupButton, LoginButton} from './index'
+import LoadingOverlay from 'react-loading-overlay'
 
-const Navbar = ({handleClick, isLoggedIn, user}) => {
+const Navbar = props => {
+  const {handleClick, isLoggedIn, user} = props
+
   const [modalShow, setModalShow] = React.useState(false)
   const [signupShow, setSignupShow] = React.useState(false)
   const [loginShow, setLoginShow] = React.useState(false)
+  const [isLoading, setLoading] = React.useState(false)
+
   return (
     <div className="nav-container">
       <div className="nav-group">
@@ -17,6 +23,11 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
           <p className="nav-title">Bramble</p>
         </Link>
       </div>
+      {/* {isLoading && (
+        <LoadingOverlay active={isLoading} spinner text="Loading post...">
+          <p>Some content or children or something.</p>
+        </LoadingOverlay>
+      )} */}
 
       <div className="nav-group">
         <nav>
@@ -40,6 +51,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => {
                   show={modalShow}
                   onHide={() => setModalShow(false)}
                   user={user}
+                  loading={setLoading}
                 />
 
                 <Link className="nav-text-button" to="/home">

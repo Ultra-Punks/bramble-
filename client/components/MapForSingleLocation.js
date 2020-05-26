@@ -1,4 +1,5 @@
 import React from 'react'
+import history from '../history'
 import MapGL, {
   NavigationControl,
   Marker,
@@ -22,7 +23,7 @@ class MapForSingleLocation extends React.Component {
       show: false,
       viewport: {
         width: window.innerWidth * 0.4,
-        height: window.innerHeight * 0.4,
+        height: window.innerHeight * 0.75,
         latitude: 40.705112,
         longitude: -74.009123,
         zoom: 12
@@ -73,21 +74,32 @@ class MapForSingleLocation extends React.Component {
       >
         <div className="popup">
           <div className="popup-header">
-            <div>
-              <strong>{loc.name && loc.name}</strong>
-              <br />
-              <Link to={`/community/list/${loc.communityId}`}>
+            <div className="width-100">
+              <p
+                className="popup-community-tag"
+                onClick={() =>
+                  history.push(`/community/list/${loc.communityId}`)
+                }
+              >
                 {loc.community && loc.community.name && loc.community.name}
-              </Link>
+              </p>
+              <div className="popup-header">
+                <p
+                  onClick={() => history.push(`/l/${loc.id}`)}
+                  className="popup-loc-name"
+                >
+                  {loc.name}
+                </p>
+              </div>
             </div>
           </div>
-          <p className="popup-body">
-            {/* {`${loc.address} ${loc.city}`} */}
-            {loc.address && `${loc.address}`}
-            {loc.city && `${loc.city}`}
-            <br />
-            {loc.description && `${loc.description}`}
-          </p>
+          <div className="popup-body">
+            <p className="popup-body-text">{loc.address && `${loc.address}`}</p>
+            <p className="popup-body-text">{loc.city && `${loc.city}`}</p>
+            <p className="popup-body-text">
+              {loc.description && `${loc.description}`}
+            </p>
+          </div>
         </div>
       </Popup>
     )

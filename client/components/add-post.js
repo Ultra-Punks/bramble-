@@ -36,6 +36,7 @@ class AddPost extends React.Component {
           username={this.props.user.username}
           communities={this.props.user.subscriber}
           closeForm={this.props.onHide}
+          loading={this.props.loading}
         />
       </Modal>
     )

@@ -1,6 +1,7 @@
 import React from 'react'
 import {Image} from 'react-bootstrap'
 import {connect} from 'react-redux'
+import history from '../history'
 
 // import the thunk here...
 import {fetchUsers, searchUsers} from '../store/allProfiles'

@@ -15,12 +15,14 @@ export default function PostCommentInfo(props) {
     unlikeComment,
     dislikeComment,
     deleteComment,
-    loggedInUser
+    loggedInUser,
+    undislikeComment
   } = props
   const [isClick, setClick] = useState(false)
+  const [isDislike, setDislike] = useState(false)
 
   const likeClass = isClick ? 'likes-number-active' : 'likes-number-unactive'
-
+  console.log('THIS IS PROPS', props)
   return (
     <div key={comment.id} className="singleCommentPreview">
       <div className="pfp-col">
@@ -60,14 +62,10 @@ export default function PostCommentInfo(props) {
           )}
         </div>
         <div className="post-feed-preview-info">
-          <Link className="link-to-post" to={`/comments/${comment.id}`}>
-            <TimeAgo
-              className="time-ago"
-              date={comment.createdAt}
-              live={false}
-            />
-            <p className="post-text">{comment.comment}</p>
-          </Link>
+          {/* <Link className="link-to-post" to={`/comments/${comment.id}`}> */}
+          <TimeAgo className="time-ago" date={comment.createdAt} live={false} />
+          <p className="post-text">{comment.comment}</p>
+          {/* </Link> */}
         </div>
         {props.isLoggedIn ? (
           <div className="commentsAndShares">
@@ -99,12 +97,27 @@ export default function PostCommentInfo(props) {
               {comment.dislikes >= 1 && (
                 <p className="dislikes-number">{comment.dislikes}</p>
               )}
-              <img
-                src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
-                className="dislikeIcon"
-                type="button"
-                onClick={() => dislikeComment(comment.id, postId)}
-              />
+              {isDislike ? (
+                <img
+                  src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                  className="dislikeIcon"
+                  type="button"
+                  onClick={() => {
+                    undislikeComment(comment.id, postId)
+                    setDislike(false)
+                  }}
+                />
+              ) : (
+                <img
+                  src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                  className="dislikeIcon"
+                  type="button"
+                  onClick={() => {
+                    dislikeComment(comment.id, postId)
+                    setDislike(true)
+                  }}
+                />
+              )}
             </div>
           </div>
         ) : (

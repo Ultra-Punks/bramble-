@@ -93,7 +93,14 @@ export default function AddPostForm(props) {
             onChange={uploadImage}
             style={{margin: 0, width: 75}}
           />
-          <AwesomeButton onPress={() => props.closeForm()}>Post</AwesomeButton>
+          <AwesomeButton
+            onPress={() => {
+              props.closeForm()
+              props.loading(true)
+            }}
+          >
+            Post
+          </AwesomeButton>
         </div>
       </Form>
     </div>

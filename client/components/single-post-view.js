@@ -1,9 +1,19 @@
 /* eslint-disable complexity */
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {fetchSinglePost, deleteTagThunk} from '../store/singlePost'
-import {PostComment, FullPicture} from './index'
+import {
+  fetchSinglePost,
+  deleteTagThunk,
+  likedPost,
+  unlikedPost,
+  dislikedPost,
+  undislikedPost,
+  addCommentThunk
+} from '../store/singlePost'
+import {PostCommentSingle, FullPicture, AddCommentSingle} from './index'
 import {Image} from 'react-bootstrap'
+import TimeAgo from 'react-timeago'
+import Heart from 'react-animated-heart'
 import ReactPlayer from 'react-player'
 import history from '../history'
 
@@ -33,6 +43,25 @@ function PostingPictures(props) {
           className="single-post-view-img"
           onClick={() => setShowPicture(true)}
         />
+
+        <FullPicture
+          show={showPicture}
+          image={post.photos[0].imgFile}
+          onHide={() => setShowPicture(false)}
+        />
+      </div>
+    )
+  } else {
+    return <div />
+  }
+}
+
+function ImageRec(props) {
+  const {post, deleteTag, fetchPost, loggedInUser, isLoggedIn} = props
+
+  if (post !== undefined && post.photos !== undefined && post.photos.length) {
+    return (
+      <div>
         {post.photos[0].tags !== undefined && post.photos[0].tags.length ? (
           <p className="suggested-tags">Suggested Tags</p>
         ) : (
@@ -43,26 +72,26 @@ function PostingPictures(props) {
             ? post.photos[0].tags.map(tag => {
                 return (
                   <div key={tag.id} className="labels-container">
-                    <p
-                      className="individual-labels-delete"
-                      onClick={() => {
-                        props.deleteTag(tag.id)
-                        props.fetchPost()
-                      }}
-                    >
-                      x
-                    </p>
+                    {isLoggedIn &&
+                      post.user !== undefined &&
+                      loggedInUser === post.user.username && (
+                        <p
+                          className="individual-labels-delete"
+                          onClick={() => {
+                            props.deleteTag(tag.id)
+                            props.fetchPost()
+                          }}
+                        >
+                          x
+                        </p>
+                      )}
+
                     <p className="individual-labels">{tag.imageTag}</p>
                   </div>
                 )
               })
             : ''}
         </div>
-        <FullPicture
-          show={showPicture}
-          image={post.photos[0].imgFile}
-          onHide={() => setShowPicture(false)}
-        />
       </div>
     )
   } else {
@@ -115,12 +144,51 @@ function UserInformation(props) {
 }
 
 class SinglePostView extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      isClick: false,
+      commentForm: false,
+      isDislike: false
+    }
+    this.handleFormOpen = this.handleFormOpen.bind(this)
+    this.handleLike = this.handleLike.bind(this)
+    this.handleDislike = this.handleDislike.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchPost()
   }
 
+  handleLike() {
+    if (this.state.isClick) {
+      this.setState({isClick: false})
+    } else {
+      this.setState({isClick: true})
+    }
+  }
+
+  handleDislike() {
+    if (this.state.isDislike) {
+      this.setState({isDislike: false})
+    } else {
+      this.setState({isDislike: true})
+    }
+  }
+
+  handleFormOpen() {
+    if (this.state.commentForm) {
+      this.setState({commentForm: false})
+    } else {
+      this.setState({commentForm: true})
+    }
+  }
+
   render() {
+    const isClick = this.state.isClick
+    const isDislike = this.state.isDislike
     const post = this.props.post
+    const likeClass = isClick ? 'likes-number-active' : 'likes-number-unactive'
     return (
       <div className="page-container">
         <div className="single-post-view-container">
@@ -143,6 +211,81 @@ class SinglePostView extends React.Component {
                   deleteTag={this.props.deleteTag}
                   fetchPost={this.props.fetchPost}
                 />
+                {this.props.isLoggedIn && (
+                  <div className="commentsAndShares">
+                    <img
+                      src="https://img.icons8.com/all/500/comments.png"
+                      className="commentIcon"
+                      type="button"
+                      onClick={() => this.handleFormOpen()}
+                    />
+                    <AddCommentSingle
+                      show={this.state.commentForm}
+                      onHide={() => this.handleFormOpen()}
+                      postId={post.id}
+                      addComment={this.props.addComment}
+                      closeForm={this.handleFormOpen}
+                    />
+
+                    <div className="likes">
+                      {post.likes >= 1 && (
+                        <p className={likeClass}>{post.likes}</p>
+                      )}
+                      {isClick ? (
+                        <Heart
+                          className="likeIcon"
+                          isClick={isClick}
+                          onClick={() => {
+                            this.handleLike()
+                            this.props.unlikePost()
+                          }}
+                        />
+                      ) : (
+                        <Heart
+                          className="likeIcon"
+                          isClick={isClick}
+                          onClick={() => {
+                            this.handleLike()
+                            this.props.likePost()
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div className="dislikes">
+                      {post.dislikes >= 1 && (
+                        <p className="dislikes-number">{post.dislikes}</p>
+                      )}
+                      {isDislike ? (
+                        <img
+                          src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                          className="dislikeIcon"
+                          type="button"
+                          onClick={() => {
+                            this.props.undislikePost()
+                            this.handleDislike()
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src="https://image.flaticon.com/icons/svg/2107/2107616.svg"
+                          className="dislikeIcon"
+                          type="button"
+                          onClick={() => {
+                            this.props.dislikePost()
+                            this.handleDislike()
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+                <ImageRec
+                  post={post}
+                  deleteTag={this.props.deleteTag}
+                  fetchPost={this.props.fetchPost}
+                  isLoggedIn={this.props.isLoggedIn}
+                  loggedInUser={this.props.loggedInUser}
+                />
                 <div className="single-post-feedback" />
                 <div className="single-post-break" />
                 {post !== undefined &&
@@ -154,7 +297,12 @@ class SinglePostView extends React.Component {
                 )}
               </div>
             </div>
-            <PostComment post={post} openComments={true} />
+            <PostCommentSingle
+              post={post}
+              openComments={true}
+              isLoggedIn={this.props.isLoggedIn}
+              loggedInUser={this.props.loggedInUser}
+            />
           </div>
         </div>
       </div>
@@ -164,7 +312,9 @@ class SinglePostView extends React.Component {
 
 const mapState = state => {
   return {
-    post: state.singlePost
+    post: state.singlePost,
+    isLoggedIn: !!state.user.id,
+    loggedInUser: state.user.username
   }
 }
 
@@ -172,7 +322,12 @@ const mapDispatch = (dispatch, ownProps) => {
   const postId = ownProps.match.params.postId
   return {
     fetchPost: () => dispatch(fetchSinglePost(postId)),
-    deleteTag: tagId => dispatch(deleteTagThunk(tagId))
+    deleteTag: tagId => dispatch(deleteTagThunk(tagId)),
+    likePost: () => dispatch(likedPost(postId)),
+    unlikePost: () => dispatch(unlikedPost(postId)),
+    addComment: comment => dispatch(addCommentThunk(postId, comment)),
+    dislikePost: () => dispatch(dislikedPost(postId)),
+    undislikePost: () => dispatch(undislikedPost(postId))
   }
 }
 

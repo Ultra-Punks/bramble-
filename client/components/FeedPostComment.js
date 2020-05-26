@@ -1,12 +1,14 @@
 import React from 'react'
-import {PostCommentInfo} from './index'
 import {connect} from 'react-redux'
 import {
-  likeCommentThunk,
-  dislikeCommentThunk,
-  deleteCommentThunk,
-  unlikeCommentThunk
+  likeCommentThunkFeed,
+  dislikeCommentThunkFeed,
+  deleteCommentThunkFeed,
+  unlikeCommentThunkFeed,
+  undislikeCommentThunkFeed,
+  fetchFollowingPosts
 } from '../store/generalUserFeed'
+import {PostCommentInfo} from './index'
 
 // NOTE: Icons only placeholders. Found them on this site: https://icons8.com/icons/set/like-heart
 
@@ -31,6 +33,7 @@ function FeedPostComment(props) {
               likeComment={props.likeComment}
               unlikeComment={props.unlikeComment}
               dislikeComment={props.dislikeComment}
+              undislikeComment={props.undislikeComment}
               deleteComment={props.deleteComment}
               loggedInUser={loggedInUser}
               isLoggedIn={props.isLoggedIn}
@@ -44,16 +47,26 @@ function FeedPostComment(props) {
   }
 }
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch, ownProps) => {
   return {
-    likeComment: (commentId, postId) =>
-      dispatch(likeCommentThunk(commentId, postId)),
-    unlikeComment: (commentId, postId) =>
-      dispatch(unlikeCommentThunk(commentId, postId)),
-    dislikeComment: (commentId, postId) =>
-      dispatch(dislikeCommentThunk(commentId, postId)),
+    likeComment: (commentId, postId) => {
+      dispatch(likeCommentThunkFeed(commentId, postId))
+      dispatch(fetchFollowingPosts(ownProps.loggedInUser))
+    },
+    unlikeComment: (commentId, postId) => {
+      dispatch(unlikeCommentThunkFeed(commentId, postId))
+      dispatch(fetchFollowingPosts(ownProps.loggedInUser))
+    },
+    dislikeComment: (commentId, postId) => {
+      dispatch(dislikeCommentThunkFeed(commentId, postId))
+      dispatch(fetchFollowingPosts(ownProps.loggedInUser))
+    },
     deleteComment: (commentId, postId) =>
-      dispatch(deleteCommentThunk(commentId, postId))
+      dispatch(deleteCommentThunkFeed(commentId, postId)),
+    undislikeComment: (commentId, postId) => {
+      dispatch(undislikeCommentThunkFeed(commentId, postId))
+      dispatch(fetchFollowingPosts(ownProps.loggedInUser))
+    }
   }
 }
 
