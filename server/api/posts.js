@@ -12,7 +12,8 @@ const {
   Community,
   Tag,
   PostComment,
-  Location
+  Location,
+  LocationReview
 } = require('../db/models')
 
 module.exports = router
@@ -118,7 +119,11 @@ router.get('/from/:username/following', async (req, res, next) => {
 
     const allLocations = await Location.findAll({
       where: {[Op.or]: [{userId: arrOfIds}, {communityId: arrOfComIds}]},
-      include: [{model: User}, {model: Community}],
+      include: [
+        {model: User},
+        {model: Community},
+        {model: LocationReview, attributes: ['ratings']}
+      ],
       order: [['createdAt', 'DESC']]
     })
 

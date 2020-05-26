@@ -1013,6 +1013,15 @@ form div {
   align-self: center;
 }
 
+.no-reviews {
+  margin-top: 10px;
+  border-top: 1px solid black;
+  padding: 10px;
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
 /* .seeReplies:hover {
   text-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em,
     rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
@@ -1491,6 +1500,8 @@ form div {
 
 .post-feed-preview-info {
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-info {
