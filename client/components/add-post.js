@@ -17,7 +17,8 @@ class AddPost extends React.Component {
       username: this.props.user.username,
       description: event.target.description.value,
       file: event.target.file.value,
-      communityId: event.target.community.value
+      communityId: event.target.community.value,
+      scan: event.target.scan.value
     }
     this.props.addPost(postInfo)
   }

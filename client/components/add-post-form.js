@@ -18,7 +18,6 @@ function makeid(length) {
 const videoTypes = ['.mp4', '.avi', '.mov', '.flv', '.wmv']
 
 function ShowPictures(props) {
-  console.log('PROPS', props)
   if (props.image[0] === undefined) return <div />
   else {
     const fileType = props.image.slice(props.image.lastIndexOf('.'))
@@ -46,6 +45,7 @@ export default function AddPostForm(props) {
   const [loading, setLoading] = useState(false)
   const [image, setImage] = useState('')
   const [url, setUrl] = useState('')
+  const [scan, setScan] = useState(false)
 
   const uploadImage = async event => {
     const files = event.target.files[0]
@@ -87,6 +87,48 @@ export default function AddPostForm(props) {
               )}
             </Form.Control>
           </Form.Group>
+          {image === '' ? (
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check
+                name="scan"
+                type="checkbox"
+                label="Scan Image"
+                value="false"
+                disabled
+                onClick={() => setScan(true)}
+              />
+            </Form.Group>
+          ) : (
+            <div className="width-250">
+              {scan ? (
+                <Form.Group controlId="formBasicCheckbox">
+                  <Form.Text className="text-muted sub">
+                    Avoid scanning large amounts of text!
+                  </Form.Text>
+                  <Form.Check
+                    readOnly
+                    name="scan"
+                    type="checkbox"
+                    label="Scan Image"
+                    value="true"
+                    checked="checked"
+                    onClick={() => setScan(false)}
+                  />
+                </Form.Group>
+              ) : (
+                <Form.Group controlId="formBasicCheckbox">
+                  <Form.Check
+                    name="scan"
+                    readOnly
+                    type="checkbox"
+                    label="Scan Image"
+                    value="false"
+                    onClick={() => setScan(true)}
+                  />
+                </Form.Group>
+              )}
+            </div>
+          )}
         </div>
         <Form.Group controlId="description">
           <Form.Control

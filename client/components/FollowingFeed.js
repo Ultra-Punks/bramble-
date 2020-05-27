@@ -17,7 +17,6 @@ function Ratings(props) {
     // !location.locationReviews[0] ||
     // !location.locationReviews[0].ratings
   ) {
-    console.log(location)
     const halfStar = (
       <img src="https://img.icons8.com/material-sharp/452/star-half.png" />
     )
@@ -57,7 +56,7 @@ export default function FollowingFeed(props) {
           if (post.type !== 'Feature') {
             return (
               <FeedPostPreview
-                key={post.id}
+                key={post.id + 'post'}
                 post={post}
                 loggedInUser={props.loggedInUser}
                 isLoggedIn={props.isLoggedIn}
@@ -66,9 +65,11 @@ export default function FollowingFeed(props) {
               />
             )
           } else {
-            console.log('POST >', post)
             return (
-              <div key={post.id} className="single-post-preview-container">
+              <div
+                key={post.id + 'location'}
+                className="single-post-preview-container"
+              >
                 {post.communityId &&
                 post.community &&
                 post.community.name !== undefined ? (

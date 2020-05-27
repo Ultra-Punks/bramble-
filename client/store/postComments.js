@@ -1,5 +1,6 @@
 // will need to import axios...
 import axios from 'axios'
+import history from '../history'
 
 // action types go here:
 const GET_POST_COMMENTS = 'GET_POST_COMMENTS'
@@ -35,6 +36,7 @@ export const addCommentThunk = (postId, comment) => {
       const {data} = await axios.post(`/api/comments/add/${postId}`, {
         comment: comment
       })
+      history.push(`/p/${postId}`)
       dispatch(addPostComment(data))
     } catch (error) {
       console.log(error)

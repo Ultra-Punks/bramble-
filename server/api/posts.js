@@ -228,16 +228,18 @@ router.post(
             imgFile: req.body.file
           })
 
-          const scannedLabels = await scanner(req.body.file)
+          if (req.body.scan === 'true') {
+            const scannedLabels = await scanner(req.body.file)
 
-          scannedLabels.forEach(label => {
-            Tag.create({
-              imageTag: label,
-              userPostId: newPost.id,
-              photoId: newPhoto.id,
-              userId: user.id
+            scannedLabels.forEach(label => {
+              Tag.create({
+                imageTag: label,
+                userPostId: newPost.id,
+                photoId: newPhoto.id,
+                userId: user.id
+              })
             })
-          })
+          }
 
           const postWithPics = await UserPost.findByPk(newPost.id, {
             include: [

@@ -1114,6 +1114,10 @@ form div {
   justify-content: space-evenly;
 }
 
+.width-250 {
+  width: 250px;
+}
+
 .commentHeader {
   background-color: rgba(60, 78, 96, 0.879);
   padding: 20px;

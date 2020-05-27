@@ -33,7 +33,6 @@ export class AddLocationForm extends React.Component {
     this.setState({
       [event.target.name]: event.target.value
     })
-    // console.log('state in handlechange', this.state)
   }
 
   handleSubmit = event => {
@@ -53,9 +52,7 @@ export class AddLocationForm extends React.Component {
     })
   }
   render() {
-    // const nextLocId = this.props.nextLocId
     const nextLocId = this.props.nextLocId
-    // console.log('id of next location', nextLocId)
 
     return (
       <Form onSubmit={this.handleSubmit} className="location-modal">
