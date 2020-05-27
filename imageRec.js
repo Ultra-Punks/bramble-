@@ -1,9 +1,10 @@
 const vision = require('@google-cloud/vision')
+
 async function scanner(image) {
   let allLabels = []
 
   const client = new vision.ImageAnnotatorClient({
-    keyFilename: './gcpconfig.json'
+    keyFilename: process.env.GCP_KEY_FILE
   })
   const [result] = await client.labelDetection(image)
   const labels = result.labelAnnotations
