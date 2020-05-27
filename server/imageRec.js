@@ -1,9 +1,9 @@
 const vision = require('@google-cloud/vision')
-const config = require('../config')
+// const config = require('../config')
 async function scanner(image) {
   let allLabels = []
 
-  const client = new vision.ImageAnnotatorClient(config)
+  const client = new vision.ImageAnnotatorClient()
   const [result] = await client.labelDetection(image)
   const labels = result.labelAnnotations
   labels.forEach(label => {
