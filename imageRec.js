@@ -4,7 +4,7 @@ async function scanner(image) {
   let allLabels = []
 
   const client = new vision.ImageAnnotatorClient({
-    keyFilename: process.env.GCP_CRED
+    keyFilename: './gcpconfig.json'
   })
   const [result] = await client.labelDetection(image)
   const labels = result.labelAnnotations
