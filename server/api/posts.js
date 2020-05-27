@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 const router = require('express').Router()
 const scanner = require('../../imageRec')
-
 const {Op} = require('sequelize')
 const isCurrentUserMiddleware = require('./middleware')
 
