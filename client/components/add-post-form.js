@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {Form, Button} from 'react-bootstrap'
+import {Form} from 'react-bootstrap'
 import {AwesomeButton} from 'react-awesome-button'
+import ReactPlayer from 'react-player'
 
 function makeid(length) {
   var result = ''
@@ -14,9 +15,29 @@ function makeid(length) {
   return result
 }
 
+const videoTypes = ['.mp4', '.avi', '.mov', '.flv', '.wmv']
+
 function ShowPictures(props) {
+  console.log('PROPS', props)
   if (props.image[0] === undefined) return <div />
-  else return <img className="add-post-img" src={props.image} />
+  else {
+    const fileType = props.image.slice(props.image.lastIndexOf('.'))
+
+    if (videoTypes.includes(fileType)) {
+      return (
+        <div className="vid-container">
+          <ReactPlayer
+            controls={true}
+            width="100%"
+            height="100%"
+            url={props.image}
+          />
+        </div>
+      )
+    } else {
+      return <img className="add-post-img" src={props.image} />
+    }
+  }
 }
 
 export default function AddPostForm(props) {
