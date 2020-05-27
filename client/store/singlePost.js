@@ -165,6 +165,7 @@ export const addCommentThunk = (postId, comment) => {
       const {data} = await axios.post(`/api/comments/add/${postId}`, {
         comment: comment
       })
+
       dispatch(addComment(data))
     } catch (error) {
       console.log(error)

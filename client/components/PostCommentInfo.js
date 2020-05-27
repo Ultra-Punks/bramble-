@@ -22,7 +22,6 @@ export default function PostCommentInfo(props) {
   const [isDislike, setDislike] = useState(false)
 
   const likeClass = isClick ? 'likes-number-active' : 'likes-number-unactive'
-  console.log('THIS IS PROPS', props)
   return (
     <div key={comment.id} className="singleCommentPreview">
       <div className="pfp-col">

@@ -25,7 +25,6 @@ function Ratings(props) {
       .reduce((acc, cur) => acc + cur) / location.locationReviews.length
   const partial = averageRating % Math.floor(averageRating)
   const rounded = averageRating - partial
-  // console.log('partial + rating', partial, rating)
   const numOfStars = Array(rounded).fill('')
   return (
     <div className="stars">
