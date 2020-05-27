@@ -342,8 +342,9 @@ class Map extends React.Component {
               </div>
             )}
           {/* map() through locations and create Markers for all of them */}
-          {/* {!this.props.locations[0] ? '' :''} */}
+
           {this.props.locations[0] &&
+            this.props.locations[0].geometry &&
             this.props.locations.map((loc, idx) => {
               const long = loc.geometry.coordinates[0]
               const lat = loc.geometry.coordinates[1]
