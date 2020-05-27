@@ -1,4 +1,5 @@
 const vision = require('@google-cloud/vision')
+
 async function scanner(image) {
   let allLabels = []
 
