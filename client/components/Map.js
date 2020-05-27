@@ -23,7 +23,7 @@ import {
   fetchSomeLocations,
   fetchHomeFeedLocations
 } from '../store/locations'
-import {fetchOneLocation} from '../store/singleLocation'
+import {fetchOneLocation, fetchAddress} from '../store/singleLocation'
 import {mapboxToken} from '../../secrets'
 
 class Map extends React.Component {
@@ -78,6 +78,7 @@ class Map extends React.Component {
         zoom: 10
       }
       const coordinates = [currentLocation.long, currentLocation.lat]
+      // this.props.getAddress(coordinates)
       const userLocation = {
         name: 'User Location',
         geometry: {type: 'point', coordinates},
@@ -341,8 +342,9 @@ class Map extends React.Component {
               </div>
             )}
           {/* map() through locations and create Markers for all of them */}
-          {/* {!this.props.locations[0] ? '' :''} */}
+
           {this.props.locations[0] &&
+            this.props.locations[0].geometry &&
             this.props.locations.map((loc, idx) => {
               const long = loc.geometry.coordinates[0]
               const lat = loc.geometry.coordinates[1]
@@ -376,6 +378,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchLocation: id => dispatch(fetchOneLocation(id)),
   getAllLocations: () => dispatch(fetchAllLocations()),
-  getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type))
+  getSomeLocations: (id, type) => dispatch(fetchSomeLocations(id, type)),
+  getAddress: coordinates => dispatch(fetchAddress(coordinates))
 })
 export default connect(mapState, mapDispatch)(Map)

@@ -160,30 +160,24 @@ export default function PostFeed(props) {
                             ''
                           )} */}
                         </div>
-                        <div className="post-feed-preview-info">
-                          <Link
-                            style={{
-                              display: 'flex',
-                              'flex-direction': 'column'
-                            }}
-                            className="link-to-post"
-                            to={`/l/${location.id}`}
-                          >
-                            <TimeAgo
-                              className="time-ago"
-                              date={location.createdAt}
-                              live={false}
-                            />
-                            <img
-                              className="post-images"
-                              src={location.coverImg}
-                            />
-                            <Ratings location={location} />
-                            <p className="address-text">{location.address}</p>
-                            <p className="post-text-location">
-                              {location.description}
-                            </p>
-                          </Link>
+                        <div
+                          className="post-feed-preview-info"
+                          onClick={() => history.push(`/l/${location.id}`)}
+                        >
+                          <TimeAgo
+                            className="time-ago"
+                            date={location.createdAt}
+                            live={false}
+                          />
+                          <img
+                            className="post-images"
+                            src={location.coverImg}
+                          />
+                          <Ratings location={location} />
+                          <p className="address-text">{location.address}</p>
+                          <p className="post-text-location">
+                            {location.description}
+                          </p>
                         </div>
                       </div>
                     </div>

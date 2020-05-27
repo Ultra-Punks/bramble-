@@ -16,7 +16,8 @@ router.get('/of/:id', async (req, res, next) => {
         {model: LocationReview, include: [{model: User}]},
         {model: Community},
         {model: User}
-      ]
+      ],
+      order: [['createdAt', 'DESC']]
     })
     res.json(locations)
   } catch (err) {
@@ -38,7 +39,8 @@ router.get('/from/:username', async (req, res, next) => {
         {model: LocationReview, include: [{model: User}]},
         {model: Community},
         {model: User}
-      ]
+      ],
+      order: [['createdAt', 'DESC']]
     })
     res.json(locations)
   } catch (err) {
@@ -74,14 +76,12 @@ router.get('/home', async (req, res, next) => {
       include: [
         {model: User},
         {model: Community, attributes: ['name']},
-        // {model: Photo, include: [{model: Tag}]},
-        {
-          model: LocationReview,
-          include: [{model: User}],
-          order: [['createdAt', 'DESC']]
-        }
+        {model: LocationReview, attributes: ['ratings']}
       ],
-      order: [['createdAt', 'DESC']]
+      order: [
+        ['createdAt', 'DESC'],
+        [{model: LocationReview}, 'createdAt', 'DESC']
+      ]
     })
     res.json(locations)
   } catch (err) {
@@ -137,7 +137,8 @@ router.get('/:id', async (req, res, next) => {
         {model: LocationReview, include: [{model: User}]},
         {model: Community},
         {model: User}
-      ]
+      ],
+      order: [[{model: LocationReview}, 'createdAt', 'DESC']]
     })
     res.json(location)
   } catch (err) {
