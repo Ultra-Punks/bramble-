@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {Form, Button} from 'react-bootstrap'
+import {AwesomeButton} from 'react-awesome-button'
 
 function makeid(length) {
   var result = ''
@@ -135,9 +136,13 @@ export default function EditProfileForm(props) {
             </Form.Group>
           </div>
         </div>
-        <Button className="post-button" variant="outline-light" type="submit">
+        <AwesomeButton
+          className="post-button"
+          variant="outline-light"
+          type="primary"
+        >
           Save Changes
-        </Button>
+        </AwesomeButton>
       </Form>
     </div>
   )

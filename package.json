@@ -15,6 +15,7 @@
     "lint-fix": "npm run lint -- --fix",
     "prepare": "if [ -d .git ]; then npm-merge-driver install; fi",
     "prettify": "prettier --write \"**/*.{js,jsx,json,css,scss,md}\"",
+    "preinstall" : "node gcpSetup.js",
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
     "start": "node server",
