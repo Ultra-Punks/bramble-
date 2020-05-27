@@ -1,5 +1,5 @@
 module.exports = {
-  config: {
+  GOOGLE_APPLICATION_CREDENTIALS: {
     type: 'service_account',
     project_id: process.env.project_id,
     private_key_id: process.env.private_key_id,
