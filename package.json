@@ -44,7 +44,7 @@
   "dependencies": {
     "@google-cloud/vision": "^1.11.0",
     "autosize": "^4.0.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "chance": "^1.1.4",
     "cloudinary": "^1.21.0",
